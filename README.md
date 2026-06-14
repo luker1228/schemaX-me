@@ -25,4 +25,5 @@
 
 可使用：
 
+md-cli
 https://github.com/doocs/md?tab=readme-ov-file
