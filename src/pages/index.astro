@@ -1,12 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CategoryCard from "../components/CategoryCard.astro";
-import PostCard from "../components/PostCard.astro";
-import { CATEGORIES, getAllPosts, getPostsByCategory } from "../lib/content";
+import {
+  CATEGORIES,
+  formatDate,
+  getAllPosts,
+  getCategoryDescription,
+  getCategoryLabel,
+  getPostsByCategory,
+  getPostsBySeries
+} from "../lib/content";
 
 const posts = await getAllPosts();
-const recentPosts = posts.slice(0, 6);
-const highlightedPosts = posts.slice(0, 3);
+const [leadPost, ...remainingPosts] = posts;
+const featuredPosts = remainingPosts.slice(0, 3);
+const recentPosts = remainingPosts.slice(3, 9);
+const modelcraftSeries = await getPostsBySeries("ModelCraft");
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
 const categoryCounts = await Promise.all(
   CATEGORIES.map(async (category) => ({
     category,
@@ -16,60 +26,191 @@ const categoryCounts = await Promise.all(
 ---
 
 <BaseLayout title="Luke's AI Hub" description="一个面向 GitHub Pages 的现代博客，聚焦 AI、计算机、英语与代码之外。">
-  <section class="shell-wide hero-grid">
-    <div class="hero-panel">
-      <span class="eyebrow">Markdown-native personal publishing</span>
-      <h1 class="hero-title">Write in ideas. Publish in structure.</h1>
-      <p class="hero-copy">
-        这里是我长期写作的主场：AI、计算机、英语和代码之外的思考被重新整理成一套更清晰、更耐看的博客结构。
-      </p>
-      <div class="hero-meta">
-        <span class="pill">GitHub Pages</span>
-        <span class="pill">Astro</span>
-        <span class="pill">{posts.length} published posts</span>
+  <section class="shell-wide brutal-hero">
+    <div class="brutal-hero-copy">
+      <span class="brutal-kicker">Luke's AI Hub / Notes, Systems, Essays</span>
+      <h1 class="brutal-title">WRITE HARD. THINK CLEAR.</h1>
+      <p class="brutal-copy">Long-form notes on AI, systems, English, and life outside code. 写清楚，再归档。</p>
+      <div class="brutal-metrics" aria-label="Site metrics">
+        <div class="metric-box">
+          <span class="metric-label">Published</span>
+          <strong>{posts.length}</strong>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Focus</span>
+          <strong>Featured Essays</strong>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">System</span>
+          <strong>Archive-led</strong>
+        </div>
       </div>
     </div>
-    <div class="surface hero-panel">
-      <span class="eyebrow">Focus</span>
-      <h2 class="hero-title" style="font-size: clamp(1.9rem, 3vw, 2.8rem);">从内容堆积，转向稳定归档。</h2>
-      <p class="hero-copy">
-        这不是模板化博客。首页强调主题分区、精选文章和长期归档，方便持续写下去，而不是只搭一个能跑的站点。
-      </p>
+
+    {leadPost && (
+      <a class="lead-feature" href={withBase(`/posts/${leadPost.slug}/`)}>
+        <p class="lead-feature-label">Lead feature</p>
+        <h2>{leadPost.title}</h2>
+        <p class="lead-feature-copy">{leadPost.description || "从长期问题里提炼一篇值得反复回看的文章。"}</p>
+        <div class="lead-feature-meta">
+          <span>{getCategoryLabel(leadPost.category)}</span>
+          <span>{formatDate(leadPost.pubDate)}</span>
+        </div>
+      </a>
+    )}
+  </section>
+
+  <section class="shell section brutal-section">
+    <div class="brutal-section-head">
+      <h2>Current Series</h2>
+      <p>一条长期主线，围绕 ModelCraft 这个项目持续写。项目入口、系列目录和相关文章从这里进入。</p>
+    </div>
+
+    <div class="series-banner">
+      <div class="series-banner-copy">
+        <p class="series-banner-kicker">Project / Series Hub</p>
+        <h3>ModelCraft</h3>
+        <p>
+          一个面向 AI 时代的数据模型引擎项目。重点不只是功能，而是让协议、Schema 和 Runtime 更容易被人和 Agent 理解。
+        </p>
+      </div>
+      <div class="series-banner-meta">
+        <div class="series-meta-box">
+          <span class="metric-label">Series posts</span>
+          <strong>{modelcraftSeries.length}</strong>
+        </div>
+        <div class="series-meta-box">
+          <span class="metric-label">GitHub</span>
+          <strong>luker1228/modelcraft</strong>
+        </div>
+        <div class="series-banner-links">
+          <a class="series-link" href={withBase("/modelcraft/")}>Open series hub</a>
+          <a class="series-link secondary" href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">View GitHub</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="shell section">
-    <div class="section-head">
-      <h2>领域入口</h2>
-      <p>按主题建立长期可维护的写作路径。</p>
+  <section class="shell section brutal-section">
+    <div class="brutal-section-head">
+      <h2>Elsewhere</h2>
+      <p>除了站内文章，这里也保留两个长期入口：代码在 GitHub，公众号放写作更新和阶段性输出。</p>
     </div>
-    <div class="category-grid">
+
+    <div class="elsewhere-grid">
+      <a class="elsewhere-card elsewhere-card-link" href="https://github.com/luker1228" target="_blank" rel="noreferrer">
+        <p class="topic-shelf-label">GitHub</p>
+        <h3>luker1228</h3>
+        <p>项目代码、实验仓库和长期迭代都会先落在这里。</p>
+        <p class="topic-shelf-link">Open GitHub profile</p>
+      </a>
+
+      <a
+        class="elsewhere-card elsewhere-card-link"
+        href="https://blog.csdn.net/weixin_43468441?type=blog"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <p class="topic-shelf-label">CSDN</p>
+        <h3>技术博客主页</h3>
+        <p>更偏工程实践和技术记录的公开主页，适合放项目外的长期技术输出。</p>
+        <p class="topic-shelf-link">Open CSDN profile</p>
+      </a>
+
+      <a
+        class="elsewhere-card elsewhere-card-link"
+        href="https://www.cnblogs.com/patientcat"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <p class="topic-shelf-label">CNBlogs</p>
+        <h3>博客园主页</h3>
+        <p>另一条长期中文技术写作出口，适合承接更完整的技术随笔和专题整理。</p>
+        <p class="topic-shelf-link">Open CNBlogs profile</p>
+      </a>
+
+      <div class="elsewhere-card elsewhere-card-qr">
+        <div>
+          <p class="topic-shelf-label">WeChat Official Account</p>
+          <h3>公众号</h3>
+          <p>扫码进入公众号。这里会放文章更新、阶段总结和一些站外内容。</p>
+        </div>
+        <img
+          src="https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"
+          alt="Luke's AI Hub 微信公众号二维码"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section brutal-section">
+    <div class="brutal-section-head">
+      <h2>Featured Essays</h2>
+      <p>先看最能代表当前写作方向的几篇，不平均铺开。</p>
+    </div>
+
+    <div class="featured-essays">
+      {featuredPosts[0] && (
+        <article class="featured-essay primary">
+          <p class="featured-essay-kicker">{getCategoryLabel(featuredPosts[0].category)}</p>
+          <h3>
+            <a href={withBase(`/posts/${featuredPosts[0].slug}/`)}>{featuredPosts[0].title}</a>
+          </h3>
+          <p class="featured-essay-meta">{formatDate(featuredPosts[0].pubDate)}</p>
+          {featuredPosts[0].description && <p class="featured-essay-copy">{featuredPosts[0].description}</p>}
+        </article>
+      )}
+
+      <div class="featured-essay-stack">
+        {featuredPosts.slice(1).map((post) => (
+          <article class="featured-essay secondary">
+            <p class="featured-essay-kicker">{getCategoryLabel(post.category)}</p>
+            <h3>
+              <a href={withBase(`/posts/${post.slug}/`)}>{post.title}</a>
+            </h3>
+            <p class="featured-essay-meta">{formatDate(post.pubDate)}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section brutal-section">
+    <div class="brutal-section-head">
+      <h2>Topics</h2>
+      <p>把它当成频道入口，不只是归档计数。先选主题，再进入对应的文章流。</p>
+    </div>
+
+    <div class="topic-shelves">
       {categoryCounts.map(({ category, count }) => (
-        <CategoryCard category={category} count={count} />
+        <a class="topic-shelf" href={withBase(`/${category}/`)}>
+          <div class="topic-shelf-top">
+            <p class="topic-shelf-label">{getCategoryLabel(category)}</p>
+            <span class="topic-shelf-count">{count} posts</span>
+          </div>
+          <h3>{getCategoryDescription(category)}</h3>
+          <p class="topic-shelf-link">Open {getCategoryLabel(category)} archive</p>
+        </a>
       ))}
     </div>
   </section>
 
-  <section class="shell section">
-    <div class="section-head">
-      <h2>精选文章</h2>
-      <p>先从最能代表当前方向的几篇开始。</p>
+  <section class="shell section brutal-section">
+    <div class="brutal-section-head">
+      <h2>Recent Updates</h2>
+      <p>像归档清单一样展示最近更新，不和精选区共用同一种卡片语言。</p>
     </div>
-    <div class="post-grid">
-      {highlightedPosts.map((post) => (
-        <PostCard post={post} />
-      ))}
-    </div>
-  </section>
 
-  <section class="shell section">
-    <div class="section-head">
-      <h2>最近更新</h2>
-      <p>按发布时间倒序展示正式文章。</p>
-    </div>
-    <div class="post-grid">
+    <div class="recent-list">
       {recentPosts.map((post) => (
-        <PostCard post={post} />
+        <a class="recent-item" href={withBase(`/posts/${post.slug}/`)}>
+          <span class="recent-date">{formatDate(post.pubDate)}</span>
+          <div class="recent-body">
+            <strong>{post.title}</strong>
+            <p>{getCategoryLabel(post.category)} / {post.description || "继续扩充这条写作线索。"}</p>
+          </div>
+        </a>
       ))}
     </div>
   </section>

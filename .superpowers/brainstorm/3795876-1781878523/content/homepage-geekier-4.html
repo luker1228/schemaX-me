@@ -1,0 +1,100 @@
+<h2>Geekier Directions</h2>
+<p class="subtitle">Same content priorities: featured articles first, topic entry second. Different level of technical sharpness.</p>
+
+<div class="cards">
+  <div class="card" data-choice="terminal-editorial" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. Terminal Editorial</div>
+        <div class="mockup-body" style="background:#0f1115;padding:14px;color:#e8ecef;">
+          <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;min-height:310px;">
+            <div style="background:#151922;border:1px solid #2b3444;border-radius:18px;padding:22px;display:grid;align-content:space-between;">
+              <div>
+                <div class="label" style="color:#8dc6ff;">/luke/articles</div>
+                <h3 style="font-size:34px;line-height:1.03;margin:12px 0 10px;color:#f4f7fb;">Write clearly. Ship ideas.</h3>
+                <p style="margin:0;color:#98a8ba;">像技术笔记和作者首页的混合体。深色、冷静、信息很硬，但不做假终端截图。</p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="padding:8px 12px;border:1px solid #2b3444;border-radius:999px;color:#b8c4d4;">AI essays</span>
+                <span style="padding:8px 12px;border:1px solid #2b3444;border-radius:999px;color:#b8c4d4;">Systems notes</span>
+              </div>
+            </div>
+            <div style="display:grid;gap:14px;">
+              <div style="background:linear-gradient(180deg,#1b2430,#11161d);border:1px solid #2b3444;border-radius:18px;padding:18px;">
+                <div class="label" style="color:#9ac7ff;">featured</div>
+                <div style="font-size:22px;font-weight:700;line-height:1.12;margin-top:8px;">Feedback, control, and agentic engineering</div>
+                <div style="font-size:13px;color:#9fb0c3;margin-top:10px;">one lead article, two supporting picks</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="placeholder" style="height:88px;border-radius:16px;background:#181d26;color:#98a8ba;border:1px solid #2b3444;">topics</div>
+                <div class="placeholder" style="height:88px;border-radius:16px;background:#181d26;color:#98a8ba;border:1px solid #2b3444;">recent</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Terminal Editorial</h3>
+      <p>深色、克制、像技术作者主页，不是 SaaS 首页，也不是炫技终端皮肤。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="grid-lab" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. Grid Lab</div>
+        <div class="mockup-body" style="background:#f4f6f8;padding:14px;">
+          <div style="display:grid;grid-template-columns:1.25fr 0.75fr;gap:14px;min-height:310px;position:relative;">
+            <div style="background:
+              linear-gradient(rgba(19,29,43,0.06) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(19,29,43,0.06) 1px, transparent 1px),
+              #fbfcfd;
+              background-size:24px 24px;
+              border:1px solid #ccd5df;border-radius:18px;padding:22px;">
+              <div class="label" style="color:#2f5f93;">research log</div>
+              <h3 style="font-size:34px;line-height:1.03;margin:12px 0 10px;color:#101722;">Structured writing for AI, systems, and life.</h3>
+              <p style="margin:0;color:#58687a;">更像研究室白板和文档首页的结合。明亮，但有很强的工程秩序感。</p>
+            </div>
+            <div style="display:grid;gap:14px;">
+              <div style="background:#101722;color:#eef4fb;border-radius:18px;padding:18px;" class="placeholder">lead essay</div>
+              <div style="background:#fbfcfd;border:1px solid #ccd5df;border-radius:18px;padding:18px;" class="placeholder">topic index</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Grid Lab</h3>
+      <p>更极客，但不是暗黑。重点是工程制图感和版面秩序。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="signal-board" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. Signal Board</div>
+        <div class="mockup-body" style="background:#131313;padding:14px;color:#f2efe8;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;min-height:310px;">
+            <div style="background:#1d1d1d;border:1px solid #363636;border-radius:18px;padding:22px;">
+              <div class="label" style="color:#f18f52;">signal / archive</div>
+              <h3 style="font-size:34px;line-height:1.03;margin:12px 0 10px;">Featured writing. Stable archive.</h3>
+              <p style="margin:0;color:#b8b2a7;">更像硬件面板或系统监控的语义，强调信号、频道、流和索引。</p>
+            </div>
+            <div style="display:grid;grid-template-rows:1.1fr 0.9fr;gap:14px;">
+              <div style="background:#f18f52;color:#17120f;border-radius:18px;padding:18px;" class="placeholder">lead pick</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="placeholder" style="border-radius:16px;background:#1d1d1d;color:#b8b2a7;border:1px solid #363636;">AI</div>
+                <div class="placeholder" style="border-radius:16px;background:#1d1d1d;color:#b8b2a7;border:1px solid #363636;">CS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Signal Board</h3>
+      <p>最有性格，最不安静，也最容易做过头。</p>
+    </div>
+  </div>
+</div>

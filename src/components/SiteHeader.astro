@@ -2,18 +2,20 @@
 const navItems = [
   { href: "/ai/", label: "AI" },
   { href: "/cs/", label: "CS" },
+  { href: "/modelcraft/", label: "ModelCraft" },
   { href: "/english/", label: "English" },
   { href: "/life/", label: "Life" },
   { href: "/archive/", label: "Archive" }
 ];
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
 <header class="site-header">
   <div class="shell shell-wide">
-    <a class="brand" href={import.meta.env.BASE_URL}>Luke's AI Hub</a>
+    <a class="brand" href={baseUrl}>Luke's AI Hub</a>
     <nav class="nav">
       {navItems.map((item) => (
-        <a href={`${import.meta.env.BASE_URL}${item.href.replace(/^\//, "")}`}>{item.label}</a>
+        <a href={`${baseUrl}${item.href.replace(/^\//, "")}`}>{item.label}</a>
       ))}
     </nav>
   </div>

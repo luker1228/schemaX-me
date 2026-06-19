@@ -2,6 +2,7 @@
 title: "为什么早期的大模型，通过 Prompt 让模型输出 JSON 不可靠"
 description: "解释 Prompt 约束 JSON 输出在生产环境中失稳的根本原因。"
 category: "ai"
+pubDate: 2026-06-14
 tags:
   - "llm"
   - "json"

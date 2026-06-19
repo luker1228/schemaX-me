@@ -7,9 +7,10 @@ interface Props {
 }
 
 const { category, count } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
-<a class="category-card" href={`${import.meta.env.BASE_URL}${category}/`}>
+<a class="category-card" href={`${baseUrl}${category}/`}>
   <div>
     <p class="category-kicker">{getCategoryLabel(category)}</p>
     <h3>{getCategoryLabel(category)}</h3>

@@ -81,6 +81,11 @@ export async function getPostsByCategory(category: Category) {
   return posts.filter((post) => post.category === category);
 }
 
+export async function getPostsBySeries(series: string) {
+  const posts = await getAllPosts();
+  return posts.filter((post) => post.series === series);
+}
+
 export function getCategoryLabel(category: Category) {
   return CATEGORY_LABELS[category];
 }

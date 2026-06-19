@@ -2,6 +2,7 @@
 title: "第1章：从零构建 Agent"
 description: "搭一个最小可运行 Agent，建立对主循环与工具调用的直觉。"
 category: "ai"
+pubDate: 2026-04-14
 series: "从零构建理解 Agent"
 ---
 # 从零构建一个 Agent

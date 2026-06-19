@@ -2,6 +2,7 @@
 title: "第0章：直观理解 Agent 与 LLM"
 description: "从最基础的视角理解 Agent 和 LLM 的关系。"
 category: "ai"
+pubDate: 2026-04-14
 series: "从零构建理解 Agent"
 ---
 # 唯物主义带你理解什么是Agent

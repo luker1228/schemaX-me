@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { formatDate, getAllPosts, getCategoryLabel } from "../lib/content";
 
 const posts = await getAllPosts();
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
 <BaseLayout title="Archive | Luke's AI Hub" description="全部已发布文章的时间归档。">
@@ -13,7 +14,7 @@ const posts = await getAllPosts();
     </div>
     <div class="archive-list">
       {posts.map((post) => (
-        <a class="archive-item" href={`${import.meta.env.BASE_URL}posts/${post.slug}/`}>
+        <a class="archive-item" href={`${baseUrl}posts/${post.slug}/`}>
           <span class="meta">{formatDate(post.pubDate)}</span>
           <div>
             <strong>{post.title}</strong>

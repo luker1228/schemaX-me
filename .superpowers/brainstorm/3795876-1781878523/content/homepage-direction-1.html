@@ -1,0 +1,104 @@
+<h2>博客首页方向</h2>
+<p class="subtitle">Reading this as: editorial blog homepage for repeat readers, with a calm, opinionated language, leaning toward a custom Astro/CSS redesign. Dials: 6 / 4 / 3.</p>
+
+<div class="cards">
+  <div class="card" data-choice="editorial-archive" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. Editorial Archive</div>
+        <div class="mockup-body">
+          <div style="display:grid;grid-template-columns:1.4fr 0.8fr;gap:14px;min-height:260px;">
+            <div style="background:#f6efe4;border:1px solid #d8c7b1;border-radius:22px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div class="label">Luke's notes</div>
+                <h3 style="font-size:32px;margin:12px 0 8px;">长期写作，不追热点。</h3>
+                <p style="margin:0;color:#6d5a47;">首页更像一张主编页，强调主题入口、少量精选和归档气质。</p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="padding:8px 12px;border:1px solid #d8c7b1;border-radius:999px;">AI</span>
+                <span style="padding:8px 12px;border:1px solid #d8c7b1;border-radius:999px;">CS</span>
+                <span style="padding:8px 12px;border:1px solid #d8c7b1;border-radius:999px;">Life</span>
+              </div>
+            </div>
+            <div style="display:grid;gap:14px;">
+              <div style="background:#fffaf2;border:1px solid #d8c7b1;border-radius:22px;padding:18px;">
+                <div class="label">精选</div>
+                <div class="placeholder" style="height:108px;">3 篇主打文章</div>
+              </div>
+              <div style="background:#fffaf2;border:1px solid #d8c7b1;border-radius:22px;padding:18px;">
+                <div class="label">归档</div>
+                <div class="placeholder" style="height:56px;">最近更新时间线</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Editorial Archive</h3>
+      <p>更安静，像长期写作者主页，重点是内容分区和阅读秩序。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="magazine-bento" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. Magazine Bento</div>
+        <div class="mockup-body">
+          <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:14px;min-height:260px;">
+            <div style="background:#f4eadb;border:1px solid #d8c7b1;border-radius:22px;padding:22px;">
+              <div class="label">主页宣言</div>
+              <h3 style="font-size:34px;margin:12px 0 8px;">写清楚，比写得快更重要。</h3>
+              <div class="placeholder" style="height:94px;">一句主标题 + 一段导语 + 一个入口按钮</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div style="background:#fffaf2;border:1px solid #d8c7b1;border-radius:22px;padding:16px;" class="placeholder">AI</div>
+              <div style="background:#efe1ce;border:1px solid #d8c7b1;border-radius:22px;padding:16px;" class="placeholder">CS</div>
+              <div style="background:#fffaf2;border:1px solid #d8c7b1;border-radius:22px;padding:16px;" class="placeholder">Life</div>
+              <div style="background:#f1e5d1;border:1px solid #d8c7b1;border-radius:22px;padding:16px;" class="placeholder">Recent</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Magazine Bento</h3>
+      <p>更有版式感，视觉记忆更强，首页像轻杂志封面。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="library-column" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. Library Column</div>
+        <div class="mockup-body">
+          <div style="display:grid;grid-template-columns:0.75fr 1.25fr;gap:14px;min-height:260px;">
+            <div style="background:#fffaf2;border:1px solid #d8c7b1;border-radius:22px;padding:18px;">
+              <div class="label">目录</div>
+              <div style="display:grid;gap:10px;margin-top:14px;">
+                <div class="placeholder" style="height:34px;">AI</div>
+                <div class="placeholder" style="height:34px;">CS</div>
+                <div class="placeholder" style="height:34px;">English</div>
+                <div class="placeholder" style="height:34px;">Life</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:14px;">
+              <div style="background:#f6efe4;border:1px solid #d8c7b1;border-radius:22px;padding:22px;">
+                <h3 style="font-size:30px;margin:0 0 8px;">像书房一样组织内容。</h3>
+                <p style="margin:0;color:#6d5a47;">左边是固定目录，右边是精选和最近更新，读者一进来就知道怎么逛。</p>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="placeholder" style="height:96px;border-radius:22px;">精选卡片</div>
+                <div class="placeholder" style="height:96px;border-radius:22px;">更新卡片</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Library Column</h3>
+      <p>更像知识库首页，导航更强，但少一点首页气场。</p>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@
 title: "第2章：Plan And Solve 与 Reflection"
 description: "给 Agent 加入规划与反思，让执行路径更稳定。"
 category: "ai"
+pubDate: 2026-04-14
 series: "从零构建理解 Agent"
 ---
 # 从零构建理解Agent-02：Plan-and-Solve + Reflection

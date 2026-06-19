@@ -2,6 +2,7 @@
 title: "RTK：用 Rust 重构你的 CLI 工具，让 CodeBuddy 的 token 消耗降低 90%"
 description: "用 Rust CLI 代理减少 AI 编程助手上下文中的无效终端输出。"
 category: "ai"
+pubDate: 2026-03-20
 tags:
   - "tooling"
   - "rust"

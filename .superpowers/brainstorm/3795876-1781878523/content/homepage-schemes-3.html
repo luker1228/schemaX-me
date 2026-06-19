@@ -1,0 +1,101 @@
+<h2>Homepage Schemes</h2>
+<p class="subtitle">Same information architecture, three visual systems. The question is how far to lean toward the Taste Skill reference.</p>
+
+<div class="cards">
+  <div class="card" data-choice="warm-editorial" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. Warm Editorial</div>
+        <div class="mockup-body" style="background:#f7f1e7;padding:14px;">
+          <div style="display:grid;grid-template-columns:1.2fr 0.85fr;gap:14px;min-height:300px;">
+            <div style="background:#fbf7f0;border:1px solid #d9c8b3;border-radius:24px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div class="label" style="color:#8b4a2d;">Luke's AI Hub</div>
+                <h3 style="font-size:34px;line-height:1.05;margin:12px 0 10px;color:#241a12;">Write with structure. 也保留判断。</h3>
+                <p style="margin:0;color:#6d5a47;">暖底色保留，但结构更利落。首屏是作者立场加主推文章，不再双卡平均分。</p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="padding:8px 12px;border:1px solid #d9c8b3;border-radius:999px;background:#fffaf2;">Featured essays</span>
+                <span style="padding:8px 12px;border:1px solid #d9c8b3;border-radius:999px;background:#fffaf2;">Archive-led</span>
+              </div>
+            </div>
+            <div style="display:grid;gap:14px;">
+              <div style="background:#8b4a2d;color:#fff7f1;border-radius:24px;padding:20px;display:grid;gap:8px;">
+                <div class="label" style="color:#f0d0bc;">Lead pick</div>
+                <div style="font-size:24px;font-weight:700;line-height:1.1;">Feedback, Control, and Agentic Engineering</div>
+                <div style="font-size:14px;opacity:0.85;">一篇大卡作为首页主叙事</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="placeholder" style="height:82px;border-radius:22px;background:#efe1ce;">AI</div>
+                <div class="placeholder" style="height:82px;border-radius:22px;background:#f4eadb;">Recent</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Warm Editorial</h3>
+      <p>保留你现在的纸张感，只借鉴参考站的节奏、权重和留白。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="monochrome-lift" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. Monochrome Lift</div>
+        <div class="mockup-body" style="background:#f1f1ef;padding:14px;">
+          <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:14px;min-height:300px;">
+            <div style="background:#fbfbf9;border:1px solid #d8d8d2;border-radius:24px;padding:24px;">
+              <div class="label" style="color:#555;">Luke's AI Hub</div>
+              <h3 style="font-size:36px;line-height:1.02;margin:12px 0 10px;color:#111;">Write in public. Think in depth.</h3>
+              <p style="margin:0;color:#555;">更靠近 tasteskill.dev 的黑白克制感，强调对比、排版和内容权重。</p>
+            </div>
+            <div style="display:grid;gap:14px;">
+              <div style="background:#151515;color:#f7f7f2;border-radius:24px;padding:20px;">
+                <div class="label" style="color:#c7c7c0;">Featured</div>
+                <div style="font-size:24px;font-weight:700;line-height:1.1;margin-top:8px;">One strong article card</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="placeholder" style="height:82px;border-radius:22px;background:#ffffff;">Topics</div>
+                <div class="placeholder" style="height:82px;border-radius:22px;background:#ffffff;">Latest</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Monochrome Lift</h3>
+      <p>更高级也更硬朗，但会明显削弱现在的个人暖色气质。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dual-tone" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. Dual Tone</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#f4f4f2 0%,#f4f4f2 54%,#f6efe4 54%,#f6efe4 100%);padding:14px;">
+          <div style="display:grid;gap:14px;min-height:300px;">
+            <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;">
+              <div style="background:#fbfbf9;border:1px solid #d8d8d2;border-radius:24px;padding:24px;">
+                <div class="label" style="color:#555;">Editorial front</div>
+                <h3 style="font-size:34px;line-height:1.02;margin:12px 0 10px;color:#111;">第一屏像主编页，下面回到书房感。</h3>
+              </div>
+              <div style="background:#111;color:#f7f7f2;border-radius:24px;padding:20px;" class="placeholder">Lead feature</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+              <div class="placeholder" style="height:110px;border-radius:22px;background:#fffaf2;">AI</div>
+              <div class="placeholder" style="height:110px;border-radius:22px;background:#efe1ce;">CS</div>
+              <div class="placeholder" style="height:110px;border-radius:22px;background:#fffaf2;">Archive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Dual Tone</h3>
+      <p>首屏借黑白克制感，后面回暖色。层次强，但最容易做得像两套站。</p>
+    </div>
+  </div>
+</div>

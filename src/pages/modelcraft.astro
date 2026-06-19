@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatDate, getPostsBySeries } from "../lib/content";
+
+const seriesName = "ModelCraft";
+const posts = await getPostsBySeries(seriesName);
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<BaseLayout
+  title="ModelCraft | Luke's AI Hub"
+  description="ModelCraft 项目与系列文章入口页，聚合项目介绍、GitHub 链接与系列目录。"
+>
+  <section class="shell-wide brutal-hero series-hero">
+    <div class="brutal-hero-copy">
+      <span class="brutal-kicker">Project / Series Hub</span>
+      <h1 class="brutal-title">MODELCRAFT</h1>
+      <p class="brutal-copy">
+        一个围绕数据模型引擎、协议自解释、Schema 约束和 Runtime 设计展开的长期项目。这里既是项目入口，也是系列文章总目录。
+      </p>
+      <div class="series-banner-links series-hero-links">
+        <a class="series-link primary" href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">Open GitHub Repo</a>
+        <a class="series-link secondary" href="#series-index">Read Series Index</a>
+      </div>
+      <div class="brutal-metrics" aria-label="ModelCraft series metrics">
+        <div class="metric-box">
+          <span class="metric-label">Series posts</span>
+          <strong>{posts.length}</strong>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Focus</span>
+          <strong>Schema / Runtime</strong>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Repo</span>
+          <strong>github.com/luker1228/modelcraft</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="lead-feature series-feature">
+      <p class="lead-feature-label">Project summary</p>
+      <h2>Build a model engine that explains itself.</h2>
+      <p class="lead-feature-copy">
+        核心问题不是“再做一个工具”，而是让数据模型、查询能力和权限边界变成一套对开发者和 AI 都可读的协议。
+      </p>
+      <div class="series-banner-links">
+        <a class="series-link" href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">Open GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section brutal-section" id="series-index">
+    <div class="brutal-section-head">
+      <h2>What This Series Covers</h2>
+      <p>从产品判断到系统实现，后续文章都会沿着同一条主线推进，而不是散点式记录。</p>
+    </div>
+
+    <div class="topic-shelves">
+      <div class="topic-shelf">
+        <div class="topic-shelf-top">
+          <p class="topic-shelf-label">Problem</p>
+          <span class="topic-shelf-count">01</span>
+        </div>
+        <h3>为什么需要一个可自解释的数据模型引擎</h3>
+        <p class="topic-shelf-link">Protocol, tooling, and AI readability</p>
+      </div>
+      <div class="topic-shelf">
+        <div class="topic-shelf-top">
+          <p class="topic-shelf-label">Architecture</p>
+          <span class="topic-shelf-count">02</span>
+        </div>
+        <h3>Schema、Runtime、权限和生成链路怎么接起来</h3>
+        <p class="topic-shelf-link">Schema-driven design and runtime flow</p>
+      </div>
+      <div class="topic-shelf">
+        <div class="topic-shelf-top">
+          <p class="topic-shelf-label">Delivery</p>
+          <span class="topic-shelf-count">03</span>
+        </div>
+        <h3>一个人如何把完整项目从调研推到可运行状态</h3>
+        <p class="topic-shelf-link">Build, ship, revise, and document</p>
+      </div>
+      <div class="topic-shelf">
+        <div class="topic-shelf-top">
+          <p class="topic-shelf-label">Series</p>
+          <span class="topic-shelf-count">{posts.length}</span>
+        </div>
+        <h3>系列文章会持续补完，不做一次性项目页</h3>
+        <p class="topic-shelf-link">This page stays as the hub</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section brutal-section">
+    <div class="brutal-section-head">
+      <h2>Series Index</h2>
+      <p>按时间线聚合当前系列文章。后续你继续写，只需要保持 `series: ModelCraft`。</p>
+    </div>
+
+    <div class="recent-list">
+      {posts.map((post) => (
+        <a class="recent-item" href={`${baseUrl}posts/${post.slug}/`}>
+          <span class="recent-date">{formatDate(post.pubDate)}</span>
+          <div class="recent-body">
+            <strong>{post.title}</strong>
+            <p>{post.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
