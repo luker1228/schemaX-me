@@ -1,30 +1,48 @@
 ---
 ---
+# Luke's Blog
 
-这个仓库用于沉淀 AI 学习笔记、实践代码与 Go 相关示例。
+这个仓库已经从 Jekyll 迁移到 Astro，用于生成 GitHub Pages 博客。
 
-## 仓库结构
+## 技术栈
 
-- `articles-draft/ai-基础知识/`：从零构建理解 Agent 系列内容（含章节文章与配套代码）
-- `articles-draft/ai-思考/`：对 Agent、反馈系统等主题的延展思考
-- `articles-draft/ai-tools/`：工具实践记录
-- `logfacade/`：一个可复用的 Go 日志封装示例
-- `assets/`：仓库配图等静态资源
+- `Astro 5`
+- `TypeScript`
+- `GitHub Pages`
 
-## 从零构建理解Agent 系列
+## 内容结构
 
-1. [第0章：直观理解Agent与LLM](./articles-draft/ai-基础知识/从零构建理解Agent/第0章-直观理解Agent与LLM/第0章-直观理解Agent与LLM.md)
-2. [第1章：从零构建Agent](./articles-draft/ai-基础知识/从零构建理解Agent/第1章-从零构建Agent/从零构建理解Agent-01.md)
-3. [第2章：PlanAndSolve与Reflection](./articles-draft/ai-基础知识/从零构建理解Agent/第2章-PlanAndSolve与Reflection/从零构建理解Agent-02.md)
-4. [第3章：简单记忆的实现](./articles-draft/ai-基础知识/从零构建理解Agent/第3章-简单记忆的实现/从零构建理解Agent-03.md)
+- `src/content/posts/ai/`：正式发布的 AI 文章
+- `src/content/posts/cs/`：正式发布的计算机与工程实践文章
+- `src/content/posts/life/`：正式发布的代码之外文章
+- `src/content/posts/english/`：正式发布的英语学习文章
+- `src/content/drafts/`：草稿与提纲，按同样的四个主题分目录
+- `public/images/`：博客静态图片资源
+- `articles-draft/`：历史整理区，保留原始文章目录与配套示例代码
+- `logfacade/`：独立的 Go 示例模块
 
-## 公众号
+## 本地开发
 
-![公众号](https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
+```bash
+npm install
+npm run dev
+```
+
+## 构建
+
+```bash
+npm run build
+```
+
+构建产物输出到 `dist/`，用于 GitHub Pages 部署。
+
+## 发布约定
+
+- 正式博客只发布 `src/content/posts/` 中的文章
+- `src/content/drafts/` 不参与生产站点路由生成
+- 文章末尾如需保留公众号图片，继续使用现有远程资源链接
 
 ## Markdown 转微信排版
 
-可使用：
-
-md-cli
-https://github.com/doocs/md?tab=readme-ov-file
+- `md-cli`
+- <https://github.com/doocs/md?tab=readme-ov-file>

@@ -1,0 +1,18 @@
+---
+import { formatDate, getCategoryLabel, type NormalizedPost } from "../lib/content";
+
+interface Props {
+  post: NormalizedPost;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <p class="category-kicker">{getCategoryLabel(post.category)}</p>
+  <h3>
+    <a href={`${import.meta.env.BASE_URL}posts/${post.slug}/`}>{post.title}</a>
+  </h3>
+  <p class="meta">{formatDate(post.pubDate)}</p>
+  {post.description && <p>{post.description}</p>}
+</article>

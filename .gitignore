@@ -1,19 +1,14 @@
 logfacade/logs
 logfacade/logs-2026-03-02T15-33-36.302/app.log
 node_modules/
+dist/
+.astro/
 
 # 环境变量文件 (含密钥)
 .env
 .env.cos
 **/.env
 !**/.env.example
-
-# Jekyll build & dependencies
-_site/
-.jekyll-cache/
-.sass-cache/
-vendor/
-Gemfile.lock
 
 # Jekyll build & dependencies
 _site/

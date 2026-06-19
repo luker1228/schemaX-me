@@ -1,129 +1,60 @@
 ---
 ---
-This file provides guidance to CodeBuddy Code when working with code in this repository.
+This file provides guidance when working with this repository.
 
 ## 仓库定位
 
-这是一个文章与示例代码混合仓库，核心是 Agent 教学内容与配套实现：
+这是一个以写作为主的 Astro 博客仓库，同时保留部分文章配套示例代码：
 
-- 文章主目录：`articles-draft/ai-基础知识/`、`articles-draft/ai-思考/`、`articles-draft/ai-tools/`
-- Agent 代码示例：`articles-draft/ai-基础知识/从零构建理解Agent/01/program`、`articles-draft/ai-基础知识/从零构建理解Agent/02/program`
+- 正式文章目录：`src/content/posts/`
+- 草稿目录：`src/content/drafts/`
+- 分类固定为：`ai`、`cs`、`life`、`english`
+- 历史文章整理区与配套代码：`articles-draft/`
 - Go 独立模块：`logfacade/`
 
-## 发布约束（必须遵守）
+## 发布约束
 
-1. 所有文章最终都会对外发布，**不允许出现内链**。
-2. 所有文章结尾必须追加公众号推荐图（固定文案）：
+1. 只有 `src/content/posts/` 里的内容会被正式发布。
+2. `src/content/drafts/` 用于草稿与提纲，不生成线上文章页。
+3. 所有文章最终都会对外发布，正文中不要依赖仓库内链。
+4. 如需追加公众号图片，使用固定远程资源：
 
 ```md
 ![](https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
 ```
 
-3. 修改 `articles-draft/ai-基础知识/从零构建理解Agent/02/program/planAndSolve.ts` 时，需确保最终文章产出也满足上述结尾要求。
-
-## 常用开发命令
-
-### Chapter 01 (ReAct)
-目录：`articles-draft/ai-基础知识/从零构建理解Agent/01/program`
+## Astro 常用命令
 
 ```bash
 npm install
-npm start          # tsx reActAgent.ts
-npm run dev        # tsx watch reActAgent.ts
+npm run dev
+npm run build
 ```
 
-来源：`articles-draft/ai-基础知识/从零构建理解Agent/01/program/package.json`
+## 内容维护规则
 
-### Chapter 02 (Plan-and-Solve + Reflection)
-目录：`articles-draft/ai-基础知识/从零构建理解Agent/02/program`
+- 正式发布文章放入 `src/content/posts/<category>/`
+- 未完成文章、大纲、插图脚本放入 `src/content/drafts/<category>/`
+- frontmatter 至少应包含：`title`、`description`、`category`
+- 草稿必须设置 `draft: true`
 
-```bash
-npm install
-npm start          # tsx reflection.ts
-npm run dev        # tsx watch planAndSolve.ts
-npx tsx planAndSolve.ts "你的问题"
-npx tsx reflection.ts "你的文本"
-```
+## 历史代码与示例
 
-来源：`articles-draft/ai-基础知识/从零构建理解Agent/02/program/package.json`
+Agent 教学代码仍保留在 `articles-draft/ai-基础知识/从零构建理解Agent/` 下，例如：
 
-### LogFacade (Go)
-目录：`logfacade`
+- `第1章-从零构建Agent/program`
+- `第2章-PlanAndSolve与Reflection/program`
+- `第3章-简单记忆的实现/program`
+- `第4章-基础外界交互能力/program`
+
+这些目录主要作为文章配套示例，不参与 Astro 构建。
+
+## LogFacade
+
+`logfacade/` 仍是独立 Go 模块，常用命令：
 
 ```bash
 go run ./cmd/main.go
 go test -v ./...
 go test -bench=. -benchmem
 ```
-
-单测（单个用例）示例：
-
-```bash
-go test -v -run TestWriteToFile ./...
-go test -v -run TestContextualLogging ./...
-```
-
-来源：`logfacade/README.md`、`logfacade/example_test.go`
-
-## 测试 / Lint / Build 现状
-
-- `01/program` 与 `02/program` 当前 `package.json` 未提供 `test` / `lint` / `build` 脚本。
-- Node 侧当前主要是通过 `tsx` 直接运行示例脚本。
-- `logfacade` 使用 `go test` 作为主要测试入口。
-
-## 高层架构速览
-
-### 1) Agent 教学代码（TypeScript）
-
-#### ReAct 基线实现（Chapter 01）
-- 文件：`articles-draft/ai-基础知识/从零构建理解Agent/01/program/reActAgent.ts`
-- 关键角色：
-  - `LLMAgent`：封装流式模型调用
-  - `ToolBox`：注册/查找工具
-  - `ReActAgent`：按 `Thought -> Action -> Observation -> Finish` 循环执行
-- 工具注册点：`toolBox.registerTool("Search", ...)`
-
-#### Plan-and-Solve 主流程（Chapter 02）
-- 文件：`articles-draft/ai-基础知识/从零构建理解Agent/02/program/planAndSolve.ts`
-- 三层结构：
-  - `Planner`：把问题拆成子任务，并做解析兜底（JSON + 行文本）
-  - `Executor`：逐个子任务执行 ReAct 循环
-  - `PlanAndSolveAgent`：统一调度任务并汇总最终答案
-- 关键价值：先规划再执行，避免单轮 ReAct 在复杂任务中的路径漂移。
-
-#### Reflection 迭代优化（Chapter 02）
-- 文件：`articles-draft/ai-基础知识/从零构建理解Agent/02/program/reflection.ts`
-- 关键角色：
-  - `LRUTextMemory`：维护近期记忆窗口
-  - `ReflectionTranslatorAgent`：多轮“初稿 -> 反思 -> 优化提示词”
-- 适用于高质量文本改写与翻译迭代。
-
-#### 共享工具
-- 文件：`articles-draft/ai-基础知识/从零构建理解Agent/02/program/utils/search.ts`
-- 功能：SerpApi 搜索封装，优先 `answer_box`，其次 `knowledge_graph`，再回落到 `organic_results`。
-
-### 2) LogFacade（Go）
-
-- 目录：`logfacade/`
-- 设计模式：Facade（门面）+ 接口隔离
-- 关键文件：
-  - `interface.go`：`Logger` 接口、`Field`、`Config`
-  - `logger.go`：`New` / `NewWithSkipStack` 工厂入口
-  - `global.go`：全局 logger 初始化与上下文获取
-  - `zap_logger.go`：zap 具体实现
-- 作用：业务代码依赖 `Logger` 接口，不直接依赖具体日志库。
-
-## 环境变量
-
-Node Agent 示例至少依赖以下变量：
-
-- `OPENAI_API_KEY`
-- `OPENAI_BASE_URL`（可选，默认 `https://api.openai.com/v1`）
-- `SERPAPI_API_KEY`（使用 Search 工具时必需）
-
-参考模板：`articles-draft/ai-基础知识/从零构建理解Agent/02/program/.env.example`
-
-## 文章输出相关参考
-
-- 仓库 README 已给出公众号图片地址（根目录 `README.md`）。
-- 微信排版可参考 README 中给出的 doocs/md 链接。

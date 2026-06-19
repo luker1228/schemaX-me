@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CategoryCard from "../components/CategoryCard.astro";
+import PostCard from "../components/PostCard.astro";
+import { CATEGORIES, getAllPosts, getPostsByCategory } from "../lib/content";
+
+const posts = await getAllPosts();
+const recentPosts = posts.slice(0, 6);
+const highlightedPosts = posts.slice(0, 3);
+const categoryCounts = await Promise.all(
+  CATEGORIES.map(async (category) => ({
+    category,
+    count: (await getPostsByCategory(category)).length
+  }))
+);
+---
+
+<BaseLayout title="Luke's AI Hub" description="一个面向 GitHub Pages 的现代博客，聚焦 AI、计算机、英语与代码之外。">
+  <section class="shell-wide hero-grid">
+    <div class="hero-panel">
+      <span class="eyebrow">Markdown-native personal publishing</span>
+      <h1 class="hero-title">Write in ideas. Publish in structure.</h1>
+      <p class="hero-copy">
+        这里是我长期写作的主场：AI、计算机、英语和代码之外的思考被重新整理成一套更清晰、更耐看的博客结构。
+      </p>
+      <div class="hero-meta">
+        <span class="pill">GitHub Pages</span>
+        <span class="pill">Astro</span>
+        <span class="pill">{posts.length} published posts</span>
+      </div>
+    </div>
+    <div class="surface hero-panel">
+      <span class="eyebrow">Focus</span>
+      <h2 class="hero-title" style="font-size: clamp(1.9rem, 3vw, 2.8rem);">从内容堆积，转向稳定归档。</h2>
+      <p class="hero-copy">
+        这不是模板化博客。首页强调主题分区、精选文章和长期归档，方便持续写下去，而不是只搭一个能跑的站点。
+      </p>
+    </div>
+  </section>
+
+  <section class="shell section">
+    <div class="section-head">
+      <h2>领域入口</h2>
+      <p>按主题建立长期可维护的写作路径。</p>
+    </div>
+    <div class="category-grid">
+      {categoryCounts.map(({ category, count }) => (
+        <CategoryCard category={category} count={count} />
+      ))}
+    </div>
+  </section>
+
+  <section class="shell section">
+    <div class="section-head">
+      <h2>精选文章</h2>
+      <p>先从最能代表当前方向的几篇开始。</p>
+    </div>
+    <div class="post-grid">
+      {highlightedPosts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </section>
+
+  <section class="shell section">
+    <div class="section-head">
+      <h2>最近更新</h2>
+      <p>按发布时间倒序展示正式文章。</p>
+    </div>
+    <div class="post-grid">
+      {recentPosts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

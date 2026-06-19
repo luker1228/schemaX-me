@@ -1,0 +1,19 @@
+---
+import { getCategoryDescription, getCategoryLabel, type Category } from "../lib/content";
+
+interface Props {
+  category: Category;
+  count: number;
+}
+
+const { category, count } = Astro.props;
+---
+
+<a class="category-card" href={`${import.meta.env.BASE_URL}${category}/`}>
+  <div>
+    <p class="category-kicker">{getCategoryLabel(category)}</p>
+    <h3>{getCategoryLabel(category)}</h3>
+    <p>{getCategoryDescription(category)}</p>
+  </div>
+  <p class="meta">{count} 篇文章</p>
+</a>

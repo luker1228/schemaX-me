@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatDate, getAllPosts, getCategoryLabel } from "../../lib/content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+const posts = await getAllPosts();
+const currentIndex = posts.findIndex((item) => item.entry.id === post.id);
+const prevPost = currentIndex >= 0 ? posts[currentIndex + 1] : undefined;
+const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : undefined;
+const title = post.data.title ?? post.id.split("/").pop()?.replace(/\.md$/, "") ?? post.slug;
+const description = post.data.description ?? "";
+const category = post.data.category ?? "ai";
+---
+
+<BaseLayout title={`${title} | Luke's AI Hub`} description={description}>
+  <section class="shell article-shell">
+    <article class="prose">
+      <p class="category-kicker">{getCategoryLabel(category)}</p>
+      <h1>{title}</h1>
+      <p class="article-meta">{formatDate(post.data.pubDate)}</p>
+      {description && <p class="hero-copy">{description}</p>}
+      <Content />
+    </article>
+  </section>
+
+  {headings.length > 0 && (
+    <section class="shell section">
+      <div class="prose-shell">
+        <div class="section-head">
+          <h2>目录</h2>
+          <p>快速跳转到文章内部章节。</p>
+        </div>
+        <div class="archive-list">
+          {headings.map((heading) => (
+            <a class="archive-item" href={`#${heading.slug}`}>
+              <span class="meta">H{heading.depth}</span>
+              <strong>{heading.text}</strong>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {(prevPost || nextPost) && (
+    <section class="shell section">
+      <div class="section-head">
+        <h2>继续阅读</h2>
+        <p>在这个博客里保持连续的阅读路径。</p>
+      </div>
+      <div class="post-grid">
+        {nextPost && (
+          <a class="post-card" href={`${import.meta.env.BASE_URL}posts/${nextPost.slug}/`}>
+            <p class="category-kicker">Newer</p>
+            <h3>{nextPost.title}</h3>
+            <p>{nextPost.description}</p>
+          </a>
+        )}
+        {prevPost && (
+          <a class="post-card" href={`${import.meta.env.BASE_URL}posts/${prevPost.slug}/`}>
+            <p class="category-kicker">Older</p>
+            <h3>{prevPost.title}</h3>
+            <p>{prevPost.description}</p>
+          </a>
+        )}
+      </div>
+    </section>
+  )}
+</BaseLayout>

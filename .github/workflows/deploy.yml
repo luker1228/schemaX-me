@@ -19,22 +19,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Add front matter to markdown files
-        run: |
-          for f in $(find . -name "*.md" \
-            ! -path "*/node_modules/*" \
-            ! -path "*/vendor/*" \
-            ! -path "./.codebuddy/*" \
-            ! -path "./.baoyu-skills/*" \
-            ! -path "./.claude/*" \
-            ! -path "./.github/*"); do
-            if [ "$(head -1 "$f")" != "---" ]; then
-              { echo "---"; echo "---"; cat "$f"; } > "${f}.tmp" && mv "${f}.tmp" "$f"
-            fi
-          done
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
       - uses: actions/configure-pages@v5
-      - uses: actions/jekyll-build-pages@v1
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Astro site
+        run: npm run build
       - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
   deploy:
     environment:
