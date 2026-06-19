@@ -1,7 +1,4 @@
 ---
-name: tencent-cos
-description: 上传文件到腾讯云 COS（对象存储）。当用户需要上传图片或其他文件到 COS、需要替换 Markdown 中的本地图片链接为 COS 链接、或询问如何发布文章图片时使用此技能。支持从 .env 读取 SecretId、SecretKey，自动生成 COS URL。
----
 
 # 腾讯云 COS 上传技能
 

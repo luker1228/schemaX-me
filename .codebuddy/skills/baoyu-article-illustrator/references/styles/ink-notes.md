@@ -1,4 +1,5 @@
-# ink-notes
+---
+---
 
 Professional black-ink visual notes on pure white, in the tradition of Mike Rohde's sketchnoting
 

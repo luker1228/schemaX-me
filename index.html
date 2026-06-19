@@ -1,0 +1,28 @@
+---
+layout: default
+title: 首页
+---
+
+<section class="hero">
+  <h1>{{ site.tagline }}</h1>
+  <p>AI 学习笔记、工程思考与实践代码。</p>
+</section>
+
+{% if site.articles.size > 0 %}
+  <h2 class="section-title">📝 文章</h2>
+  <div class="article-list">
+  {% for article in site.articles reversed %}
+    <a href="{{ article.url | relative_url }}" class="article-card">
+      <div class="article-card-title">{{ article.title | default: article.name | replace: '.md', '' }}</div>
+      {% if article.description %}
+        <div class="article-card-desc">{{ article.description }}</div>
+      {% endif %}
+    </a>
+  {% endfor %}
+  </div>
+{% else %}
+  <div style="text-align:center; padding: 3rem 0; color: #999;">
+    <p style="font-size: 1.2rem; margin-bottom: 1rem;">✨ 还没有文章</p>
+    <p>在 <code>_articles/</code> 目录下新建 <code>.md</code> 文件即可发布。</p>
+  </div>
+{% endif %}

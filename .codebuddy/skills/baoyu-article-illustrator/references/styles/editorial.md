@@ -1,4 +1,5 @@
-# editorial
+---
+---
 
 Magazine-style editorial infographic for professional content
 

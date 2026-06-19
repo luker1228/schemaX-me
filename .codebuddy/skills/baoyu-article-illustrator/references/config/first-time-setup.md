@@ -1,7 +1,4 @@
 ---
-name: first-time-setup
-description: First-time setup flow for baoyu-article-illustrator preferences
----
 
 # First-Time Setup
 

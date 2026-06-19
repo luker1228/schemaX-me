@@ -7,3 +7,17 @@ node_modules/
 .env.cos
 **/.env
 !**/.env.example
+
+# Jekyll build & dependencies
+_site/
+.jekyll-cache/
+.sass-cache/
+vendor/
+Gemfile.lock
+
+# Jekyll build & dependencies
+_site/
+.jekyll-cache/
+.sass-cache/
+vendor/
+Gemfile.lock

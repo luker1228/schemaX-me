@@ -1,4 +1,5 @@
-# pixel-art
+---
+---
 
 Retro 8-bit pixel art aesthetic with nostalgic gaming style
 

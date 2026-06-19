@@ -1,4 +1,5 @@
-# playful
+---
+---
 
 Fun, creative illustration style for casual and educational content
 

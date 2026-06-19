@@ -1,4 +1,5 @@
-# sketch-notes
+---
+---
 
 Hand-drawn educational infographic style with warm cream paper, black hand-drawn lines, and soft pastel section blocks. Optimized for single-page visual explainers.
 

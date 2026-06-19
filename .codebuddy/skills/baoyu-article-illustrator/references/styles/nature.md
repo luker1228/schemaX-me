@@ -1,4 +1,5 @@
-# nature
+---
+---
 
 Organic, earthy illustration style for environmental and wellness content
 

@@ -1,4 +1,5 @@
-# minimal
+---
+---
 
 Ultra-clean, zen-like illustration style for focused content
 

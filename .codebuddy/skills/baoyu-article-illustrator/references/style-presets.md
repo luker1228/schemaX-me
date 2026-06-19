@@ -1,4 +1,5 @@
-# Style Presets
+---
+---
 
 `--preset X` expands to a type + style + optional palette combination. Users can override any dimension.
 

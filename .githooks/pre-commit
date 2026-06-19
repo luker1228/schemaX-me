@@ -1,0 +1,18 @@
+#!/bin/bash
+# Pre-commit hook: auto-add empty front matter (---) to markdown files
+# that don't already have it, so Jekyll renders them as pages.
+
+echo "🔍 Checking markdown files for front matter..."
+
+for f in $(git diff --cached --name-only --diff-filter=ACM | grep '\.md$'); do
+  if [ ! -f "$f" ]; then continue; fi
+  firstline=$(head -1 "$f")
+  if [ "$firstline" != "---" ]; then
+    { echo "---"; echo "---"; cat "$f"; } > "${f}.tmp"
+    mv "${f}.tmp" "$f"
+    git add "$f"
+    echo "  + added front matter: $f"
+  fi
+done
+
+echo "✅ Done."

@@ -1,4 +1,5 @@
-# mono-ink
+---
+---
 
 Black ink on pure white with sparse semantic accent colors
 

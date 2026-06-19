@@ -1,4 +1,5 @@
-# intuition-machine
+---
+---
 
 Technical briefing infographic style with aged paper and bilingual labels
 
