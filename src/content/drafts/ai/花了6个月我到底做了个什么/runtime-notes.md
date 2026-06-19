@@ -317,7 +317,7 @@ runtime 的做法是：
 
 ---
 
-![ModelCraft Runtime 核心架构图](ModelCraft_Runtime_核心架构___三层数据_2026-06-03T17-29-13.png)
+![ModelCraft Runtime 核心架构图](普通用户数据查询链路图.png)
 
 ## 10. 简化架构图
 

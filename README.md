@@ -16,9 +16,8 @@
 - `src/content/posts/cs/`：正式发布的计算机与工程实践文章
 - `src/content/posts/life/`：正式发布的代码之外文章
 - `src/content/posts/english/`：正式发布的英语学习文章
-- `src/content/drafts/`：草稿与提纲，按同样的四个主题分目录
+- `src/content/drafts/`：草稿工作区，按同样的四个主题分目录，每篇文章一个独立目录，目录内可放正文、提纲、配图、脚本和示例代码
 - `public/images/`：博客静态图片资源
-- `articles-draft/`：历史整理区，保留原始文章目录与配套示例代码
 - `logfacade/`：独立的 Go 示例模块
 
 ## 本地开发
@@ -40,6 +39,7 @@ npm run build
 
 - 正式博客只发布 `src/content/posts/` 中的文章
 - `src/content/drafts/` 不参与生产站点路由生成
+- 草稿文章建议保持“一个目录对应一篇文章”的原始工作形态
 - 文章末尾如需保留公众号图片，继续使用现有远程资源链接
 
 ## Markdown 转微信排版

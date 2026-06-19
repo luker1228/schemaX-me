@@ -9,7 +9,6 @@ This file provides guidance when working with this repository.
 - 正式文章目录：`src/content/posts/`
 - 草稿目录：`src/content/drafts/`
 - 分类固定为：`ai`、`cs`、`life`、`english`
-- 历史文章整理区与配套代码：`articles-draft/`
 - Go 独立模块：`logfacade/`
 
 ## 发布约束
@@ -34,20 +33,10 @@ npm run build
 ## 内容维护规则
 
 - 正式发布文章放入 `src/content/posts/<category>/`
-- 未完成文章、大纲、插图脚本放入 `src/content/drafts/<category>/`
+- 未完成文章放入 `src/content/drafts/<category>/<article-dir>/`
+- 每篇草稿都是一个独立目录，目录内允许同时放正文、大纲、插图、脚本和示例代码
 - frontmatter 至少应包含：`title`、`description`、`category`
 - 草稿必须设置 `draft: true`
-
-## 历史代码与示例
-
-Agent 教学代码仍保留在 `articles-draft/ai-基础知识/从零构建理解Agent/` 下，例如：
-
-- `第1章-从零构建Agent/program`
-- `第2章-PlanAndSolve与Reflection/program`
-- `第3章-简单记忆的实现/program`
-- `第4章-基础外界交互能力/program`
-
-这些目录主要作为文章配套示例，不参与 Astro 构建。
 
 ## LogFacade
 
