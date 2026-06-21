@@ -8,8 +8,8 @@ watermark:
 preferred_style:
   name: notion
   description: ""
-default_output_dir: same-dir
-language: zh
+default_output_dir: imgs-subdir
+language: null
 preferred_image_backend: auto
 custom_styles: []
 ---
