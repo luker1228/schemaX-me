@@ -28,13 +28,21 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     </div>
 
     <div class="series-sidebar-list">
-      <a class="series-sidebar-item" href={`${baseUrl}${category}/`}>
+      <a
+        class:list={["series-sidebar-item", { "is-active": currentGroup === null }]}
+        href={`${baseUrl}${category}/`}
+        aria-current={currentGroup === null ? "page" : undefined}
+      >
         <span class="series-sidebar-label">所有</span>
         <strong>{allPosts.length}</strong>
       </a>
 
       {topicGroups.map((group) => (
-        <a class="series-sidebar-item" href={group.href}>
+        <a
+          class:list={["series-sidebar-item", { "is-active": currentGroup === group.key }]}
+          href={group.href}
+          aria-current={currentGroup === group.key ? "page" : undefined}
+        >
           <span class="series-sidebar-label">{group.label}</span>
           <strong>{group.count}</strong>
         </a>

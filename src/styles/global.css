@@ -392,6 +392,11 @@ main {
   border: 2px solid var(--line);
   background: color-mix(in srgb, var(--paper) 88%, var(--accent) 12%);
   color: inherit;
+  box-shadow: 4px 4px 0 rgba(23, 20, 18, 0.88);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
 }
 
 .series-sidebar-item strong {
@@ -407,6 +412,21 @@ main {
   font-family: var(--mono);
   font-size: 0.78rem;
   font-weight: 700;
+}
+
+.series-sidebar-item:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 rgba(23, 20, 18, 0.92);
+}
+
+.series-sidebar-item.is-active {
+  background: color-mix(in srgb, var(--accent) 34%, var(--paper));
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(23, 20, 18, 0.92);
+}
+
+.series-sidebar-item.is-active strong {
+  background: color-mix(in srgb, var(--accent) 78%, #ffffff);
 }
 
 .series-sidebar-label {
