@@ -1,7 +1,6 @@
 ---
 title: 反馈控制系统图
 description: 反馈回路相关文章的配图草稿。
-category: ai
 draft: true
 ---
 

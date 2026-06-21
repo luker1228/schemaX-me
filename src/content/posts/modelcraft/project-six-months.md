@@ -1,7 +1,6 @@
 ---
 title: "花了 6 个月我到底做了个什么"
 description: "一篇关于 AI 项目收尾、落地与个人方法论的项目复盘。"
-category: "ai"
 pubDate: 2026-06-09
 series: "ModelCraft"
 tags:

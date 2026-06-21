@@ -1,7 +1,8 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export const CATEGORIES = ["ai", "cs", "life", "english"] as const;
-export type Category = (typeof CATEGORIES)[number];
+export const CONTENT_CATEGORIES = [...CATEGORIES, "modelcraft"] as const;
+export type Category = (typeof CONTENT_CATEGORIES)[number];
 
 export type NormalizedPost = {
   entry: CollectionEntry<"posts">;
@@ -16,18 +17,27 @@ export type NormalizedPost = {
   cover?: string;
 };
 
+export type TopicGroup = {
+  key: string;
+  label: string;
+  count: number;
+  href: string;
+};
+
 const CATEGORY_LABELS: Record<Category, string> = {
   ai: "AI",
   cs: "CS",
   life: "Life",
-  english: "English"
+  english: "English",
+  modelcraft: "ModelCraft"
 };
 
 const CATEGORY_DESCRIPTIONS: Record<Category, string> = {
   ai: "Agent、LLM、工具与实践复盘。",
   cs: "工程最佳实践与通用计算机知识。",
   life: "代码之外的思考、写作与方法论。",
-  english: "英语学习、表达积累与写作训练。"
+  english: "英语学习、表达积累与写作训练。",
+  modelcraft: "一个围绕数据模型引擎、协议自解释、Schema 约束和 Runtime 设计展开的长期项目。"
 };
 
 function titleFromId(id: string) {
@@ -36,12 +46,8 @@ function titleFromId(id: string) {
 }
 
 function inferCategory(entry: CollectionEntry<"posts">): Category {
-  if (entry.data.category) {
-    return entry.data.category;
-  }
-
   const [topLevel] = entry.id.split("/");
-  if (CATEGORIES.includes(topLevel as Category)) {
+  if (CONTENT_CATEGORIES.includes(topLevel as Category)) {
     return topLevel as Category;
   }
 
@@ -84,6 +90,82 @@ export async function getPostsByCategory(category: Category) {
 export async function getPostsBySeries(series: string) {
   const posts = await getAllPosts();
   return posts.filter((post) => post.series === series);
+}
+
+export function getPostGroup(post: NormalizedPost) {
+  const parts = post.entry.id.split("/");
+  return parts[1] ?? "essays";
+}
+
+export function getSeriesSlug(series: string) {
+  return series
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\p{Letter}\p{Number}-]+/gu, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export function getSeriesPath(series: string, hrefMap: Record<string, string> = {}) {
+  return hrefMap[series] ?? `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}series/${getSeriesSlug(series)}/`;
+}
+
+export async function getSeriesSlugMap() {
+  const posts = await getAllPosts();
+  return new Map(
+    Array.from(new Set(posts.map((post) => post.series).filter((series): series is string => Boolean(series)))).map((series) => [
+      getSeriesSlug(series),
+      series
+    ])
+  );
+}
+
+function titleCaseSegment(segment: string) {
+  return segment.replace(/[-_]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getGroupLabel(group: string, posts: NormalizedPost[]) {
+  if (group === "essays") {
+    return "随笔";
+  }
+
+  const seriesNames = Array.from(new Set(posts.map((post) => post.series).filter((series): series is string => Boolean(series))));
+  if (seriesNames.length === 1) {
+    return seriesNames[0];
+  }
+
+  return titleCaseSegment(group);
+}
+
+export function getCategoryGroups(posts: NormalizedPost[], category: Category): TopicGroup[] {
+  const grouped = posts.reduce((map, post) => {
+    const group = getPostGroup(post);
+    const bucket = map.get(group) ?? [];
+    bucket.push(post);
+    map.set(group, bucket);
+    return map;
+  }, new Map<string, NormalizedPost[]>());
+
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+  return Array.from(grouped.entries())
+    .map(([key, groupPosts]) => ({
+      key,
+      label: getGroupLabel(key, groupPosts),
+      count: groupPosts.length,
+      href: `${baseUrl}${category}/${key}/`
+    }))
+    .sort((left, right) => {
+      if (left.key === "essays") {
+        return 1;
+      }
+
+      if (right.key === "essays") {
+        return -1;
+      }
+
+      return left.label.localeCompare(right.label, "zh-CN");
+    });
 }
 
 export function getCategoryLabel(category: Category) {

@@ -1,7 +1,6 @@
 ---
 title: "第5章：构建 SubAgent"
 description: "把任务拆成子问题，交给更细分的 Agent 单元去执行。"
-category: "ai"
 pubDate: 2026-06-02
 series: "从零构建理解 Agent"
 ---

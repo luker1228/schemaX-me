@@ -4,7 +4,6 @@
 ---
 title: 花了 6 个月我到底做了个什么：draft
 description: 面向正式发布前的项目复盘草稿。
-category: ai
 draft: true
 ---
 

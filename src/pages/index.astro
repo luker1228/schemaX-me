@@ -62,84 +62,32 @@ const categoryCounts = await Promise.all(
 
   <section class="shell section brutal-section">
     <div class="brutal-section-head">
-      <h2>Current Series</h2>
+      <h2>当前主线</h2>
       <p>一条长期主线，围绕 ModelCraft 这个项目持续写。项目入口、系列目录和相关文章从这里进入。</p>
     </div>
 
     <div class="series-banner">
       <div class="series-banner-copy">
-        <p class="series-banner-kicker">Project / Series Hub</p>
-        <h3>ModelCraft</h3>
+        <p class="series-banner-kicker">项目 / 系列入口</p>
+        <h3><a class="series-title-link" href={withBase("/modelcraft/")}>ModelCraft</a></h3>
         <p>
           一个面向 AI 时代的数据模型引擎项目。重点不只是功能，而是让协议、Schema 和 Runtime 更容易被人和 Agent 理解。
         </p>
       </div>
       <div class="series-banner-meta">
-        <div class="series-meta-box">
-          <span class="metric-label">Series posts</span>
+        <a class="series-meta-box series-meta-link" href={withBase("/modelcraft/")}>
+          <span class="metric-label">系列文章</span>
           <strong>{modelcraftSeries.length}</strong>
-        </div>
-        <div class="series-meta-box">
-          <span class="metric-label">GitHub</span>
+        </a>
+        <a
+          class="series-meta-box series-meta-link"
+          href="https://github.com/luker1228/modelcraft"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span class="metric-label">GitHub 仓库</span>
           <strong>luker1228/modelcraft</strong>
-        </div>
-        <div class="series-banner-links">
-          <a class="series-link" href={withBase("/modelcraft/")}>Open series hub</a>
-          <a class="series-link secondary" href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">View GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="shell section brutal-section">
-    <div class="brutal-section-head">
-      <h2>Elsewhere</h2>
-      <p>除了站内文章，这里也保留两个长期入口：代码在 GitHub，公众号放写作更新和阶段性输出。</p>
-    </div>
-
-    <div class="elsewhere-grid">
-      <a class="elsewhere-card elsewhere-card-link" href="https://github.com/luker1228" target="_blank" rel="noreferrer">
-        <p class="topic-shelf-label">GitHub</p>
-        <h3>luker1228</h3>
-        <p>项目代码、实验仓库和长期迭代都会先落在这里。</p>
-        <p class="topic-shelf-link">Open GitHub profile</p>
-      </a>
-
-      <a
-        class="elsewhere-card elsewhere-card-link"
-        href="https://juejin.cn/user/2929553730971224/posts"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <p class="topic-shelf-label">Juejin</p>
-        <h3>掘金主页</h3>
-        <p>站外中文技术写作入口，适合承接工程实践、工具总结和更碎片化的技术输出。</p>
-        <p class="topic-shelf-link">Open Juejin profile</p>
-      </a>
-
-      <a
-        class="elsewhere-card elsewhere-card-link"
-        href="https://www.cnblogs.com/patientcat"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <p class="topic-shelf-label">CNBlogs</p>
-        <h3>博客园主页</h3>
-        <p>另一条长期中文技术写作出口，适合承接更完整的技术随笔和专题整理。</p>
-        <p class="topic-shelf-link">Open CNBlogs profile</p>
-      </a>
-
-      <div class="elsewhere-card elsewhere-card-qr">
-        <div>
-          <p class="topic-shelf-label">WeChat Official Account</p>
-          <h3>公众号</h3>
-          <p>扫码进入公众号。这里会放文章更新、阶段总结和一些站外内容。</p>
-        </div>
-        <img
-          src="https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"
-          alt="Luke's AI Hub 微信公众号二维码"
-          loading="lazy"
-        />
+        </a>
       </div>
     </div>
   </section>
@@ -212,6 +160,33 @@ const categoryCounts = await Promise.all(
           </div>
         </a>
       ))}
+    </div>
+  </section>
+
+  <section class="shell section elsewhere-tail">
+    <div class="elsewhere-tail-head">
+      <h2>站外入口</h2>
+      <p>站外入口统一放在最后，只作为补充出口，不参与首页主叙事。</p>
+    </div>
+
+    <div class="elsewhere-tail-links">
+      <a class="elsewhere-pill" href="https://github.com/luker1228" target="_blank" rel="noreferrer">
+        GitHub / luker1228
+      </a>
+      <a class="elsewhere-pill" href="https://juejin.cn/user/2929553730971224/posts" target="_blank" rel="noreferrer">
+        掘金 / 主页
+      </a>
+      <a class="elsewhere-pill" href="https://www.cnblogs.com/patientcat" target="_blank" rel="noreferrer">
+        博客园 / 主页
+      </a>
+      <a
+        class="elsewhere-pill elsewhere-pill-accent"
+        href="https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"
+        target="_blank"
+        rel="noreferrer"
+      >
+        公众号 / 二维码
+      </a>
     </div>
   </section>
 </BaseLayout>

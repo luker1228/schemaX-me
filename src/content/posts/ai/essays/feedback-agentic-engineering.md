@@ -1,7 +1,6 @@
 ---
 title: "反馈的回响：从振荡到 Agentic Engineering"
 description: "用控制理论中的振荡视角理解 Agentic Engineering 的核心问题。"
-category: "ai"
 pubDate: 2026-05-03
 tags:
   - "agentic-engineering"

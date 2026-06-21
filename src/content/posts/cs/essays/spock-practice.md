@@ -1,7 +1,6 @@
 ---
 title: "快速完成单元测试：Spock 实践笔记"
 description: "围绕 Spock 的工程实践记录，聚焦测试表达力和效率。"
-category: "cs"
 pubDate: 2026-05-03
 tags:
   - "testing"

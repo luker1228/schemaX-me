@@ -1,7 +1,6 @@
 ---
 title: "焦虑到极限的反馈"
 description: "一篇不谈技术的个人情绪和生活阶段反思。"
-category: "life"
 pubDate: 2026-06-02
 tags:
   - "reflection"

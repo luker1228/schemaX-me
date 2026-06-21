@@ -1,7 +1,6 @@
 ---
 title: 花了 6 个月我到底做了个什么：outline
 description: 项目复盘文章插图与结构提纲。
-category: ai
 draft: true
 image_count: 1
 density: minimal

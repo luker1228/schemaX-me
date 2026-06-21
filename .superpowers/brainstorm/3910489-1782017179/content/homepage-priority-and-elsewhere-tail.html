@@ -1,0 +1,221 @@
+<style>
+  .stack {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .flow {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .section-card {
+    border: 3px solid #171412;
+    border-radius: 20px;
+    background: #fffaf2;
+    box-shadow: 8px 8px 0 rgba(23, 20, 18, 0.9);
+    padding: 1rem 1.1rem;
+  }
+
+  .section-card.primary {
+    background: linear-gradient(180deg, #f7d28b 0%, #f3e3bf 100%);
+  }
+
+  .section-card.secondary {
+    background: #f4ecdd;
+  }
+
+  .section-card.tertiary {
+    background: #efe5d2;
+  }
+
+  .section-tag {
+    margin: 0 0 0.4rem;
+    color: #8f5b2f;
+    font: 700 0.75rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-card h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    text-transform: uppercase;
+  }
+
+  .section-card p {
+    margin: 0;
+    color: #534d45;
+    line-height: 1.6;
+  }
+
+  .tail-strip {
+    display: grid;
+    gap: 0.9rem;
+    border: 3px solid #171412;
+    border-radius: 20px;
+    background: #f8f3ea;
+    box-shadow: 8px 8px 0 rgba(23, 20, 18, 0.9);
+    padding: 1rem 1.1rem;
+  }
+
+  .tail-strip h3 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .tail-strip p {
+    margin: 0;
+    color: #5e574f;
+    line-height: 1.6;
+  }
+
+  .tail-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.55rem;
+    padding: 0.5rem 0.85rem;
+    border: 2px solid #171412;
+    border-radius: 999px;
+    color: #171412;
+    text-decoration: none;
+    font: 700 0.76rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #f1e5cf;
+  }
+
+  .pill strong {
+    font-size: 0.82rem;
+  }
+
+  .pill.qr {
+    background: #e2a646;
+  }
+
+  .compact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .variant {
+    border: 3px solid #171412;
+    border-radius: 20px;
+    background: #f7f1e8;
+    box-shadow: 8px 8px 0 rgba(23, 20, 18, 0.9);
+    padding: 1rem;
+  }
+
+  .variant-label {
+    margin: 0 0 0.65rem;
+    font: 700 0.76rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7c4d22;
+  }
+
+  .soft .pill {
+    background: #f7efe1;
+    box-shadow: none;
+  }
+
+  .strong .pill {
+    background: #e2a646;
+    box-shadow: 4px 4px 0 rgba(23, 20, 18, 0.9);
+  }
+
+  .strong .tail-strip {
+    background: linear-gradient(180deg, #f8efe0 0%, #f2e2bf 100%);
+  }
+
+  @media (max-width: 900px) {
+    .compact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<h2>首页主次顺序 + 尾部外链区</h2>
+<p class="subtitle">我按你的意思，把博客主表达放前面，外部入口降级到页面最后，并压成一行入口带。</p>
+
+<div class="section">
+  <div class="flow">
+    <div class="section-card primary">
+      <p class="section-tag">1 / Hero</p>
+      <h3>Lead feature</h3>
+      <p>页面开场，代表站点写作姿态和当前最值得看的文章。</p>
+    </div>
+    <div class="section-card primary">
+      <p class="section-tag">2 / Main Narrative</p>
+      <h3>Current Series</h3>
+      <p>ModelCraft 作为长期主线，应该紧跟在 Hero 后面承接主题。</p>
+    </div>
+    <div class="section-card secondary">
+      <p class="section-tag">3 / Essays</p>
+      <h3>Featured Essays</h3>
+      <p>展示代表性文章，继续强化“博客内容本身”而不是站外分发渠道。</p>
+    </div>
+    <div class="section-card tertiary">
+      <p class="section-tag">Last / Low Priority</p>
+      <h3>Elsewhere</h3>
+      <p>放到最后，只作为补充出口，不参与首页核心叙事竞争。</p>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="soft" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>更轻的尾部入口带</h3>
+      <p>像页脚增强版，信息退后最明显。我推荐这个，最符合“不是首页主表达”。</p>
+    </div>
+  </div>
+  <div class="option" data-choice="strong" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>稍强一点的尾部入口带</h3>
+      <p>仍然是一行，但按钮更像 CTA，适合你还想保留一点站外导流力度。</p>
+    </div>
+  </div>
+</div>
+
+<div class="compact-grid section">
+  <div class="variant soft">
+    <p class="variant-label">A / 轻量尾部带</p>
+    <div class="tail-strip">
+      <h3>Elsewhere</h3>
+      <p>站外入口统一压缩到尾部，只保留简洁导航语义。</p>
+      <div class="tail-links">
+        <a class="pill"><strong>GitHub</strong> / luker1228</a>
+        <a class="pill"><strong>Juejin</strong> / 掘金主页</a>
+        <a class="pill"><strong>CNBlogs</strong> / 博客园主页</a>
+        <a class="pill qr"><strong>WeChat</strong> / 扫码关注</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="variant strong">
+    <p class="variant-label">B / 强一点的尾部带</p>
+    <div class="tail-strip">
+      <h3>Elsewhere</h3>
+      <p>仍然放在最后，但每个入口的操作感更强，视觉存在感会更高一些。</p>
+      <div class="tail-links">
+        <a class="pill"><strong>Open GitHub</strong></a>
+        <a class="pill"><strong>Open Juejin</strong></a>
+        <a class="pill"><strong>Open CNBlogs</strong></a>
+        <a class="pill qr"><strong>WeChat QR</strong></a>
+      </div>
+    </div>
+  </div>
+</div>

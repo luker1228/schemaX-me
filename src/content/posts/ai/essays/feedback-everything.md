@@ -1,7 +1,6 @@
 ---
 title: "反馈的回响：从 Agent 到 Everything"
 description: "从 Agent 的反馈闭环出发，讨论它如何延展到更广的软件系统。"
-category: "ai"
 pubDate: 2026-03-25
 tags:
   - "agent"

@@ -1,0 +1,59 @@
+---
+import PostCard from "./PostCard.astro";
+import { getCategoryDescription, getCategoryGroups, getCategoryLabel, type Category, type NormalizedPost } from "../lib/content";
+
+interface Props {
+  category: Category;
+  allPosts: NormalizedPost[];
+  posts?: NormalizedPost[];
+  currentGroup?: string | null;
+}
+
+const { category, allPosts, posts = allPosts, currentGroup = null } = Astro.props;
+const topicGroups = getCategoryGroups(allPosts, category);
+const currentGroupLabel = currentGroup ? topicGroups.find((group) => group.key === currentGroup)?.label ?? currentGroup : "最近文章";
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<section class="shell-wide category-series-shell">
+  <div class="section-head">
+    <h2>{getCategoryLabel(category)}</h2>
+    <p>{getCategoryDescription(category)}</p>
+  </div>
+
+  <aside class="series-sidebar">
+    <div class="series-sidebar-head">
+      <h3>系列</h3>
+      <p>先按长期主线看，再回到最近文章。</p>
+    </div>
+
+    <div class="series-sidebar-list">
+      <a class="series-sidebar-item" href={`${baseUrl}${category}/`}>
+        <span class="series-sidebar-label">所有</span>
+        <strong>{allPosts.length}</strong>
+      </a>
+
+      {topicGroups.map((group) => (
+        <a class="series-sidebar-item" href={group.href}>
+          <span class="series-sidebar-label">{group.label}</span>
+          <strong>{group.count}</strong>
+        </a>
+      ))}
+    </div>
+  </aside>
+
+  <div class="series-posts-wrap">
+    <div class="article-shell series-posts-panel" id="recent-articles">
+      <div class="series-posts-head">
+        <h3>{currentGroupLabel}</h3>
+        <p>{currentGroup ? "按时间倒序展示这一组文章。" : "按时间倒序展示当前分类下的全部文章。"}</p>
+      </div>
+
+      <div class="post-grid">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

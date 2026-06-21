@@ -1,7 +1,6 @@
 ---
 title: "分页锚点不稳定：从 Offset 漂移到 Cursor 设计"
 description: "从真实故障出发，重新讨论为什么分页设计应该走向 Cursor。"
-category: "cs"
 pubDate: 2026-05-07
 tags:
   - "pagination"

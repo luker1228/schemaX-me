@@ -1,7 +1,6 @@
 ---
 title: "第3章：简单记忆的实现"
 description: "从零搭建一个能写入、检索和回忆的最小记忆系统。"
-category: "ai"
 pubDate: 2026-04-18
 series: "从零构建理解 Agent"
 ---

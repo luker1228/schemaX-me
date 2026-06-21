@@ -1,7 +1,6 @@
 ---
 title: "ModelCraft：低代码底座 - 数据模型的设计"
 description: "从一入职就从事数据模型设计，到成长为负责人，再到离开。深度了解项目各种优缺点后，经历 8 个月 Vibecoding 重写一版。目标曾是国内版 Supabase，以 MySQL 为底座。"
-category: "cs"
 pubDate: 2026-06-19
 series: "ModelCraft"
 tags: ["modelcraft", "architecture"]

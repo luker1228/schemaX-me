@@ -1,7 +1,6 @@
 ---
 title: 花了 6 个月我到底做了个什么：内网版本
 description: 更完整的内部项目复盘草稿。
-category: ai
 draft: true
 ---
 # AI 时代的模型引擎

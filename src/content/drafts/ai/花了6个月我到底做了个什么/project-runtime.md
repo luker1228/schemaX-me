@@ -1,7 +1,6 @@
 ---
 title: ModelCraft Runtime 草稿
 description: Runtime 核心架构总结草稿。
-category: ai
 draft: true
 ---
 # Runtime 核心架构总结

@@ -1,0 +1,289 @@
+<style>
+  .compare-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .demo-card {
+    border: 3px solid #171412;
+    border-radius: 22px;
+    background: #f7f1e8;
+    box-shadow: 8px 8px 0 rgba(23, 20, 18, 0.9);
+    padding: 1rem;
+  }
+
+  .demo-label {
+    margin: 0 0 0.65rem;
+    font: 700 0.78rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7c4d22;
+  }
+
+  .banner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 1rem;
+  }
+
+  .copy,
+  .meta,
+  .box {
+    border: 3px solid #171412;
+    border-radius: 18px;
+    background: #fffaf2;
+    box-shadow: 6px 6px 0 rgba(23, 20, 18, 0.9);
+  }
+
+  .copy,
+  .meta {
+    padding: 1.3rem;
+  }
+
+  .copy {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .copy h3,
+  .title-link {
+    margin: 0;
+    font-size: clamp(2rem, 3.4vw, 2.6rem);
+    line-height: 0.96;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #171412;
+    text-decoration: none;
+  }
+
+  .title-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .title-link::after {
+    content: "↗";
+    font-size: 0.9rem;
+    transform: translateY(-0.1rem);
+    opacity: 0.85;
+  }
+
+  .title-link.emphasized {
+    text-decoration: underline;
+    text-decoration-thickness: 0.16rem;
+    text-underline-offset: 0.2rem;
+  }
+
+  .copy p {
+    margin: 0;
+    color: #534d45;
+    line-height: 1.65;
+  }
+
+  .kicker {
+    margin: 0;
+    color: #8f5b2f;
+    font: 700 0.76rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    align-content: start;
+  }
+
+  .box {
+    min-height: 5.8rem;
+    padding: 0.95rem 1rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .metric {
+    margin: 0;
+    color: #6b6358;
+    font: 700 0.74rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .box strong {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .links {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cta,
+  .ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.7rem 1rem;
+    border: 3px solid #171412;
+    text-decoration: none;
+    color: #171412;
+    font: 700 0.8rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 6px 6px 0 rgba(23, 20, 18, 0.9);
+  }
+
+  .cta {
+    background: #e2a646;
+  }
+
+  .ghost {
+    background: #f1e5cf;
+  }
+
+  .clickable {
+    position: relative;
+    background: linear-gradient(180deg, #fffaf2 0%, #fff2db 100%);
+  }
+
+  .clickable::before {
+    content: "Clickable";
+    position: absolute;
+    top: 0.9rem;
+    right: 1rem;
+    padding: 0.2rem 0.45rem;
+    border: 2px solid #171412;
+    background: #e2a646;
+    font: 700 0.68rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .full-card {
+    cursor: pointer;
+    background:
+      linear-gradient(135deg, rgba(226, 166, 70, 0.15), rgba(226, 166, 70, 0)) padding-box,
+      #fffaf2;
+  }
+
+  .full-card .kicker::after {
+    content: " entire panel";
+    opacity: 0.6;
+  }
+
+  @media (max-width: 900px) {
+    .banner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<h2>点击语义对比</h2>
+<p class="subtitle">目标只有一个：用户一眼看出哪些是信息展示，哪些是可以点进去的入口。</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>标题保持纯文本</h3>
+      <p>只保留按钮可点击。信息层次最稳，但标题看起来像入口却不能点，容易误判。</p>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>标题即链接</h3>
+      <p>标题用明确的链接样式，CTA 继续保留。阅读和跳转语义最清楚，我当前推荐这个。</p>
+    </div>
+  </div>
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>整块文案区可点击</h3>
+      <p>可点击面积最大，但容易把展示区和交互区混在一起，尤其首页信息密度高时更明显。</p>
+    </div>
+  </div>
+</div>
+
+<div class="compare-grid section">
+  <div class="demo-card">
+    <p class="demo-label">A / 只有按钮可点击</p>
+    <div class="banner">
+      <div class="copy">
+        <p class="kicker">Project / Series Hub</p>
+        <h3>ModelCraft</h3>
+        <p>一个面向 AI 时代的数据模型引擎项目。重点不只是功能，而是让协议、Schema 和 Runtime 更容易被人和 Agent 理解。</p>
+      </div>
+      <div class="meta">
+        <div class="box">
+          <p class="metric">Series posts</p>
+          <strong>5</strong>
+        </div>
+        <div class="box">
+          <p class="metric">GitHub</p>
+          <strong>luker1228/modelcraft</strong>
+        </div>
+        <div class="links">
+          <a class="cta">Open series hub</a>
+          <a class="ghost">View GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <p class="demo-label">B / 标题即链接</p>
+    <div class="banner">
+      <div class="copy clickable">
+        <p class="kicker">Project / Series Hub</p>
+        <a class="title-link emphasized">ModelCraft</a>
+        <p>一个面向 AI 时代的数据模型引擎项目。重点不只是功能，而是让协议、Schema 和 Runtime 更容易被人和 Agent 理解。</p>
+      </div>
+      <div class="meta">
+        <div class="box">
+          <p class="metric">Series posts</p>
+          <strong>5</strong>
+        </div>
+        <div class="box">
+          <p class="metric">GitHub</p>
+          <strong>luker1228/modelcraft</strong>
+        </div>
+        <div class="links">
+          <a class="cta">Open series hub</a>
+          <a class="ghost">View GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <p class="demo-label">C / 整块文案区可点击</p>
+    <div class="banner">
+      <div class="copy full-card clickable">
+        <p class="kicker">Project / Series Hub</p>
+        <a class="title-link">ModelCraft</a>
+        <p>一个面向 AI 时代的数据模型引擎项目。重点不只是功能，而是让协议、Schema 和 Runtime 更容易被人和 Agent 理解。</p>
+      </div>
+      <div class="meta">
+        <div class="box">
+          <p class="metric">Series posts</p>
+          <strong>5</strong>
+        </div>
+        <div class="box">
+          <p class="metric">GitHub</p>
+          <strong>luker1228/modelcraft</strong>
+        </div>
+        <div class="links">
+          <a class="cta">Open series hub</a>
+          <a class="ghost">View GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,6 @@
 ---
 title: 工程实践系列大纲
 description: 工程最佳实践系列的配图与结构提纲。
-category: cs
 draft: true
 palette: macaron
 image_count: 4

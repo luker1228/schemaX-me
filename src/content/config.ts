@@ -5,7 +5,6 @@ const commonSchema = z.object({
   description: z.string().optional(),
   pubDate: z.coerce.date().optional(),
   updatedDate: z.coerce.date().optional(),
-  category: z.enum(["ai", "cs", "life", "english"]).optional(),
   tags: z.array(z.string()).default([]),
   draft: z.boolean().optional(),
   slug: z.string().optional(),

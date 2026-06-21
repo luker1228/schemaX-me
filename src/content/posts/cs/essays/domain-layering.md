@@ -1,7 +1,6 @@
 ---
 title: "领域驱动设计：从三层架构到领域分层"
 description: "把常见三层架构问题拆开，看清领域分层真正解决什么。"
-category: "cs"
 pubDate: 2026-05-03
 tags:
   - "ddd"

@@ -1,7 +1,6 @@
 ---
 title: 第4章：基础外界交互能力大纲
 description: 第 4 章配图与结构大纲草稿。
-category: ai
 draft: true
 series: 从零构建理解 Agent
 palette: default

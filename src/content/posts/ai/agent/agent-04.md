@@ -1,7 +1,6 @@
 ---
 title: "第4章：基础外界交互能力"
 description: "让 Agent 在安全边界内稳定读取外界信息、做计划并形成闭环。"
-category: "ai"
 pubDate: 2026-04-29
 series: "从零构建理解 Agent"
 ---

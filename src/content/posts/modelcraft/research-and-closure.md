@@ -1,7 +1,6 @@
 ---
 title: "ModelCraft：01-如何调研和闭环"
 description: "从 Duck talking、自主验证 demo、区分 Mock 边界到沉淀高质量测试，讨论技术调研如何形成闭环。"
-category: "cs"
 pubDate: 2026-06-21
 series: "ModelCraft"
 tags:
