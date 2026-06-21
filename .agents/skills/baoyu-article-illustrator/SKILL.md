@@ -1,4 +1,6 @@
 ---
+name: baoyu-article-illustrator
+description: Analyze an article, choose illustration positions, and generate consistent images across type, style, and palette with reproducible saved prompts.
 version: 1.58.0
 metadata:
   openclaw:
