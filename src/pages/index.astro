@@ -13,7 +13,7 @@ import {
 const posts = await getAllPosts();
 const [leadPost, ...remainingPosts] = posts;
 const featuredPosts = remainingPosts.slice(0, 3);
-const recentPosts = remainingPosts.slice(3, 9);
+const recentPosts = posts.slice(0, 6);
 const modelcraftSeries = await getPostsBySeries("ModelCraft");
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
