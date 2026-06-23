@@ -2,8 +2,6 @@
 ---
 # Luke's Blog
 
-这个仓库已经从 Jekyll 迁移到 Astro，用于生成 GitHub Pages 博客。
-
 ## 技术栈
 
 - `Astro 5`

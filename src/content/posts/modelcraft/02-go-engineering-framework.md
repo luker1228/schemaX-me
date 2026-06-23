@@ -1,5 +1,17 @@
+---
+title: "ModelCraft：02-AI时代的Go工程最佳实践——代码框架篇"
+description: "从日志门面、业务错误、DDD 分层到可观测性，讨论 AI 时代第一版 Go 工程架子应该怎么搭。"
+pubDate: 2026-06-24
+series: "ModelCraft"
+tags:
+  - "modelcraft"
+  - "go"
+  - "architecture"
+  - "observability"
+  - "engineering"
+---
 ![](https://luke-1307356219.cos.ap-chongqing.myqcloud.com/articles/AI%E6%97%B6%E4%BB%A3Go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6.png)
-# AI时代的Go工程最佳实践——代码框架篇
+# ModelCraft：02-AI时代的Go工程最佳实践——代码框架篇
 
 ## 背景
 **经过我自己无数的踩坑，我分享一般非常务实的AI时代最佳工程实践**
