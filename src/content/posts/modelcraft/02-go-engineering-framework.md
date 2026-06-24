@@ -1237,8 +1237,7 @@ submitObservedTask("sync-order", func() error {
 
 更好的做法是围绕关键事件打日志。
 
-比如一个模型查询，请优先打这些事件：
-
+比如
 1. `request.started`
 2. `auth.checked`
 3. `schema.built`
@@ -1257,10 +1256,9 @@ submitObservedTask("sync-order", func() error {
 
 比如你在问：
 
-- 哪个模型最慢
 - 哪个错误码最近激增
 - 哪个租户经常打到限制
-- 哪个 resolver 在拖慢整条链路
+- 哪个action在拖慢整条链路
 
 如果工程里没有提前把这些字段、指标、span 埋好，那么系统根本回答不了你。
 
