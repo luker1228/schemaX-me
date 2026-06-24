@@ -17,7 +17,7 @@ tags:
 
 测试风格也从 JUnit + Mockito，逐步迁移到 Spock。中间还补了设计模式与 DDD 思路。本文主要想分享：**如何用 Spock 更快写出“好用”的单元测试**。
 
-![](https://km.woa.com/asset/4e88d089959d4481a3bb3fe185a0b5a8?height=410&width=854)
+![given-when-then 如何帮助快速完成单测，并反哺代码质量](https://luke-1307356219.cos.ap-chongqing.myqcloud.com/articles/spock-given-when-then.png)
 
 ### 1.1 关于单元测试想说的话
 我不想讨论“要不要写单测”——这是团队与个人风格问题。这里只讨论：

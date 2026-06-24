@@ -1,4 +1,6 @@
 ---
+import lukeIp from "../../assets/luke_ip.jpg";
+
 const navItems = [
   { href: "/ai/", label: "AI" },
   { href: "/cs/", label: "CS" },
@@ -12,7 +14,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
 <header class="site-header">
   <div class="shell shell-wide">
-    <a class="brand" href={baseUrl}>Luke's AI Hub</a>
+    <a class="brand" href={baseUrl}>
+      <span class="brand-avatar">
+        <img src={lukeIp.src} alt="Luke 的个人 IP 形象" width={lukeIp.width} height={lukeIp.height} />
+      </span>
+      <span>Luke's AI Hub</span>
+    </a>
     <nav class="nav">
       {navItems.map((item) => (
         <a href={`${baseUrl}${item.href.replace(/^\//, "")}`}>{item.label}</a>
