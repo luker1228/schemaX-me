@@ -1,449 +1,224 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import lukeIp from "../../assets/luke_ip.jpg";
-import {
-  CATEGORIES,
-  CONTENT_CATEGORIES,
-  formatDate,
-  getAllPosts,
-  getCategoryDescription,
-  getCategoryLabel,
-  getPostsByCategory,
-  getPostsBySeries
-} from "../lib/content";
+import lukeIpPortrait from "../../assets/luke_ip_34.png";
+import { formatDate, getAllPosts, getPostsBySeries } from "../lib/content";
 
 const posts = await getAllPosts();
-const leadPost = posts[0];
-const modelcraftSeries = await getPostsBySeries("ModelCraft");
-const mainlinePost = modelcraftSeries[0] ?? leadPost;
-const recentPosts = posts.slice(0, 5);
+const latestWriting = posts.slice(0, 4);
+const modelcraftPosts = await getPostsBySeries("ModelCraft");
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
-const themeOrder = ["modelcraft", ...CATEGORIES] as const;
-const themeIconMap: Record<(typeof themeOrder)[number], string> = {
-  modelcraft: "/icons/themes/modelcraft.svg",
-  ai: "/icons/themes/ai.svg",
-  cs: "/icons/themes/cs.svg",
-  life: "/icons/themes/life.svg",
-  english: "/icons/themes/english.svg"
-};
-const themeCards = await Promise.all(
-  themeOrder.map(async (category) => ({
-    category,
-    count: (await getPostsByCategory(category)).length
-  }))
-);
 
-const EXCLUDED_COVER_PATTERNS = ["公众号.jpg", "%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"];
-const findFirstImage = (body: string) => {
-  const candidates = [
-    ...body.matchAll(/!\[[^\]]*?\]\((https?:\/\/[^)\s]+)\)/gi),
-    ...body.matchAll(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/gi)
-  ]
-    .map((match) => match[1])
-    .filter(Boolean);
-
-  for (const candidate of candidates) {
-    if (EXCLUDED_COVER_PATTERNS.some((pattern) => candidate.includes(pattern))) {
-      continue;
-    }
-
-    return candidate;
+const featuredWorks = [
+  {
+    index: "01",
+    label: "Tech Writing",
+    title: "技术博客",
+    copy: "记录我在后端工程、AI Agent、数据模型、低代码、部署与工程化方面的实践思考。",
+    href: withBase("/archive/"),
+    tone: "yellow",
+    meta: `${posts.length} 篇已发布内容`
+  },
+  {
+    index: "02",
+    label: "Frontend Guide",
+    title: "前端教学",
+    copy: "写给后端同学、设计同学和零基础学习者的前端速通手册，后续会从其它仓库接入。",
+    href: "#frontend-guide",
+    tone: "cyan",
+    meta: "预留入口"
+  },
+  {
+    index: "03",
+    label: "Product Demo",
+    title: "Demo 项目",
+    copy: "展示我独立完成的实验性项目和产品 Demo，用真实可运行的系统验证想法。",
+    href: "#product-demo",
+    tone: "purple",
+    meta: "预留入口"
   }
-};
+];
 
-const featuredCandidates = posts.map((post) => ({
-  ...post,
-  image: post.cover || findFirstImage(post.entry.body)
-}));
-
-const FEATURED_TAG = "featured";
-const taggedFeaturedCandidates = featuredCandidates.filter((post) =>
-  post.tags.some((tag) => tag.toLowerCase() === FEATURED_TAG)
-);
-
-const featuredSource = taggedFeaturedCandidates.length > 0 ? taggedFeaturedCandidates : featuredCandidates;
-
-const featuredSlides = [
-  ...featuredSource.filter((post) => Boolean(post.image)),
-  ...featuredSource.filter((post) => !post.image)
-]
-  .filter((post, index, list) => list.findIndex((item) => item.slug === post.slug) === index)
-  .slice(0, 5);
+const guideSteps = [
+  "从 Markdown 理解 HTML",
+  "从盒子模型理解 CSS",
+  "从交互理解 JavaScript",
+  "从组件理解 React",
+  "从提示词理解 AI 写前端"
+];
 ---
 
-<BaseLayout title="Luke's AI Hub" description="把长期写作做成可回看的作品集：主线项目、精选文章与主题入口。">
-  <section class="home-hero shell-wide">
-    <div class="home-hero-backdrop" aria-hidden="true">
-      <span class="hero-orb hero-orb-a"></span>
-      <span class="hero-orb hero-orb-b"></span>
-      <span class="hero-gridline hero-gridline-a"></span>
-      <span class="hero-gridline hero-gridline-b"></span>
-    </div>
+<BaseLayout title="Luke Lab" description="Luke 的个人技术实验室，统一承接技术写作、前端教学与可运行 Demo。">
+  <section class="shell-wide home-hero lab-hero">
+    <div class="home-hero-grid lab-hero-grid">
+      <div class="home-panel home-hero-copy lab-panel">
+        <span class="eyebrow">Luke Lab / Personal Tech Lab</span>
+        <h1 class="home-hero-title">Build. Write. Teach. Ship.</h1>
+        <p class="hero-copy hero-copy-en">
+          Luke's personal lab for engineering notes, frontend learning, and runnable product demos.
+        </p>
+        <p class="hero-copy">
+          这里是 Luke 的个人技术实验室，收集我的技术写作、前端教学和 Demo 项目。它们来自不同方向，但共同指向一件事：把复杂问题讲清楚，把想法做成可以体验的产品。
+        </p>
 
-    <div class="home-hero-grid">
-      <div class="home-intro-panel">
-        <div class="home-intro-copyblock">
-          <p class="hero-kicker">Luke's AI Hub / Personal Writing System</p>
-          <h1>把长期问题写成值得反复回看的作品。</h1>
-          <p class="home-intro-copy">AI、工程、英语和生活写作的长期档案。</p>
-
-          <div class="home-intro-actions">
-            <a class="home-button home-button-primary" href={withBase("/modelcraft/")}>进入当前主线</a>
-            <a class="home-button home-button-secondary" href="#curated">浏览精选主题</a>
-          </div>
+        <div class="hero-actions">
+          <a class="site-button site-button-primary" href="#works">查看作品</a>
+          <a class="site-button site-button-secondary" href="#product-demo">进入 Demo</a>
         </div>
 
-        <aside class="home-character-note" aria-label="Luke IP illustration">
-          <div class="home-character-frame">
-            <img src={lukeIp.src} alt="Luke 的手绘 IP 形象：坐在电脑前写作" width={lukeIp.width} height={lukeIp.height} loading="eager" />
-          </div>
-          <div class="home-character-caption">
-            <span>Desk Sketch</span>
-            <strong>写作、编码、反复打磨。</strong>
-          </div>
-        </aside>
-
-        <div class="home-signal-strip" aria-label="Site overview">
-          <div class="signal-item">
-            <span>Published</span>
+        <div class="hero-stats" aria-label="Luke Lab overview">
+          <div class="stat-box stat-box-yellow">
+            <span class="stat-label">Writing</span>
             <strong>{posts.length}</strong>
           </div>
-          <div class="signal-item">
-            <span>Main line</span>
-            <strong>ModelCraft</strong>
+          <div class="stat-box stat-box-cyan">
+            <span class="stat-label">Teaching</span>
+            <strong>Planned</strong>
           </div>
-          <div class="signal-item">
-            <span>Scope</span>
-            <strong>AI / CS / Life / English</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="home-mainline-stack">
-        <article class="mainline-card">
-          <div class="mainline-card-head">
-            <p>Current line</p>
-            <span>01</span>
-          </div>
-          <h2>ModelCraft</h2>
-          <p class="mainline-card-copy">
-            一个围绕数据模型引擎、Schema 约束、协议自解释与 Runtime 设计持续展开的长期项目。
-          </p>
-
-          <div class="mainline-card-links">
-            <a href={withBase("/modelcraft/")}>查看系列入口</a>
-            <a href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">GitHub 仓库</a>
-          </div>
-
-          <div class="mainline-meta-row">
-            <div>
-              <span>系列文章</span>
-              <strong>{modelcraftSeries.length}</strong>
-            </div>
-            <div>
-              <span>更新状态</span>
-              <strong>Active</strong>
-            </div>
-          </div>
-        </article>
-
-        {mainlinePost && (
-          <a class="mainline-feature" href={withBase(`/posts/${mainlinePost.slug}/`)}>
-            <p class="mainline-feature-label">Latest from the line</p>
-            <h3>{mainlinePost.title}</h3>
-            <p>{mainlinePost.description || "从项目过程里抽出一个可以长期成立的问题。"}</p>
-            <div class="mainline-feature-meta">
-              <span>{formatDate(mainlinePost.pubDate)}</span>
-              <span>{getCategoryLabel(mainlinePost.category)}</span>
-            </div>
-          </a>
-        )}
-      </div>
-    </div>
-  </section>
-
-  <section class="home-curated shell-wide" id="curated">
-    <div class="section-intro section-intro-wide">
-      <div>
-        <h2>精选文章</h2>
-      </div>
-    </div>
-
-    <div class="selected-stage">
-      <div class="featured-carousel" data-carousel>
-        <div class="featured-carousel-viewport">
-          <div class="featured-carousel-track" data-track>
-            {featuredSlides.map((post, index) => (
-              <article class="featured-slide" data-slide aria-hidden={index === 0 ? "false" : "true"}>
-                <a class={`featured-slide-card${post.image ? "" : " featured-slide-card-textonly"}`} href={withBase(`/posts/${post.slug}/`)}>
-                  {post.image && (
-                    <div class="featured-slide-media">
-                      <img src={post.image} alt={post.title} loading={index === 0 ? "eager" : "lazy"} />
-                    </div>
-                  )}
-
-                  <div class="featured-slide-copy">
-                    <p class="selected-card-label">{getCategoryLabel(post.category)}</p>
-                    <h4>{post.title}</h4>
-                    <p class="selected-card-copy">{post.description || "从一个长期主题切进，再把它写透。"}</p>
-                    <div class="featured-slide-footer">
-                      <span>{formatDate(post.pubDate)}</span>
-                    </div>
-                  </div>
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div class="featured-carousel-footer">
-          <div class="featured-slide-dots" aria-label="精选文章分页">
-            {featuredSlides.map((post, index) => (
-              <button
-                type="button"
-                class={`featured-dot${index === 0 ? " is-active" : ""}`}
-                data-dot={index}
-                aria-label={`查看 ${post.title}`}
-              ></button>
-            ))}
-          </div>
-
-          <div class="featured-carousel-controls">
-            <button type="button" class="featured-arrow" data-prev aria-label="上一张精选">Prev</button>
-            <button type="button" class="featured-arrow" data-next aria-label="下一张精选">Next</button>
+          <div class="stat-box stat-box-purple">
+            <span class="stat-label">Demo</span>
+            <strong>Planned</strong>
           </div>
         </div>
       </div>
+
+      <aside class="home-portrait lab-portrait">
+        <img src={lukeIp.src} alt="Luke 的个人 IP 形象" width={lukeIp.width} height={lukeIp.height} loading="eager" />
+        <div class="portrait-caption">
+          <span class="panel-kicker">Luke</span>
+          <strong>把复杂问题讲清楚，把想法做成产品。</strong>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <section class="home-topics shell-wide">
-    <div class="section-intro section-intro-wide">
-      <div>
-        <h2>主题入口</h2>
-      </div>
+  <section class="shell-wide home-section" id="works">
+    <div class="home-section-head">
+      <h2>Featured Works</h2>
+      <p>Luke Lab 统一品牌，具体内容会分布在主站和不同子项目里。</p>
     </div>
 
-    <aside class="theme-atlas">
-      <div class="theme-atlas-list">
-        {themeCards.map(({ category }) => (
-          <a class="theme-card" href={withBase(`/${category}/`)}>
-            <span class="theme-card-icon" aria-hidden="true">
-              <img src={withBase(themeIconMap[category])} alt="" />
-            </span>
-            <strong>{getCategoryLabel(category)}</strong>
-          </a>
-        ))}
-      </div>
-    </aside>
+    <div class="works-grid lab-works-grid">
+      {featuredWorks.map((item) => (
+        <a class={`theme-card work-card work-card-${item.tone}`} href={item.href}>
+          <span class="panel-kicker">{item.index} / {item.label}</span>
+          <strong>{item.title}</strong>
+          <p>{item.copy}</p>
+          <span class="note-date">{item.meta}</span>
+        </a>
+      ))}
+    </div>
   </section>
 
-  <section class="home-notes shell-wide">
-    <div class="section-divider section-divider-notes" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <div class="section-intro">
-      <div>
-        <h2>最近更新</h2>
-      </div>
-    </div>
-
-    <div class="notes-layout">
-      <div class="notes-list">
-        {recentPosts.map((post) => (
-          <a class="note-row" href={withBase(`/posts/${post.slug}/`)}>
-            <span class="note-row-date">{formatDate(post.pubDate)}</span>
-            <div class="note-row-body">
-              <strong>{post.title}</strong>
-              <p>{getCategoryLabel(post.category)} / {post.description || "继续把这条线索补完整。"}</p>
+  <section class="shell-wide home-section" id="frontend-guide">
+    <div class="home-columns lab-columns">
+      <article class="manifesto-card lab-guide-card">
+        <span class="panel-kicker">Frontend Guide For Backend Developers</span>
+        <h3>前端教学路线</h3>
+        <p>这一部分会独立成仓，但主站会保留教学路线与索引，方便快速理解内容结构。</p>
+        <div class="guide-steps">
+          {guideSteps.map((step, index) => (
+            <div class="guide-step">
+              <span class="guide-step-index">{String(index + 1).padStart(2, "0")}</span>
+              <strong>{step}</strong>
             </div>
-          </a>
-        ))}
-      </div>
+          ))}
+        </div>
+      </article>
+
+      <aside class="feature-card work-card-cyan lab-placeholder-card">
+        <span class="featured-tag">Reserved</span>
+        <h3>前端教学仓库稍后接入</h3>
+        <p>当前首页先保留清晰入口，不在这个仓库里硬塞教学内容。</p>
+      </aside>
     </div>
   </section>
 
-  <section class="home-elsewhere shell-wide">
-    <div class="section-divider section-divider-elsewhere" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+  <section class="shell-wide home-section" id="product-demo">
+    <div class="home-columns lab-columns">
+      <article class="spotlight-card work-card-purple">
+        <span class="panel-kicker">Product Demo</span>
+        <h3>可运行的 Demo 会放在这里</h3>
+        <p>主站会展示 Demo 截图、项目解决的问题、技术栈，以及在线体验和 GitHub 入口。现在先把结构定住，等外部仓库接入。</p>
+        <div class="demo-stack">
+          <span class="stack-chip">Product thinking</span>
+          <span class="stack-chip">Engineering delivery</span>
+          <span class="stack-chip">Runnable prototype</span>
+        </div>
+      </article>
 
-    <div class="elsewhere-panel">
-      <h3>站外延伸</h3>
-      <div class="elsewhere-links">
-        <a href="https://github.com/luker1228" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
-          <img src="https://github.com/favicon.ico" alt="" aria-hidden="true" loading="lazy" />
-        </a>
-        <a href="https://juejin.cn/user/2929553730971224/posts" target="_blank" rel="noreferrer" aria-label="掘金" title="掘金">
-          <img src="https://juejin.cn/favicon.ico" alt="" aria-hidden="true" loading="lazy" />
-        </a>
-        <a href="https://www.cnblogs.com/patientcat" target="_blank" rel="noreferrer" aria-label="博客园" title="博客园">
-          <img src="https://www.cnblogs.com/favicon.ico" alt="" aria-hidden="true" loading="lazy" />
-        </a>
-      </div>
-
-      <a
-        class="wechat-qr"
-        href="https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="公众号二维码"
-        title="公众号二维码"
-      >
-        <img
-          src="https://luke-1307356219.cos.ap-chongqing.myqcloud.com/%E5%85%AC%E8%80%83/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"
-          alt="Luke's AI Hub 公众号二维码"
-          loading="lazy"
-        />
-      </a>
+      <aside class="lab-screenshot-card">
+        <span class="panel-kicker">Demo board</span>
+        <div class="terminal-window">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="terminal-body">
+            <p>$ luke-lab demo status</p>
+            <p>&gt; pending external repos</p>
+            <p>&gt; reserve area for live product screenshots</p>
+            <p>&gt; links will point to real runnable demos</p>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <script>
-    const carousel = document.querySelector("[data-carousel]");
-    if (carousel) {
-      const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
-      const dots = Array.from(carousel.querySelectorAll("[data-dot]"));
-      const track = carousel.querySelector("[data-track]");
-      const viewport = carousel.querySelector(".featured-carousel-viewport");
-      const prevButton = carousel.querySelector("[data-prev]");
-      const nextButton = carousel.querySelector("[data-next]");
-      let activeIndex = 0;
-      let timer;
-      let isAnimating = false;
-      let pointerStartX = 0;
-      let animationFrame;
+  <section class="shell-wide home-section" id="blog">
+    <div class="home-section-head">
+      <h2>Blog</h2>
+      <p>技术博客是 Luke Lab 当前最完整的内容部分。下面这组卡片放最近更新，完整内容继续走 Blog 归档。</p>
+    </div>
 
-      const getOffset = (index) => {
-        let offset = index - activeIndex;
-        const midpoint = slides.length / 2;
+    <div class="post-grid">
+      {latestWriting.map((post) => (
+        <a class="post-card" href={withBase(`/posts/${post.slug}/`)}>
+          <p class="category-kicker">{post.category}</p>
+          <h3>{post.title}</h3>
+          <p class="meta">{formatDate(post.pubDate)}</p>
+          <p>{post.description || "从一个长期问题切出一个足够扎实的剖面。"}</p>
+        </a>
+      ))}
+    </div>
 
-        if (offset > midpoint) {
-          offset -= slides.length;
-        }
+    <div class="hero-actions section-actions">
+      <a class="site-button site-button-primary" href={withBase("/archive/")}>进入 Blog</a>
+      <a class="site-button site-button-secondary" href={withBase("/modelcraft/")}>查看 ModelCraft</a>
+    </div>
+  </section>
 
-        if (offset < -midpoint) {
-          offset += slides.length;
-        }
+  <section class="shell-wide home-section" id="about">
+    <div class="about-showcase">
+      <div class="about-visual">
+        <div class="about-visual-shadow" aria-hidden="true"></div>
+        <div class="about-visual-frame">
+          <img src={lukeIpPortrait.src} alt="Luke 的个人 IP 形象" width={lukeIpPortrait.width} height={lukeIpPortrait.height} loading="lazy" />
+        </div>
+      </div>
 
-        return offset;
-      };
+      <div class="about-copy" id="contact">
+        <span class="featured-tag">About</span>
+        <h2>About Luke</h2>
+        <p>
+          我是 Luke，一个关注 AI Agent、后端工程、前端表达和产品交付的开发者。我喜欢把工程经验整理成文章，也喜欢把复杂知识讲成可学习的路径。
+        </p>
+        <p>
+          Luke Lab 把技术写作、前端教学和 Demo 项目放进同一个作品体系里。它们不要求主题完全一致，但都会指向同一件事：把复杂问题讲清楚，把想法做成可以体验的产品。
+        </p>
+        <p class="about-contact-copy">
+          如果你想先看代码，从 GitHub 进入最快；如果你想看文章分发，也可以走掘金和博客园。
+        </p>
 
-      const render = () => {
-        slides.forEach((slide, index) => {
-          const offset = getOffset(index);
-          const absOffset = Math.abs(offset);
-          const limitedOffset = Math.max(-2, Math.min(2, offset));
-          const isMobile = window.matchMedia("(max-width: 720px)").matches;
-          const visible = isMobile ? absOffset === 0 : absOffset <= 2;
-          const scale = isMobile ? 1 : Math.max(0.54, 1.04 - absOffset * 0.17);
-          const depth = isMobile ? 0 : absOffset === 0 ? 260 : 40 - absOffset * 320;
-          const shiftX = isMobile ? 0 : limitedOffset * 48;
-          const shiftY = isMobile ? 0 : absOffset === 0 ? 0.2 : 1.8 + absOffset * 1.4;
-          const rotateY = isMobile ? 0 : limitedOffset * -12;
-          const rotateX = isMobile ? 0 : absOffset === 0 ? 0.5 : 2.8 + absOffset * 0.7;
-          const opacity = visible ? (isMobile ? 1 : Math.max(0.08, 1 - absOffset * 0.34)) : 0;
-          const zIndex = absOffset === 0 ? 180 : 120 - absOffset * 26;
+        <div class="contact-actions">
+          <a class="site-button site-button-primary" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="site-button site-button-secondary" href="https://juejin.cn/user/2929553730971224/posts" target="_blank" rel="noreferrer">掘金</a>
+          <a class="site-button site-button-secondary" href="https://www.cnblogs.com/patientcat" target="_blank" rel="noreferrer">博客园</a>
+        </div>
 
-          slide.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
-          slide.style.opacity = String(opacity);
-          slide.style.zIndex = String(zIndex);
-          slide.style.pointerEvents = index === activeIndex ? "auto" : "none";
-          slide.style.transform = `translate3d(${shiftX}%, ${shiftY}rem, ${depth}px) scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        dots.forEach((dot, index) => {
-          dot.classList.toggle("is-active", index === activeIndex);
-        });
-      };
-
-      const commitRender = () => {
-        if (animationFrame) {
-          window.cancelAnimationFrame(animationFrame);
-        }
-
-        animationFrame = window.requestAnimationFrame(() => {
-          render();
-        });
-      };
-
-      const queueIndexChange = (nextIndex) => {
-        if (isAnimating) {
-          return;
-        }
-
-        isAnimating = true;
-        activeIndex = nextIndex;
-        commitRender();
-
-        window.setTimeout(() => {
-          isAnimating = false;
-        }, 900);
-      };
-
-      const stopAuto = () => {
-        if (timer) {
-          window.clearInterval(timer);
-        }
-      };
-
-      const startAuto = () => {
-        stopAuto();
-        timer = window.setInterval(() => {
-          queueIndexChange((activeIndex + 1) % slides.length);
-        }, 7000);
-      };
-
-      prevButton?.addEventListener("click", () => {
-        queueIndexChange((activeIndex - 1 + slides.length) % slides.length);
-        startAuto();
-      });
-
-      nextButton?.addEventListener("click", () => {
-        queueIndexChange((activeIndex + 1) % slides.length);
-        startAuto();
-      });
-
-      dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-          queueIndexChange(index);
-          startAuto();
-        });
-      });
-
-      viewport?.addEventListener("pointerdown", (event) => {
-        pointerStartX = event.clientX;
-        viewport.style.cursor = "grabbing";
-      });
-
-      viewport?.addEventListener("pointerup", (event) => {
-        const deltaX = event.clientX - pointerStartX;
-        viewport.style.cursor = "grab";
-
-        if (Math.abs(deltaX) < 36) {
-          return;
-        }
-
-        activeIndex = deltaX < 0
-          ? (activeIndex + 1) % slides.length
-          : (activeIndex - 1 + slides.length) % slides.length;
-
-        commitRender();
-        startAuto();
-      });
-
-      viewport?.addEventListener("pointerleave", () => {
-        viewport.style.cursor = "grab";
-      });
-
-      commitRender();
-      startAuto();
-    }
-  </script>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

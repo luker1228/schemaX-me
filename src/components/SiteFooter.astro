@@ -5,13 +5,16 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 <footer class="site-footer">
   <div class="shell shell-wide footer-inner">
     <div class="footer-grid">
-      <p>Written in Markdown. Published with Astro on GitHub Pages.</p>
+      <p>
+        Luke Lab 是 Luke 的个人技术实验室。这里统一承接技术写作、前端教学与可运行 Demo，当前这个仓库负责主站与博客部分。
+      </p>
       <div class="footer-links" aria-label="Site links">
-        <a href={`${baseUrl}modelcraft/`}>ModelCraft</a>
-        <a href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://juejin.cn/user/2929553730971224/posts" target="_blank" rel="noreferrer">Juejin</a>
-        <a href="https://www.cnblogs.com/patientcat" target="_blank" rel="noreferrer">CNBlogs</a>
-        <a href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">Project Repo</a>
+        <a class="social-link" href={`${baseUrl}`}>Works</a>
+        <a class="social-link" href={`${baseUrl}archive/`}>Blog</a>
+        <a class="social-link" href={`${baseUrl}modelcraft/`}>ModelCraft</a>
+        <a class="social-link" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="social-link" href="https://juejin.cn/user/2929553730971224/posts" target="_blank" rel="noreferrer">Juejin</a>
+        <a class="social-link" href="https://www.cnblogs.com/patientcat" target="_blank" rel="noreferrer">CNBlogs</a>
       </div>
     </div>
   </div>

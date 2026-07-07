@@ -9,9 +9,10 @@ interface Props {
 }
 
 const {
-  title = "Luke's AI Hub",
-  description = "AI、计算机、英语和代码之外的长期写作。"
+  title = "Luke Lab",
+  description = "Luke 的个人技术实验室：技术写作、前端教学与可运行 Demo 的统一入口。"
 } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://luker1228.github.io").toString();
 ---
 
 <!doctype html>
@@ -21,6 +22,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
   </head>
   <body>
     <div class="site-shell">
