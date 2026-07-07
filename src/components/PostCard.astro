@@ -9,7 +9,7 @@ const { post } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
-<a class="post-card" href={`${baseUrl}posts/${post.slug}/`}>
+<a class="post-card" href={`${baseUrl}blogs/posts/${post.slug}/`}>
   <p class="category-kicker">{getCategoryLabel(post.category)}</p>
   <h3>{post.title}</h3>
   <p class="meta">{formatDate(post.pubDate)}</p>

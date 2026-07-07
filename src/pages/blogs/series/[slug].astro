@@ -1,0 +1,69 @@
+---
+import BlogDirectory from "../../../components/BlogDirectory.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { formatDate, getPostsBySeries, getSeriesSlug, getSeriesSlugMap } from "../../../lib/content";
+
+export async function getStaticPaths() {
+  const slugMap = await getSeriesSlugMap();
+  return Array.from(slugMap.entries()).map(([slug, series]) => ({
+    params: { slug },
+    props: { series }
+  }));
+}
+
+const { series } = Astro.props;
+const posts = await getPostsBySeries(series);
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+const seriesSlug = getSeriesSlug(series);
+const isModelCraft = series === "ModelCraft";
+const title = isModelCraft ? "ModelCraft" : series;
+const description = isModelCraft
+  ? "ModelCraft 系列文章目录。"
+  : `${series} 系列文章目录。`;
+---
+
+<BaseLayout title={`${title} | Luke's AI Hub`} description={description}>
+  <section class="shell-wide blog-page">
+    <div class="home-section-head blog-page-head">
+      <div>
+        <span class="eyebrow">Luke Lab / Series</span>
+        <h1 class="blog-page-title">{title}</h1>
+      </div>
+      <p>{isModelCraft ? "ModelCraft 的系列入口与文章目录。" : "按时间倒序查看这个系列下的全部文章。"}</p>
+      {isModelCraft && (
+        <div class="section-actions">
+          <a class="site-button site-button-secondary" href="https://github.com/luker1228/modelcraft" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        </div>
+      )}
+    </div>
+
+    <div class="blog-layout">
+      <BlogDirectory activeSection="series" activeSeriesSlug={seriesSlug} />
+
+      <div class="blog-content">
+        <div class="blog-list-shell">
+          <div class="home-section-head">
+            <h2>{title}</h2>
+            <p>{posts.length} 篇文章按发布时间倒序排列。</p>
+          </div>
+
+          <div class="blog-list">
+            {posts.map((post) => (
+              <a class="blog-list-item" href={`${baseUrl}blogs/posts/${post.slug}/`}>
+                <span class="blog-list-date">{formatDate(post.pubDate)}</span>
+                <div class="blog-list-body">
+                  <span class="blog-list-tag">{isModelCraft ? "ModelCraft" : series}</span>
+                  <strong>{post.title}</strong>
+                  <p>{post.description}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

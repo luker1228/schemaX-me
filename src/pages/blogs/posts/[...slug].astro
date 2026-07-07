@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { formatDate, getAllPosts, getCategoryLabel } from "../../lib/content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { formatDate, getAllPosts, getCategoryLabel } from "../../../lib/content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -62,14 +62,14 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       </div>
       <div class="post-grid">
         {nextPost && (
-          <a class="post-card" href={`${baseUrl}posts/${nextPost.slug}/`}>
+          <a class="post-card" href={`${baseUrl}blogs/posts/${nextPost.slug}/`}>
             <p class="category-kicker">Newer</p>
             <h3>{nextPost.title}</h3>
             <p>{nextPost.description}</p>
           </a>
         )}
         {prevPost && (
-          <a class="post-card" href={`${baseUrl}posts/${prevPost.slug}/`}>
+          <a class="post-card" href={`${baseUrl}blogs/posts/${prevPost.slug}/`}>
             <p class="category-kicker">Older</p>
             <h3>{prevPost.title}</h3>
             <p>{prevPost.description}</p>

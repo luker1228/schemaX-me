@@ -1,0 +1,34 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Java">
+  <defs>
+    <linearGradient id="bgJava" x1="17" y1="14" x2="49" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE071"/>
+      <stop offset="0.48" stop-color="#FF8A3D"/>
+      <stop offset="1" stop-color="#F9415B"/>
+    </linearGradient>
+    <filter id="badgeShadow" x="4" y="5" width="56" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.2" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#badgeShadow)">
+    <circle cx="32" cy="32" r="24" fill="#0E0E0E"/>
+    <circle cx="32" cy="32" r="20.4" fill="url(#bgJava)"/>
+    <circle cx="32" cy="32" r="20.4" stroke="#FFF0C4" stroke-width="2" stroke-opacity="0.52"/>
+
+    <!-- retro sticker highlight -->
+    <path d="M21.2 17.8C25 15.5 29.8 14.6 34.5 15.4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.28"/>
+
+    <!-- steam -->
+    <path d="M28.4 18.3C31.2 20.6 31.3 23 28.9 25.2C27.3 26.7 27.6 28.2 30.5 29.9" stroke="#FFF6DE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M34.4 17.9C37.4 20.3 37.3 22.8 34.9 25.3C33.3 27 33.8 28.4 36.6 30" stroke="#FFF6DE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M40.1 20.3C42 22.1 41.8 24 39.9 25.8C38.7 27 39.1 28.2 41.1 29.4" stroke="#FFF6DE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- cup -->
+    <path d="M21.7 31.9H39.8C39.5 37.5 35.9 40.9 30.9 40.9C26 40.9 22.3 37.5 21.7 31.9Z" fill="#111111"/>
+    <path d="M39.6 33.3H43C45 33.3 46.3 34.5 46.3 36.3C46.3 38.2 44.9 39.4 42.7 39.4H39.2" stroke="#111111" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 45H44" stroke="#111111" stroke-width="3.4" stroke-linecap="round"/>
+
+    <!-- red-brown coffee line -->
+    <path d="M24.8 31.7C29.2 33.8 35.1 33.8 39.2 31.4" stroke="#9A2D22" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  </g>
+</svg>

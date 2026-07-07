@@ -1,0 +1,143 @@
+---
+import lukeIp from "../../../assets/luke_ip.jpg";
+import BlogDirectory from "../../components/BlogDirectory.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatDate, getAllPosts, getCategoryLabel } from "../../lib/content";
+
+const posts = await getAllPosts();
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+
+const EXCLUDED_COVER_PATTERNS = ["公众号.jpg", "%E5%85%AC%E4%BC%97%E5%8F%B7.jpg"];
+
+const findFirstImage = (body: string) => {
+  const candidates = [
+    ...body.matchAll(/!\[[^\]]*?\]\((https?:\/\/[^)\s]+)\)/gi),
+    ...body.matchAll(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/gi)
+  ]
+    .map((match) => match[1])
+    .filter(Boolean);
+
+  for (const candidate of candidates) {
+    if (EXCLUDED_COVER_PATTERNS.some((pattern) => candidate.includes(pattern))) {
+      continue;
+    }
+
+    return candidate;
+  }
+};
+
+const featuredPosts = posts.map((post) => ({
+  ...post,
+  image: post.cover || findFirstImage(post.entry.body)
+}));
+
+const leadPost = featuredPosts.find((post) => Boolean(post.image)) ?? featuredPosts[0];
+const remainingPosts = featuredPosts.filter((post) => post.slug !== leadPost?.slug);
+const gridPosts = remainingPosts.slice(0, 3);
+const listPosts = remainingPosts.slice(3);
+---
+
+<BaseLayout title="Blogs | Luke Lab" description="Luke Lab 的技术博客首页，精选文章、最新内容与全部写作入口。">
+  <section class="shell-wide blog-page">
+    <div class="home-section-head blog-page-head">
+      <div>
+        <span class="eyebrow">Luke Lab / Blogs</span>
+        <h1 class="blog-page-title">Blogs</h1>
+      </div>
+      <p>技术博客是 Luke Lab 当前最完整的内容部分。这里先呈现精选文章，再往下看最近更新与全部内容。</p>
+    </div>
+
+    <div class="blog-layout">
+      <BlogDirectory activeSection="categories" />
+
+      <div class="blog-content">
+        {leadPost && (
+          <article class="blog-featured">
+            <div class="blog-featured-media">
+              {leadPost.image ? (
+                <img src={leadPost.image} alt={leadPost.title} loading="eager" />
+              ) : (
+                <div class="blog-featured-placeholder">
+                  <span class="panel-kicker">Featured</span>
+                  <strong>{leadPost.title}</strong>
+                </div>
+              )}
+            </div>
+
+            <div class="blog-featured-panel">
+              <span class="featured-tag">{getCategoryLabel(leadPost.category)}</span>
+              <h2>{leadPost.title}</h2>
+              <p>{leadPost.description || "从一个长期主题切进，再把它写透。"}</p>
+
+              <div class="blog-meta">
+                <span class="blog-meta-avatar">
+                  <img src={lukeIp.src} alt="Luke 的个人 IP 形象" aria-hidden="true" />
+                </span>
+                <div>
+                  <p class="blog-meta-author">Luke Lab</p>
+                  <div class="blog-meta-row">
+                    <p>{formatDate(leadPost.pubDate)}</p>
+                    <span>•</span>
+                    <p>{getCategoryLabel(leadPost.category)}</p>
+                  </div>
+                </div>
+              </div>
+
+              <a class="site-button site-button-primary" href={withBase(`/blogs/posts/${leadPost.slug}/`)}>
+                Read Article
+              </a>
+            </div>
+          </article>
+        )}
+
+        <div class="blog-grid">
+          {gridPosts.map((post) => (
+            <a class="blog-card" href={withBase(`/blogs/posts/${post.slug}/`)}>
+              <div class="blog-card-media">
+                {post.image ? (
+                  <img src={post.image} alt={post.title} loading="lazy" />
+                ) : (
+                  <div class="blog-card-placeholder">
+                    <span class="panel-kicker">{getCategoryLabel(post.category)}</span>
+                    <strong>{post.title}</strong>
+                  </div>
+                )}
+              </div>
+
+              <div class="blog-card-body">
+                <span class="blog-card-tag">{getCategoryLabel(post.category)}</span>
+                <h3>{post.title}</h3>
+                <div class="blog-card-meta">
+                  <p class="blog-card-date">{formatDate(post.pubDate)}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {listPosts.length > 0 && (
+          <div class="blog-list-shell">
+            <div class="home-section-head">
+              <h2>More Posts</h2>
+              <p>完整列表继续往下浏览。</p>
+            </div>
+
+            <div class="blog-list">
+              {listPosts.map((post) => (
+                <a class="blog-list-item" href={withBase(`/blogs/posts/${post.slug}/`)}>
+                  <span class="blog-list-date">{formatDate(post.pubDate)}</span>
+                  <div class="blog-list-body">
+                    <span class="blog-list-tag">{getCategoryLabel(post.category)}</span>
+                    <strong>{post.title}</strong>
+                    <p>{post.description || "从一个长期问题切出一个足够扎实的剖面。"}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

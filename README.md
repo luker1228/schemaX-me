@@ -59,7 +59,7 @@ npm run build
 
 | 名称 | 链接 |
 |------|------|
-| aritcles-hub（本仓库） | <https://github.com/luker1228/aritcles-hub> |
+| GitHub Repo | <https://github.com/luker1228/aritcles-hub> |
 | GitHub Profile | <https://github.com/luker1228> |
 
 ### 公众号

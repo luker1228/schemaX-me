@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import CategorySeriesIndex from "../../../components/CategorySeriesIndex.astro";
+import { CATEGORIES, getCategoryDescription, getCategoryLabel, getPostsByCategory, type Category } from "../../../lib/content";
+
+export function getStaticPaths() {
+  return CATEGORIES.map((category) => ({
+    params: { category }
+  }));
+}
+
+const { category } = Astro.params as { category: Category };
+const posts = await getPostsByCategory(category);
+const basePath = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<BaseLayout title={`${getCategoryLabel(category)} | Luke's AI Hub`} description={getCategoryDescription(category)}>
+  <CategorySeriesIndex category={category} allPosts={posts} basePath={`${basePath}blogs/`} />
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import CategorySeriesIndex from "../../../../components/CategorySeriesIndex.astro";
+import {
+  CATEGORIES,
+  getAllPosts,
+  getCategoryDescription,
+  getCategoryGroups,
+  getCategoryLabel,
+  getPostGroup,
+  type Category
+} from "../../../../lib/content";
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+
+  return CATEGORIES.flatMap((category) => {
+    const categoryPosts = posts.filter((post) => post.category === category);
+    return getCategoryGroups(categoryPosts, category, `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}blogs/`).map((group) => ({
+      params: { category, group: group.key }
+    }));
+  });
+}
+
+const { category, group } = Astro.params as { category: Category; group: string };
+const allPosts = (await getAllPosts()).filter((post) => post.category === category);
+const posts = allPosts.filter((post) => getPostGroup(post) === group);
+const groupLabel = getCategoryGroups(allPosts, category, `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}blogs/`).find(
+  (item) => item.key === group
+)?.label ?? group;
+const basePath = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}blogs/`;
+---
+
+<BaseLayout title={`${groupLabel} | ${getCategoryLabel(category)} | Luke's AI Hub`} description={getCategoryDescription(category)}>
+  <CategorySeriesIndex category={category} allPosts={allPosts} posts={posts} currentGroup={group} basePath={basePath} />
+</BaseLayout>

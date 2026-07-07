@@ -108,7 +108,7 @@ export function getSeriesSlug(series: string) {
 }
 
 export function getSeriesPath(series: string, hrefMap: Record<string, string> = {}) {
-  return hrefMap[series] ?? `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}series/${getSeriesSlug(series)}/`;
+  return hrefMap[series] ?? `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}blogs/series/${getSeriesSlug(series)}/`;
 }
 
 export async function getSeriesSlugMap() {
@@ -138,7 +138,7 @@ function getGroupLabel(group: string, posts: NormalizedPost[]) {
   return titleCaseSegment(group);
 }
 
-export function getCategoryGroups(posts: NormalizedPost[], category: Category): TopicGroup[] {
+export function getCategoryGroups(posts: NormalizedPost[], category: Category, basePath = import.meta.env.BASE_URL.replace(/\/?$/, "/")): TopicGroup[] {
   const grouped = posts.reduce((map, post) => {
     const group = getPostGroup(post);
     const bucket = map.get(group) ?? [];
@@ -147,13 +147,12 @@ export function getCategoryGroups(posts: NormalizedPost[], category: Category): 
     return map;
   }, new Map<string, NormalizedPost[]>());
 
-  const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
   return Array.from(grouped.entries())
     .map(([key, groupPosts]) => ({
       key,
       label: getGroupLabel(key, groupPosts),
       count: groupPosts.length,
-      href: `${baseUrl}${category}/${key}/`
+      href: `${basePath}${category}/${key}/`
     }))
     .sort((left, right) => {
       if (left.key === "essays") {

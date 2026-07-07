@@ -1,0 +1,86 @@
+---
+import { CATEGORIES, getAllPosts, getCategoryDescription, getCategoryLabel, getPostsBySeries, getSeriesPath, getSeriesSlugMap, type Category } from "../lib/content";
+
+interface Props {
+  activeSection: "posts" | "categories" | "series";
+  activeCategory?: Category;
+  activeSeriesSlug?: string;
+}
+
+const { activeSection, activeCategory = null, activeSeriesSlug = null } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+const posts = await getAllPosts();
+const categoryLinks = CATEGORIES.map((category) => ({
+  category,
+  label: getCategoryLabel(category),
+  description: getCategoryDescription(category),
+  count: posts.filter((post) => post.category === category).length,
+  href: withBase(`/blogs/${category}/`)
+}));
+
+const seriesSlugMap = await getSeriesSlugMap();
+const seriesLinks = await Promise.all(
+  Array.from(seriesSlugMap.entries()).map(async ([slug, seriesName]) => {
+    const seriesPosts = await getPostsBySeries(seriesName);
+    return {
+      slug,
+      label: seriesName,
+      count: seriesPosts.length,
+      href: getSeriesPath(seriesName)
+    };
+  })
+);
+---
+
+<aside class="blog-directory" aria-label="Blog navigation">
+<div class="blog-directory-shell">
+  <span class="blog-directory-kicker">
+    <span aria-hidden="true" class="blog-directory-kicker-dot"></span>
+    Blog Index
+  </span>
+
+  <nav class="blog-directory-tree" aria-label="Blog sections">
+    <a class:list={["blog-directory-root", { "is-active": activeSection === "posts" }]} href={withBase("/blogs/posts/")} aria-current={activeSection === "posts" ? "page" : undefined}>
+      <span class="blog-directory-root-label">Posts</span>
+      <span class="blog-directory-root-meta">{posts.length}</span>
+    </a>
+
+    <details class="blog-directory-group" open={activeSection === "categories"}>
+      <summary class:list={["blog-directory-group-summary", { "is-active": activeSection === "categories" }]}>
+        <span class="blog-directory-group-title">
+          <span aria-hidden="true" class="blog-directory-kicker-dot"></span>
+          Categories
+        </span>
+        <span class="blog-directory-group-meta">{categoryLinks.length}</span>
+      </summary>
+      <nav class="blog-directory-subnav" aria-label="Blog categories">
+        {categoryLinks.map((item) => (
+          <a class:list={["blog-directory-subitem", { "is-active": activeCategory === item.category }]} href={item.href} aria-current={activeCategory === item.category ? "page" : undefined}>
+            <span class="blog-directory-subline"></span>
+            <span class="blog-directory-subitem-label">{item.label}</span>
+          </a>
+        ))}
+      </nav>
+    </details>
+
+    <details class="blog-directory-group" open={activeSection === "series"}>
+      <summary class:list={["blog-directory-group-summary", { "is-active": activeSection === "series" }]}>
+        <span class="blog-directory-group-title">
+          <span aria-hidden="true" class="blog-directory-kicker-dot"></span>
+          Series
+        </span>
+        <span class="blog-directory-group-meta">{seriesLinks.length}</span>
+      </summary>
+      <nav class="blog-directory-subnav" aria-label="Blog series">
+        {seriesLinks.map((item) => (
+          <a class:list={["blog-directory-subitem", { "is-active": activeSeriesSlug === item.slug }]} href={item.href} aria-current={activeSeriesSlug === item.slug ? "page" : undefined}>
+            <span class="blog-directory-subline"></span>
+            <span class="blog-directory-subitem-label">{item.label}</span>
+          </a>
+        ))}
+      </nav>
+    </details>
+  </nav>
+</div>
+</aside>

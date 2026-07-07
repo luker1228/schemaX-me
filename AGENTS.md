@@ -1,6 +1,6 @@
 ---
 ---
-# AGENTS.md — aritcles-hub
+# AGENTS.md — Luke's Blog
 
 ## 这是什么
 
@@ -36,7 +36,7 @@ src/pages/
 关键细节：
 - **Frontmatter 字段**: `title`, `description`, `pubDate`, `updatedDate`, `tags`, `draft`, `slug`, `series`, `cover`
 - 实际分类不从 frontmatter 读；运行时按 `posts` 中文件路径首段推断。当前有效顶层目录为 `ai`、`cs`、`life`、`english`、`modelcraft`
-- 所有内部链接必须使用 `import.meta.env.BASE_URL`，因站点部署在 `/aritcles-hub`
+- 所有内部链接必须使用 `import.meta.env.BASE_URL`，开发环境根路径为 `/`，生产环境保留 GitHub Pages 所需前缀
 - `src/content/drafts/` 是独立 Astro collection，但页面路由不包含它
 - `drafts/` 里的 Markdown 也会被 Astro content loader 读取；如果同一篇文章同时在 `drafts/` 和 `posts/` 存在，`npm run build` 会出现 `Duplicate id` 警告
 

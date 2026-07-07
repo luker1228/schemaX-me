@@ -1,14 +1,25 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import lukeIp from "../../assets/luke_ip.jpg";
-import lukeIpPortrait from "../../assets/luke_ip_34.png";
-import { formatDate, getAllPosts, getPostsBySeries } from "../lib/content";
+import graphqlSvg from "../../assets/icons/graphql.svg";
+import dockerSvg from "../../assets/icons/docker.svg";
+import goSvg from "../../assets/icons/go.svg";
+import javaSvg from "../../assets/icons/java.svg";
+import k8sSvg from "../../assets/icons/k8s-official.svg";
+import mysqlSvg from "../../assets/icons/mysql-official.svg";
+import nodejsSvg from "../../assets/icons/nodejs.svg";
+import pythonSvg from "../../assets/icons/python.svg";
+import { getAllPosts } from "../lib/content";
 
 const posts = await getAllPosts();
-const latestWriting = posts.slice(0, 4);
-const modelcraftPosts = await getPostsBySeries("ModelCraft");
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+const graphqlSvgSrc = typeof graphqlSvg === "string" ? graphqlSvg : graphqlSvg.src;
+const dockerSvgSrc = typeof dockerSvg === "string" ? dockerSvg : dockerSvg.src;
+const goSvgSrc = typeof goSvg === "string" ? goSvg : goSvg.src;
+const nodejsSvgSrc = typeof nodejsSvg === "string" ? nodejsSvg : nodejsSvg.src;
+const pythonSvgSrc = typeof pythonSvg === "string" ? pythonSvg : pythonSvg.src;
+const k8sSvgSrc = typeof k8sSvg === "string" ? k8sSvg : k8sSvg.src;
+const mysqlSvgSrc = typeof mysqlSvg === "string" ? mysqlSvg : mysqlSvg.src;
 
 const featuredWorks = [
   {
@@ -16,7 +27,7 @@ const featuredWorks = [
     label: "Tech Writing",
     title: "技术博客",
     copy: "记录我在后端工程、AI Agent、数据模型、低代码、部署与工程化方面的实践思考。",
-    href: withBase("/archive/"),
+    href: withBase("/blogs/"),
     tone: "yellow",
     meta: `${posts.length} 篇已发布内容`
   },
@@ -31,12 +42,12 @@ const featuredWorks = [
   },
   {
     index: "03",
-    label: "Product Demo",
-    title: "Demo 项目",
-    copy: "展示我独立完成的实验性项目和产品 Demo，用真实可运行的系统验证想法。",
-    href: "#product-demo",
+    label: "Series",
+    title: "系列文章",
+    copy: "进入长期系列入口，统一查看 ModelCraft 与后续系列。",
+    href: withBase("/blogs/series/"),
     tone: "purple",
-    meta: "预留入口"
+    meta: "Series Index"
   }
 ];
 
@@ -47,24 +58,128 @@ const guideSteps = [
   "从组件理解 React",
   "从提示词理解 AI 写前端"
 ];
+
+const techStack = [
+  {
+    label: "Python",
+    copy: "Automation, agents, scripts",
+    src: pythonSvgSrc,
+    accent: "yellow",
+    featured: true
+  },
+  {
+    label: "GraphQL",
+    copy: "Schema-first APIs",
+    src: graphqlSvgSrc,
+    accent: "cyan"
+  },
+  {
+    label: "Docker",
+    copy: "Portable runtime",
+    src: dockerSvgSrc,
+    accent: "purple"
+  },
+  {
+    label: "Go",
+    copy: "Services & tools",
+    src: goSvgSrc,
+    accent: "green"
+  },
+  {
+    label: "Java",
+    copy: "Enterprise services",
+    src: typeof javaSvg === "string" ? javaSvg : javaSvg.src,
+    accent: "red"
+  },
+  {
+    label: "Kubernetes",
+    copy: "Cluster orchestration",
+    src: k8sSvgSrc,
+    accent: "blue"
+  },
+  {
+    label: "MySQL",
+    copy: "Relational storage",
+    src: mysqlSvgSrc,
+    accent: "orange"
+  },
+  {
+    label: "TypeScript",
+    copy: "Frontend systems",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    accent: "yellow"
+  },
+  {
+    label: "Astro",
+    copy: "Static publishing",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
+    accent: "cyan"
+  }
+];
+
+const heroOrbit = [
+  {
+    label: "React",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    className: "orbit-react"
+  },
+  {
+    label: "GraphQL",
+    src: graphqlSvgSrc,
+    className: "orbit-graphql"
+  },
+  {
+    label: "Node.js",
+    src: nodejsSvgSrc,
+    className: "orbit-node"
+  },
+  {
+    label: "Python",
+    src: pythonSvgSrc,
+    className: "orbit-python"
+  },
+  {
+    label: "Docker",
+    src: dockerSvgSrc,
+    className: "orbit-docker"
+  },
+  {
+    label: "Java",
+    src: typeof javaSvg === "string" ? javaSvg : javaSvg.src,
+    className: "orbit-java"
+  },
+  {
+    label: "Go",
+    src: goSvgSrc,
+    className: "orbit-go"
+  }
+];
 ---
 
 <BaseLayout title="Luke Lab" description="Luke 的个人技术实验室，统一承接技术写作、前端教学与可运行 Demo。">
   <section class="shell-wide home-hero lab-hero">
-    <div class="home-hero-grid lab-hero-grid">
-      <div class="home-panel home-hero-copy lab-panel">
+    <div class="home-panel lab-panel lab-panel-hero">
+      <div class="lab-hero-orbit" aria-hidden="true">
+        {heroOrbit.map((item) => (
+          <span class={`orbit-icon ${item.className}`}>
+            <img src={item.src} alt="" width="64" height="64" loading="lazy" decoding="async" />
+          </span>
+        ))}
+      </div>
+
+      <div class="lab-hero-copy">
         <span class="eyebrow">Luke Lab / Personal Tech Lab</span>
-        <h1 class="home-hero-title">Build. Write. Teach. Ship.</h1>
+        <h1 class="home-hero-title">学无止境<br />学以致用</h1>
         <p class="hero-copy hero-copy-en">
-          Luke's personal lab for engineering notes, frontend learning, and runnable product demos.
+          Luke's lab for engineering notes, frontend learning, and runnable product demos.
         </p>
         <p class="hero-copy">
-          这里是 Luke 的个人技术实验室，收集我的技术写作、前端教学和 Demo 项目。它们来自不同方向，但共同指向一件事：把复杂问题讲清楚，把想法做成可以体验的产品。
+          这里是 Luke 的个人技术实验室，收集我的技术写作、前端教学和 Demo 项目。重点不在概念堆叠，而在把复杂问题讲清楚，把想法做成能跑的产品。
         </p>
 
         <div class="hero-actions">
           <a class="site-button site-button-primary" href="#works">查看作品</a>
-          <a class="site-button site-button-secondary" href="#product-demo">进入 Demo</a>
+          <a class="site-button site-button-secondary" href="#stack">技术栈</a>
         </div>
 
         <div class="hero-stats" aria-label="Luke Lab overview">
@@ -73,23 +188,35 @@ const guideSteps = [
             <strong>{posts.length}</strong>
           </div>
           <div class="stat-box stat-box-cyan">
-            <span class="stat-label">Teaching</span>
-            <strong>Planned</strong>
+            <span class="stat-label">Core Stack</span>
+            <strong>{techStack.length}</strong>
           </div>
           <div class="stat-box stat-box-purple">
-            <span class="stat-label">Demo</span>
-            <strong>Planned</strong>
+            <span class="stat-label">Sections</span>
+            <strong>3</strong>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <aside class="home-portrait lab-portrait">
-        <img src={lukeIp.src} alt="Luke 的个人 IP 形象" width={lukeIp.width} height={lukeIp.height} loading="eager" />
-        <div class="portrait-caption">
-          <span class="panel-kicker">Luke</span>
-          <strong>把复杂问题讲清楚，把想法做成产品。</strong>
-        </div>
-      </aside>
+  <section class="shell-wide home-section stack-section" id="stack">
+    <div class="home-section-head stack-section-head">
+      <h2>技术栈</h2>
+      <p>我所熟悉的技术栈</p>
+    </div>
+
+    <div class="lab-stack-panel">
+      <div class="stack-marquee" aria-label="技术栈展示">
+        <ul class="stack-marquee-list">
+          {techStack.map((item) => (
+            <li class={`stack-marquee-item stack-marquee-item-${item.accent}`}>
+              <img src={item.src} alt="" width="28" height="28" loading={item.featured ? "eager" : "lazy"} decoding="async" />
+              <span>{item.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -167,58 +294,4 @@ const guideSteps = [
     </div>
   </section>
 
-  <section class="shell-wide home-section" id="blog">
-    <div class="home-section-head">
-      <h2>Blog</h2>
-      <p>技术博客是 Luke Lab 当前最完整的内容部分。下面这组卡片放最近更新，完整内容继续走 Blog 归档。</p>
-    </div>
-
-    <div class="post-grid">
-      {latestWriting.map((post) => (
-        <a class="post-card" href={withBase(`/posts/${post.slug}/`)}>
-          <p class="category-kicker">{post.category}</p>
-          <h3>{post.title}</h3>
-          <p class="meta">{formatDate(post.pubDate)}</p>
-          <p>{post.description || "从一个长期问题切出一个足够扎实的剖面。"}</p>
-        </a>
-      ))}
-    </div>
-
-    <div class="hero-actions section-actions">
-      <a class="site-button site-button-primary" href={withBase("/archive/")}>进入 Blog</a>
-      <a class="site-button site-button-secondary" href={withBase("/modelcraft/")}>查看 ModelCraft</a>
-    </div>
-  </section>
-
-  <section class="shell-wide home-section" id="about">
-    <div class="about-showcase">
-      <div class="about-visual">
-        <div class="about-visual-shadow" aria-hidden="true"></div>
-        <div class="about-visual-frame">
-          <img src={lukeIpPortrait.src} alt="Luke 的个人 IP 形象" width={lukeIpPortrait.width} height={lukeIpPortrait.height} loading="lazy" />
-        </div>
-      </div>
-
-      <div class="about-copy" id="contact">
-        <span class="featured-tag">About</span>
-        <h2>About Luke</h2>
-        <p>
-          我是 Luke，一个关注 AI Agent、后端工程、前端表达和产品交付的开发者。我喜欢把工程经验整理成文章，也喜欢把复杂知识讲成可学习的路径。
-        </p>
-        <p>
-          Luke Lab 把技术写作、前端教学和 Demo 项目放进同一个作品体系里。它们不要求主题完全一致，但都会指向同一件事：把复杂问题讲清楚，把想法做成可以体验的产品。
-        </p>
-        <p class="about-contact-copy">
-          如果你想先看代码，从 GitHub 进入最快；如果你想看文章分发，也可以走掘金和博客园。
-        </p>
-
-        <div class="contact-actions">
-          <a class="site-button site-button-primary" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="site-button site-button-secondary" href="https://juejin.cn/user/2929553730971224/posts" target="_blank" rel="noreferrer">掘金</a>
-          <a class="site-button site-button-secondary" href="https://www.cnblogs.com/patientcat" target="_blank" rel="noreferrer">博客园</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
 </BaseLayout>

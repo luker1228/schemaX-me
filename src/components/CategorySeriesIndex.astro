@@ -1,18 +1,18 @@
 ---
-import PostCard from "./PostCard.astro";
-import { getCategoryDescription, getCategoryGroups, getCategoryLabel, type Category, type NormalizedPost } from "../lib/content";
+import BlogDirectory from "./BlogDirectory.astro";
+import { formatDate, getCategoryDescription, getCategoryGroups, getCategoryLabel, type Category, type NormalizedPost } from "../lib/content";
 
 interface Props {
   category: Category;
   allPosts: NormalizedPost[];
   posts?: NormalizedPost[];
   currentGroup?: string | null;
+  basePath?: string;
 }
 
-const { category, allPosts, posts = allPosts, currentGroup = null } = Astro.props;
-const topicGroups = getCategoryGroups(allPosts, category);
+const { category, allPosts, posts = allPosts, currentGroup = null, basePath = import.meta.env.BASE_URL.replace(/\/?$/, "/") } = Astro.props;
+const topicGroups = getCategoryGroups(allPosts, category, basePath);
 const currentGroupLabel = currentGroup ? topicGroups.find((group) => group.key === currentGroup)?.label ?? currentGroup : "最近文章";
-const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
 <section class="shell-wide category-series-shell">
@@ -21,46 +21,26 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     <p>{getCategoryDescription(category)}</p>
   </div>
 
-  <div class="home-columns">
-    <aside class="series-sidebar">
-      <div class="series-sidebar-head">
-        <h3>系列</h3>
-        <p>先按长期主线看，再回到最近文章。</p>
-      </div>
+  <div class="blog-layout">
+    <BlogDirectory activeSection="categories" activeCategory={category} />
 
-      <div class="series-sidebar-list">
-        <a
-          class:list={["series-sidebar-item", { "is-active": currentGroup === null }]}
-          href={`${baseUrl}${category}/`}
-          aria-current={currentGroup === null ? "page" : undefined}
-        >
-          <span class="series-sidebar-label">所有</span>
-          <strong>{allPosts.length}</strong>
-        </a>
-
-        {topicGroups.map((group) => (
-          <a
-            class:list={["series-sidebar-item", { "is-active": currentGroup === group.key }]}
-            href={group.href}
-            aria-current={currentGroup === group.key ? "page" : undefined}
-          >
-            <span class="series-sidebar-label">{group.label}</span>
-            <strong>{group.count}</strong>
-          </a>
-        ))}
-      </div>
-    </aside>
-
-    <div class="series-posts-wrap">
-      <div class="series-posts-panel" id="recent-articles">
-        <div class="series-posts-head">
-          <h3>{currentGroupLabel}</h3>
+    <div class="blog-content">
+      <div class="blog-list-shell" id="recent-articles">
+        <div class="home-section-head">
+          <h2>{currentGroupLabel}</h2>
           <p>{currentGroup ? "按时间倒序展示这一组文章。" : "按时间倒序展示当前分类下的全部文章。"}</p>
         </div>
 
-        <div class="post-grid">
+        <div class="blog-list">
           {posts.map((post) => (
-            <PostCard post={post} />
+            <a class="blog-list-item" href={`${basePath}blogs/posts/${post.slug}/`}>
+              <span class="blog-list-date">{formatDate(post.pubDate)}</span>
+              <div class="blog-list-body">
+                <span class="blog-list-tag">{getCategoryLabel(post.category)}</span>
+                <strong>{post.title}</strong>
+                <p>{post.description || "从一个长期问题切出一个足够扎实的剖面。"}</p>
+              </div>
+            </a>
           ))}
         </div>
       </div>

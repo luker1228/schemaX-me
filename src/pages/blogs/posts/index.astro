@@ -1,0 +1,45 @@
+---
+import BlogDirectory from "../../../components/BlogDirectory.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { formatDate, getAllPosts, getCategoryLabel } from "../../../lib/content";
+
+const posts = await getAllPosts();
+---
+
+<BaseLayout title="Posts | Luke's AI Hub" description="Luke Lab 的全部文章列表。">
+  <section class="shell-wide blog-page">
+    <div class="home-section-head blog-page-head">
+      <div>
+        <span class="eyebrow">Luke Lab / Posts</span>
+        <h1 class="blog-page-title">Posts</h1>
+      </div>
+      <p>这里是全部文章总列表。你可以从这里继续按时间回看，或者返回分类页筛选主题。</p>
+    </div>
+
+    <div class="blog-layout">
+      <BlogDirectory activeSection="posts" />
+
+      <div class="blog-content">
+        <div class="blog-list-shell">
+          <div class="home-section-head">
+            <h2>All Articles</h2>
+            <p>{posts.length} 篇文章按发布时间倒序排列。</p>
+          </div>
+
+          <div class="blog-list">
+            {posts.map((post) => (
+              <a class="blog-list-item" href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}blogs/posts/${post.slug}/`}>
+                <span class="blog-list-date">{formatDate(post.pubDate)}</span>
+                <div class="blog-list-body">
+                  <span class="blog-list-tag">{getCategoryLabel(post.category)}</span>
+                  <strong>{post.title}</strong>
+                  <p>{post.description || "从一个长期问题切出一个足够扎实的剖面。"}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

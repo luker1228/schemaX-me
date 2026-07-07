@@ -1,0 +1,64 @@
+---
+import BlogDirectory from "../../../components/BlogDirectory.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getAllPosts, getPostsBySeries, getSeriesPath, getSeriesSlugMap } from "../../../lib/content";
+
+const seriesSlugMap = await getSeriesSlugMap();
+const allPosts = await getAllPosts();
+
+const seriesCards = await Promise.all(
+  Array.from(seriesSlugMap.entries()).map(async ([slug, seriesName]) => {
+    const posts = await getPostsBySeries(seriesName);
+    return {
+      slug,
+      seriesName,
+      count: posts.length,
+      href: getSeriesPath(seriesName),
+      description:
+        seriesName === "ModelCraft"
+          ? "一个围绕数据模型引擎、协议自解释、Schema 约束和 Runtime 设计展开的长期项目。"
+          : "系列文章入口。"
+    };
+  })
+);
+---
+
+<BaseLayout title="Series | Luke's AI Hub" description="Luke Lab 的系列文章总览。">
+  <section class="shell-wide blog-page">
+    <div class="home-section-head blog-page-head">
+      <div>
+        <span class="eyebrow">Luke Lab / Series</span>
+        <h1 class="blog-page-title">Series</h1>
+      </div>
+      <p>这里收纳所有长期系列入口。</p>
+    </div>
+
+    <div class="blog-layout">
+      <BlogDirectory activeSection="series" />
+
+      <div class="blog-content">
+        <div class="blog-list-shell">
+          <div class="home-section-head">
+            <h2>Available Series</h2>
+            <p>{seriesCards.length} 个系列入口，{allPosts.filter((post) => Boolean(post.series)).length} 篇文章归入系列。</p>
+          </div>
+
+          <div class="blog-list">
+            {seriesCards.map((series) => (
+              <a class="blog-list-item" href={series.href}>
+                <span class="blog-list-date">Series</span>
+                <div class="blog-list-body">
+                  <span class="blog-list-tag">Series</span>
+                  <strong>{series.seriesName}</strong>
+                  <p>
+                    {series.description} {series.count} 篇文章。
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
