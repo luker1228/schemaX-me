@@ -15,7 +15,8 @@ const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
 
 // —— DOSSIER: 机密档案 HLM-1 / LUKE ——
 const portraitSrc = withBase("images/ip/portrait.png");
-const blueprintSrc = withBase("images/ip/blueprint.png");
+const portraitWebp = withBase("images/ip/portrait.webp");
+const blueprintWebp = withBase("images/ip/blueprint.webp");
 
 const capabilityMatrix = [
   { name: "PYTHON", value: 82 },
@@ -190,7 +191,10 @@ const techStack = [
           <div class="grid">
             <div>
               <div class="dossier-photo">
-                <img src={portraitSrc} alt="LUKE 主体成像" width="190" height="190" loading="eager" decoding="async" />
+                <picture>
+                  <source type="image/webp" srcset={portraitWebp} />
+                  <img src={portraitSrc} alt="LUKE 主体成像" width="190" height="190" loading="eager" decoding="async" />
+                </picture>
                 <span class="scanbar"></span>
                 <span class="reg tl"></span>
                 <span class="reg tr"></span>
@@ -227,7 +231,7 @@ const techStack = [
           <span class="dossier-corner tr"></span>
           <span class="dossier-corner bl"></span>
           <span class="dossier-corner br"></span>
-          <div class="blueprint" style={`background-image:url('${blueprintSrc}')`}></div>
+          <div class="blueprint" style={`background-image:url('${blueprintWebp}')`}></div>
 
           <div class="dossier-panel-head">
             <h2>能力矩阵</h2>

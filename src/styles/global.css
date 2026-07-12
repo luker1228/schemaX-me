@@ -3084,3 +3084,34 @@ main {
   height: 1.1rem;
   object-fit: contain;
 }
+
+/* ---------- 404 收容失效 ---------- */
+.dossier-photo.fit-wide {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+.dossier-404-right {
+  align-self: center;
+}
+.dossier-404-num {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 13vw, 8.5rem);
+  line-height: 0.82;
+  letter-spacing: 0.02em;
+  color: var(--classified);
+  text-shadow: 0 0 18px rgba(255, 77, 77, 0.35);
+}
+.dossier-404-title {
+  margin: 0.3rem 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.dossier-404-copy {
+  margin: 0 0 1.2rem;
+  max-width: 30rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+}

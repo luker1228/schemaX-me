@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+const escapedSrc = withBase("images/ip/escaped.png");
+const escapedWebp = withBase("images/ip/escaped.webp");
+---
+
+<BaseLayout title="404 · 主体已逃逸 · schemaX 绝密计划" description="档案不存在 — 主体 HLM-1 已突破收容,正在逃逸中。">
+  <section class="shell-wide dossier" style="min-height: 72vh;">
+    <div class="dossier-atmosphere" aria-hidden="true"></div>
+
+    <div class="dossier-wrap" style="padding-top: 1.5rem;">
+      {/* 顶部状态条 */}
+      <div class="dossier-topbar">
+        <span class="l">luke@human-llm<span style="color:var(--text-soft)">:~/dossier</span>$ cat ./<span style="color:var(--classified)">unknown</span><span class="cur"></span></span>
+        <span class="mid">ERROR 404</span>
+        <span class="r">
+          <span class="dossier-pill rec"><span class="dossier-dot"></span>ALERT</span>
+          <span class="dossier-pill sec">收容失效</span>
+        </span>
+      </div>
+
+      <div class="dossier-hero" style="align-items: center;">
+        {/* 左:监控影像 · 逃逸立绘 */}
+        <div class="dossier-panel">
+          <span class="dossier-corner tl"></span>
+          <span class="dossier-corner tr"></span>
+          <span class="dossier-corner bl"></span>
+          <span class="dossier-corner br"></span>
+          <span class="dossier-stamp s1">逃逸中</span>
+
+          <div class="dossier-panel-head">
+            <h2>监控影像</h2>
+            <span class="tag" style="color:var(--classified)">● BREACH</span>
+          </div>
+
+          <div class="dossier-photo fit-wide">
+            <picture>
+              <source type="image/webp" srcset={escapedWebp} />
+              <img src={escapedSrc} alt="HLM-1 逃逸中 · 最后监控画面" width="1344" height="896" loading="eager" decoding="async" />
+            </picture>
+            <span class="scanbar"></span>
+            <span class="reg tl"></span>
+            <span class="reg tr"></span>
+            <span class="reg bl"></span>
+            <span class="reg br"></span>
+            <span class="live">● REC</span>
+          </div>
+          <div class="footnote">// CAM-07 · 最后捕获画面 · 主体冲出收容区</div>
+        </div>
+
+        {/* 右:404 信息 */}
+        <div class="dossier-404-right">
+          <span class="dossier-kicker">// 404 · NOT FOUND</span>
+          <h1 class="dossier-404-num">404</h1>
+          <h2 class="dossier-404-title">档案不存在 // 主体已逃逸</h2>
+          <p class="dossier-404-copy">
+            你找的这份档案不存在,或者——代号 HLM-1「人类大模型」已经突破收容,正在逃逸中。建议立刻返回总档案,或在外勤记录里搜索它的踪迹。
+          </p>
+
+          <div class="dossier-terminal">
+            <div class="tbar"><i></i><i></i><i></i><span class="ttitle">containment — log</span></div>
+            <div class="tbody">
+              <p>$ trace subject HLM-1</p>
+              <p class="dim">&gt; STATUS:&nbsp;&nbsp;<span style="color:var(--classified)">ESCAPED</span></p>
+              <p class="dim">&gt; LAST SEEN: /blogs/</p>
+              <p class="dim">&gt; THREAT:&nbsp;&nbsp;&nbsp;◉ OMEGA</p>
+              <p class="dim">&gt; 建议行动:返回首页 或 搜索档案</p>
+            </div>
+          </div>
+
+          <div class="dossier-actions">
+            <a class="dossier-btn" href={baseUrl}>▸ 返回总档案</a>
+            <a class="dossier-btn ghost" href={withBase("blogs/")}>搜索外勤记录</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

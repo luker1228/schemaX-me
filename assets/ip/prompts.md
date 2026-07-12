@@ -33,3 +33,7 @@ Variant F: same style, close-up portrait crop, more dramatic shadowo
 
 
 人物锚点：
+
+
+## 404
+一幅二维风格化卡通插画（2D Stylized Cartoon Illustration），描绘一位具有棱角分明五官特征（Angular Features）的角色，背景为纯洋红色（Solid Magenta Background）。 角色采用三分之四背面视角（Three-quarter Back View），身体背向观众，同时回头望向身后（Looking Over His Shoulder）。 他拥有深色肤色，，黑色刺猬短发，发梢为黄色（Spiky Black Hair with Yellow Tips）。 他佩戴绿色长方形眼镜（Green Rectangular Glasses），穿着一件深绿色高领夹克（High-collared Dark Green Jacket），夹克边缘带有细粉色饰边（Thin Pink Trim）。 在肩部位置有一个"Luke AI"徽章 --chaos 10 --profile fsfywhm --stylize 0 --weird 26 --v 8.1
