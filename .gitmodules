@@ -1,0 +1,3 @@
+[submodule "external/HowToFrontend"]
+	path = external/HowToFrontend
+	url = https://github.com/luker1228/HowToFrontend.git
