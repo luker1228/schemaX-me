@@ -1,8 +1,8 @@
 ---
-import { ComponentsPage } from "../../howto/components/components-page.jsx";
-import "../../howto/styles.css";
+import { LessonReactApp } from "../../../howto/components/lesson-react-page.jsx";
+import "../../../howto/styles.css";
 
-const title = "组件 · 前端战术手册";
+const title = "React · 前端战术手册";
 ---
 
 <!doctype html>
@@ -13,6 +13,6 @@ const title = "组件 · 前端战术手册";
     <title>{title}</title>
   </head>
   <body>
-    <ComponentsPage client:only="react" />
+    <LessonReactApp client:only="react" />
   </body>
 </html>

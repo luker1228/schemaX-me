@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-// HowToFrontend is mounted under the /howto/ Astro routes. Flat inputs like
-// "lesson-html.html" or "decor/heart.svg" are mapped onto that prefix so they
-// resolve against the current base (/aritcles-hub in prod, / in dev).
-const HOWTO = "howto/";
+// HowToFrontend is mounted under the /howto/frontend/ Astro routes (the
+// /howto/ route is the multi-manual hub). Flat inputs like "lesson-html.html"
+// or "decor/heart.svg" are mapped onto that prefix so they resolve against the
+// current base (/aritcles-hub in prod, / in dev).
+const HOWTO = "howto/frontend/";
 export function withBase(path = "") {
   if (!path || path.startsWith("#") || /^[a-z]+:/i.test(path)) return path;
   const base = import.meta.env.BASE_URL || "/";
