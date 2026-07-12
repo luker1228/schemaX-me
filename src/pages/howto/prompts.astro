@@ -1,0 +1,18 @@
+---
+import { PromptsPage } from "../../howto/components/prompts-page.jsx";
+import "../../howto/styles.css";
+
+const title = "提示词 · 前端战术手册";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <PromptsPage client:only="react" />
+  </body>
+</html>

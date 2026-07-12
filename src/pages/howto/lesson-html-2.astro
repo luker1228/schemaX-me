@@ -1,0 +1,18 @@
+---
+import { LessonHtml2Page } from "../../howto/components/lesson-html-2-page.jsx";
+import "../../howto/styles.css";
+
+const title = "HTML 进阶 · 前端战术手册";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <LessonHtml2Page client:only="react" />
+  </body>
+</html>
