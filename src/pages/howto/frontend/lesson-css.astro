@@ -1,6 +1,7 @@
 ---
 import { LessonCssPage } from "../../../howto/components/lesson-css-page.jsx";
 import "../../../howto/styles.css";
+import DossierBridge from "./_DossierBridge.astro";
 
 const title = "CSS 基础 · 前端战术手册";
 ---
@@ -13,6 +14,8 @@ const title = "CSS 基础 · 前端战术手册";
     <title>{title}</title>
   </head>
   <body>
+    <DossierBridge crumb="lesson-css" />
+
     <LessonCssPage client:only="react" />
   </body>
 </html>

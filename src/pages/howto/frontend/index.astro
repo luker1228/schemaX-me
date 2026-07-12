@@ -1,6 +1,7 @@
 ---
 import { IndexPage } from "../../../howto/components/index-page.jsx";
 import "../../../howto/styles.css";
+import DossierBridge from "./_DossierBridge.astro";
 
 const title = "后端同学的前端战术手册";
 ---
@@ -13,6 +14,8 @@ const title = "后端同学的前端战术手册";
     <title>{title}</title>
   </head>
   <body>
+    <DossierBridge crumb="" />
+
     <IndexPage client:only="react" />
   </body>
 </html>

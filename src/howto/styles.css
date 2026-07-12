@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 :root {
-  --ground-yellow: #FFDC58;
+  --ground-yellow: #ffd43b;
   --yellow-hover: #FFD12E;
   --nav-dark: #1E1E1B;
   --paper: #FFFFFF;
@@ -10,7 +10,7 @@
   --ink: #000000;
   --muted-text: #6B6355;
   --soft-green: #00C870;
-  --soft-yellow: #FFDC58;
+  --soft-yellow: #ffd43b;
   --pink-note: #D030A8;
   --accent-blue: #00A8F8;
   --accent-green: #00C870;
@@ -107,8 +107,9 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--nav-dark);
+  color: #f6ead6;
+  border-bottom: 2px solid #000;
 }
 
 .site-header-inner,
@@ -1777,7 +1778,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 0;
   background: var(--surface);
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
   display: grid;
   gap: 4px;
 }
@@ -1846,7 +1847,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 0;
   background: var(--surface);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
   display: grid;
   gap: 10px;
 }
@@ -2674,7 +2675,7 @@ textarea {
     linear-gradient(180deg, color-mix(in oklab, var(--surface) 78%, white), color-mix(in oklab, var(--surface) 68%, white)),
     var(--surface);
   overflow: auto;
-  box-shadow: 0 10px 24px color-mix(in oklab, var(--fg) 7%, transparent);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
 }
 
 .guided-css-muted,

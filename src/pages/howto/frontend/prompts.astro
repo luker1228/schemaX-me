@@ -1,6 +1,7 @@
 ---
 import { PromptsPage } from "../../../howto/components/prompts-page.jsx";
 import "../../../howto/styles.css";
+import DossierBridge from "./_DossierBridge.astro";
 
 const title = "提示词 · 前端战术手册";
 ---
@@ -13,6 +14,8 @@ const title = "提示词 · 前端战术手册";
     <title>{title}</title>
   </head>
   <body>
+    <DossierBridge crumb="prompts" />
+
     <PromptsPage client:only="react" />
   </body>
 </html>

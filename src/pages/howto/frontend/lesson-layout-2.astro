@@ -1,6 +1,7 @@
 ---
 import { LessonLayout2Page } from "../../../howto/components/lesson-layout-2-page.jsx";
 import "../../../howto/styles.css";
+import DossierBridge from "./_DossierBridge.astro";
 
 const title = "布局进阶 · 前端战术手册";
 ---
@@ -13,6 +14,8 @@ const title = "布局进阶 · 前端战术手册";
     <title>{title}</title>
   </head>
   <body>
+    <DossierBridge crumb="lesson-layout-2" />
+
     <LessonLayout2Page client:only="react" />
   </body>
 </html>
