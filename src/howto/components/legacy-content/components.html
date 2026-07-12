@@ -1,0 +1,86 @@
+<header class="site-header" data-od-id="components-header">
+    <div class="container site-header-inner">
+      <a class="brand-mark" href="/index.html" data-od-id="components-brand-link"><span>新前端中心</span><span class="brand-pill">手册</span></a>
+      <nav class="nav-links" data-od-id="components-nav">
+        <a href="/lesson-html.html" data-perspectives='[{"text":"Markdown 对比","href":"/lesson-html.html"},{"text":"Figma 对比","href":"/lesson-html-2.html"}]'>HTML</a>
+        <a href="/lesson-css.html" data-perspectives='[{"text":"CSS 基础","href":"/lesson-css.html"},{"text":"Figma 对比","href":"/lesson-css-2.html"}]'>CSS</a>
+        <a href="/lesson-js.html">JavaScript</a>
+        <a href="/components.html" data-perspectives='[{"text":"先认词","href":"/lesson-react.html"},{"text":"组件词典","href":"/components.html","current":true}]'>组件</a>
+      </nav>
+      <div class="step-nav">
+        <a class="step-nav-btn" href="/lesson-js.html" title="JavaScript">← 上一节</a>
+        <a class="step-nav-btn is-next" href="/prompts.html" title="提示词库">下一节 →</a>
+      </div>
+    </div>
+  </header>
+  <main class="container" data-od-id="components-main">
+    <section class="page-hero" data-od-id="components-hero">
+      <div class="breadcrumb">手册 / 组件 / 前端组件词汇表</div>
+      <h1 class="page-title" data-od-id="components-title">先认识组件，再学会和 AI 说前端语言。</h1>
+      <p class="lede">这页不是组件文档大全，而是给后端同学的组件词汇表。每个卡片都回答五件事：它是什么、解决什么问题、后端怎么理解、常见场景、怎样描述给 AI。</p>
+    </section>
+    <section class="section" data-od-id="components-grid-section">
+      <div class="wiki-grid">
+        <article class="wiki-card" data-od-id="component-card">
+          <span class="micro-label">Card</span>
+          <h3>Card 卡片</h3>
+          <p>像接口返回的一条资源摘要，用来展示对象的核心信息。</p>
+          <div class="prompt-block">请生成一个用户信息卡片，包含头像、用户名、角色、状态标签和操作按钮。卡片需要有边框、圆角和 hover 效果。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-button">
+          <span class="micro-label">Button</span>
+          <h3>Button 按钮</h3>
+          <p>像一个可触发动作的 RPC 入口，要区分主按钮、次按钮、危险按钮。</p>
+          <div class="prompt-block">请生成主按钮和次按钮两种样式，并包含默认、hover、disabled 三个状态。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-form">
+          <span class="micro-label">Form</span>
+          <h3>Form 表单</h3>
+          <p>像收集请求参数的结构体，负责承载输入、校验和提交。</p>
+          <div class="prompt-block">请生成一个用户创建表单，包含名称、角色、邮箱和提交按钮，并在校验失败时显示错误信息。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-input">
+          <span class="micro-label">Input</span>
+          <h3>Input 输入框</h3>
+          <p>像可编辑字段，常常伴随 placeholder、错误态、帮助文本和焦点态。</p>
+          <div class="prompt-block">请生成一个带 label、placeholder、错误提示和帮助文案的输入框组件。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-modal">
+          <span class="micro-label">Modal</span>
+          <h3>Modal 弹窗</h3>
+          <p>像临时阻断当前流程的确认层，适合删除确认、审批确认、关键设置。</p>
+          <div class="prompt-block">点击删除按钮后弹出一个确认 Modal，包含标题、说明文案、取消按钮和确认按钮。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-drawer">
+          <span class="micro-label">Drawer</span>
+          <h3>Drawer 抽屉</h3>
+          <p>像不跳转页面就展开详情接口，适合查看用户详情、配置表单、日志。</p>
+          <div class="prompt-block">点击表格中的“查看详情”按钮后，从右侧打开一个 Drawer，展示当前用户的详细信息。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-navbar">
+          <span class="micro-label">Navbar</span>
+          <h3>Navbar 导航栏</h3>
+          <p>像系统的全局入口，类似 API 网关暴露的一组顶层路径。</p>
+          <div class="prompt-block">请生成一个顶部导航栏，左侧是 Logo，中间是菜单，右侧是搜索框和登录按钮。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-sidebar">
+          <span class="micro-label">Sidebar</span>
+          <h3>Sidebar 侧边栏</h3>
+          <p>像后台应用的路由索引，帮助用户在不同模块之间切换。</p>
+          <div class="prompt-block">请生成一个管理后台左侧 Sidebar，包含分组标题、当前高亮态和折叠态。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-table">
+          <span class="micro-label">Table</span>
+          <h3>Table 表格</h3>
+          <p>像批量资源视图，适合用户、订单、日志、任务等列表数据。</p>
+          <div class="prompt-block">请生成一个用户列表 Table，包含头像、姓名、角色、状态、创建时间和操作列。</div>
+        </article>
+        <article class="wiki-card" data-od-id="component-loading">
+          <span class="micro-label">States</span>
+          <h3>Loading / Empty State</h3>
+          <p>它们不是装饰，而是页面状态机的一部分。AI 提示词必须明确这些状态。</p>
+          <div class="prompt-block">表格加载时显示 Loading，空数据时显示 Empty State，错误时显示错误提示条。</div>
+        </article>
+      </div>
+    </section>
+  </main>

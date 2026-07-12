@@ -1,0 +1,222 @@
+<header class="site-header" data-od-id="layout-header">
+    <div class="lesson-shell site-header-inner">
+      <a class="brand-mark" href="/index.html" data-od-id="layout-brand-link"><span>新前端中心</span><span class="brand-pill">手册</span></a>
+      <nav class="nav-links" data-od-id="layout-nav">
+        <a href="/lesson-html.html" data-perspectives='[{"text":"Markdown 对比","href":"/lesson-html.html"},{"text":"Figma 对比","href":"/lesson-html-2.html"}]'>HTML</a>
+        <a href="/lesson-css.html" data-perspectives='[{"text":"CSS 基础","href":"/lesson-css.html"},{"text":"Figma 对比","href":"/lesson-css-2.html"}]'>CSS</a>
+        <a href="/lesson-js.html">JavaScript</a>
+        <a href="/lesson-react.html">组件</a>
+        <a href="/lesson-layout.html" data-perspectives='[{"text":"布局第一课：骨架","href":"/lesson-layout.html","current":true},{"text":"布局第二课：排列","href":"/lesson-layout-2.html"}]'>布局</a>
+      </nav>
+      <div class="step-nav">
+        <a class="step-nav-btn" href="/lesson-react.html" title="组件">← 上一节</a>
+        <a class="step-nav-btn is-next" href="/lesson-layout-2.html" title="布局第二课">下一节 →</a>
+      </div>
+    </div>
+  </header>
+  <header class="html2-hero html-reading-hero" data-od-id="layout-hero">
+    <div class="lesson-shell">
+      <div class="html2-hero-meta">
+        <span class="html2-pill html2-pill-fill">结构认知 · STRUCTURE</span>
+        <span class="html2-pill">布局第一课 · 页面骨架</span>
+        <span class="html2-label">阅读时长 ≈ 8 分钟</span>
+      </div>
+      <div class="html2-hero-grid">
+        <div class="html2-hero-copy">
+          <h1 class="page-title" data-od-id="layout-title">
+            <span class="html2-title-line">先看页面骨架，</span>
+            <span class="html2-title-line">再看怎么 <span class="html2-title-em">排</span></span>
+          </h1>
+        </div>
+        <div class="html2-hero-side">
+          <div class="html2-hero-row"><span class="html2-hero-k">本页讲什么</span><span class="html2-hero-v">页面骨架怎么拆</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">内容形式</span><span class="html2-hero-v">3 个真实组件示例</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">适合谁</span><span class="html2-hero-v">刚学前端的人</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">目标</span><span class="html2-hero-v">会说清楚页面分区</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="html-reading-page" data-od-id="layout-main">
+    <aside class="lesson-aside lesson-floating-toc" data-od-id="layout-floating-toc">
+      <button type="button" class="toc-toggle" data-toc-toggle aria-expanded="true">目录</button>
+      <div class="toc-body" data-toc-body>
+      <span class="micro-label">章节目录</span>
+      <ul class="toc-list">
+        <li>
+          <a href="#layout-idea">核心</a>
+        </li>
+        <li>
+          <a href="#layout-recipe-topbar">传统门户 / 官网</a>
+        </li>
+        <li>
+          <a href="#layout-recipe-dashboard">后台管理系统</a>
+        </li>
+        <li>
+          <a href="#layout-recipe-marketing">博客 / 文章详情</a>
+        </li>
+        <li>
+          <a href="#layout-faq">常见问题</a>
+        </li>
+      </ul>
+      </div>
+    </aside>
+    <section class="html2-body-section" id="layout-idea" data-od-id="layout-idea">
+      <div class="wrap">
+        <div class="section-head">
+        <div>
+          <div class="section-num"><strong>01</strong> / 核心</div>
+          <h2 class="section-title">先记住一句话<br><span class="html2-title-em">布局决定元素彼此的位置关系</span></h2>
+        </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">核心</span>
+          <p>字号、颜色、边框，是在管“长什么样”；这一课先看页面怎么拆成几个区域，谁放在上面，谁在左边，谁占主体。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="html2-body-section" id="layout-recipe-topbar" data-od-id="layout-recipes">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>02</strong> / 传统门户 / 官网</div>
+            <h2 class="section-title">传统门户 / 官网骨架<br><span class="html2-title-em">先把入口、主视觉和内容区分开</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">重点</span>
+          <p>典型结构是 <code>header + nav + banner + main + footer</code>。适合首页、活动页、产品官网，重点是先把入口、主视觉和内容区分开。</p>
+        </div>
+        <article class="layout-recipe-card layout-recipe-card-spacious">
+          <div class="layout-recipe-head">
+            <span class="micro-label">Pattern 01</span>
+            <h3>传统门户 / 官网布局</h3>
+          </div>
+          <div class="layout-react-preview" data-layout-recipe-preview="portal"></div>
+          <div class="layout-html-sample">
+            <span class="layout-prompt-label">HTML 大概长这样</span>
+            <pre><code>&lt;header&gt;
+  &lt;nav&gt;Logo / 导航 / 登录&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class="banner"&gt;主视觉&lt;/section&gt;
+  &lt;section class="cards"&gt;
+    &lt;article&gt;功能卡片 1&lt;/article&gt;
+    &lt;article&gt;功能卡片 2&lt;/article&gt;
+    &lt;article&gt;功能卡片 3&lt;/article&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;版权 / 联系方式&lt;/footer&gt;</code></pre>
+          </div>
+          <div class="layout-prompt-block">
+            <span class="layout-prompt-label">可以这样描述</span>
+            <p>做一个门户首页：顶部是 header，里面放 Logo 和导航；中间是大 banner 和几块功能卡片；下方是 footer。桌面端多列，移动端收成单列。</p>
+          </div>
+          <p class="layout-recipe-tip"><strong>关键词：</strong><code>header</code>、<code>nav</code>、<code>banner</code>、<code>main</code>、<code>footer</code></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="html2-body-section" id="layout-recipe-dashboard" data-od-id="layout-recipes-dashboard">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>03</strong> / 后台管理系统</div>
+            <h2 class="section-title">后台管理系统骨架<br><span class="html2-title-em">左侧导航，右侧主体</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">重点</span>
+          <p>结构上通常是 <code>header + aside + main</code>，其中 <code>aside</code> 贴最左并铺满高度，<code>main</code> 吃掉剩余空间。</p>
+        </div>
+        <article class="layout-recipe-card layout-recipe-card-spacious">
+          <div class="layout-recipe-head">
+            <span class="micro-label">Pattern 02</span>
+            <h3>后台管理系统布局</h3>
+          </div>
+          <div class="layout-react-preview" data-layout-recipe-preview="dashboard"></div>
+          <div class="layout-html-sample">
+            <span class="layout-prompt-label">HTML 大概长这样</span>
+            <pre><code>&lt;header&gt;系统头部&lt;/header&gt;
+&lt;div class="layout-shell"&gt;
+  &lt;aside&gt;左侧导航&lt;/aside&gt;
+  &lt;main&gt;
+    &lt;section&gt;筛选栏&lt;/section&gt;
+    &lt;section&gt;表格 / 图表 / 表单&lt;/section&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <div class="layout-prompt-block">
+            <span class="layout-prompt-label">可以这样描述</span>
+            <p>做一个后台管理系统：顶部是 header；左侧是固定宽度的 aside 导航，贴最左并铺满整条高度；右侧 main 作为主体区域，展示表格、图表和表单；移动端把侧边栏收起。</p>
+          </div>
+          <p class="layout-recipe-tip"><strong>关键词：</strong><code>header</code>、<code>aside</code>、<code>main</code>、<code>固定宽度</code>、<code>占据主体</code></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="html2-body-section" id="layout-recipe-marketing" data-od-id="layout-recipes-marketing">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>04</strong> / 博客 / 文章详情</div>
+            <h2 class="section-title">博客 / 文章详情页骨架<br><span class="html2-title-em">正文在中间，侧栏在旁边</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">重点</span>
+          <p>常见结构是 <code>header + article + aside + footer</code>。主内容是文章，右侧是作者信息、目录和相关文章。</p>
+        </div>
+        <article class="layout-recipe-card">
+          <div class="layout-recipe-head">
+            <span class="micro-label">Pattern 03</span>
+            <h3>博客 / 文章详情页布局</h3>
+          </div>
+          <div class="layout-react-preview" data-layout-recipe-preview="blog"></div>
+          <div class="layout-html-sample">
+            <span class="layout-prompt-label">HTML 大概长这样</span>
+            <pre><code>&lt;header&gt;博客导航 / 搜索&lt;/header&gt;
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h1&gt;文章标题&lt;/h1&gt;
+    &lt;p&gt;正文内容...&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;aside&gt;
+    &lt;section&gt;作者信息&lt;/section&gt;
+    &lt;section&gt;目录&lt;/section&gt;
+    &lt;section&gt;相关文章&lt;/section&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;版权 / 备案&lt;/footer&gt;</code></pre>
+          </div>
+          <div class="layout-prompt-block">
+            <span class="layout-prompt-label">可以这样描述</span>
+            <p>做一个博客详情页：顶部是 header；中间左边是文章正文 article，右边是 aside，放作者信息、目录和相关文章；底部是 footer；移动端把右侧栏折到下方。</p>
+          </div>
+          <p class="layout-recipe-tip"><strong>关键词：</strong><code>article</code>、<code>aside</code>、<code>目录</code>、<code>footer</code>、<code>单列</code></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="html2-body-section" id="layout-faq" data-od-id="layout-faq">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>05</strong> / 常见问题</div>
+            <h2 class="section-title">先把最容易混淆的一件事说清楚：<br><span class="html2-title-em">左右位置主要由 CSS 决定。</span></h2>
+          </div>
+        </div>
+        <div class="faq-grid">
+          <details class="faq-item" open data-od-id="layout-faq-aside-position">
+            <summary>为什么写了 aside，有时在左边，有时在右边？</summary>
+            <p><code>aside</code> 只是语义标签，本身不决定左右。真正决定它在哪一侧的是父容器的 <code>CSS</code>：如果用了 <code>flex</code>，就看 <code>flex-direction</code>、<code>order</code>、以及主轴和交叉轴怎么定义；如果用了 <code>grid</code>，就看列怎么分配。HTML 负责表达“这里是 aside”，CSS 负责决定它是左边、右边，还是在下方。</p>
+          </details>
+          <details class="faq-item" data-od-id="layout-faq-aside-mobile">
+            <summary>那移动端为什么经常又会变成上下排列？</summary>
+            <p>因为在窄屏下，CSS 往往会把原来的两列布局改成单列，最常见的做法是把 <code>flex-direction</code> 从横向改成纵向，或者直接重设 <code>grid-template-columns</code>。这样正文优先展示，<code>aside</code> 再往下堆叠。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>

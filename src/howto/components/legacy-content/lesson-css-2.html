@@ -1,0 +1,136 @@
+<header class="site-header" data-od-id="css2-header">
+    <div class="lesson-shell site-header-inner">
+      <a class="brand-mark" href="/index.html" data-od-id="css2-brand-link"><span>新前端中心</span><span class="brand-pill">手册</span></a>
+      <nav class="nav-links" data-od-id="css2-nav">
+        <a href="/lesson-html.html" data-perspectives='[{"text":"Markdown 对比","href":"/lesson-html.html"},{"text":"Figma 对比","href":"/lesson-html-2.html"}]'>HTML</a>
+        <a href="/lesson-css.html" data-perspectives='[{"text":"CSS 基础","href":"/lesson-css.html"},{"text":"Figma 对比","href":"/lesson-css-2.html","current":true}]'>CSS</a>
+        <a href="/lesson-js.html">JavaScript</a>
+        <a href="/lesson-react.html">组件</a>
+        <a href="/lesson-layout.html">布局</a>
+      </nav>
+      <div class="step-nav">
+        <a class="step-nav-btn" href="/lesson-css.html" title="CSS · 基础">← 上一节</a>
+        <a class="step-nav-btn is-next" href="/lesson-js.html" title="JavaScript">下一节 →</a>
+      </div>
+    </div>
+  </header>
+  <header class="html2-hero" data-od-id="css2-page-hero">
+    <div class="lesson-shell">
+      <div class="html2-hero-meta">
+        <span class="html2-pill html2-pill-fill">实验互动 · INTERACTIVE</span>
+        <span class="html2-pill">CSS 第二课 · Figma 对照</span>
+        <span class="html2-label">阅读时长 ≈ 10 分钟</span>
+      </div>
+      <div class="html2-hero-grid">
+        <div class="html2-hero-copy">
+          <h1 class="page-title" data-od-id="css2-page-title">
+            <span class="html2-title-line">Figma 属性面板</span>
+            <span class="html2-title-line">就是 CSS <span class="html2-title-em">属性清单</span></span>
+          </h1>
+        </div>
+        <div class="html2-hero-side">
+          <div class="html2-hero-row"><span class="html2-hero-k">本页讲什么</span><span class="html2-hero-v">属性面板 = CSS</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">内容形式</span><span class="html2-hero-v">字段 / 代码对照高亮</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">适合谁</span><span class="html2-hero-v">设计师 · 0 代码也能懂</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">目标</span><span class="html2-hero-v">看到字段就会写属性</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main data-od-id="css2-main">
+    <section class="html2-body-section" id="css2-why" data-od-id="css2-why-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>01</strong> / 核心</div>
+            <h2 class="section-title">先记住这一句<br><span class="html2-title-em">属性面板 = CSS 清单</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">核心</span>
+          <p>选中一个 Figma 图层，右侧那块属性面板，就是它“长什么样”的全部信息。CSS 把同一块信息写成了文本：一行一个属性，冒号后面跟值。字段名几乎一模一样。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="html2-body-section" id="css-pair" data-od-id="css2-pair-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>02</strong> / 对照</div>
+            <h2 class="section-title">一个按钮，两种描述<br><span class="html2-title-em">Figma ↔ CSS</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">方式</span>
+          <p>同一个按钮，左边是 Figma 属性面板，右边是浏览器看到的 CSS。鼠标移到任意一行，两边会同时高亮，它们是同一个东西。</p>
+        </div>
+
+          <div class="layer-card" id="cssPair">
+      <div class="props-mock">
+        <div class="pm-section">
+          <div class="pm-section-title">Layout · 布局</div>
+          <div class="pm-row" data-key="padding">
+            <span class="pm-prefix">P</span>
+            <input class="pm-input" value="20" readonly="">
+            <span class="pm-hint">内边距</span>
+          </div>
+          <div class="pm-row" data-key="radius">
+            <span class="pm-prefix">⌒</span>
+            <input class="pm-input" value="8" readonly="">
+            <span class="pm-hint">圆角</span>
+          </div>
+        </div>
+
+        <div class="pm-section">
+          <div class="pm-section-title">Fill · 填充</div>
+          <div class="pm-row" data-key="bg">
+            <span class="pm-color-chip" style="background:#EF7627"></span>
+            <span class="pm-color-input">FF4D2E</span>
+            <span class="pm-hint">100%</span>
+          </div>
+        </div>
+
+        <div class="pm-section">
+          <div class="pm-section-title">Text · 文字</div>
+          <div class="pm-row" data-key="font-size">
+            <span class="pm-prefix">Aa</span>
+            <input class="pm-input" value="14" readonly="">
+            <span class="pm-hint">字号</span>
+          </div>
+          <div class="pm-row" data-key="color">
+            <span class="pm-color-chip" style="background:#ffffff;border:1px solid #555"></span>
+            <span class="pm-color-input">FFFFFF</span>
+            <span class="pm-hint">字色</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pair-divider">=</div>
+
+      <div class="code-mock">
+        <div class="code-head"><span class="dot"></span><span class="code-fname">style.css</span></div>
+<pre><span class="csel">.button</span> {
+<span class="cline is-flash" data-key="bg">  <span class="ckey">background</span>: <span class="cstr">#EF7627</span>;</span>
+<span class="cline" data-key="color">  <span class="ckey">color</span>: <span class="cstr">#ffffff</span>;</span>
+<span class="cline is-flash" data-key="padding">  <span class="ckey">padding</span>: <span class="cnum">20</span><span class="cstr">px</span>;</span>
+<span class="cline is-flash" data-key="radius">  <span class="ckey">border-radius</span>: <span class="cnum">8</span><span class="cstr">px</span>;</span>
+<span class="cline" data-key="font-size">  <span class="ckey">font-size</span>: <span class="cnum">14</span><span class="cstr">px</span>;</span>
+}</pre>
+      </div>
+
+      <div class="pair-caption pair-caption-2col">
+        <div>
+          <div class="cap-k">Figma 视角</div>
+          选中一个图层，<strong>右侧属性面板</strong>就是它"长什么样"的全部信息。
+        </div>
+        <div>
+          <div class="cap-k">代码视角</div>
+          一组 <code>属性: 值</code>。属性名几乎跟 Figma 一样：<code>padding</code> = 内边距、<code>border-radius</code> = 圆角。
+        </div>
+      </div>
+    </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/src/app.js"></script>

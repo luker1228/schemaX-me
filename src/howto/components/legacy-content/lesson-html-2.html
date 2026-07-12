@@ -1,0 +1,136 @@
+<header class="site-header" data-od-id="lesson2-header">
+    <div class="lesson-shell site-header-inner">
+      <a class="brand-mark" href="/index.html" data-od-id="lesson2-brand-link"><span>新前端中心</span><span class="brand-pill">手册</span></a>
+      <nav class="nav-links" data-od-id="lesson2-nav">
+        <a href="/lesson-html.html" data-perspectives='[{"text":"Markdown 对比","href":"/lesson-html.html"},{"text":"Figma 对比","href":"/lesson-html-2.html","current":true}]'>HTML</a>
+        <a href="/lesson-css.html" data-perspectives='[{"text":"CSS 基础","href":"/lesson-css.html"},{"text":"Figma 对比","href":"/lesson-css-2.html"}]'>CSS</a>
+        <a href="/lesson-js.html">JavaScript</a>
+        <a href="/lesson-react.html">组件</a>
+        <a href="/lesson-layout.html">布局</a>
+      </nav>
+      <div class="step-nav">
+        <a class="step-nav-btn" href="/lesson-html.html" title="HTML · Markdown 对比">← 上一节</a>
+        <a class="step-nav-btn is-next" href="/lesson-css.html" title="CSS · 基础">下一节 →</a>
+      </div>
+    </div>
+  </header>
+  <header class="html2-hero" data-od-id="html2-page-hero">
+    <div class="lesson-shell">
+      <div class="html2-hero-meta">
+        <span class="html2-pill html2-pill-fill">实验互动 · INTERACTIVE</span>
+        <span class="html2-pill">HTML 第二课 · Figma 对照</span>
+        <span class="html2-label">阅读时长 ≈ 10 分钟</span>
+      </div>
+      <div class="html2-hero-grid">
+        <div class="html2-hero-copy">
+          <h1 class="page-title" data-od-id="html2-page-title">
+            <span class="html2-title-line">Figma 属性面板，</span>
+            <span class="html2-title-line">就是 HTML <span class="html2-title-em">标签树</span></span>
+          </h1>
+        </div>
+        <div class="html2-hero-side">
+          <div class="html2-hero-row"><span class="html2-hero-k">本页讲什么</span><span class="html2-hero-v">图层树 = 标签树</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">内容形式</span><span class="html2-hero-v">Figma / HTML 对照高亮</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">适合谁</span><span class="html2-hero-v">设计师 · 0 代码也能懂</span></div>
+          <div class="html2-hero-row"><span class="html2-hero-k">目标</span><span class="html2-hero-v">会读 DOM 结构</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main data-od-id="lesson2-main">
+
+    <section class="html2-body-section" id="html2-core" data-od-id="html2-core-section">
+      <div class="wrap">
+        <div class="section-head">
+        <div>
+          <div class="section-num"><strong>01</strong> / 核心</div>
+          <h2 class="section-title">先记住这一句<br><span class="html2-title-em">属性面板 = 标签树</span></h2>
+        </div>
+      </div>
+      <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">核心</span>
+          <p>Figma 左侧的图层面板，和浏览器看到的 HTML，是同一棵树。你在设计稿里怎么嵌套 Frame，HTML 就怎么嵌套标签。记住这一点，看到任何设计稿都能估出大致结构。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="html2-body-section" id="html-figma" data-od-id="html2-pair-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>02</strong> / 对照</div>
+            <h2 class="section-title">一张卡片，两种描述<br><span class="html2-title-em">属性面板 ↔ HTML</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">方式</span>
+          <p>同一个卡片，左边是 Figma 图层面板，右边是浏览器看到的 HTML。鼠标移到任意一行，两边会同时高亮，它们其实是同一个结构的两种写法。</p>
+        </div>
+
+        <div class="layer-card" id="htmlPair" data-od-id="html2-layer-card">
+            <div class="pair-grid">
+              <div class="pair-col pair-figma">
+                <span class="micro-label">Figma · 图层面板</span>
+                <div class="figma-mock">
+                  <div class="fm-title">图层 · LAYERS</div>
+                  <div class="fm-layer" data-key="card">
+                    <span class="fm-ic">▾</span>
+                    <span class="fm-ic fm-ic-box">⬚</span>
+                    <span>Card / Frame</span>
+                  </div>
+                  <div class="fm-layer fm-indent-1" data-key="header">
+                    <span class="fm-ic">▾</span>
+                    <span class="fm-ic fm-ic-box">⬚</span>
+                    <span>Header / Frame</span>
+                  </div>
+                  <div class="fm-layer fm-indent-2" data-key="title">
+                    <span class="fm-ic">·</span>
+                    <span class="fm-ic fm-ic-text">T</span>
+                    <span>Title</span>
+                  </div>
+                  <div class="fm-layer fm-indent-2" data-key="desc">
+                    <span class="fm-ic">·</span>
+                    <span class="fm-ic fm-ic-text">T</span>
+                    <span>Description</span>
+                  </div>
+                  <div class="fm-layer fm-indent-1" data-key="btn">
+                    <span class="fm-ic">·</span>
+                    <span class="fm-ic fm-ic-box">▭</span>
+                    <span>Button</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pair-divider">=</div>
+
+              <div class="pair-col pair-code">
+                <span class="micro-label">浏览器 · HTML</span>
+                <div class="code-mock">
+                  <div class="code-head"><span class="dot"></span><span class="code-fname">card.html</span></div>
+                  <pre><span class="cline" data-key="card"><span class="ctag">&lt;div</span> <span class="cattr">class</span>=<span class="cstr">"card"</span><span class="ctag">&gt;</span></span>
+<span class="cline" data-key="header">  <span class="ctag">&lt;div</span> <span class="cattr">class</span>=<span class="cstr">"header"</span><span class="ctag">&gt;</span></span>
+<span class="cline" data-key="title">    <span class="ctag">&lt;h3&gt;</span>标题<span class="ctag">&lt;/h3&gt;</span></span>
+<span class="cline" data-key="desc">    <span class="ctag">&lt;p&gt;</span>描述文字<span class="ctag">&lt;/p&gt;</span></span>
+<span class="cline" data-key="header">  <span class="ctag">&lt;/div&gt;</span></span>
+<span class="cline" data-key="btn">  <span class="ctag">&lt;button&gt;</span>点击<span class="ctag">&lt;/button&gt;</span></span>
+<span class="cline" data-key="card"><span class="ctag">&lt;/div&gt;</span></span></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="pair-captions">
+              <div class="pair-caption">
+                <div class="cap-k">设计视角</div>
+                一棵<strong>图层树</strong>。Frame 套 Frame，每个图层有名字、有层级、有缩进。
+              </div>
+              <div class="pair-caption">
+                <div class="cap-k">代码视角</div>
+                一棵<strong>标签树</strong>。<code>&lt;div&gt;</code> 套 <code>&lt;div&gt;</code>，每个标签有名字、有层级、有缩进——一模一样的事。
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <script type="module" src="/src/app.js"></script>
