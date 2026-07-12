@@ -1,11 +1,11 @@
 ---
-import lukeIp from "../../assets/luke_ip.jpg";
+import lukeIp from "../../assets/luke2.png";
 
 const navItems = [
-  { href: "/", label: "Works" },
-  { href: "/#stack", label: "Stack" },
-  { href: "/blogs/", label: "Blog" },
-  { href: "/#about", label: "About" },
+  { href: "/", label: "首页" },
+  { href: "/#stack", label: "技术栈" },
+  { href: "/blogs/", label: "博客" },
+  { href: "/#works", label: "内容入口" },
   { href: "https://github.com/luker1228", label: "GitHub", external: true }
 ];
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
@@ -19,8 +19,8 @@ const currentPath = Astro.url.pathname;
         <img src={lukeIp.src} alt="Luke 的个人 IP 形象" width={lukeIp.width} height={lukeIp.height} />
       </span>
       <span class="brand-copy">
-        <span class="brand-mark">Luke Lab</span>
-        <span class="brand-subtitle">Build. Write. Teach. Ship.</span>
+        <span class="brand-mark">schemaX</span>
+        <span class="brand-subtitle">绝密计划 · CLASSIFIED</span>
       </span>
     </a>
     <nav class="nav">

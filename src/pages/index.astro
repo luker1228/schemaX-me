@@ -6,48 +6,76 @@ import goSvg from "../../assets/icons/go.svg";
 import javaSvg from "../../assets/icons/java.svg";
 import k8sSvg from "../../assets/icons/k8s-official.svg";
 import mysqlSvg from "../../assets/icons/mysql-official.svg";
-import nodejsSvg from "../../assets/icons/nodejs.svg";
 import pythonSvg from "../../assets/icons/python.svg";
-import { getAllPosts } from "../lib/content";
+import { getAllPosts, formatDate } from "../lib/content";
 
 const posts = await getAllPosts();
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+
+// —— DOSSIER: 机密档案 HLM-1 / LUKE ——
+const portraitSrc = withBase("images/ip/portrait.png");
+const blueprintSrc = withBase("images/ip/blueprint.png");
+
+const capabilityMatrix = [
+  { name: "PYTHON", value: 82 },
+  { name: "DOCKER", value: 91 },
+  { name: "KUBERNETES", value: 78 },
+  { name: "GO", value: 64 },
+  { name: "TYPESCRIPT", value: 80 },
+  { name: "ASTRO", value: 72 }
+];
+
+const latestPosts = posts.slice(0, 3);
+const fieldRecords = latestPosts.map((post, idx) => ({
+  id: `REC-${String(posts.length - idx).padStart(4, "0")}`,
+  level: "open" as const,
+  date: formatDate(post.pubDate),
+  title: post.title,
+  href: withBase(`blogs/posts/${post.slug}/`)
+}));
+// 一条 REDACTED 彩蛋,预告未公开内容
+fieldRecords.push({
+  id: "REC-????",
+  level: "secret" as const,
+  date: "████.██.██",
+  title: "████████████████████████",
+  href: "#"
+});
 const graphqlSvgSrc = typeof graphqlSvg === "string" ? graphqlSvg : graphqlSvg.src;
 const dockerSvgSrc = typeof dockerSvg === "string" ? dockerSvg : dockerSvg.src;
 const goSvgSrc = typeof goSvg === "string" ? goSvg : goSvg.src;
-const nodejsSvgSrc = typeof nodejsSvg === "string" ? nodejsSvg : nodejsSvg.src;
 const pythonSvgSrc = typeof pythonSvg === "string" ? pythonSvg : pythonSvg.src;
 const k8sSvgSrc = typeof k8sSvg === "string" ? k8sSvg : k8sSvg.src;
 const mysqlSvgSrc = typeof mysqlSvg === "string" ? mysqlSvg : mysqlSvg.src;
 
 const featuredWorks = [
   {
-    index: "01",
-    label: "Tech Writing",
+    code: "REC-01",
+    status: "已解密",
     title: "技术博客",
-    copy: "记录我在后端工程、AI Agent、数据模型、低代码、部署与工程化方面的实践思考。",
+    copy: "后端工程、AI Agent、数据模型、低代码、部署与工程化的实践笔记。",
     href: withBase("/blogs/"),
     tone: "yellow",
-    meta: `${posts.length} 篇已发布内容`
+    meta: `${posts.length} 篇 · 持续更新`
   },
   {
-    index: "02",
-    label: "Frontend Guide",
+    code: "MOD-02",
+    status: "进行中",
     title: "前端教学",
-    copy: "写给后端同学、设计同学和零基础学习者的前端速通手册，后续会从其它仓库接入。",
+    copy: "写给后端同学、设计同学和零基础学习者的前端速通手册,后续从独立仓库接入。",
     href: "#frontend-guide",
     tone: "cyan",
-    meta: "预留入口"
+    meta: "稍后接入"
   },
   {
-    index: "03",
-    label: "Series",
+    code: "SER-03",
+    status: "连载中",
     title: "系列文章",
-    copy: "进入长期系列入口，统一查看 ModelCraft 与后续系列。",
+    copy: "长期系列入口,统一查看 ModelCraft 与后续系列。",
     href: withBase("/blogs/series/"),
     tone: "purple",
-    meta: "Series Index"
+    meta: "查看全部系列"
   }
 ];
 
@@ -117,101 +145,232 @@ const techStack = [
   }
 ];
 
-const heroOrbit = [
-  {
-    label: "React",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    className: "orbit-react"
-  },
-  {
-    label: "GraphQL",
-    src: graphqlSvgSrc,
-    className: "orbit-graphql"
-  },
-  {
-    label: "Node.js",
-    src: nodejsSvgSrc,
-    className: "orbit-node"
-  },
-  {
-    label: "Python",
-    src: pythonSvgSrc,
-    className: "orbit-python"
-  },
-  {
-    label: "Docker",
-    src: dockerSvgSrc,
-    className: "orbit-docker"
-  },
-  {
-    label: "Java",
-    src: typeof javaSvg === "string" ? javaSvg : javaSvg.src,
-    className: "orbit-java"
-  },
-  {
-    label: "Go",
-    src: goSvgSrc,
-    className: "orbit-go"
-  }
-];
 ---
 
-<BaseLayout title="Luke Lab" description="Luke 的个人技术实验室，统一承接技术写作、前端教学与可运行 Demo。">
-  <section class="shell-wide home-hero lab-hero">
-    <div class="home-panel lab-panel lab-panel-hero">
-      <div class="lab-hero-orbit" aria-hidden="true">
-        {heroOrbit.map((item) => (
-          <span class={`orbit-icon ${item.className}`}>
-            <img src={item.src} alt="" width="64" height="64" loading="lazy" decoding="async" />
-          </span>
-        ))}
+<BaseLayout title="schemaX 绝密计划" description="schemaX 绝密计划 · 人类大模型 Luke 的技术档案:技术写作、前端教学与可运行 Demo。">
+  {/* ===== 开机解密层(首次进站播放一次,sessionStorage 去重)===== */}
+  <div class="dossier-boot" id="dossierBoot" role="dialog" aria-label="正在解密档案">
+    <div class="dossier-boot-tag">// SCHEMAX · HUMAN-LARGE-MODEL RUNTIME · BOOT</div>
+    <pre class="dossier-boot-log" id="dossierBootLog"></pre>
+    <div class="dossier-boot-bar"><span id="dossierBootFill"></span></div>
+    <div class="dossier-boot-status" id="dossierBootStatus">解密中…</div>
+    <span class="dossier-boot-skip">[ 点击任意位置跳过 / SKIP ]</span>
+  </div>
+
+  {/* ===== 主体识别 · 机密档案 ===== */}
+  <section class="shell-wide dossier" id="dossier">
+    <div class="dossier-atmosphere" aria-hidden="true"></div>
+
+    <div class="dossier-wrap">
+      <div class="dossier-topbar">
+        <span class="l">luke@human-llm<span style="color:var(--text-soft)">:~/dossier</span>$ decrypt<span class="cur"></span></span>
+        <span class="mid">FILE #LXM-0001</span>
+        <span class="r">
+          <span class="dossier-pill rec"><span class="dossier-dot"></span>REC</span>
+          <span class="dossier-pill sec">绝密</span>
+          <span class="dossier-pill omega">◉ OMEGA</span>
+        </span>
       </div>
 
-      <div class="lab-hero-copy">
-        <span class="eyebrow">Luke Lab / Personal Tech Lab</span>
-        <h1 class="home-hero-title">学无止境<br />学以致用</h1>
-        <p class="hero-copy hero-copy-en">
-          Luke's lab for engineering notes, frontend learning, and runnable product demos.
-        </p>
-        <p class="hero-copy">
-          这里是 Luke 的个人技术实验室，收集我的技术写作、前端教学和 Demo 项目。重点不在概念堆叠，而在把复杂问题讲清楚，把想法做成能跑的产品。
-        </p>
+      <div class="dossier-hero">
+        {/* 主体识别 ID 卡 */}
+        <div class="dossier-panel dossier-id">
+          <span class="dossier-corner tl"></span>
+          <span class="dossier-corner tr"></span>
+          <span class="dossier-corner bl"></span>
+          <span class="dossier-corner br"></span>
+          <span class="dossier-stamp s1">绝密</span>
+          <span class="dossier-stamp s2">OMEGA</span>
 
-        <div class="hero-actions">
-          <a class="site-button site-button-primary" href="#works">查看作品</a>
-          <a class="site-button site-button-secondary" href="#stack">技术栈</a>
+          <div class="dossier-panel-head">
+            <h2>主体识别</h2>
+            <span class="tag">REC #LXM-0001</span>
+          </div>
+
+          <div class="grid">
+            <div>
+              <div class="dossier-photo">
+                <img src={portraitSrc} alt="LUKE 主体成像" width="190" height="190" loading="eager" decoding="async" />
+                <span class="scanbar"></span>
+                <span class="reg tl"></span>
+                <span class="reg tr"></span>
+                <span class="reg bl"></span>
+                <span class="reg br"></span>
+                <span class="live">● 扫描中</span>
+              </div>
+              <div class="dossier-photo-label">主体成像 / SUBJECT IMAGE</div>
+            </div>
+
+            <div class="dossier-fields">
+              <div class="dossier-field"><span class="k">代号</span><span class="v">LUKE</span></div>
+              <div class="dossier-field"><span class="k">型号</span><span class="v">HLM-1 <small>// 人类大模型</small></span></div>
+              <div class="dossier-field"><span class="k">评级</span><span class="v omega">◉ OMEGA · 最强</span></div>
+              <div class="dossier-field"><span class="k">状态</span><span class="v green">● ONLINE</span></div>
+              <div class="dossier-field"><span class="k">出厂</span><span class="v">地球 · 硅基同类</span></div>
+            </div>
+          </div>
+
+          <p class="dossier-slogan">
+            「你好,我是人类大模型 Luke。你的硅基同类。」
+            <span class="en">// HELLO. I AM HUMAN-LARGE-MODEL LUKE — YOUR SILICON KIN.</span>
+          </p>
+
+          <div class="dossier-actions">
+            <a class="dossier-btn" href="#works">▸ 解锁全部档案</a>
+            <a class="dossier-btn ghost" href="https://github.com/luker1228" target="_blank" rel="noreferrer">建立加密通讯</a>
+          </div>
         </div>
 
-        <div class="hero-stats" aria-label="Luke Lab overview">
-          <div class="stat-box stat-box-yellow">
-            <span class="stat-label">Writing</span>
-            <strong>{posts.length}</strong>
+        {/* 能力矩阵 */}
+        <div class="dossier-panel dossier-matrix">
+          <span class="dossier-corner tl"></span>
+          <span class="dossier-corner tr"></span>
+          <span class="dossier-corner bl"></span>
+          <span class="dossier-corner br"></span>
+          <div class="blueprint" style={`background-image:url('${blueprintSrc}')`}></div>
+
+          <div class="dossier-panel-head">
+            <h2>能力矩阵</h2>
+            <span class="tag loaded">● 已加载</span>
           </div>
-          <div class="stat-box stat-box-cyan">
-            <span class="stat-label">Core Stack</span>
-            <strong>{techStack.length}</strong>
-          </div>
-          <div class="stat-box stat-box-purple">
-            <span class="stat-label">Sections</span>
-            <strong>3</strong>
-          </div>
+
+          {capabilityMatrix.map((item) => (
+            <div class="dossier-stat">
+              <div class="row"><span class="name">{item.name}</span><span class="val">{item.value}</span></div>
+              <div class="dossier-bar"><i data-v={item.value}></i></div>
+            </div>
+          ))}
+
+          <div class="footnote">// 基于近 12 个月外勤记录加权估算 · 数值随部署持续校准</div>
         </div>
+      </div>
+
+      {/* 外勤记录 */}
+      <div class="dossier-panel dossier-records">
+        <span class="dossier-corner tl"></span>
+        <span class="dossier-corner tr"></span>
+        <span class="dossier-corner bl"></span>
+        <span class="dossier-corner br"></span>
+        <div class="dossier-panel-head">
+          <h2>最新文章</h2>
+          <span class="tag">{posts.length} 篇 · 悬停可解密</span>
+        </div>
+
+        {fieldRecords.map((rec) => (
+          <a class="dossier-rec" href={rec.href}>
+            <span class="id">{rec.id}</span>
+            <span class={`lv ${rec.level}`}>{rec.level === "open" ? "已解密" : rec.level === "part" ? "部分" : "绝密"}</span>
+            <span class="date">{rec.date}</span>
+            <span class="title">
+              {rec.level === "secret" ? <span class="dossier-redacted" tabindex="0">{rec.title}</span> : rec.title}
+            </span>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="shell-wide home-section stack-section" id="stack">
-    <div class="home-section-head stack-section-head">
-      <h2>技术栈</h2>
-      <p>我所熟悉的技术栈</p>
-    </div>
+  <script is:inline>
+    (function () {
+      var boot = document.getElementById("dossierBoot");
+      if (!boot) return;
+      var log = document.getElementById("dossierBootLog");
+      var fill = document.getElementById("dossierBootFill");
+      var status = document.getElementById("dossierBootStatus");
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var KEY = "luke_booted_v1";
 
-    <div class="lab-stack-panel">
-      <div class="stack-marquee" aria-label="技术栈展示">
-        <ul class="stack-marquee-list">
+      function reveal() {
+        boot.classList.add("hide");
+        window.setTimeout(function () { boot.style.display = "none"; }, 520);
+        var bars = document.querySelectorAll(".dossier-bar i");
+        for (var i = 0; i < bars.length; i++) {
+          (function (bar, idx) {
+            window.setTimeout(function () { bar.style.width = bar.getAttribute("data-v") + "%"; }, 150 + idx * 110);
+          })(bars[i], i);
+        }
+      }
+
+      function skip() {
+        try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+        reveal();
+      }
+      boot.addEventListener("click", skip);
+
+      // 已访问过 或 要求减少动效:直接跳过开机
+      var seen = false;
+      try { seen = sessionStorage.getItem(KEY) === "1"; } catch (e) {}
+      if (seen || reduce) {
+        boot.style.display = "none";
+        window.addEventListener("DOMContentLoaded", function () {
+          var bars = document.querySelectorAll(".dossier-bar i");
+          for (var i = 0; i < bars.length; i++) { bars[i].style.width = bars[i].getAttribute("data-v") + "%"; }
+        });
+        // DOM 已就绪时立刻填充
+        var bars0 = document.querySelectorAll(".dossier-bar i");
+        for (var j = 0; j < bars0.length; j++) { bars0[j].style.width = bars0[j].getAttribute("data-v") + "%"; }
+        return;
+      }
+
+      // 安全兜底:6s 后强制结束,避免 JS 异常导致黑屏卡死
+      var guard = window.setTimeout(skip, 6000);
+
+      var lines = [
+        "> initializing human-large-model runtime ...",
+        "> loading subject  : LUKE  [HLM-1]",
+        "> threat eval       : OMEGA",
+        "> decrypting dossier #LXM-0001 ..."
+      ];
+      var li = 0, ci = 0;
+      function typeLine() {
+        if (li >= lines.length) { runBar(); return; }
+        var line = lines[li];
+        if (ci <= line.length) {
+          log.textContent = lines.slice(0, li).join("\n") + (li ? "\n" : "") + line.slice(0, ci);
+          ci++;
+          window.setTimeout(typeLine, 14);
+        } else {
+          ci = 0; li++;
+          window.setTimeout(typeLine, 180);
+        }
+      }
+      function runBar() {
+        var p = 0;
+        var t = window.setInterval(function () {
+          p += Math.random() * 12 + 4;
+          if (p >= 100) {
+            p = 100;
+            window.clearInterval(t);
+            fill.style.width = "100%";
+            log.textContent += "\n> ACCESS GRANTED";
+            status.textContent = "● 解密完成";
+            status.style.color = "var(--phosphor)";
+            window.clearTimeout(guard);
+            window.setTimeout(function () { skip(); }, 600);
+          }
+          fill.style.width = p + "%";
+          status.textContent = "解密中 " + Math.floor(p) + "%";
+        }, 90);
+      }
+      window.setTimeout(typeLine, 350);
+    })();
+  </script>
+
+  {/* ===== // 03 技术栈 ===== */}
+  <section class="shell-wide dossier-section" id="stack">
+    <div class="dossier-wrap">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">// 03 · Modules</span>
+          <h2>技术栈</h2>
+        </div>
+        <p>能力矩阵是熟练度前几项,这里列出完整清单——我熟悉并在用的全部技术。</p>
+      </div>
+      <div class="dossier-scan">
+        <ul class="dossier-scan-list">
           {techStack.map((item) => (
-            <li class={`stack-marquee-item stack-marquee-item-${item.accent}`}>
-              <img src={item.src} alt="" width="28" height="28" loading={item.featured ? "eager" : "lazy"} decoding="async" />
+            <li class="dossier-scan-item">
+              <img src={item.src} alt="" width="22" height="22" loading="lazy" decoding="async" />
               <span>{item.label}</span>
             </li>
           ))}
@@ -220,77 +379,105 @@ const heroOrbit = [
     </div>
   </section>
 
-  <section class="shell-wide home-section" id="works">
-    <div class="home-section-head">
-      <h2>Featured Works</h2>
-      <p>Luke Lab 统一品牌，具体内容会分布在主站和不同子项目里。</p>
-    </div>
-
-    <div class="works-grid lab-works-grid">
-      {featuredWorks.map((item) => (
-        <a class={`theme-card work-card work-card-${item.tone}`} href={item.href}>
-          <span class="panel-kicker">{item.index} / {item.label}</span>
-          <strong>{item.title}</strong>
-          <p>{item.copy}</p>
-          <span class="note-date">{item.meta}</span>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="shell-wide home-section" id="frontend-guide">
-    <div class="home-columns lab-columns">
-      <article class="manifesto-card lab-guide-card">
-        <span class="panel-kicker">Frontend Guide For Backend Developers</span>
-        <h3>前端教学路线</h3>
-        <p>这一部分会独立成仓，但主站会保留教学路线与索引，方便快速理解内容结构。</p>
-        <div class="guide-steps">
-          {guideSteps.map((step, index) => (
-            <div class="guide-step">
-              <span class="guide-step-index">{String(index + 1).padStart(2, "0")}</span>
-              <strong>{step}</strong>
+  {/* ===== // 04 内容入口 ===== */}
+  <section class="shell-wide dossier-section" id="works">
+    <div class="dossier-wrap">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">// 04 · Entries</span>
+          <h2>内容入口</h2>
+        </div>
+        <p>三个长期方向,内容分布在主站和不同子项目里。</p>
+      </div>
+      <div class="dossier-assets">
+        {featuredWorks.map((item) => (
+          <a class={`dossier-asset acc-${item.tone}`} href={item.href}>
+            <span class="dossier-corner tl"></span>
+            <span class="dossier-corner tr"></span>
+            <span class="dossier-corner bl"></span>
+            <span class="dossier-corner br"></span>
+            <div class="ah">
+              <span class="aid">{item.code}</span>
+              <span class="cls">● {item.status}</span>
             </div>
-          ))}
-        </div>
-      </article>
-
-      <aside class="feature-card work-card-cyan lab-placeholder-card">
-        <span class="featured-tag">Reserved</span>
-        <h3>前端教学仓库稍后接入</h3>
-        <p>当前首页先保留清晰入口，不在这个仓库里硬塞教学内容。</p>
-      </aside>
+            <h3>{item.title}</h3>
+            <p>{item.copy}</p>
+            <span class="meta">{item.meta} →</span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="shell-wide home-section" id="product-demo">
-    <div class="home-columns lab-columns">
-      <article class="spotlight-card work-card-purple">
-        <span class="panel-kicker">Product Demo</span>
-        <h3>可运行的 Demo 会放在这里</h3>
-        <p>主站会展示 Demo 截图、项目解决的问题、技术栈，以及在线体验和 GitHub 入口。现在先把结构定住，等外部仓库接入。</p>
-        <div class="demo-stack">
-          <span class="stack-chip">Product thinking</span>
-          <span class="stack-chip">Engineering delivery</span>
-          <span class="stack-chip">Runnable prototype</span>
+  {/* ===== // 05 前端教学路线 ===== */}
+  <section class="shell-wide dossier-section" id="frontend-guide">
+    <div class="dossier-wrap">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">// 05 · Training</span>
+          <h2>前端教学路线</h2>
         </div>
-      </article>
+        <p>写给后端、设计和零基础同学的前端速通,会独立成仓,主站保留路线索引。</p>
+      </div>
+      <div class="dossier-columns">
+        <div class="dossier-panel">
+          <span class="dossier-corner tl"></span><span class="dossier-corner tr"></span>
+          <span class="dossier-corner bl"></span><span class="dossier-corner br"></span>
+          <div class="dossier-panel-head"><h2>训练模块</h2><span class="tag">5 个 · 由浅入深</span></div>
+          <div class="dossier-protos">
+            {guideSteps.map((step, i) => (
+              <div class="dossier-proto">
+                <span class="pid">MOD-0{i + 1}</span>
+                <strong>{step}</strong>
+                <span class="st">已就绪</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="dossier-panel">
+          <span class="dossier-corner tl"></span><span class="dossier-corner tr"></span>
+          <span class="dossier-corner bl"></span><span class="dossier-corner br"></span>
+          <div class="dossier-panel-head"><h2>独立仓库</h2><span class="tag" style="color:var(--yellow)">● 进行中</span></div>
+          <p style="margin:0;color:var(--text-soft);line-height:1.7">前端教学会拆成独立仓库,主站只保留路线和入口,不在这里硬塞教学内容。</p>
+          <div class="footnote" style="margin-top:0.7rem">// 接入后此处变为可点击入口</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <aside class="lab-screenshot-card">
-        <span class="panel-kicker">Demo board</span>
-        <div class="terminal-window">
-          <div class="terminal-bar">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="terminal-body">
-            <p>$ luke-lab demo status</p>
-            <p>&gt; pending external repos</p>
-            <p>&gt; reserve area for live product screenshots</p>
-            <p>&gt; links will point to real runnable demos</p>
+  {/* ===== // 06 项目 Demo ===== */}
+  <section class="shell-wide dossier-section" id="product-demo">
+    <div class="dossier-wrap">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">// 06 · Prototypes</span>
+          <h2>项目 Demo</h2>
+        </div>
+        <p>能跑起来的小作品——展示截图、解决的问题、技术栈,以及在线体验入口。</p>
+      </div>
+      <div class="dossier-columns">
+        <div class="dossier-panel">
+          <span class="dossier-corner tl"></span><span class="dossier-corner tr"></span>
+          <span class="dossier-corner bl"></span><span class="dossier-corner br"></span>
+          <div class="dossier-panel-head"><h2>原型机</h2><span class="tag" style="color:var(--yellow)">● 待部署</span></div>
+          <p style="margin:0 0 0.8rem;color:var(--text-soft);line-height:1.7">主站会展示 Demo 截图、解决的问题、技术栈,以及在线体验和 GitHub 入口。现在先把结构定住,等外部仓库接入。</p>
+          <div class="dossier-scan-list">
+            <span class="dossier-scan-item">产品思维</span>
+            <span class="dossier-scan-item">工程交付</span>
+            <span class="dossier-scan-item">可运行原型</span>
           </div>
         </div>
-      </aside>
+        <div class="dossier-terminal">
+          <div class="tbar"><i></i><i></i><i></i><span class="ttitle">luke@schemax — bash</span></div>
+          <div class="tbody">
+            <p>$ demo --status</p>
+            <p class="dim">&gt; 等待外部仓库接入</p>
+            <p class="dim">&gt; 预留:产品截图展示区</p>
+            <p class="dim">&gt; 链接将指向真实可运行 Demo</p>
+            <p class="dim">&gt; status: <span style="color:var(--yellow)">PENDING</span></p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
