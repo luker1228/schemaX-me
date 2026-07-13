@@ -19,17 +19,25 @@
   --accent-red: #F85850;
   --accent-purple: #A088D0;
 
-  --bg: #FFF7E8;
-  --surface: var(--paper);
-  --surface-2: var(--paper-warm);
-  --fg: var(--ink);
-  --muted: var(--muted-text);
-  --border: var(--ink);
-  --accent: var(--ground-yellow);
-  --accent-strong: var(--nav-dark);
+  /* ── 战术手册皮肤 04 · Bone 牛皮纸(浅 · 阅读优先)── */
+  --bg: #e6dcc4;
+  --surface: #f3ecd9;
+  --surface-2: #fbf4e2;
+  --fg: #241d13;
+  --muted: #6b5c42;
+  --border: #2a2218;
+  --accent: #c8501e;
+  --accent-strong: #46502a;
+  --stamp: #a81e16;
   --warn: var(--soft-yellow);
   --success: var(--soft-green);
-  --shadow: 4px 4px 0 var(--ink);
+  --shadow: 4px 4px 0 rgba(40, 30, 15, 0.45);
+  --code-bg: #241d13;
+  --code-fg: #f3ecd9;
+  --code-border: #000000;
+  --syn-tag: #c8501e;
+  --syn-attr: #6b3fa0;
+  --syn-str: #46502a;
   --radius-sm: 2px;
   --radius-md: 0px;
   --radius-lg: 0px;
@@ -107,9 +115,9 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--nav-dark);
-  color: #f6ead6;
-  border-bottom: 2px solid #000;
+  background: var(--surface);
+  color: var(--fg);
+  border-bottom: 2px solid var(--border);
 }
 
 .site-header-inner,
@@ -3083,4 +3091,128 @@ textarea {
   .pair-divider {
     padding: 4px 0;
   }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   战术手册 / dossier 暗色皮肤 — 覆盖层
+   主体已通过 :root token 重映射变暗。这里把代码编辑/预览面板强制保留
+   亮色(代码可读、在暗页面上"跳"出来),并把 inline-note 做成 INTEL 情报框。
+   迭代/回退只需删掉本块。
+   ════════════════════════════════════════════════════════════════ */
+
+/* INTEL 情报框:底色随主题 + 左强调边,标签反白 */
+.html2-inline-note {
+  background: color-mix(in oklab, var(--accent) 14%, var(--bg)) !important;
+  border-left: 5px solid var(--accent) !important;
+}
+.html2-inline-note-tag {
+  color: var(--bg) !important;
+  background: var(--accent) !important;
+  border: 1.5px solid var(--bg) !important;
+}
+
+/* 代码/playground 面板:走主题 token(--code-bg/--code-fg),各皮肤自带明暗 */
+.code-block,
+.playground-textarea,
+.playground-source-panel,
+.code-mock pre {
+  background: var(--code-bg) !important;
+  color: var(--code-fg) !important;
+  border-color: var(--code-border) !important;
+}
+/* 渲染预览始终白底(浏览器画布),保证用户 HTML 真实呈现 */
+.preview-content,
+.playground-iframe {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+/* 代码语法 mock 色随主题 */
+.code-mock .ctag { color: var(--syn-tag) !important; }
+.code-mock .cattr { color: var(--syn-attr) !important; }
+.code-mock .cstr { color: var(--syn-str) !important; }
+
+/* ════════════════════════════════════════════════════════════════
+   战术手册质感(Bone 纸质手册):纸纹 + 绝密水印 + 分类印章 + 定位角标
+   纯装饰,不改任何正文。纸纹/水印走 z-index:-1 叠在内容之下。
+   ════════════════════════════════════════════════════════════════ */
+body { position: relative; }
+
+/* 牛皮纸纤维纹理(极淡,铺满) */
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.06;
+}
+
+/* 绝密水印(对角斜置,极淡) */
+body::before {
+  content: "绝密 · CLASSIFIED";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-26deg);
+  z-index: -1;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 14vw, 11rem);
+  letter-spacing: 0.1em;
+  color: var(--fg);
+  opacity: 0.04;
+  white-space: nowrap;
+}
+
+/* hero 分类印章(右上角斜盖红章) */
+.hero {
+  position: relative;
+}
+.hero::before {
+  content: "绝密 \A CLASSIFIED";
+  white-space: pre;
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 3;
+  padding: 7px 13px;
+  border: 3px solid var(--stamp);
+  color: var(--stamp);
+  background: color-mix(in oklab, var(--stamp) 8%, var(--surface));
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(-7deg);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* 课程卡定位角标(十字裁切标,top-left / bottom-right) */
+.lesson-card {
+  position: relative;
+}
+.lesson-card::before,
+.lesson-card::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--accent-strong);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 2;
+}
+.lesson-card::before {
+  top: 6px;
+  left: 6px;
+  border-width: 2px 0 0 2px;
+}
+.lesson-card::after {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 2px 2px 0;
 }

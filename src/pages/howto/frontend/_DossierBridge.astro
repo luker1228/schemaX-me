@@ -1,6 +1,7 @@
 ---
 // Dossier 风格桥接顶栏 —— 自包含样式(课程页只加载 howto/styles.css,没有 global.css 的
 // dossier token/类/blink keyframe,所以这里全部硬编码,不依赖外部)。
+import DecodeOverlay from "./_DecodeOverlay.astro";
 interface Props {
   crumb?: string;
 }
@@ -11,6 +12,7 @@ const hubHref = withBase("howto/");
 const pathStr = crumb ? `howto/frontend/${crumb}` : "howto/frontend";
 ---
 
+<DecodeOverlay />
 <div class="db" role="navigation" aria-label="战术手册导航">
   <span class="db-left">
     luke@human-llm<span class="db-muted">:~/{pathStr}</span>$

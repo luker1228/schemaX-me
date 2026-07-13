@@ -209,7 +209,7 @@ export function ComponentsPage() {
       <ConfigProvider theme={{ token: { colorPrimary: "#ef7627", borderRadius: 8, fontFamily: "inherit" } }}>
         <header className="site-header">
           <div className="container site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}><span>新前端中心</span><span className="brand-pill">手册</span></a>
+            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">手册</span></a>
             <SiteNav currentPath="components.html" />
             <StepNav prev={{ href: "lesson-react.html", title: "组件：先认词" }} next={{ href: "prompts.html", title: "提示词库" }} />
           </div>

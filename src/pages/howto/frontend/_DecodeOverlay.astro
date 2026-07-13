@@ -1,0 +1,181 @@
+---
+// 进入战术手册时的"解密"覆盖层:暗 dossier 全屏动画盖住 hub(暗)→ 手册(Bone 浅)的色切换。
+// 每 session 只播一次(sessionStorage),支持 SKIP / prefers-reduced-motion / 兜底超时。
+// 自包含(课程页只加载 howto/styles.css,无 global.css dossier token)。
+const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boot-decrypt.svg`;
+---
+
+<div class="dec" id="dec" aria-hidden="true">
+  <button class="dec-skip" id="dec-skip" type="button">SKIP ▸</button>
+  <div class="dec-box">
+    <span class="dec-stamp">绝密 · CLASSIFIED</span>
+    <img class="dec-art" style="width:100%;max-width:230px;height:auto;display:block;margin:0 auto;" src={decArt} alt="DECRYPTING FIELD MANUAL" />
+    <div class="dec-log">
+      <p>&gt; ACCESS // /howto/frontend/</p>
+      <p>&gt; CLEARANCE ◉ OMEGA · GRANTED</p>
+      <p>&gt; DECRYPTING …</p>
+    </div>
+    <div class="dec-bar"><i id="dec-bar-i"></i></div>
+    <div class="dec-status" id="dec-status">// 请稍候 · 解密中</div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var dec = document.getElementById("dec");
+    if (!dec) return;
+    var KEY = "howto-decoded";
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try {
+      if (sessionStorage.getItem(KEY) || reduce) {
+        dec.remove();
+        return;
+      }
+    } catch (e) {}
+
+    var status = document.getElementById("dec-status");
+    var skip = document.getElementById("dec-skip");
+    var done = false;
+    function finish(ok) {
+      if (done) return;
+      done = true;
+      try {
+        sessionStorage.setItem(KEY, "1");
+      } catch (e) {}
+      if (status) status.textContent = ok ? "// ACCESS GRANTED ▸" : "// SKIPPED";
+      dec.classList.add("dec--done");
+      setTimeout(function () {
+        dec.remove();
+      }, 460);
+    }
+    if (skip) skip.addEventListener("click", function () {
+      finish(false);
+    });
+    // 进度条 CSS 动画 ~1.5s;1.75s 完成
+    setTimeout(function () {
+      finish(true);
+    }, 1750);
+    // 兜底:6s 强制移除
+    setTimeout(function () {
+      if (!done) dec.remove();
+    }, 6000);
+  })();
+</script>
+
+<style>
+  .dec {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background:
+      repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.04) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.6) 100%),
+      #0c0f0d;
+    color: #22ff88;
+    font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: opacity 420ms ease, visibility 420ms ease;
+  }
+  .dec--done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .dec-skip {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: 1.5px solid #2c3d33;
+    color: #6f8a7a;
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+  .dec-skip:hover {
+    color: #ffd43b;
+    border-color: #ffd43b;
+  }
+  .dec-box {
+    max-width: 30rem;
+    text-align: center;
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+  }
+  .dec-stamp {
+    color: #ff4d4d;
+    border: 2.5px solid #ff4d4d;
+    padding: 3px 12px;
+    letter-spacing: 0.16em;
+    font-weight: 800;
+    transform: rotate(-6deg);
+    font-size: 0.8rem;
+  }
+  .dec-title {
+    font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #e7f3ea;
+    text-shadow: 0 0 18px rgba(34, 255, 136, 0.18);
+  }
+  .dec-log {
+    font-size: 0.82rem;
+    line-height: 1.9;
+    color: #22ff88;
+    text-align: left;
+    width: 100%;
+    max-width: 22rem;
+  }
+  .dec-log p {
+    margin: 0;
+    opacity: 0;
+    animation: dec-line 320ms ease forwards;
+  }
+  .dec-log p:nth-child(1) {
+    animation-delay: 120ms;
+  }
+  .dec-log p:nth-child(2) {
+    animation-delay: 540ms;
+  }
+  .dec-log p:nth-child(3) {
+    animation-delay: 960ms;
+  }
+  @keyframes dec-line {
+    to {
+      opacity: 1;
+    }
+  }
+  .dec-bar {
+    width: 100%;
+    max-width: 22rem;
+    height: 10px;
+    background: #08120c;
+    border: 1px solid #2c3d33;
+  }
+  .dec-bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: #22ff88;
+    box-shadow: 0 0 10px rgba(34, 255, 136, 0.5);
+    animation: dec-fill 1500ms ease forwards;
+  }
+  @keyframes dec-fill {
+    to {
+      width: 100%;
+    }
+  }
+  .dec-status {
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    color: #6f8a7a;
+  }
+</style>
