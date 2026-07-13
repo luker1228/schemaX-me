@@ -11,6 +11,13 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
 <a class="category-card" href={`${baseUrl}${category}/`}>
+  <img
+    class="category-card-icon"
+    src={`${baseUrl}images/brand/categories/${category}.png`}
+    alt=""
+    width="44"
+    height="44"
+  />
   <div>
     <p class="category-kicker">{getCategoryLabel(category)}</p>
     <h3>{getCategoryLabel(category)}</h3>
@@ -18,3 +25,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
   </div>
   <p class="meta">{count} 篇文章</p>
 </a>
+
+<style>
+  .category-card-icon {
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0.7rem;
+  }
+</style>

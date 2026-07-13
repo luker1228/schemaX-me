@@ -1,5 +1,5 @@
 ---
-import lukeIp from "../../assets/luke2.webp";
+// 整站图标 logo-min: public/images/brand/logo-min.png(header 用)
 
 const navItems = [
   { href: "/", label: "首页" },
@@ -17,7 +17,7 @@ const currentPath = Astro.url.pathname;
   <div class="shell shell-wide">
     <a class="brand" href={baseUrl}>
       <span class="brand-avatar">
-        <img src={lukeIp.src} alt="Luke 的个人 IP 形象" width={lukeIp.width} height={lukeIp.height} />
+        <img src={`${baseUrl}images/brand/logo-min.svg`} alt="schemaX" width="56" height="56" />
       </span>
       <span class="brand-copy">
         <span class="brand-mark">schemaX</span>

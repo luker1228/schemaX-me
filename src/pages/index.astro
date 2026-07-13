@@ -191,10 +191,7 @@ const techStack = [
           <div class="grid">
             <div>
               <div class="dossier-photo">
-                <picture>
-                  <source type="image/webp" srcset={portraitWebp} />
-                  <img src={portraitSrc} alt="LUKE 主体成像" width="190" height="190" loading="eager" decoding="async" />
-                </picture>
+                <img src={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/card-hlm1.svg`} alt="HLM-1 主体档案" width="190" height="190" loading="eager" decoding="async" />
                 <span class="scanbar"></span>
                 <span class="reg tl"></span>
                 <span class="reg tr"></span>
