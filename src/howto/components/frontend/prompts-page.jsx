@@ -173,7 +173,7 @@ export function PromptsPage() {
       <>
         <header className="site-header">
           <div className="container site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">手册</span></a>
+            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">FM-01</span></a>
             <SiteNav />
             <StepNav prev={{ href: "lesson-layout.html", title: "布局" }} />
           </div>

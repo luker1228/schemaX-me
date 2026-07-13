@@ -579,7 +579,7 @@ export function LessonReactApp() {
       <>
         <header className="site-header">
           <div className="lesson-shell site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">手册</span></a>
+            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">FM-01</span></a>
             <SiteNav currentPath="lesson-react.html" />
             <StepNav prev={{ href: "lesson-js.html", title: "JavaScript" }} next={{ href: "lesson-layout.html", title: "布局" }} />
           </div>

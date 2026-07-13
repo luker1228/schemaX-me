@@ -250,8 +250,7 @@ export function IndexPage() {
         <header className="site-header">
           <div className="container site-header-inner">
             <a className="brand-mark" href={withBase("index.html")}>
-              <span>前端战术</span>
-              <span className="brand-pill">手册</span>
+              <span>前端战术</span><span className="brand-pill">FM-01</span>
             </a>
             <SiteNav />
             <div className="header-actions">
@@ -348,8 +347,7 @@ export function IndexPage() {
           <div className="container footer-grid">
             <div className="footer-col">
               <a className="brand-mark" href={withBase("index.html")}>
-                <span>前端战术</span>
-                <span className="brand-pill">手册</span>
+                <span>前端战术</span><span className="brand-pill">FM-01</span>
               </a>
               <p className="card-copy">给设计师、产品、运营和后端的前端战术手册：理解结构、样式、交互与组件语言。</p>
             </div>

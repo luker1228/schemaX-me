@@ -7,6 +7,8 @@ import javaSvg from "../../assets/icons/java.svg";
 import k8sSvg from "../../assets/icons/k8s-official.svg";
 import mysqlSvg from "../../assets/icons/mysql-official.svg";
 import pythonSvg from "../../assets/icons/python.svg";
+import motorcyclePortrait from "../../assets/ip/摩托.png";
+import sideProfilePortrait from "../../assets/ip/尖头发侧面.png";
 import { getAllPosts, formatDate } from "../lib/content";
 
 const posts = await getAllPosts();
@@ -14,9 +16,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
 
 // —— DOSSIER: 机密档案 HLM-1 / LUKE ——
-const portraitSrc = withBase("images/ip/portrait.png");
-const portraitWebp = withBase("images/ip/portrait.webp");
-const blueprintWebp = withBase("images/ip/blueprint.webp");
+const blueprintWebp = motorcyclePortrait.src;
 
 const capabilityMatrix = [
   { name: "PYTHON", value: 82 },
@@ -191,7 +191,7 @@ const techStack = [
           <div class="grid">
             <div>
               <div class="dossier-photo">
-                <img src={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/card-hlm1.svg`} alt="HLM-1 主体档案" width="190" height="190" loading="eager" decoding="async" />
+                <img src={sideProfilePortrait.src} alt="HLM-1 主体档案" width="1024" height="1536" loading="eager" decoding="async" />
                 <span class="scanbar"></span>
                 <span class="reg tl"></span>
                 <span class="reg tr"></span>

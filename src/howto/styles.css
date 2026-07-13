@@ -142,9 +142,11 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  flex: 0 0 auto;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .brand-pill,
@@ -161,10 +163,15 @@ textarea {
 }
 
 .brand-pill {
-  padding: 5px 8px;
-  background: var(--warn);
-  border: 1.5px solid var(--fg);
-  color: var(--ink);
+  flex: 0 0 auto;
+  padding: 4px 7px;
+  border-radius: 0;
+  background: transparent;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
 }
 
 .nav-links {
@@ -3215,4 +3222,290 @@ body::before {
   bottom: 6px;
   right: 6px;
   border-width: 0 2px 2px 0;
+}
+
+/* Deploy manual */
+.deploy-manual {
+  min-height: 100vh;
+  position: relative;
+  padding: 2rem 0 5rem;
+  background: #0c0f0d;
+  color: #e7f3ea;
+  overflow: hidden;
+}
+
+.deploy-atmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.04) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(34, 255, 136, 0.035) 0 1px, transparent 1px 32px),
+    radial-gradient(120% 90% at 50% 20%, transparent 40%, rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+}
+
+.deploy-wrap {
+  position: relative;
+  width: min(1080px, calc(100vw - 48px));
+  margin: 0 auto;
+}
+
+.deploy-topbar,
+.deploy-lesson-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.8rem 1rem;
+  border: 1px solid #1f2a24;
+  background: #0f1311;
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: #22ff88;
+}
+
+.deploy-topbar span span,
+.deploy-lesson-topbar span span {
+  color: #9c9384;
+}
+
+.deploy-topbar a,
+.deploy-lesson-topbar a {
+  color: #ffd43b;
+  text-decoration: none;
+}
+
+.deploy-hero {
+  padding: 4.5rem 0 2.2rem;
+}
+
+.deploy-kicker,
+.deploy-lesson-id,
+.deploy-lesson-status,
+.deploy-lesson-kicker {
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.16em;
+}
+
+.deploy-kicker,
+.deploy-lesson-kicker {
+  color: #22ff88;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.deploy-hero h1 {
+  margin: 0.5rem 0 0;
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(3rem, 8vw, 5.8rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.deploy-lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+  gap: 1.4rem;
+}
+
+.deploy-lesson-file {
+  position: relative;
+  min-height: 220px;
+  padding: 1.25rem;
+  display: grid;
+  align-content: end;
+  gap: 0.55rem;
+  border: 2px solid #241d13;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 38%), #eadfbd;
+  color: #241d13;
+  text-decoration: none;
+  box-shadow: 7px 7px 0 #c8501e;
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.deploy-lesson-file::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -1.2rem;
+  width: min(13rem, 70%);
+  height: 1.4rem;
+  background: #d8c89d;
+  border: 2px solid #241d13;
+  border-bottom: 0;
+  border-radius: 4px 10px 0 0;
+  clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
+}
+
+.deploy-lesson-file:hover {
+  transform: translateY(-3px) rotate(-0.35deg);
+  box-shadow: 9px 9px 0 #c8501e;
+}
+
+.deploy-lesson-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #ff4d4d;
+  border: 1.5px solid #ff4d4d;
+  padding: 0.18rem 0.5rem;
+  transform: rotate(-6deg);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.deploy-lesson-id {
+  color: #c8501e;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.deploy-lesson-file h2 {
+  margin: 0;
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.deploy-lesson-file p {
+  margin: 0;
+  color: #46502a;
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.deploy-lesson {
+  min-height: 100vh;
+  padding: 2rem 0 5rem;
+  background:
+    repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.035) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(34, 255, 136, 0.03) 0 1px, transparent 1px 32px),
+    #0c0f0d;
+  color: #e7f3ea;
+}
+
+.deploy-lesson-topbar,
+.deploy-lesson-hero,
+.deploy-lesson-body {
+  width: min(860px, calc(100vw - 48px));
+  margin: 0 auto;
+}
+
+.deploy-lesson-hero {
+  padding: 4.5rem 0 2.5rem;
+}
+
+.deploy-lesson-hero h1 {
+  margin: 0.55rem 0 1rem;
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(2.7rem, 7vw, 5.4rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.deploy-lesson-hero p {
+  max-width: 42rem;
+  margin: 0;
+  color: #cfc7b5;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.deploy-lesson-body {
+  display: grid;
+  gap: 1.3rem;
+}
+
+.deploy-lesson-body section {
+  padding: 1.35rem;
+  border: 1px solid #1f2a24;
+  background: rgba(15, 19, 17, 0.9);
+}
+
+.deploy-lesson-body h2,
+.deploy-lesson-body h3 {
+  margin: 0 0 0.8rem;
+  line-height: 1.25;
+}
+
+.deploy-lesson-body h2 {
+  color: #ffd43b;
+  font-size: 1.45rem;
+}
+
+.deploy-lesson-body h3 {
+  color: #22ff88;
+  font-size: 1rem;
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+.deploy-lesson-body p,
+.deploy-lesson-body li {
+  color: #e7f3ea;
+  line-height: 1.85;
+}
+
+.deploy-lesson-body code {
+  color: #ffd43b;
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+.deploy-lesson-body pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid #2c3d33;
+  background: #08120c;
+  color: #e7f3ea;
+}
+
+.deploy-table-wrap {
+  overflow-x: auto;
+}
+
+.deploy-lesson-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0 1rem;
+  font-size: 0.92rem;
+}
+
+.deploy-lesson-body th,
+.deploy-lesson-body td {
+  padding: 0.65rem;
+  border: 1px solid #2c3d33;
+  text-align: left;
+}
+
+.deploy-lesson-body th {
+  color: #22ff88;
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+.deploy-lesson-body blockquote {
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid #ff4d4d;
+  background: #08120c;
+  color: #ffd43b;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 640px) {
+  .deploy-wrap,
+  .deploy-lesson-topbar,
+  .deploy-lesson-hero,
+  .deploy-lesson-body {
+    width: min(100% - 28px, 860px);
+  }
+
+  .deploy-hero {
+    padding-top: 3rem;
+  }
+
+  .deploy-lesson-file {
+    min-height: 190px;
+  }
 }

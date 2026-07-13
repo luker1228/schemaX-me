@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { DeployIndexPage } from "../../../howto/components/deploy/deploy-index-page.jsx";
+import "../../../howto/styles.css";
+---
+
+<BaseLayout title="部署战术手册 · schemaX" description="部署战术手册:从 Docker 镜像到生产部署的实战课程。">
+  <DeployIndexPage client:load />
+</BaseLayout>

@@ -17,12 +17,12 @@ const manuals = [
   },
   {
     code: "FM-02",
-    stamp: "待解密",
-    stampImage: withBase("images/brand/stamps/stamp-uncracked.svg"),
+    stamp: "已解密",
+    stampImage: withBase("images/brand/stamps/stamp-cracked.svg"),
     title: "部署战术手册",
     copy: "把应用安全地推上线:环境变量、CI/CD、容器、域名与运维排错。",
-    meta: "待部署 · 内容整理中",
-    href: ""
+    meta: "Docker · 镜像 · 配置 · K8s →",
+    href: withBase("howto/deploy/")
   }
 ];
 ---
@@ -182,11 +182,13 @@ const manuals = [
     border: 0;
     color: #e7f3ea !important;
     font-family: var(--font-mono) !important;
-    font-size: 0.92rem !important;
+    font-size: clamp(0.78rem, 2.8vw, 0.92rem) !important;
     line-height: 1.25 !important;
     text-align: center;
     text-transform: none !important;
     letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: visible;
   }
   .manual-status-stamp {
     position: absolute;
@@ -324,6 +326,7 @@ const manuals = [
     line-height: 1.25;
     text-align: center;
     letter-spacing: 0.04em;
+    white-space: nowrap;
   }
   .manual-launch-log {
     width: min(340px, 100%);

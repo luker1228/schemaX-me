@@ -2697,8 +2697,9 @@ main {
   inset: 0;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
-  opacity: 0.06;
+  background-size: min(62%, 340px) auto;
+  opacity: 0.16;
+  filter: saturate(0.75) brightness(1.1);
   pointer-events: none;
 }
 .dossier-stat {
