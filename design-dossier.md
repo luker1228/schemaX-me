@@ -1,126 +1,239 @@
-# DOSSIER 设计系统 · 最强人类大模型 LUKE 机密档案
+# DOSSIER 设计系统 · Luke Cyber Zine Archive
 
-> `design.md` 是「复古开发者实验室」基底;本文档是叠加在它之上的**机密档案**皮肤
-> (路线 **C 赛博档案 + A 终端启动** 融合)。外壳是终端(开机/解密),里面是档案
-> (ID 卡 + 属性矩阵 + 涂黑记录)。slogan「人类大模型 · Luke」是档案上的**型号代号**,
-> 「最强」是**评级印章**——它不再是营销文案,而是档案本身的一部分。
+> `design.md` 是「复古开发者实验室」底盘。本文档不是简单续一层“机密档案”皮肤，而是把它推进成一套更完整的
+> **cyberpunk + zine + retroui** 首页/专题语法。
+>
+> 终端依然是查看器，档案依然是内容主体，但现在要加入：
+>
+> - zine 的拼贴、碰撞、脚注、裁切
+> - retroui 的窗口栏、按钮、状态灯、硬阴影
+> - cyberpunk 的扫描、警示、荧光、系统编号
 
 ---
 
 ## 0. 世界观锚点
 
-```
-档案编号:  FILE #LXM-0001
-对象代号:  LUKE
-型号:      HLM-1  (Human Large Model)
-能力评级:  ◉ OMEGA   ← "最强"
-机密等级:  绝密 / CLASSIFIED
-当前状态:  ONLINE
+```txt
+ARCHIVE ID:   LXM-0001
+SUBJECT:      LUKE
+MODEL:        HLM-1  / Human Large Model
+ISSUE:        03
+STATUS:       ONLINE
+CLEARANCE:    OMEGA / CLASSIFIED
 ```
 
-整站语法:**终端是「查看器/解密器」,档案是「正在被阅读的内容」**。
-视觉 = 黑底终端里打开一份绿色字符的数字档案。A 负责"开机解密"叙事,C 负责"读档"结构。
+整站语法从原来的“正在读一份数字档案”升级为：
+
+> **你正在浏览一套地下实验室公开给外部世界的混合媒介档案。**
+
+它既像：
+
+- 一台旧机器正在启动
+- 一份被多次复印、贴标、重审的技术档案
+- 一本独立刊物式的个人实验室索引
 
 ---
 
-## 1. 配色 Token(追加在 `global.css` `:root`)
+## 1. 风格定义
 
-基底沿用 `design.md`,只追加档案语义色:
+### 不是
 
-| Token | Hex | 语义 | 对应 IP 角色 |
-|---|---:|---|---|
-| `--phosphor` | `#22ff88` | 终端/解密/数据(主导氛围) | 绿眼镜 |
-| `--phosphor-dim` | `#0f6b3c` | 弱化绿、进度槽底 | — |
-| `--classified` | `#ff4d4d` | 绝密印章 / 涂黑 REDACTED | — |
-| `--yellow` | `#ffd43b` | 机密等级 / 警示 / OMEGA 评级 | 黄皮肤 |
-| `--purple`(`--ai`) | `#b678ff` | AI / 实验模块 | 紫风衣 |
-| `--cyan` | `#00d4ff` | 链接 | — |
+- 不是纯黑客终端页
+- 不是纯赛博夜店海报
+- 不是全页面做旧的复古玩具站
 
-**原则**:绿主导氛围,黄做等级,红只点印章/涂黑,紫给 AI 板块。IP 的 4 色(黄/黑/绿/紫)
-与语义天然对齐,角色放进档案不违和。配比参考 `design.md`:黑灰 75% / 文字 15% / 彩色 10%。
+### 是
+
+- **Cyberpunk** 负责危险感、在线感、扫描感
+- **Zine** 负责版式冲突、脚注、编号、拼贴
+- **RetroUI** 负责信息结构、按钮逻辑、窗口 chrome
+
+一句话：
+
+> **外层像系统，内层像杂志，交互像旧机器。**
 
 ---
 
-## 2. Motif 系统(档案感的灵魂细节)
+## 2. 配色 Token
+
+在 `design.md` 基础上，dossier 层优先使用以下语义色：
+
+| Token | Hex | 语义 |
+|---|---:|---|
+| `--ink` | `#111111` | 页面主底色 |
+| `--ink-2` | `#1a1a1a` | panel / chrome |
+| `--paper` | `#f3eadb` | 浅底块 / 纸张感文字区 |
+| `--paper-dim` | `#c8beaf` | 注释 / 脚注 |
+| `--phosphor` | `#22ff88` | 扫描、在线、数据 |
+| `--acid` | `#ffd43b` | 编号、CTA、标签、荧光笔 |
+| `--classified` | `#ff4d4d` | 印章、错误、REDACTED |
+| `--cyan` | `#00d4ff` | 链接、悬停、辅助电光 |
+| `--violet` | `#b678ff` | AI / 实验模块，小比例 |
+
+### 比例建议
+
+- 黑灰与炭色：65%
+- 纸白与正文：15%
+- 荧光强调：20%
+
+### 使用规则
+
+- `phosphor + acid` 是默认双核
+- `classified` 只打点，不铺满
+- `paper` 只用于局部“纸片/档案页”，不要把全站洗成浅底
+
+---
+
+## 3. Motif 系统
 
 | Motif | 实现 | 用途 |
 |---|---|---|
-| **开机解密层** `.dossier-boot` | `position:fixed;inset:0;z-index:9500` + 打字机日志 + 进度条 | 首次进站播放一次,`sessionStorage` 去重,可点击跳过,6s 兜底,`prefers-reduced-motion` 直达 |
-| **扫描线 + 暗角** `.dossier-atmosphere` | `repeating-linear-gradient` + radial vignette,hero 内绝对定位 | 氛围叠层(只覆盖 hero,不污染正文页) |
-| **扫描光带** `.dossier-photo .scanbar` | 头像框内横向 `@keyframes` 光带循环 | "主体成像"扫描感 |
-| **红色印章** `.dossier-stamp` | 旋转空心描边字 `rotate(-12deg)` | `绝密` / `OMEGA` 斜盖角落 |
-| **涂黑** `.dossier-redacted` | 红色块遮文字,hover 揭示 | easter egg / 草稿 / 预告 |
-| **四角对位** `.dossier-corner` / `.reg` | L 形描边角 | 文件框/照片框的"取景器"感 |
-| **属性条** `.dossier-bar i` | 条纹绿条 + 发光,JS 设宽触发过渡 | 能力矩阵 RPG 感 |
-| **状态闪烁** `.dossier-dot` / `.cur` | `steps()` 呼吸动画 | `● REC` / `● ONLINE` / 光标 |
+| **boot layer** `.dossier-boot` | 固定层 + 打字日志 + 进度条 | 首次开机叙事 |
+| **window chrome** `.dossier-window` | 顶部控制条 + 像素灯 + panel body | retroui 骨架 |
+| **scanline field** `.dossier-atmosphere` | 轻扫描线 + 暗角 + 噪点 | hero 氛围层 |
+| **issue label** `.dossier-issue` | 大编号 / 小字脚注 / 扭转贴纸 | zine 层次 |
+| **redacted strip** `.dossier-redacted` | 红块涂黑或 hover reveal | 档案感 + 彩蛋 |
+| **acid marker** `.dossier-highlight` | 黄底高亮条 / 下划线 | 重点句 |
+| **offset shadow** `.dossier-hard-shadow` | `4px 4px 0 var(--acid)` | retroui 触感 |
+| **corner registration** `.dossier-reg` | 四角 L 形对位 | 取景/印刷定位 |
+| **status dot** `.dossier-dot` | `ONLINE / REC / LIVE` 闪烁点 | 系统状态 |
+| **footnote rail** `.dossier-note` | 边注 / 竖排 meta / 小字说明 | zine 的阅读层次 |
 
 ---
 
-## 3. IP 图片分配表
+## 4. 首页 Hero 的新语法
 
-`assets/ip/` → `public/images/ip/`(ASCII 名,避开中文文件名 Vite import 风险):
+Hero 不再只是“终端里的一张档案卡”，而是 3 层叠加：
 
-| 源文件 | 落点 | 处理 |
+### 第 1 层：系统外壳
+
+- 顶部状态条
+- 左上角 archive id / issue
+- 右上角 clearance / online 状态
+- 窗口 chrome 或启动条
+
+### 第 2 层：主体档案
+
+- 头像或半身立绘放入扫描框
+- 中央为 `LUKE / HLM-1 / Human Large Model`
+- 评级印章 `OMEGA`
+- 1 个主 CTA + 1 个次 CTA
+
+### 第 3 层：zine 拼贴
+
+- 大号倾斜编号，如 `03`
+- issue 贴角
+- 一个脚注块或边注块
+- 一条黄底 marker slogan，而不是普通副标题
+
+Hero 目标：
+
+> 第一眼是强辨识，第二眼是可读，第三眼才是细节可玩。
+
+---
+
+## 5. Slogan 落位
+
+`人类大模型 Luke` 不该作为常规品牌口号飘在 hero 上，而应嵌入系统字段。
+
+推荐落位：
+
+- 型号字段：`HLM-1 / Human Large Model`
+- 贴纸字段：`human-scale intelligence`
+- 高亮句：`你的硅基同类，还保留人类的审美故障`
+- 状态条：`luke@human-llm:~$`
+
+`最强` 也不再是营销词，而是：
+
+- 评级章
+- issue tag
+- 彩蛋 footnote
+
+---
+
+## 6. 版面扩张策略
+
+当前 dossier 语言已经铺进首页 hero。下一步不建议“整页全都变成同一种档案卡”，而要做节奏分层：
+
+| 现有板块 | 新命名建议 | 处理方向 |
 |---|---|---|
-| `头像.png` → `portrait.png` | Hero 主体识别卡 · 主扫描立绘;同时 `cp` 回 `assets/luke2.png` 供 Header/Footer/Blog 复用 | 扫描框 + 光带 + 四角 |
-| `线条.png` → `blueprint.png` | 能力矩阵背景蓝图叠层(`opacity:.06`) | 技术图纸感,点睛 |
-| `海报.png`(护目镜) | (待接)Hero 装备形态切换 / 404 | 扫描模式 |
-| `基础.png` | (待接)About · 心理画像卷首 | 标准 |
-| `长身.png` | (待接)About 全身扫描 | 全身框 |
-| `尖头发侧面.png` | (待接)属性矩阵侧栏小图 | 侧脸变体 |
-| `头部元素.png` | (待接)loading / 章节分隔 / favicon | 碎片 |
-| `橘色.png` | (待接)"备用型号 HLM-1β"彩蛋 | 橙青配色 |
-| `儿童画.png` | (待接)"早期训练样本 v0.1"彩蛋 | 藏底 |
+| Featured Works | `DEPLOYED ASSETS` | 用窗口卡 + 编号 |
+| Frontend Guide | `TRAINING PROTOCOLS` | 用 issue 卡 + 步骤轨道 |
+| Product Demo | `FIELD PROTOTYPES` | 用控制台 / 终端面板 |
+| 技术栈 marquee | `SIGNAL BAND` | 做成 ticker，不必删 |
+| Footer / About | `TRANSMISSION` | 做成通讯区和脚注区 |
+
+核心原则：
+
+- hero 最强戏剧性
+- 中段收回到结构化 panel
+- 局部再插入 zine 撞版
+
+不要让用户从头到尾都在打一场视觉仗。
 
 ---
 
-## 4. Slogan 落点
+## 7. 图片与资产分配
 
-`人类大模型 · Luke` 当**档案字段**,不当广告语:
+建议沿用 `public/images/ip/` 的 ASCII 命名策略，并按角色分工：
 
-- Hero ID 卡:型号 `HLM-1 · 人类大模型` + 代号 `LUKE`
-- 评级印章:`◉ OMEGA · 最强`
-- slogan 引用条:「你好,我是人类大模型 Luke。你的硅基同类。」(左磷光绿竖线)
-- 底部状态栏:`luke@human-llm:~$_`
+| 资产 | 建议用途 |
+|---|---|
+| `portrait.png` | Hero 主体扫描框 / about |
+| `blueprint.png` | matrix / 背景蓝图 / panel 叠层 |
+| `goggles-poster.png` | 404 / 彩蛋 / alt hero |
+| `full-body.png` | about 页或 profile 页 |
+| `head-fragment.png` | favicon / loading / sticker |
 
----
+处理原则：
 
-## 5. 已落地组件清单
-
-- [x] 开机解密层(`dossier-boot` + `is:inline` 脚本)
-- [x] 顶部状态条(`dossier-topbar` · `luke@human-llm` + `● REC` + `绝密` + `◉ OMEGA`)
-- [x] 主体识别 ID 卡(`dossier-id` · 头像扫描 + 字段 + 双印章 + slogan + 双按钮)
-- [x] 能力矩阵(`dossier-matrix` · 6 条属性条 + 蓝图底纹)
-- [x] 外勤记录(`dossier-records` · 最新 3 篇真实文章 + 1 条 REDACTED 彩蛋)
-- [x] 配色 token + motif CSS(纯追加进 `global.css`,全部 scope 在 `.dossier` 下)
-- [x] 图片入站 `public/images/ip/`
+- 不裸放在白底里
+- 包进窗口、扫描框、纸片或 panel
+- 图像边缘优先硬切，不做柔雾融合
 
 ---
 
-## 6. 后续待铺(路线图)
+## 8. 交互与动效
 
-当前只换了**首页 Hero**;SiteHeader/Footer 和下方既有板块(技术栈 marquee / Featured Works /
-Frontend Guide / Product Demo)保留原样,可按需继续"档案化":
+允许：
 
-| 现有板块 | 档案化命名 | 下一步 |
-|---|---|---|
-| 技术栈 marquee | 合并进 CAPABILITY MATRIX(或保留为终端滚动条) | 决定去留 |
-| Featured Works | DEPLOYED ASSETS · 部署资产 | 套 `.dossier-panel` + 编号 |
-| Frontend Guide | TRAINING PROTOCOLS · 训练协议 | 步骤 → 训练模块 |
-| Product Demo | FIELD PROTOTYPES · 外勤原型机 | 终端窗口升级为解密终端 |
-| SiteHeader | 终端 chrome 化(品牌 → `luke@human-llm:~$`) | 可选 |
-| SiteFooter / About | TRANSMISSION · 加密通讯 + PSYCHE PROFILE | 可选 |
-| 404 | "ACCESS DENIED / FILE NOT FOUND" 用护目镜立绘 | 彩蛋 |
+- 开机层
+- 扫描光带
+- 轻微 hover 位移
+- 状态灯闪烁
+- ticker / marquee
+- typed boot log
 
-**决策点**:档案皮肤是只铺在 Hero(目前),还是往下铺满首页、甚至全站?
-→ 见对话结论,按需推进。
+不建议：
+
+- 大幅度 parallax
+- 连续 glitch 抖动
+- 整站满屏扫描线
+- 高强度 flicker
+
+动效应像设备在运作，不像页面在炫技。
 
 ---
 
-## 7. 设计禁忌(继承 `design.md` 并强化)
+## 9. 设计禁忌
 
-- 不破坏正文页可读性:扫描线/暗角**只覆盖 hero**,不全局铺。
-- 开机动画**可跳过、可去重、有兜底**,不能阻塞内容(失败也要显形)。
-- 红色只用于印章/涂黑,不滥用。
-- 不引入玻璃拟态、大圆角、柔和大阴影(继承 design.md)。
-- 中文文件名不直接走 Vite import → 统一放 `public/images/ip/`。
+- 不把 `zine` 做成满屏胶带和碎贴纸
+- 不把 `cyberpunk` 做成蓝紫霓虹渐变
+- 不把 `retroui` 做成儿童像素游戏 UI
+- 不给正文阅读区加重扫描线和低对比噪点
+- 不把所有 section 都封在同一种厚边框盒子里
+- 不使用大圆角、玻璃拟态、柔和现代阴影
+
+---
+
+## 10. 决策原则
+
+如果需要在“更酷”和“更清楚”之间选：
+
+- 首页首屏：先保辨识度
+- 内容正文：先保可读性
+- CTA：先保可操作性
+
+判断是否做对的标准不是“够不够赛博”，而是：
+
+> **这是不是 Luke 的世界，而不是任意一个赛博模板。**

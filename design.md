@@ -1,618 +1,246 @@
-# Luke Lab Design System
-
-> Luke Lab 是一个个人技术实验室：收集技术写作、前端教学和可运行 Demo。视觉方向参考复古开发者工具站点：黑色背景、硬边框、彩色强调色、终端感、像素感、作品陈列感。
-
+---
+name: Luke Lab
+description: A hacker's classified dossier — cyberpunk retro, AI-model persona, most wanted in digital space.
+colors:
+  carbon-black: "#171717"
+  deep-void: "#111111"
+  panel-strong: "#1d1d1d"
+  panel-muted: "#242424"
+  iron-border: "#333333"
+  aged-ivory: "#f6ead6"
+  mortar-gray: "#9c9384"
+  wanted-yellow: "#ffd43b"
+  cold-wire-cyan: "#00d4ff"
+  phosphor-green: "#00d26a"
+  neural-violet: "#b678ff"
+  alert-red: "#ff4d4d"
+typography:
+  display:
+    fontFamily: '"Arial Black", "Archivo Black", Impact, sans-serif'
+    fontSize: "clamp(3rem, 9vw, 6.5rem)"
+    fontWeight: 900
+    lineHeight: 0.88
+    letterSpacing: "0.02em"
+  headline:
+    fontFamily: '"Arial Black", "Archivo Black", Impact, sans-serif'
+    fontSize: "clamp(1.7rem, 4vw, 2.8rem)"
+    fontWeight: 900
+    lineHeight: 0.95
+    letterSpacing: "0.02em"
+  title:
+    fontFamily: '"Arial Black", "Archivo Black", Impact, sans-serif'
+    fontSize: "clamp(1.2rem, 2vw, 1.7rem)"
+    fontWeight: 900
+    lineHeight: 1.05
+    letterSpacing: "0.02em"
+  body:
+    fontFamily: '"Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif'
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: 1.7
+  label:
+    fontFamily: '"SFMono-Regular", "JetBrains Mono", Consolas, monospace'
+    fontSize: "0.78rem"
+    fontWeight: 700
+    letterSpacing: "0.08em"
+rounded:
+  none: "0px"
+  pill: "999px"
+spacing:
+  xs: "0.5rem"
+  sm: "0.9rem"
+  md: "1.35rem"
+  lg: "2rem"
+  xl: "4.5rem"
+components:
+  button-primary:
+    backgroundColor: "{colors.wanted-yellow}"
+    textColor: "{colors.deep-void}"
+    rounded: "{rounded.none}"
+    padding: "0.85rem 1.05rem"
+  button-primary-hover:
+    backgroundColor: "{colors.wanted-yellow}"
+    textColor: "{colors.deep-void}"
+    rounded: "{rounded.none}"
+    padding: "0.85rem 1.05rem"
+  button-secondary:
+    backgroundColor: "{colors.panel-strong}"
+    textColor: "{colors.aged-ivory}"
+    rounded: "{rounded.none}"
+    padding: "0.85rem 1.05rem"
+  nav-link:
+    backgroundColor: "{colors.deep-void}"
+    textColor: "{colors.aged-ivory}"
+    rounded: "{rounded.none}"
+    padding: "0.5rem 0.8rem"
+  nav-link-active:
+    backgroundColor: "{colors.wanted-yellow}"
+    textColor: "{colors.deep-void}"
+    rounded: "{rounded.none}"
+    padding: "0.5rem 0.8rem"
+  work-card:
+    backgroundColor: "{colors.deep-void}"
+    textColor: "{colors.aged-ivory}"
+    rounded: "{rounded.none}"
+    padding: "{spacing.md}"
+  stat-box:
+    backgroundColor: "{colors.panel-strong}"
+    textColor: "{colors.aged-ivory}"
+    rounded: "{rounded.none}"
+    padding: "0.85rem 0.95rem"
 ---
 
-## 1. 设计关键词
+# Design System: Luke Lab
 
-```txt
-Retro Developer / Indie Hacker / Personal Lab / Engineering Playground
-```
+## 1. Overview
 
-Luke Lab 不需要像传统 SaaS 官网那样干净、圆润、商业化，而应该更像一个“工程师的实验室”。整体气质是：
+**Creative North Star: "The Wanted Dossier"**
 
-- 黑底高对比
-- 复古像素感
-- 无圆角或极小圆角
-- 终端 / Dashboard / Code Window 氛围
-- 彩色标签与错位阴影
-- 作品集陈列，而不是产品营销页
+Luke Lab is a classified intelligence file on a self-styled AI model — the most wanted entity in a hacker's cyberpunk world. The interface is not a portfolio. It is a dossier: dark terminals, hardwired transmissions, redacted fields, colored offset shadows that read like physical stamps. The premise is taken seriously enough to make it feel real. Luke is both the subject of the file and the person who built it.
 
----
+The visual language is cyberpunk-retro: carbon black backgrounds, aged-ivory text that feels like a transmission received on a CRT, and high-saturation accent colors deployed with military discipline — each one assigned a signal role in the information hierarchy, like category markers on a mission board. Typography is compressed and uppercase for display work, functional and legible for body prose. There are no decorative flourishes. Every element earns its presence.
 
-## 2. 配色解读
+This system is dark because the scenario demands it: an operator's dossier, read under operational conditions. Not dark because "tools look cool dark." Not dark to signal seriousness. Dark because the narrative requires it. The Tactics Manual sub-theme (`src/howto/styles.css`) inverts this — warm bone-paper cream, terracotta accent — and should be treated as a separate surface entirely: same structural rules, different atmospheric register.
 
-参考图的核心配色不是“多彩”，而是：
+**What this system explicitly rejects:**
+- Commercial SaaS landing pages with gradient heroes, rounded cards, and metric stat grids
+- Glassmorphism and decorative backdrop-filter blur
+- Soft drop shadows and ambient glow as default elevation
+- Gradient text (`background-clip: text`)
+- Multiple accent colors on a single surface
+- Generic AI product marketing aesthetics
+- Pure `#000000` backgrounds
 
-> 大面积黑灰背景 + 米白文字 + 少量高饱和彩色强调。
+**Key Characteristics:**
+- Zero border-radius throughout (pill tags at 999px are the sole exception)
+- Hard offset box-shadow as the only elevation mechanism: colored, crisp, zero blur
+- Monospace uppercase labels everywhere metadata appears
+- Display type compressed to line-height 0.88–0.95, always uppercase
+- Five named accent colors, each assigned to one content category
+- Faint dot-grid background at the body level — a data-space underlay
+- System font stack for body/label: no web font loaded, bilingual-safe
 
-这种配色的好处是：
+## 2. Colors: The Signal Palette
 
-1. 黑色背景让页面有开发者工具感。
-2. 米白文字比纯白更复古，也更柔和。
-3. 彩色强调色用于标签、按钮、边框、阴影和分类识别。
-4. 每个模块只使用一种强调色，避免页面变花。
+Five accent channels on a carbon substrate. Grounds are the dark infrastructure. Signals are the content identifiers. The two groups never compete — Grounds recede, Signals assert.
 
----
+### Primary
+- **Wanted Yellow** (`#ffd43b`): The primary action color. Active nav state, primary buttons, Writing content work cards, guide step indices, `::selection` highlight. Yellow means "act here" or "this is the Writing category." Its rarity is the point.
 
-## 3. 色彩 Token
+### Secondary
+- **Cold Wire Cyan** (`#00d4ff`): Frontend, links, the about-visual offset frame shadow, dossier ghost-button hover, and accent for Frontend Guide content. Evokes cold data transmission and electric signal.
 
-### 3.1 基础色
+### Tertiary
+- **Phosphor Green** (`#00d26a`): Running states, Deploy content, success indicators, dossier progress bars, terminal glow. Named after the phosphor coating of old CRT monitors — the color of a live system.
+- **Neural Violet** (`#b678ff`): AI content, experimental work, lab portrait background tint, work card shadow variant for generative projects.
+- **Alert Red** (`#ff4d4d`): Classified stamps, error states, the dossier pulse dot, fault conditions. Used only where the interface must signal restriction or danger.
 
-| Token | Hex | 用途 |
-|---|---:|---|
-| `--bg` | `#171717` | 页面主背景 |
-| `--bg-deep` | `#0f0f0f` | 更深的区块背景、Footer |
-| `--panel` | `#111111` | 卡片、代码窗口、内容面板 |
-| `--panel-2` | `#1d1d1d` | 次级面板、hover 背景 |
-| `--border` | `#333333` | 边框、分割线 |
-| `--border-soft` | `#262626` | 弱边框 |
+### Neutral
+- **Carbon Black** (`#171717`): Page background. Not pure black — the faintest warmth prevents the heavy-black look. The operational floor.
+- **Deep Void** (`#111111`): Card and content surface. One step deeper than Carbon Black.
+- **Panel Strong** (`#1d1d1d`): Interactive surfaces — nav background, hovered surfaces, stat boxes.
+- **Panel Muted** (`#242424`): Secondary panels, code backgrounds, deeply nested surfaces.
+- **Iron Border** (`#333333`): All borders and dividers. High enough contrast on carbon to read without being loud.
+- **Aged Ivory** (`#f6ead6`): Primary text. Warm tint — never pure white. The slightly yellowed quality evokes a document that has been read many times.
+- **Mortar Gray** (`#9c9384`): Secondary text, metadata, labels, muted copy. Warm gray — aged, not sterile.
 
-### 3.2 文字色
+### Named Rules
+**The One Channel Rule.** Each accent color is the sole identifier for its content category: Yellow = Writing, Cyan = Frontend, Green = Deploy/Live, Violet = AI, Red = Alert. Do not reassign. Do not mix channels on a single surface. The color is the category. Its scarcity is its meaning.
 
-| Token | Hex | 用途 |
-|---|---:|---|
-| `--text` | `#f6ead6` | 主标题、正文高亮文字 |
-| `--text-strong` | `#fffaf0` | 特别强调文字 |
-| `--muted` | `#9c9384` | 副标题、说明文字 |
-| `--muted-2` | `#6f6a60` | 时间、辅助信息、脚注 |
+**The Carbon Floor Rule.** The background is always Carbon Black (`#171717`). Never `#000000` — pure black feels valueless. Never dark blue or dark teal — the domain reflex is the enemy. The floor must not have a recognizable genre.
 
-### 3.3 强调色
+## 3. Typography
 
-| Token | Hex | 用途 |
-|---|---:|---|
-| `--yellow` | `#ffd43b` | 主按钮、技术博客、重点 CTA |
-| `--cyan` | `#00d4ff` | 前端教学、链接、科技感强调 |
-| `--green` | `#00d26a` | Demo、成功状态、运行中状态 |
-| `--purple` | `#b678ff` | AI、实验性内容、特殊模块 |
-| `--red` | `#ff4d4d` | 警示、错误、强调标签 |
-| `--orange` | `#e5a425` | 次级强调、步骤编号 |
-| `--blue` | `#1ab2de` | 信息提示、数据图表 |
+**Display Font:** Arial Black / Archivo Black (Impact as last resort, sans-serif)
+**Body Font:** Avenir Next / Segoe UI / PingFang SC / Hiragino Sans GB (system stack)
+**Label / Mono Font:** SFMono-Regular / JetBrains Mono / Consolas (monospace)
 
----
+**Character:** Display type is blunt-force — no curvature, compressed tracking, line-height under 1. It prints like a rubber stamp. Body type is neutral and fast: system-font only, handles Chinese/English without font-switching artifacts. Mono is everywhere metadata lives — dates, labels, nav items, breadcrumbs — it signals "this is data, not prose."
 
-## 4. 推荐 CSS 变量
+### Hierarchy
+- **Display** (900 weight, `clamp(3rem, 9vw, 6.5rem)`, line-height 0.88, tracking 0.02em): Hero titles and page-level identifiers. Uppercase. One instance maximum per screen.
+- **Headline** (900 weight, `clamp(1.7rem, 4vw, 2.8rem)`, line-height 0.95, tracking 0.02em): Section headings. Uppercase.
+- **Title** (900 weight, `clamp(1.2rem, 2vw, 1.7rem)`, line-height 1.05): Card headings, post titles. Uppercase.
+- **Body** (400 weight, 1rem, line-height 1.7): Prose and descriptions. Max 44rem line length (approximately 65ch). System font only — never a loaded web font.
+- **Label** (700 weight, 0.78rem, tracking 0.08em, uppercase, monospace): All metadata — dates, tags, nav links, breadcrumbs, kickers, stat labels. The operational readout voice.
 
-```css
-:root {
-  color-scheme: dark;
+### Named Rules
+**The Uppercase Display Rule.** Any text using the display font (Arial Black / Archivo Black) is uppercase. Sentence-case in the display font is a mistake, not a choice.
 
-  --bg: #171717;
-  --bg-deep: #0f0f0f;
-  --panel: #111111;
-  --panel-2: #1d1d1d;
+**The Body Stack Rule.** Body text must never load a remote font. The system stack renders instantly across platforms and handles bilingual content correctly without Chinese-character fallback artifacts.
 
-  --text: #f6ead6;
-  --text-strong: #fffaf0;
-  --muted: #9c9384;
-  --muted-2: #6f6a60;
+**The Mono Label Rule.** Any text smaller than 0.85rem carrying metadata is monospace and uppercase. Lowercase proportional type at label scale signals a decision that was not made.
 
-  --border: #333333;
-  --border-soft: #262626;
+## 4. Elevation
 
-  --yellow: #ffd43b;
-  --cyan: #00d4ff;
-  --green: #00d26a;
-  --purple: #b678ff;
-  --red: #ff4d4d;
-  --orange: #e5a425;
-  --blue: #1ab2de;
+No soft shadows exist in this system. The only elevation mechanism is the **hard offset shadow**: `box-shadow: Npx Npx 0 [color]`, zero blur radius. The shadow is a displaced color block — it reads like a stamp offset or a risograph misprint, not a floating card. Documents stacked; papers pressed; corners visible.
 
-  --shadow-size: 6px;
-  --radius: 0px;
-}
-```
+Surfaces are flat at rest. Interaction triggers the offset. The hover pattern is consistent across the entire system: `transform: translate(-2px, -2px)` while `box-shadow` expands — the element appears to physically lift while its shadow stays behind.
 
----
+### Shadow Vocabulary
+- **Hover lift** (`transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor; transition: 120ms ease`): Nav links, post cards, category cards, archive items, buttons. Uses `currentColor` so elements inherit their own shadow color.
+- **Accent offset** (`box-shadow: 6px 6px 0 0 var(--yellow/cyan/violet)`): Work cards, stat boxes, dossier asset panels. Color hardcoded to the content category's assigned signal.
+- **Neutral offset** (`box-shadow: 8px 8px 0 0 rgba(255,255,255,0.05)`): Default surface elevation (`--shadow-md`) for editorial cards and panels. Nearly invisible — a tonal separator only.
+- **Dossier glow** (`box-shadow: 8px 8px 0 rgba(34, 255, 136, 0.1)`): Dossier panels only. Phosphor green at 10% opacity — atmospheric, not structural.
 
-## 5. 色彩使用规则
+### Named Rules
+**The No-Blur Rule.** A `box-shadow` with non-zero blur radius in a UI elevation role is prohibited. If it looks like a soft shadow, it is wrong. The only permitted blur is `filter: blur()` on purely decorative atmospheric pseudo-elements — never on interactive surfaces.
 
-### 5.1 页面背景
+**The Flat-at-Rest Rule.** No surface has a persistent elevation shadow in its default rest state, except work cards and stat boxes with named accent offsets. Everything else is flat until interaction.
 
-页面主体使用 `--bg`，不要使用纯黑 `#000000`。
+## 5. Components
 
-```css
-body {
-  background: var(--bg);
-  color: var(--text);
-}
-```
-
-原因：纯黑容易显得廉价和刺眼，`#171717` 更接近参考图中的暗灰背景。
-
----
-
-### 5.2 卡片背景
-
-卡片、代码窗口、展示面板使用 `--panel`。
-
-```css
-.card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-}
-```
-
-卡片 hover 可以使用 `--panel-2`。
-
-```css
-.card:hover {
-  background: var(--panel-2);
-}
-```
-
----
-
-### 5.3 文字层级
-
-```css
-.title {
-  color: var(--text-strong);
-}
-
-.body {
-  color: var(--text);
-}
-
-.desc {
-  color: var(--muted);
-}
-
-.meta {
-  color: var(--muted-2);
-}
-```
-
-不要大面积使用纯白。纯白只用于极少数强强调位置。
-
----
-
-## 6. 三类作品的颜色绑定
-
-Luke Lab 有三个核心入口，建议固定颜色绑定，形成长期识别。
-
-| 模块 | 颜色 | 说明 |
-|---|---|---|
-| 技术博客 / Writing | Yellow | 代表沉淀、笔记、知识输出 |
-| 前端教学 / Frontend Guide | Cyan | 代表前端、界面、学习路径 |
-| Demo 项目 / Product Demo | Green 或 Purple | 代表运行、实验、可交付产品 |
-
-推荐：
-
-```txt
-TECH WRITING      -> Yellow
-FRONTEND GUIDE    -> Cyan
-PRODUCT DEMO      -> Green
-AI / EXPERIMENT   -> Purple
-WARNING / BUG     -> Red
-```
-
----
-
-## 7. 核心组件风格
-
-### 7.1 卡片
-
-卡片是 Luke Lab 的核心组件。采用硬边框、无圆角、彩色错位阴影。
-
-```css
-.work-card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  position: relative;
-}
-
-.work-card.yellow {
-  box-shadow: var(--shadow-size) var(--shadow-size) 0 var(--yellow);
-}
-
-.work-card.cyan {
-  box-shadow: var(--shadow-size) var(--shadow-size) 0 var(--cyan);
-}
-
-.work-card.green {
-  box-shadow: var(--shadow-size) var(--shadow-size) 0 var(--green);
-}
-
-.work-card.purple {
-  box-shadow: var(--shadow-size) var(--shadow-size) 0 var(--purple);
-}
-```
-
-设计要点：
-
-- 不使用大圆角。
-- 不使用玻璃拟态。
-- 不使用柔和大阴影。
-- 阴影是“色块错位”，不是模糊阴影。
-
----
-
-### 7.2 标签 Badge
-
-标签用于区分模块和强化复古感。
-
-```css
-.badge {
-  display: inline-flex;
-  align-items: center;
-  height: 24px;
-  padding: 0 8px;
-  border: 1px solid currentColor;
-  background: var(--panel);
-  color: var(--yellow);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.badge.cyan {
-  color: var(--cyan);
-}
-
-.badge.green {
-  color: var(--green);
-}
-
-.badge.purple {
-  color: var(--purple);
-}
-```
-
----
-
-### 7.3 按钮
-
-主按钮使用黄色，保持硬朗和复古。
-
-```css
-.button-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 16px;
-  border: 1px solid var(--text-strong);
-  border-radius: 0;
-  background: var(--yellow);
-  color: #111111;
-  font-weight: 800;
-  box-shadow: 4px 4px 0 var(--text-strong);
-}
-
-.button-primary:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--text-strong);
-}
-```
-
-次级按钮使用黑底描边。
-
-```css
-.button-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 16px;
-  border: 1px solid var(--border);
-  border-radius: 0;
-  background: var(--panel);
-  color: var(--text);
-}
-
-.button-secondary:hover {
-  border-color: var(--cyan);
-  color: var(--cyan);
-}
-```
-
----
-
-### 7.4 代码窗口 / Demo 截图容器
-
-参考图中的 Dashboard 区块，可以抽象为代码窗口组件。
-
-```css
-.code-window {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  box-shadow:
-    6px 6px 0 var(--cyan),
-    12px 12px 0 var(--yellow),
-    18px 18px 0 var(--red);
-}
-
-.code-window-header {
-  height: 32px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 12px;
-}
-
-.window-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--red);
-}
-
-.window-dot.yellow {
-  background: var(--yellow);
-}
-
-.window-dot.green {
-  background: var(--green);
-}
-```
-
-这个组件适合展示：
-
-- Demo 项目截图
-- 代码片段
-- 架构图
-- 终端命令
-- 项目运行状态
-
----
-
-## 8. 首页配色分布
-
-建议按比例使用颜色：
-
-```txt
-黑灰背景：75%
-米白文字：15%
-彩色强调：10%
-```
-
-彩色不要大面积铺满，而是用于：
-
-- 小标签
-- 按钮
-- 链接 hover
-- 卡片阴影
-- 模块标题中的关键词
-- 状态点
-- 图标
-
-错误示例：
-
-```txt
-每个区块都用大面积彩色背景
-每张卡片都同时出现 4 种强调色
-标题、按钮、边框、图标全部不同颜色
-```
-
-正确示例：
-
-```txt
-一个模块只选一个强调色
-大面积保持黑灰
-用米白保证阅读
-用彩色制造记忆点
-```
-
----
-
-## 9. 字体建议
-
-整体建议使用两套字体：
-
-```txt
-标题：紧凑、粗重、有工程感
-正文：清晰、易读
-代码：等宽字体
-```
-
-CSS 示例：
-
-```css
-:root {
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-}
-
-body {
-  font-family: var(--font-sans);
-}
-
-code,
-pre,
-.terminal {
-  font-family: var(--font-mono);
-}
-```
-
-标题可以使用更紧凑的 uppercase 风格：
-
-```css
-.hero-title {
-  font-size: clamp(48px, 8vw, 96px);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  font-weight: 900;
-}
-```
-
----
-
-## 10. 布局原则
-
-### 10.1 最大宽度
-
-```css
-.container {
-  width: min(100% - 32px, 1120px);
-  margin-inline: auto;
-}
-```
-
-### 10.2 区块间距
-
-```css
-.section {
-  padding: 96px 0;
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 64px 0;
-  }
-}
-```
-
-### 10.3 网格
-
-作品卡片使用三列，移动端一列。
-
-```css
-.works-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
-@media (max-width: 900px) {
-  .works-grid {
-    grid-template-columns: 1fr;
-  }
-}
-```
-
----
-
-## 11. 页面模块建议
-
-Luke Lab 首页建议包含：
-
-```txt
-1. Header
-2. Hero
-3. Featured Works
-4. Frontend Guide Roadmap
-5. Product Demo Showcase
-6. Latest Writing
-7. About Luke
-8. Footer
-```
-
-不建议包含：
-
-```txt
-Pricing
-客户评价
-商业 SaaS 指标
-过重的营销转化模块
-```
-
-因为 Luke Lab 是个人技术实验室，不是商业产品官网。
-
----
-
-## 12. Hero 示例文案
-
-```txt
-BUILD. WRITE. TEACH. SHIP.
-
-Luke's personal lab for engineering notes, frontend learning, and runnable product demos.
-
-这里是 Luke 的个人技术实验室，收集我的技术写作、前端教学和 Demo 项目。它们来自不同方向，但共同指向一件事：把复杂问题讲清楚，把想法做成可以体验的产品。
-```
-
-按钮：
-
-```txt
-Explore Works
-View Demo
-```
-
----
-
-## 13. 三张作品卡片文案
-
-### TECH WRITING
-
-```txt
-技术博客
-记录后端工程、AI Agent、低代码平台、数据模型、部署与工程化实践。
-```
-
-颜色：`--yellow`
-
-### FRONTEND GUIDE
-
-```txt
-前端教学
-写给后端同学、设计同学和零基础学习者的前端速通手册，从 HTML、CSS 到 React 与组件思维。
-```
-
-颜色：`--cyan`
-
-### PRODUCT DEMO
-
-```txt
-Demo 项目
-展示独立完成的实验性项目和产品 Demo，用真实可运行的系统验证想法。
-```
-
-颜色：`--green` 或 `--purple`
-
----
-
-## 14. 设计禁忌
-
-Luke Lab 不建议使用：
-
-```txt
-大圆角卡片
-玻璃拟态
-大面积渐变背景
-柔和商业 SaaS 风
-浅色背景
-过多动效
-过多 emoji
-太多不同字体
-```
-
-更推荐：
-
-```txt
-硬边框
-黑灰背景
-彩色错位阴影
-小面积高饱和强调色
-代码窗口
-终端感
-像素标签
-清晰网格
-```
-
----
-
-## 15. 最终设计原则
-
-Luke Lab 的视觉系统可以概括为一句话：
-
-> 用黑灰背景承载工程感，用米白文字保证阅读，用高饱和彩色建立记忆点。
-
-更具体地说：
-
-```txt
-黑色负责氛围
-米白负责阅读
-黄色负责主 CTA
-青色负责前端与链接
-绿色负责运行和 Demo
-紫色负责实验与 AI
-红色负责警示和 Bug
-```
-
-这个配色体系能够把博客、前端教学和 Demo 项目这些不完全相关的内容统一到一个“个人技术实验室”的视觉框架里。
+### Buttons
+A button is a command, not an invitation. Zero radius. Uppercase monospace label. Interaction has weight.
+- **Shape:** 0px radius — square corners, always.
+- **Primary:** Wanted Yellow (`#ffd43b`) background, Deep Void (`#111111`) text. Padding `0.85rem 1.05rem`. Mono font, 0.84rem, 700 weight, 0.06em tracking, uppercase.
+- **Hover / Focus:** `transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor` at 120ms ease.
+- **Secondary / Ghost:** Panel Strong (`#1d1d1d`) background, Aged Ivory text. Same shape and hover behavior.
+- **Active nav state:** Full background swap to Wanted Yellow, text to Deep Void — not an underline, not a dot.
+
+### Work Cards
+The primary content unit on the Lab homepage. Flat at rest, accent-offset as a persistent named state.
+- **Corner Style:** 0px radius.
+- **Background:** Deep Void (`#111111`).
+- **Shadow Strategy:** Hardcoded accent offset — Yellow for Writing, Cyan for Frontend, Violet for AI. On hover: `translate(-2px, -2px)` and shadow grows to `8px 8px`.
+- **Border:** `1px solid #333333` at rest.
+- **Internal Padding:** `1.35rem` standard.
+
+### Navigation
+Monospace uppercase at 0.78rem, 0.08em tracking. Each link is a small bordered button (`border: 1px solid #333333; background: #111111`). Active state: full Wanted Yellow fill. Hover: translate + currentColor shadow. Reads as a mission menu, not a navigation bar.
+
+### Badges / Kickers
+Inline-flex, `border: 1px solid #333333`, signal color at 10–12% opacity background, `box-shadow: 3px 3px 0 0 #333333`. Classification markers at label scale. One accent color per variant.
+
+### Terminal Window (Signature Component)
+Dark panel (`#0c0c0c` body, `#151515` toolbar). Traffic-light stop indicators as **square** blocks — not circles. Red/Yellow/Green correspond to Alert Red, Wanted Yellow, Phosphor Green. Monospace body at `0.86rem`, phosphor-green tint (`#d6f7df`), line-height 1.8. Used for running-system demonstrations and live technical content.
+
+### Dossier Panels (Signature Component)
+Full sub-theme for the homepage dossier section: dark panels (`#0f1311`) with phosphor-green glow shadows, scan-line animations on pseudo-elements, corner registration marks, blinking cursor, and hover-to-reveal redacted fields. The visual apex of the Wanted Dossier metaphor. Never used in Howto/Tactics or editorial surfaces.
+
+### Sub-theme: Tactics Manual
+`src/howto/styles.css` defines a fully separate skin — bone-paper warm background (`#e6dcc4`), terracotta accent (`#c8501e`), dark ink text (`#241d13`), IBM Plex Mono body. Same structural rules (zero radius, hard offset shadow) but completely inverted atmospheric register: archival document against dark terminal. Treat as a sibling system, not a variant of this one.
+
+## 6. Do's and Don'ts
+
+### Do:
+- **Do** use `box-shadow: Npx Npx 0 [color]` (zero blur) for every elevation effect — hard offset only.
+- **Do** assign accent colors by content category and hold the assignment: Yellow = Writing, Cyan = Frontend, Green = Deploy, Violet = AI, Red = Alert.
+- **Do** use monospace uppercase for every label, date, kicker, breadcrumb, and nav link without exception.
+- **Do** compress display headings to `line-height: 0.88–0.95` and uppercase. The stamp-like compression is the identity.
+- **Do** apply `translate(-2px, -2px)` + shadow expansion at 120ms ease as the universal hover pattern.
+- **Do** maintain the body-level grid background (`rgba(255,255,255,0.035)` lines at 24px). It grounds the surface in a data-space register.
+- **Do** keep total accent coverage under 10% per screen. Carbon and iron dominate — color is signal, not decoration.
+- **Do** use `999px` border-radius exclusively for pill tags. The contrast against zero-radius surfaces makes pills legible as a different affordance.
+
+### Don't:
+- **Don't** use rounded corners (2px, 4px, 8px, `rounded-lg`) anywhere except `999px` pills. Zero-radius is non-negotiable.
+- **Don't** use glassmorphism (`backdrop-filter: blur` on card or overlay surfaces). Explicitly rejected.
+- **Don't** use soft blurred drop shadows. A `box-shadow` with non-zero blur in any UI elevation role is wrong.
+- **Don't** use gradient text (`background-clip: text` with a gradient fill). All text is a single solid color.
+- **Don't** build hero-metric templates: big number, supporting stats, gradient accent. Commercial SaaS cliché.
+- **Don't** use `#000000` as any background. The floor is Carbon Black (`#171717`).
+- **Don't** mix multiple accent colors on a single surface. One module, one channel.
+- **Don't** load a web font for body or label text. The system stack handles bilingual content correctly and loads instantly.
+- **Don't** use Dossier sub-theme components (scan panels, registration marks, blinking cursors, redacted fields) outside the dedicated dossier/about section.
+- **Don't** make the design "feel dark" through genre reflex — dark blue + electric neon reads as crypto; dark green reads as finance terminal. Carbon Black with warm ivory is a deliberate departure from those domain reflexes.

@@ -2,6 +2,14 @@ import { initPlaygrounds } from "./init-playgrounds.js";
 
 export function initLegacyEnhancements(root = document) {
   const cleanups = [];
+  const getElementById = (id) => {
+    if (!id) return null;
+    if (typeof root.getElementById === "function") return root.getElementById(id);
+    if (typeof root.querySelector === "function" && typeof CSS !== "undefined" && typeof CSS.escape === "function") {
+      return root.querySelector(`#${CSS.escape(id)}`);
+    }
+    return document.getElementById(id);
+  };
 
   root.querySelectorAll(".nav-links a[data-perspectives]").forEach((link) => {
     let perspectives = [];
@@ -70,7 +78,7 @@ export function initLegacyEnhancements(root = document) {
   root.querySelectorAll("[data-copy-target]").forEach((button) => {
     const handler = async () => {
       const targetId = button.getAttribute("data-copy-target");
-      const target = root.getElementById ? root.getElementById(targetId) : document.getElementById(targetId);
+      const target = getElementById(targetId);
       if (!target) return;
       try {
         await navigator.clipboard.writeText(target.textContent.trim());
@@ -152,9 +160,7 @@ export function initLegacyEnhancements(root = document) {
           }
         }
         if (bestId) {
-          const parent = bestId
-            ? root.getElementById(bestId)?.closest(".lesson-section[id]")
-            : null;
+          const parent = getElementById(bestId)?.closest(".lesson-section[id]") ?? null;
           const parentId = parent ? parent.id : null;
           links.forEach((a) => {
             const href = a.getAttribute("href")?.slice(1);

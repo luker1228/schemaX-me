@@ -25,6 +25,10 @@ src/content/
   drafts/   — 空占位目录；写作草稿已迁到主仓库 `../sources/drafts/`
   config.ts — Zod schema 定义 frontmatter，posts 和 drafts 共用同一 schema
 src/lib/content.ts — 辅助函数：getAllPosts, getPostsByCategory, getPostsBySeries
+src/howto/
+  components/frontend/legacy-content/ — 前端手册的静态 HTML 正文产物
+  components/deploy/legacy-content/   — 部署手册的静态 HTML 正文产物
+  components/deploy/deploy-legacy-page.jsx — 部署手册 HTML 正文容器
 src/pages/
   index.astro          — 首页
   posts/[...slug].astro — 文章详情页（catch-all 路由）
@@ -39,6 +43,8 @@ src/pages/
 - 所有内部链接必须使用 `import.meta.env.BASE_URL`，开发环境根路径为 `/`，生产环境保留 GitHub Pages 所需前缀
 - `src/content/drafts/` 仍保留为 Astro collection 和目录占位，但当前应视为不承载写作内容
 - 当前的草稿工作区在主仓库 `../sources/drafts/`；这里的 `drafts/` 只用于避免旧路径断裂
+- `howto` 下的长正文手册页，优先使用 `legacy-content/*.html + *LegacyPage` 渲染静态 HTML 产物；尤其是从外部仓库迁入原文时，默认先整理成 HTML 产物，不要继续手写大段 JSX 正文
+- 即使是部署手册的 HTML 正文产物，样式也优先复用 `src/howto/components/frontend` 现有这套页面结构和 CSS 约定；不要为正文内容再单独发明一套平行的长期样式体系，除非明确需要独立视觉语言
 
 ## CI/CD
 
@@ -70,3 +76,5 @@ src/pages/
 - `modelcraft` 是独立内容分组，已参与正式路由与聚合，不属于 `cs/essays`
 - 文章配图托管在腾讯 COS（`luke-1307356219.cos.ap-chongqing.myqcloud.com`），不入库
 - Markdown 转微信排版：使用 `md-cli`（https://github.com/doocs/md）
+- 部署手册正文页若内容以“文章/讲义”为主，默认走 `src/howto/components/deploy/legacy-content/*.html` + `DeployLegacyPage`；只有确实需要复杂交互时才改用 JSX 页面组件
+- 部署手册沿用 `frontend` 手册已经验证过的正文 CSS 体系时，优先复用现有 class 语义、布局骨架和样式规则；不要因为内容迁移就把同类正文拆成两套长期维护的视觉系统

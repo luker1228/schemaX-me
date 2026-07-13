@@ -53,7 +53,6 @@ if (!page || !lessonNav) {
 
     {page.kind === "legacy" ? (
       <LegacyPage
-        client:load
         title={page.title}
         html={legacyHtmlMap[page.htmlKey]}
         currentPath={lessonNav.currentPath}
@@ -66,6 +65,13 @@ if (!page || !lessonNav) {
       <ComponentsPage client:load currentPath={lessonNav.currentPath} prev={lessonNav.prev} next={lessonNav.next} />
     ) : page.kind === "prompts" ? (
       <PromptsPage client:load currentPath={lessonNav.currentPath} prev={lessonNav.prev} next={lessonNav.next} />
+    ) : null}
+
+    {page.kind === "legacy" ? (
+      <script type="module">
+        import { initLegacyEnhancements } from "../../../howto/components/frontend/legacy-enhancements.js";
+        initLegacyEnhancements(document);
+      </script>
     ) : null}
   </body>
 </html>

@@ -1,7 +1,8 @@
 ---
 import "../../../howto/styles.css";
 import DossierBridge from "./_DossierBridge.astro";
-import { DeployDockerArtifactImagePage } from "../../../howto/components/deploy/deploy-docker-artifact-image-page.jsx";
+import { DeployLegacyPage } from "../../../howto/components/deploy/deploy-legacy-page.jsx";
+import dockerArtifactImageHtml from "../../../howto/components/deploy/legacy-content/docker-artifact-image.html?raw";
 import { deployLessons, getDeployLessonNeighbors } from "../../../howto/manuals/deploy/registry.js";
 
 export function getStaticPaths() {
@@ -32,9 +33,14 @@ if (!lesson) {
     <DossierBridge crumb={lesson.slug} />
 
     {lesson.slug === "docker-artifact-image" ? (
-      <DeployDockerArtifactImagePage client:load lesson={lesson} prev={neighbors.prev} next={neighbors.next} />
+      <DeployLegacyPage title={`${lesson.title} · 部署战术手册`} html={dockerArtifactImageHtml} prev={neighbors.prev} next={neighbors.next} />
     ) : (
       <div>Unsupported deploy lesson: {lesson.slug}</div>
     )}
+
+    <script type="module">
+      import { initLegacyEnhancements } from "../../../howto/components/frontend/legacy-enhancements.js";
+      initLegacyEnhancements(document);
+    </script>
   </body>
 </html>

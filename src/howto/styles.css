@@ -680,6 +680,22 @@ textarea {
   color: var(--accent-strong);
 }
 
+.deploy-inline-label {
+  display: inline;
+  margin-right: 0.4rem;
+  color: inherit;
+  opacity: 0.72;
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.deploy-code-block {
+  min-height: 9.5rem;
+  display: flex;
+  align-items: flex-start;
+}
+
 .stats-grid,
 .card-grid,
 .chapter-grid,
@@ -1559,6 +1575,33 @@ textarea {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
+}
+
+.comparison-card + p {
+  margin-top: 1.4rem;
+}
+
+.lesson-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0 1rem;
+  font-size: 0.92rem;
+  background: var(--surface);
+}
+
+.lesson-prose th,
+.lesson-prose td {
+  padding: 0.65rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.lesson-prose th {
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  background: color-mix(in oklab, var(--surface-2) 82%, white);
 }
 
 .atlas-grid {

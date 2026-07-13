@@ -1,7 +1,36 @@
-import React, { useEffect, useRef } from "react";
-import { initLegacyEnhancements } from "./legacy-enhancements.js";
+import React from "react";
 import { withBasePath, withHowtoManualPath } from "../../lib/paths.js";
-import { PageFrame, SiteNav, StepNav } from "./site-components.jsx";
+import { StepNav } from "./site-components.jsx";
+import { LegacyPageShell } from "../shared/legacy-page-shell.jsx";
+
+const COURSES = [
+  {
+    label: "HTML",
+    href: "lesson-html.html",
+    perspectives: [
+      { text: "Markdown 对比", href: "lesson-html.html" },
+      { text: "Figma 对比", href: "lesson-html-2.html" },
+    ],
+  },
+  {
+    label: "CSS",
+    href: "lesson-css.html",
+    perspectives: [
+      { text: "CSS 基础", href: "lesson-css.html" },
+      { text: "Figma 对比", href: "lesson-css-2.html" },
+    ],
+  },
+  { label: "JavaScript", href: "lesson-js.html" },
+  { label: "组件", href: "lesson-react.html" },
+  {
+    label: "布局",
+    href: "lesson-layout.html",
+    perspectives: [
+      { text: "布局第一课：骨架", href: "lesson-layout.html" },
+      { text: "布局第二课：排列", href: "lesson-layout-2.html" },
+    ],
+  },
+];
 
 function rewriteLegacyUrl(rawPath) {
   if (!rawPath || rawPath.startsWith("#") || /^[a-z]+:/i.test(rawPath)) return rawPath;
@@ -33,37 +62,47 @@ function rewriteLegacyHtmlForBase(html) {
     .replace(/"href":"([^"]*)"/g, (_, path) => `"href":"${rewriteLegacyUrl(path)}"`);
 }
 
-function stripEmbeddedHeader(html) {
-  return html.replace(/^\s*<header class="site-header"[\s\S]*?<\/header>\s*/i, "");
+function StaticSiteNav({ currentPath = "" }) {
+  return (
+    <nav className="nav-links">
+      {COURSES.map((course) => {
+        const href = withHowtoManualPath("frontend", course.href);
+        const perspectives = course.perspectives
+          ? JSON.stringify(
+              course.perspectives.map((item) => ({
+                ...item,
+                href: withHowtoManualPath("frontend", item.href),
+                current: item.href === currentPath,
+              }))
+            )
+          : undefined;
+        return (
+          <a key={course.label} href={href} data-perspectives={perspectives}>
+            {course.label}
+          </a>
+        );
+      })}
+    </nav>
+  );
 }
 
 export function LegacyPage({ title, html, currentPath = "", prev = null, next = null }) {
-  const rootRef = useRef(null);
-  const renderedHtml = stripEmbeddedHeader(rewriteLegacyHtmlForBase(html));
-
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
-
-  useEffect(() => {
-    if (!rootRef.current) return undefined;
-    return initLegacyEnhancements(rootRef.current);
-  }, [renderedHtml]);
-
   return (
-    <PageFrame title={title}>
-      <>
+    <LegacyPageShell
+      title={title}
+      html={html}
+      rewriteHtml={rewriteLegacyHtmlForBase}
+      renderHeader={() => (
         <header className="site-header">
           <div className="lesson-shell site-header-inner">
             <a className="brand-mark" href={withHowtoManualPath("frontend")}>
               <span>前端战术</span><span className="brand-pill">FM-01</span>
             </a>
-            <SiteNav currentPath={currentPath} />
+            <StaticSiteNav currentPath={currentPath} />
             <StepNav prev={prev} next={next} />
           </div>
         </header>
-        <div ref={rootRef} dangerouslySetInnerHTML={{ __html: renderedHtml }} />
-      </>
-    </PageFrame>
+      )}
+    />
   );
 }

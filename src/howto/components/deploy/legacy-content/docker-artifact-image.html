@@ -1,44 +1,126 @@
-<article class="deploy-lesson">
-  <nav class="deploy-lesson-topbar">
-    <span>luke@human-llm<span>:~/howto/deploy/DEP-01</span>$ cat lesson.html</span>
-    <a href="/howto/deploy/">返回部署手册</a>
-  </nav>
+<header class="html2-hero html-reading-hero">
+  <div class="lesson-shell">
+    <div class="html2-hero-meta">
+      <span class="html2-pill html2-pill-fill">Dockerfile · IMAGE</span>
+      <span class="html2-pill">DEP-01 · 镜像基础</span>
+      <span class="html2-label">阅读时长 ≈ 8 分钟</span>
+    </div>
+    <div class="html2-hero-grid">
+      <div class="html2-hero-copy">
+        <h1 class="page-title">
+          <span class="html2-title-line">从<span class="html2-title-em">编译产物</span></span>
+          <span class="html2-title-line">到镜像</span>
+        </h1>
+      </div>
+      <div class="html2-hero-side">
+        <div class="html2-hero-row"><span class="html2-hero-k">本页讲什么</span><span class="html2-hero-v">artifact → image</span></div>
+        <div class="html2-hero-row"><span class="html2-hero-k">内容形式</span><span class="html2-hero-v">概念拆解 + Dockerfile</span></div>
+        <div class="html2-hero-row"><span class="html2-hero-k">适合谁</span><span class="html2-hero-v">写应用但还没系统部署的人</span></div>
+        <div class="html2-hero-row"><span class="html2-hero-k">目标</span><span class="html2-hero-v">看懂多阶段构建的边界</span></div>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <header class="deploy-lesson-hero">
-    <span class="deploy-lesson-kicker">// DEP-01 · DOCKERFILE</span>
-    <h1>从编译产物到镜像</h1>
-    <p>把二进制、JAR 或前端包封进一个可部署的标准盒子。核心动作:多阶段构建。</p>
-  </header>
+<main class="lesson-shell lesson-main">
+  <aside class="lesson-aside lesson-floating-toc">
+    <button type="button" class="toc-toggle" data-toc-toggle aria-expanded="true">目录</button>
+    <div class="toc-body" data-toc-body>
+      <span class="micro-label">章节目录</span>
+      <ul class="toc-list">
+        <li><a href="#deploy-core">核心</a></li>
+        <li><a href="#deploy-local-build">本地构建的问题</a></li>
+        <li><a href="#deploy-multi-stage">多阶段构建</a></li>
+        <li><a href="#deploy-runtime">运行时差异</a></li>
+        <li><a href="#deploy-habits">打包习惯</a></li>
+        <li><a href="#deploy-config">配置注入</a></li>
+        <li><a href="#deploy-summary">一句话总结</a></li>
+      </ul>
+    </div>
+  </aside>
 
-  <main class="deploy-lesson-body">
-    <section>
-      <h2>0. 打包镜像,到底在打包什么?</h2>
-      <p>代码写完、编译之后,通常会产出一个可运行的产物:Go 是二进制文件,Java 是 JAR 包,前端是 <code>dist/</code> 静态文件。</p>
-      <p>打包成镜像,本质上就是把这个产物连同运行环境封进一个标准盒子里。</p>
-      <pre><code>源码 --编译--&gt; 产物 artifact --打包--&gt; 镜像 image</code></pre>
-      <p>关键认知:镜像里真正运行需要的,只是 <strong>产物 + 运行时环境</strong>。源码、编译器、构建工具,运行时都不该混进去。</p>
+  <article class="lesson-prose">
+    <section class="html2-body-section lesson-section" id="deploy-core">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>01</strong> / 核心</div>
+            <h2 class="section-title">打包镜像，到底在打包什么</h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">核心</span>
+          <p>你真正要部署的，不是源码，而是编译完以后那个“可运行的东西”。</p>
+        </div>
+        <p>代码写完、编译之后,通常会产出一个可运行的产物(artifact):</p>
+        <ul>
+          <li><strong>Go</strong> → 一个二进制文件(<code>myapp</code>)</li>
+          <li><strong>Java</strong> → 一个 JAR 包(<code>app.jar</code>)</li>
+          <li><strong>前端</strong> → 一堆静态文件(<code>dist/</code>)</li>
+        </ul>
+        <p>这些运行的产物本身就是可以执行的。Go 二进制能直接启动，JAR 交给 JVM 就能起进程，前端静态文件交给 Web 服务器就能对外提供页面。平时本地联调，本质上就是在跑这个产物。</p>
+        <p>打包成镜像，本质上就是把它连同运行环境封进一个标准盒子里:</p>
+        <pre class="code-block"><code>源码 --编译--&gt; 产物 artifact --打包--&gt; 镜像 image</code></pre>
+        <p>关键认知:镜像里真正运行需要的,只是 <strong>产物 + 运行时环境</strong>。源码、编译器、构建工具,运行时都不该混进去。</p>
+        <p>问题也就随之出现了:怎么让这些“运行时不需要的东西”不混进镜像里?这就是整篇文章要解决的事。</p>
+        <p>Docker 基础这里不展开，重点只放在:怎么合理使用 Dockerfile，怎么把镜像做对。</p>
+      </div>
     </section>
 
-    <section>
-      <h2>1. 本地构建产物为什么不好?</h2>
-      <h3>做法 A:本地编译好,直接 COPY 进镜像</h3>
-      <pre><code class="language-dockerfile">FROM alpine:3.19
+    <section class="html2-body-section lesson-section" id="deploy-local-build">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>02</strong> / 问题</div>
+            <h2 class="section-title">本地构建产物为什么不好</h2>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div>
+            <h3><span class="deploy-inline-label">做法 A</span> 本地编译好,直接 COPY 进镜像</h3>
+            <pre class="code-block deploy-code-block"><code class="language-dockerfile">FROM alpine:3.19
 COPY myapp .
 CMD ["./myapp"]</code></pre>
-      <p>简单,但有致命陷阱:本地构建环境和镜像运行环境不一致。macOS 编出的 darwin 二进制丢进 Linux 镜像,就会遇到 <code>exec format error</code>。</p>
-      <h3>做法 B:在镜像里编译</h3>
-      <pre><code class="language-dockerfile">FROM golang:1.22
+            <p>简单，但有个致命陷阱:本地构建环境和镜像运行环境不一致，产物可能根本跑不起来。</p>
+            <ul>
+              <li><strong>编译器版本不一致</strong>：本地用 Go 1.21 编译，运行环境却按 Go 1.16 的预期去跑，行为可能异常甚至直接失败</li>
+              <li><strong>操作系统不一致</strong>：你在 macOS 上编出来的是 darwin 二进制，丢进 Linux 镜像就会报 <code>exec format error</code></li>
+              <li><strong>C 库不一致</strong>：在普通 Linux(glibc)上编译，再扔进 alpine(musl)，就可能缺动态库</li>
+            </ul>
+          </div>
+          <div>
+            <h3><span class="deploy-inline-label">做法 B</span> 在镜像里编译</h3>
+            <pre class="code-block deploy-code-block"><code class="language-dockerfile">FROM golang:1.22
 WORKDIR /app
 COPY . .
 RUN go build -o myapp .
 CMD ["./myapp"]</code></pre>
-      <p>环境一致了,但镜像会巨大、不安全、构建慢。生产运行根本不需要 Go 工具链和源码。</p>
+            <p>环境一致的问题解决了，但新的麻烦马上出现:</p>
+            <ul>
+              <li><strong>镜像巨大</strong>：带着整个 Go 工具链和全部源码，生产运行时根本用不到</li>
+              <li><strong>不安全</strong>：镜像里多了编译器、shell、各种工具，攻击面平白无故变大</li>
+              <li><strong>构建慢</strong>：每次都要拉大镜像、装工具链，CI 和发布都会被拖慢</li>
+            </ul>
+          </div>
+        </div>
+        <p>做法 A 死在环境不一致，做法 B 死在臃肿不安全。有没有一种方式，既保证环境一致，又能让最终镜像小而安全?答案就是多阶段构建。</p>
+      </div>
     </section>
 
-    <section>
-      <h2>2. 解法:编译和运行分开</h2>
-      <p>多阶段构建用一个阶段专门编译,另一个阶段只放产物。最终镜像只保留最后一个阶段,前面的 builder 用完即弃。</p>
-      <pre><code class="language-dockerfile">FROM golang:1.22 AS builder
+    <section class="html2-body-section lesson-section" id="deploy-multi-stage">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>03</strong> / 解法</div>
+            <h2 class="section-title">把编译和运行分开<br><span class="html2-title-em">多阶段构建</span></h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">核心</span>
+          <p>多阶段构建两边的便宜都占了:在受控的构建阶段里编译，保证环境一致；最终运行阶段只保留产物，做到小而安全。</p>
+        </div>
+        <p>核心思想非常简单:一个阶段专门编译，另一个阶段只放产物。最终镜像只保留最后一个阶段，前面的 builder 用完即弃。</p>
+        <pre class="code-block"><code class="language-dockerfile">FROM golang:1.22 AS builder
 WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 go build -o myapp .
@@ -47,45 +129,91 @@ FROM alpine:3.19
 WORKDIR /app
 COPY --from=builder /app/myapp .
 CMD ["./myapp"]</code></pre>
-      <p><code>COPY --from=builder</code> 是关键:跨阶段只取产物,不把构建工具链带进最终镜像。</p>
+        <pre class="code-block"><code>┌──── 阶段 1: builder(用完即弃) ────┐
+│ Go 工具链 + 源码                   │
+│        ↓ go build                 │
+│      产物: myapp                  │  ← 只取这一个
+└───────────────┬───────────────────┘
+                │ COPY --from=builder
+                ▼
+┌──── 阶段 2: runtime(最终镜像) ───┐
+│ alpine + myapp                    │  ← 真正部署的是这个
+└───────────────────────────────────┘</code></pre>
+        <p><code>COPY --from=builder</code> 是关键:跨阶段只取产物,不把构建工具链带进最终镜像。</p>
+        <pre class="code-block"><code>朴素(单阶段):  golang + 源码 + 工具链 + 二进制   ≈ 800 MB
+多阶段(alpine): alpine + 二进制                  ≈ 20 MB</code></pre>
+        <p>为什么要追求小?就三个字:快、省、安全。</p>
+        <ul>
+          <li><strong>快</strong>：镜像小，拉取 / 推送快，Pod 启动快，扩容和滚动更新也都更快</li>
+          <li><strong>省</strong>：仓库存储和跨地域传输都按体积计成本</li>
+          <li><strong>安全</strong>：包越少，攻击面越小，CVE 也越少；很多最小镜像连 shell 都没有</li>
+        </ul>
+        <p>一个 Dockerfile，一条 <code>docker build</code> 命令，就可以同时完成“受控编译”和“最小运行”这两件事。</p>
+      </div>
     </section>
 
-    <section>
-      <h2>3. 不同语言的产物,不同运行阶段</h2>
-      <div class="deploy-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>产物类型</th>
-              <th>运行时依赖</th>
-              <th>最终阶段</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Go / Rust 静态二进制</td>
-              <td>无</td>
-              <td><code>scratch</code> 或 <code>alpine</code></td>
-            </tr>
-            <tr>
-              <td>C/C++ 动态二进制</td>
-              <td>libc 等动态库</td>
-              <td><code>alpine</code> / <code>debian-slim</code></td>
-            </tr>
-            <tr>
-              <td>Java JAR</td>
-              <td>JVM</td>
-              <td><code>eclipse-temurin:21-jre</code></td>
-            </tr>
-            <tr>
-              <td>前端静态包</td>
-              <td>Web 服务器</td>
-              <td><code>nginx:alpine</code></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <pre><code class="language-dockerfile">FROM node:20-alpine AS builder
+    <section class="html2-body-section lesson-section" id="deploy-runtime">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>04</strong> / 运行时</div>
+            <h2 class="section-title">不同语言的产物<br><span class="html2-title-em">对应不同运行阶段</span></h2>
+          </div>
+        </div>
+        <p>核心套路都一样:编译阶段 + 运行阶段。真正变化的，只是运行阶段到底要放什么。</p>
+        <div class="deploy-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>产物类型</th>
+                <th>运行时依赖</th>
+                <th>最终阶段</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Go / Rust 静态二进制</td>
+                <td>无</td>
+                <td><code>scratch</code> 或 <code>alpine</code></td>
+              </tr>
+              <tr>
+                <td>C/C++ 动态二进制</td>
+                <td>libc 等动态库</td>
+                <td><code>alpine</code> / <code>debian-slim</code></td>
+              </tr>
+              <tr>
+                <td>Java JAR</td>
+                <td>JVM</td>
+                <td><code>eclipse-temurin:21-jre</code></td>
+              </tr>
+              <tr>
+                <td>前端静态包</td>
+                <td>Web 服务器</td>
+                <td><code>nginx:alpine</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Java 例子: JAR → JRE</h3>
+        <pre class="code-block"><code class="language-dockerfile">FROM maven:3.9 AS builder
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn package -DskipTests
+
+FROM eclipse-temurin:21-jre-alpine
+COPY --from=builder /app/target/*.jar /app.jar
+CMD ["java", "-jar", "/app.jar"]</code></pre>
+        <p>Java 的特殊之处在于:它虽然是跨平台字节码，但运行时必须带 JVM，所以镜像天然比 Go 大。这不是 Dockerfile 写得不好，而是语言运行时本身的成本。</p>
+        <ul>
+          <li><strong>JRE 不等于 JDK</strong>：生产只要 JRE，别把编译器一起带进去</li>
+          <li><strong>alpine 版更小</strong>：<code>eclipse-temurin:*-jre-alpine</code> 通常比 Debian 版小很多</li>
+          <li><strong>fat JAR 不利于缓存</strong>：Spring Boot 一改代码，整个 JAR 层都变</li>
+        </ul>
+        <p>Java 镜像想继续瘦，还可以往后做分层 JAR、<code>jlink</code>，甚至 GraalVM Native Image，但那已经是下一层优化了。</p>
+        <h3>前端例子: dist → nginx</h3>
+        <pre class="code-block"><code class="language-dockerfile">FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -94,30 +222,97 @@ RUN npm run build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
+        <p>规律很稳定:运行阶段只装“跑产物必需的最小运行时”。Java 只装 JRE，前端只装 nginx，Go 干脆什么都不装。</p>
+      </div>
     </section>
 
-    <section>
-      <h2>4. 打包好镜像的几个习惯</h2>
-      <ul>
-        <li><strong>.dockerignore</strong>:把 <code>node_modules</code>、<code>.git</code>、测试数据挡在构建上下文之外。</li>
-        <li><strong>小基础镜像</strong>:优先 <code>alpine</code>、<code>-slim</code>、<code>distroless</code>。</li>
-        <li><strong>依赖先拷,源码后拷</strong>:利用层缓存,依赖没变就不用重装。</li>
-        <li><strong>非 root 用户运行</strong>:用 <code>USER appuser</code> 降低风险。</li>
-      </ul>
+    <section class="html2-body-section lesson-section" id="deploy-habits">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>05</strong> / 默认习惯</div>
+            <h2 class="section-title">打包好镜像的几个默认动作</h2>
+          </div>
+        </div>
+        <ul>
+          <li><strong>.dockerignore</strong>:把 <code>node_modules</code>、<code>.git</code>、测试数据挡在构建上下文之外</li>
+          <li><strong>小基础镜像</strong>:优先 <code>alpine</code>、<code>-slim</code>、<code>distroless</code></li>
+          <li><strong>依赖先拷,源码后拷</strong>:利用层缓存，依赖没变就跳过重装</li>
+          <li><strong>非 root 用户运行</strong>:用 <code>USER appuser</code> 降低风险</li>
+          <li><strong>合并 RUN</strong>:多条命令用 <code>&amp;&amp;</code> 串起来，减少镜像层数</li>
+        </ul>
+        <p>这里最值得记住的是“依赖先拷、源码后拷”。源码天天变，依赖很少变。顺序写对了，改一行业务代码就不会触发“重装所有依赖”那一层，CI 时间差很多。</p>
+      </div>
     </section>
 
-    <section>
-      <h2>5. 运行配置怎么办?</h2>
-      <p>配置不要打进镜像。同一镜像要跑 dev、test、prod,配置应该从外部注入。</p>
-      <pre><code class="language-bash">docker run -e CONFIG_FILE=/app/config.yaml \
+    <section class="html2-body-section lesson-section" id="deploy-config">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>06</strong> / 配置</div>
+            <h2 class="section-title">
+              <span class="html2-title-line">镜像做好了以后</span>
+              <span class="html2-title-line"><span class="html2-title-em">运行配置怎么办</span></span>
+            </h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">原则</span>
+          <p>配置不要打进镜像。镜像应该 immutable，环境差异来自外部注入，而不是打出三份不同镜像。</p>
+        </div>
+        <p>镜像只装“程序”，但程序启动往往还依赖运行时配置，比如数据库连接、业务参数、密钥文件。</p>
+        <ul>
+          <li><strong>多环境</strong>：同一镜像要跑 dev / test / prod，配置天然不同</li>
+          <li><strong>安全</strong>：密码打进镜像，等于把钥匙焊死在门上</li>
+          <li><strong>解耦</strong>：改配置不该重新打镜像，镜像应该是 immutable 的</li>
+        </ul>
+        <p>最常用的做法是:运行时从外部注入配置，尤其是挂载配置文件。</p>
+        <pre class="code-block"><code class="language-bash">docker run -e CONFIG_FILE=/app/config.yaml \
   -v ./config.yaml:/app/config.yaml \
   myapp:1.0</code></pre>
-      <p>复杂配置用文件挂载,能查看、能核对。简单配置用环境变量,比如 <code>LOG_LEVEL=debug</code>。</p>
+        <p>这里环境变量只负责告诉程序“配置文件在哪”，真正的配置内容是通过 volume 挂进去的。这种方式最大的好处是:你能进容器直接看文件，容易核对。</p>
+        <h3>docker-compose 挂载</h3>
+        <pre class="code-block"><code class="language-yaml">services:
+  app:
+    image: myapp:1.0
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    environment:
+      CONFIG_FILE: /app/config.yaml
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: s3cret</code></pre>
+        <p>同一镜像，不同环境只换挂进去的配置文件。镜像不变，变的是外部配置，这才是正确的部署边界。</p>
+        <p>少量简单配置可以直接用环境变量，比如 <code>LOG_LEVEL=debug</code>。但配置一多，一复杂，就应当回到文件挂载。</p>
+        <h3>敏感信息</h3>
+        <ul>
+          <li>绝不进镜像，也不要明文提交 Git</li>
+          <li><code>.env</code> 这类文件要进 <code>.gitignore</code></li>
+          <li>更复杂的密码管理、动态配置更新，可以留到 K8s / Secret / 配置中心那一层解决</li>
+        </ul>
+      </div>
     </section>
 
-    <section>
-      <h2>6. 一句话总结</h2>
-      <blockquote>打包镜像的本质 = 只把运行需要的放进镜像,其余全部留在构建阶段。</blockquote>
+    <section class="html2-body-section lesson-section" id="deploy-summary">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-num"><strong>07</strong> / 总结</div>
+            <h2 class="section-title">一句话总结</h2>
+          </div>
+        </div>
+        <div class="html2-inline-note">
+          <span class="html2-inline-note-tag">结论</span>
+          <p>打包镜像的本质 = 只把运行需要的放进镜像,其余(编译器、源码、构建工具)全部留在构建阶段。</p>
+        </div>
+        <pre class="code-block"><code>产物 + 运行时  ──COPY --from──&gt;  最终镜像(小而安全)
+(构建阶段产出)                    (只有这一个会被推送/部署)</code></pre>
+        <p>多阶段构建就是把这件事写成标准流程:前段编译，后段运行，最终镜像又小又安全。这才是从“编译产物”到“生产级镜像”的标准姿势。</p>
+      </div>
     </section>
-  </main>
-</article>
+  </article>
+</main>
