@@ -1,0 +1,71 @@
+---
+import "../../../howto/styles.css";
+import DossierBridge from "./_DossierBridge.astro";
+import { LegacyPage } from "../../../howto/components/frontend/legacy-page.jsx";
+import { LessonReactApp } from "../../../howto/components/frontend/lesson-react-page.jsx";
+import { ComponentsPage } from "../../../howto/components/frontend/components-page.jsx";
+import { PromptsPage } from "../../../howto/components/frontend/prompts-page.jsx";
+import htmlLessonHtml from "../../../howto/components/frontend/legacy-content/lesson-html.html?raw";
+import htmlLessonHtml2 from "../../../howto/components/frontend/legacy-content/lesson-html-2.html?raw";
+import htmlLessonCss from "../../../howto/components/frontend/legacy-content/lesson-css.html?raw";
+import htmlLessonCss2 from "../../../howto/components/frontend/legacy-content/lesson-css-2.html?raw";
+import htmlLessonJs from "../../../howto/components/frontend/legacy-content/lesson-js.html?raw";
+import htmlLessonLayout from "../../../howto/components/frontend/legacy-content/lesson-layout.html?raw";
+import htmlLessonLayout2 from "../../../howto/components/frontend/legacy-content/lesson-layout-2.html?raw";
+import { frontendLessonPages, getFrontendLegacyLesson } from "../../../howto/manuals/frontend/registry.js";
+
+const legacyHtmlMap = {
+  "lesson-html": htmlLessonHtml,
+  "lesson-html-2": htmlLessonHtml2,
+  "lesson-css": htmlLessonCss,
+  "lesson-css-2": htmlLessonCss2,
+  "lesson-js": htmlLessonJs,
+  "lesson-layout": htmlLessonLayout,
+  "lesson-layout-2": htmlLessonLayout2,
+};
+
+export function getStaticPaths() {
+  return frontendLessonPages.map((page) => ({
+    params: { slug: page.slug },
+    props: {
+      page,
+      lessonNav: getFrontendLegacyLesson(page.currentPath),
+    },
+  }));
+}
+
+const { page, lessonNav } = Astro.props;
+
+if (!page || !lessonNav) {
+  throw new Error(`Unknown frontend lesson: ${Astro.params.slug}`);
+}
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{page.title}</title>
+  </head>
+  <body>
+    <DossierBridge crumb={page.slug} />
+
+    {page.kind === "legacy" ? (
+      <LegacyPage
+        client:load
+        title={page.title}
+        html={legacyHtmlMap[page.htmlKey]}
+        currentPath={lessonNav.currentPath}
+        prev={lessonNav.prev}
+        next={lessonNav.next}
+      />
+    ) : page.kind === "react" ? (
+      <LessonReactApp client:load currentPath={lessonNav.currentPath} prev={lessonNav.prev} next={lessonNav.next} />
+    ) : page.kind === "components" ? (
+      <ComponentsPage client:load currentPath={lessonNav.currentPath} prev={lessonNav.prev} next={lessonNav.next} />
+    ) : page.kind === "prompts" ? (
+      <PromptsPage client:load currentPath={lessonNav.currentPath} prev={lessonNav.prev} next={lessonNav.next} />
+    ) : null}
+  </body>
+</html>

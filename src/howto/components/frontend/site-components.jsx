@@ -1,23 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { withHowtoManualPath } from "../../lib/paths.js";
 
-// HowToFrontend is mounted under the /howto/frontend/ Astro routes (the
-// /howto/ route is the multi-manual hub). Flat inputs like "lesson-html.html"
-// or "decor/heart.svg" are mapped onto that prefix so they resolve against the
-// current base (/aritcles-hub in prod, / in dev).
-const HOWTO = "howto/frontend/";
 export function withBase(path = "") {
-  if (!path || path.startsWith("#") || /^[a-z]+:/i.test(path)) return path;
-  const base = import.meta.env.BASE_URL || "/";
-  const b = base.endsWith("/") ? base : `${base}/`;
-  let mapped;
-  if (path === "index.html") {
-    mapped = HOWTO;
-  } else if (path.endsWith(".html")) {
-    mapped = `${HOWTO}${path.slice(0, -5)}/`;
-  } else {
-    mapped = `${HOWTO}${path.startsWith("/") ? path.slice(1) : path}`;
-  }
-  return `${b}${mapped}`;
+  return withHowtoManualPath("frontend", path);
 }
 
 export function CopyButton({ text, className = "" }) {

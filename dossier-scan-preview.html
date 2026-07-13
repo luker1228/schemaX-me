@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dossier Scan Preview</title>
+    <style>
+      :root {
+        --bg: #060a07;
+        --panel: #0d1310;
+        --panel-2: #111a15;
+        --line: rgba(75, 255, 157, 0.34);
+        --line-soft: rgba(75, 255, 157, 0.16);
+        --green: #4bff9d;
+        --green-dim: #1f8f5a;
+        --yellow: #f3de55;
+        --text: #d7f7df;
+        --muted: #6f8b78;
+        --purple: #9b61bd;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        background:
+          linear-gradient(rgba(75, 255, 157, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(75, 255, 157, 0.035) 1px, transparent 1px),
+          radial-gradient(circle at 20% 0%, rgba(155, 97, 189, 0.14), transparent 34rem),
+          radial-gradient(circle at 80% 20%, rgba(75, 255, 157, 0.1), transparent 30rem),
+          var(--bg);
+        background-size: 28px 28px, 28px 28px, auto, auto, auto;
+        font-family: var(--sans);
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 44px 0 64px;
+      }
+
+      .hero {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 26px;
+        border-bottom: 1px solid var(--line-soft);
+        padding-bottom: 22px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-family: var(--mono);
+        font-size: clamp(28px, 4vw, 50px);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .subtitle {
+        max-width: 58ch;
+        margin-top: 10px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .status {
+        flex: 0 0 auto;
+        border: 1px solid var(--line);
+        padding: 9px 12px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+        background: rgba(9, 18, 12, 0.8);
+        box-shadow: 0 0 28px rgba(75, 255, 157, 0.08);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        min-height: 310px;
+        border: 1px solid var(--line-soft);
+        background:
+          linear-gradient(180deg, rgba(75, 255, 157, 0.055), transparent 36%),
+          var(--panel);
+        padding: 18px;
+      }
+
+      .card::before,
+      .card::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        pointer-events: none;
+      }
+
+      .card::before {
+        top: -1px;
+        left: -1px;
+        border-top: 2px solid var(--green);
+        border-left: 2px solid var(--green);
+      }
+
+      .card::after {
+        right: -1px;
+        bottom: -1px;
+        border-right: 2px solid var(--green);
+        border-bottom: 2px solid var(--green);
+      }
+
+      .card-head {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      h2 {
+        font-family: var(--mono);
+        font-size: 15px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .card-note {
+        margin-top: 6px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .badge {
+        flex: 0 0 auto;
+        border: 1px solid var(--line);
+        padding: 4px 7px;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+      }
+
+      .icon {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+      }
+
+      .tech {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Option A: terminal stream */
+      .terminal-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .terminal-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 54px 24px 1fr 58px;
+        align-items: center;
+        gap: 10px;
+        min-height: 38px;
+        border: 1px solid rgba(75, 255, 157, 0.22);
+        background: rgba(6, 11, 8, 0.76);
+        padding: 7px 9px;
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .terminal-item::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(75, 255, 157, 0.12), transparent);
+        opacity: 0;
+        transform: translateX(-70%);
+        transition: opacity 160ms ease, transform 500ms ease;
+      }
+
+      .terminal-item:hover::after {
+        opacity: 1;
+        transform: translateX(70%);
+      }
+
+      .ok {
+        color: var(--green);
+      }
+
+      .mod {
+        color: var(--muted);
+        text-align: right;
+      }
+
+      /* Option B: circuit chips */
+      .chip-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .chip-item {
+        position: relative;
+        min-height: 74px;
+        border: 1px solid rgba(75, 255, 157, 0.28);
+        background:
+          linear-gradient(135deg, rgba(75, 255, 157, 0.13), transparent 44%),
+          #07100b;
+        padding: 12px;
+        font-family: var(--mono);
+      }
+
+      .chip-item::before,
+      .chip-item::after {
+        content: "";
+        position: absolute;
+        background: var(--line);
+      }
+
+      .chip-item::before {
+        left: 12px;
+        right: 12px;
+        bottom: 7px;
+        height: 1px;
+      }
+
+      .chip-item::after {
+        right: 12px;
+        top: 12px;
+        width: 1px;
+        bottom: 12px;
+      }
+
+      .chip-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .chip-label {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.09em;
+      }
+
+      .chip-code {
+        color: var(--green-dim);
+        font-size: 10px;
+      }
+
+      /* Option C: radar scan */
+      .radar-panel {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(75, 255, 157, 0.18);
+        background:
+          repeating-linear-gradient(0deg, rgba(75, 255, 157, 0.04) 0 1px, transparent 1px 5px),
+          rgba(6, 12, 8, 0.68);
+        padding: 14px;
+      }
+
+      .radar-panel::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 34%;
+        background: linear-gradient(90deg, transparent, rgba(75, 255, 157, 0.16), transparent);
+        animation: pass 3.6s linear infinite;
+      }
+
+      @keyframes pass {
+        from {
+          transform: translateX(-130%);
+        }
+        to {
+          transform: translateX(330%);
+        }
+      }
+
+      .radar-list {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .radar-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        border: 1px solid rgba(75, 255, 157, 0.24);
+        background: rgba(12, 20, 15, 0.78);
+        padding: 6px 10px;
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      .radar-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        box-shadow: 0 0 14px var(--green);
+      }
+
+      /* Option D: grouped HUD */
+      .hud-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .hud-group {
+        min-height: 108px;
+        border: 1px solid rgba(75, 255, 157, 0.22);
+        background:
+          linear-gradient(90deg, rgba(155, 97, 189, 0.13), transparent 65%),
+          rgba(8, 13, 10, 0.86);
+        padding: 12px;
+      }
+
+      .hud-title {
+        display: flex;
+        justify-content: space-between;
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        border-bottom: 1px solid rgba(75, 255, 157, 0.18);
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+      }
+
+      .hud-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .hud-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid rgba(215, 247, 223, 0.14);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 6px 8px;
+        font-family: var(--mono);
+        font-size: 11px;
+      }
+
+      @media (max-width: 860px) {
+        .grid,
+        .hud-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          display: block;
+        }
+
+        .status {
+          display: inline-block;
+          margin-top: 16px;
+        }
+
+        .chip-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .chip-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .terminal-item {
+          grid-template-columns: 44px 22px 1fr;
+        }
+
+        .terminal-item .mod {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div>
+          <h1>// Stack Scan UI</h1>
+          <p class="subtitle">四种“技术栈扫描条”视觉方向预览。都保持当前首页的机密档案、扫描、荧光绿、硬边框语言。</p>
+        </div>
+        <div class="status">SYSTEM PREVIEW · ONLINE</div>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h2>01 Terminal Stream</h2>
+              <p class="card-note">像系统枚举模块，信息密度最高，最黑客。</p>
+            </div>
+            <span class="badge">LOW RISK</span>
+          </div>
+          <ul class="tech terminal-list">
+            <li class="terminal-item"><span class="ok">[OK]</span><img class="icon" src="assets/icons/python.svg" alt="" /><span>Python</span><span class="mod">MOD-01</span></li>
+            <li class="terminal-item"><span class="ok">[OK]</span><img class="icon" src="assets/icons/graphql.svg" alt="" /><span>GraphQL</span><span class="mod">MOD-02</span></li>
+            <li class="terminal-item"><span class="ok">[OK]</span><img class="icon" src="assets/icons/docker.svg" alt="" /><span>Docker</span><span class="mod">MOD-03</span></li>
+            <li class="terminal-item"><span class="ok">[OK]</span><img class="icon" src="assets/icons/go.svg" alt="" /><span>Go</span><span class="mod">MOD-04</span></li>
+            <li class="terminal-item"><span class="ok">[OK]</span><img class="icon" src="assets/icons/java.svg" alt="" /><span>Java</span><span class="mod">MOD-05</span></li>
+            <li class="terminal-item"><span class="ok">[OK]</span><img class="icon" src="assets/icons/k8s-official.svg" alt="" /><span>Kubernetes</span><span class="mod">MOD-06</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h2>02 Circuit Chips</h2>
+              <p class="card-note">技术项像电路板芯片，更视觉化，也更像能力模块。</p>
+            </div>
+            <span class="badge">BEST FIT</span>
+          </div>
+          <ul class="tech chip-grid">
+            <li class="chip-item"><div class="chip-top"><img class="icon" src="assets/icons/python.svg" alt="" /><span class="chip-code">A01</span></div><span class="chip-label">PYTHON</span></li>
+            <li class="chip-item"><div class="chip-top"><img class="icon" src="assets/icons/graphql.svg" alt="" /><span class="chip-code">A02</span></div><span class="chip-label">GRAPHQL</span></li>
+            <li class="chip-item"><div class="chip-top"><img class="icon" src="assets/icons/docker.svg" alt="" /><span class="chip-code">B01</span></div><span class="chip-label">DOCKER</span></li>
+            <li class="chip-item"><div class="chip-top"><img class="icon" src="assets/icons/go.svg" alt="" /><span class="chip-code">C01</span></div><span class="chip-label">GO</span></li>
+            <li class="chip-item"><div class="chip-top"><img class="icon" src="assets/icons/java.svg" alt="" /><span class="chip-code">C02</span></div><span class="chip-label">JAVA</span></li>
+            <li class="chip-item"><div class="chip-top"><img class="icon" src="assets/icons/mysql-official.svg" alt="" /><span class="chip-code">D01</span></div><span class="chip-label">MYSQL</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h2>03 Radar Scan</h2>
+              <p class="card-note">保留标签云，但加扫描光和锁定点，改动最小。</p>
+            </div>
+            <span class="badge">FAST PATCH</span>
+          </div>
+          <div class="radar-panel">
+            <ul class="tech radar-list">
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/python.svg" alt="" /><span>Python</span></li>
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/graphql.svg" alt="" /><span>GraphQL</span></li>
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/docker.svg" alt="" /><span>Docker</span></li>
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/go.svg" alt="" /><span>Go</span></li>
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/java.svg" alt="" /><span>Java</span></li>
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/k8s-official.svg" alt="" /><span>Kubernetes</span></li>
+              <li class="radar-item"><span class="radar-dot"></span><img class="icon" src="assets/icons/mysql-official.svg" alt="" /><span>MySQL</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <h2>04 Grouped HUD</h2>
+              <p class="card-note">把技术栈按能力域分组，最像系统面板，但需要改数据结构。</p>
+            </div>
+            <span class="badge">STRUCTURED</span>
+          </div>
+          <div class="hud-grid">
+            <div class="hud-group">
+              <div class="hud-title"><span>LANGUAGE</span><span>04</span></div>
+              <div class="hud-items">
+                <span class="hud-item"><img class="icon" src="assets/icons/python.svg" alt="" />Python</span>
+                <span class="hud-item"><img class="icon" src="assets/icons/go.svg" alt="" />Go</span>
+                <span class="hud-item"><img class="icon" src="assets/icons/java.svg" alt="" />Java</span>
+              </div>
+            </div>
+            <div class="hud-group">
+              <div class="hud-title"><span>INFRA</span><span>02</span></div>
+              <div class="hud-items">
+                <span class="hud-item"><img class="icon" src="assets/icons/docker.svg" alt="" />Docker</span>
+                <span class="hud-item"><img class="icon" src="assets/icons/k8s-official.svg" alt="" />K8s</span>
+              </div>
+            </div>
+            <div class="hud-group">
+              <div class="hud-title"><span>DATA</span><span>02</span></div>
+              <div class="hud-items">
+                <span class="hud-item"><img class="icon" src="assets/icons/mysql-official.svg" alt="" />MySQL</span>
+                <span class="hud-item"><img class="icon" src="assets/icons/graphql.svg" alt="" />GraphQL</span>
+              </div>
+            </div>
+            <div class="hud-group">
+              <div class="hud-title"><span>WEB</span><span>02</span></div>
+              <div class="hud-items">
+                <span class="hud-item">TypeScript</span>
+                <span class="hud-item">Astro</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

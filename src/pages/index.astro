@@ -19,12 +19,12 @@ const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
 const blueprintWebp = motorcyclePortrait.src;
 
 const capabilityMatrix = [
-  { name: "PYTHON", value: 82 },
-  { name: "DOCKER", value: 91 },
-  { name: "KUBERNETES", value: 78 },
-  { name: "GO", value: 64 },
-  { name: "TYPESCRIPT", value: 80 },
-  { name: "ASTRO", value: 72 }
+  { name: "人类亲和性", value: 91 },
+  { name: "AI 亲和性", value: 96 },
+  { name: "好奇心", value: 94 },
+  { name: "表达清晰度", value: 88 },
+  { name: "工程直觉", value: 90 },
+  { name: "长期主义", value: 86 }
 ];
 
 const latestPosts = posts.slice(0, 3);
@@ -242,7 +242,7 @@ const techStack = [
             </div>
           ))}
 
-          <div class="footnote">// 基于近 12 个月外勤记录加权估算 · 数值随部署持续校准</div>
+          <div class="footnote">// 能力举证来自写作、协作与项目记录 · 数值用于表达个人品质倾向</div>
         </div>
       </div>
 
@@ -365,14 +365,15 @@ const techStack = [
           <span class="dossier-kicker">// 03 · Modules</span>
           <h2>技术栈</h2>
         </div>
-        <p>能力矩阵是熟练度前几项,这里列出完整清单——我熟悉并在用的全部技术。</p>
       </div>
       <div class="dossier-scan">
         <ul class="dossier-scan-list">
-          {techStack.map((item) => (
+          {techStack.map((item, index) => (
             <li class="dossier-scan-item">
+              <span class="scan-prefix">[OK]</span>
               <img src={item.src} alt="" width="22" height="22" loading="lazy" decoding="async" />
               <span>{item.label}</span>
+              <span class="scan-code">MOD-{String(index + 1).padStart(2, "0")}</span>
             </li>
           ))}
         </ul>

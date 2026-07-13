@@ -1,5 +1,6 @@
 import React from "react";
 import { PageFrame, PromptLibrary, SiteNav, StepNav, withBase } from "./site-components.jsx";
+import { getFrontendLegacyLesson } from "../../manuals/frontend/registry.js";
 
 const filters = [
   { value: "all", label: "All" },
@@ -167,15 +168,16 @@ POST /api/projects
   },
 ];
 
-export function PromptsPage() {
+export function PromptsPage({ currentPath, prev, next }) {
+  const lesson = currentPath ? { currentPath, prev, next } : getFrontendLegacyLesson("prompts.html");
   return (
     <PageFrame title="Prompt Library · 后端同学的前端战术手册">
       <>
         <header className="site-header">
           <div className="container site-header-inner">
             <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">FM-01</span></a>
-            <SiteNav />
-            <StepNav prev={{ href: "lesson-layout.html", title: "布局" }} />
+            <SiteNav currentPath={lesson.currentPath} />
+            <StepNav prev={lesson.prev} next={lesson.next} />
           </div>
         </header>
         <main className="container">

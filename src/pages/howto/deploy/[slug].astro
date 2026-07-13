@@ -1,0 +1,40 @@
+---
+import "../../../howto/styles.css";
+import DossierBridge from "./_DossierBridge.astro";
+import { DeployDockerArtifactImagePage } from "../../../howto/components/deploy/deploy-docker-artifact-image-page.jsx";
+import { deployLessons, getDeployLessonNeighbors } from "../../../howto/manuals/deploy/registry.js";
+
+export function getStaticPaths() {
+  return deployLessons.map((lesson) => ({
+    params: { slug: lesson.slug },
+    props: {
+      lesson,
+      neighbors: getDeployLessonNeighbors(lesson.slug),
+    },
+  }));
+}
+
+const { lesson, neighbors } = Astro.props;
+
+if (!lesson) {
+  throw new Error("Missing deploy lesson props");
+}
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{lesson.title} · 部署战术手册</title>
+  </head>
+  <body>
+    <DossierBridge crumb={lesson.slug} />
+
+    {lesson.slug === "docker-artifact-image" ? (
+      <DeployDockerArtifactImagePage client:load lesson={lesson} prev={neighbors.prev} next={neighbors.next} />
+    ) : (
+      <div>Unsupported deploy lesson: {lesson.slug}</div>
+    )}
+  </body>
+</html>

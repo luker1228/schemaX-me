@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBasePath } from "../../howto/lib/paths.js";
+import { deployManual } from "../../howto/manuals/deploy/registry.js";
 
-const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-const withBase = (p: string) => `${baseUrl}${p.replace(/^\//, "")}`;
+const withBase = withBasePath;
 
 // 战术手册索引。新增手册只需往这里加一项；href 为空字符串的渲染为不可点占位卡。
 const manuals = [
@@ -19,12 +20,18 @@ const manuals = [
     code: "FM-02",
     stamp: "已解密",
     stampImage: withBase("images/brand/stamps/stamp-cracked.svg"),
-    title: "部署战术手册",
-    copy: "把应用安全地推上线:环境变量、CI/CD、容器、域名与运维排错。",
+    title: deployManual.title,
+    copy: deployManual.description,
     meta: "Docker · 镜像 · 配置 · K8s →",
     href: withBase("howto/deploy/")
   }
 ];
+
+const getManualPath = (href: string) => {
+  const normalizedBase = (import.meta.env.BASE_URL.replace(/\/?$/, "/")).replace(/\/$/, "");
+  const normalizedHref = href.startsWith(normalizedBase) ? href.slice(normalizedBase.length) : href;
+  return normalizedHref.replace(/^\/+|\/+$/g, "");
+};
 ---
 
 <BaseLayout
@@ -66,7 +73,7 @@ const manuals = [
         <div class="dossier-assets">
           {manuals.map((m) =>
             m.href ? (
-              <a class="dossier-asset manual-card" href={m.href} data-manual-launch>
+              <a class="dossier-asset manual-card" href={m.href} data-manual-launch data-manual-title={m.title} data-manual-path={getManualPath(m.href)}>
                 <img class="manual-status-stamp" src={m.stampImage} alt={m.stamp} width="132" height="58" loading="lazy" decoding="async" />
                 <h3>{m.title}</h3>
               </a>
@@ -87,10 +94,10 @@ const manuals = [
       <span class="manual-launch-stamp">ACCESS GRANTED</span>
       <div class="manual-launch-card">
         <img class="manual-launch-status" src={withBase("images/brand/stamps/stamp-cracked.svg")} alt="已解密" width="210" height="72" loading="eager" decoding="async" />
-        <span class="manual-launch-title">前端战术手册</span>
+        <span class="manual-launch-title" data-manual-launch-title>前端战术手册</span>
       </div>
       <div class="manual-launch-log">
-        <p>&gt; LOCATING ./manuals/frontend</p>
+        <p data-manual-launch-path>&gt; LOCATING ./howto/frontend</p>
         <p>&gt; CLEARANCE 已解密</p>
         <p>&gt; OPENING FIELD MANUAL ...</p>
       </div>
@@ -102,14 +109,20 @@ const manuals = [
     (function () {
       var overlay = document.getElementById("manualLaunch");
       var links = document.querySelectorAll("[data-manual-launch]");
+      var title = overlay && overlay.querySelector("[data-manual-launch-title]");
+      var path = overlay && overlay.querySelector("[data-manual-launch-path]");
       if (!overlay || !links.length) return;
 
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       for (var i = 0; i < links.length; i++) {
         links[i].addEventListener("click", function (event) {
           var href = this.getAttribute("href");
+          var manualTitle = this.getAttribute("data-manual-title");
+          var manualPath = this.getAttribute("data-manual-path");
           if (!href || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
           if (reduce) return;
+          if (title && manualTitle) title.textContent = manualTitle;
+          if (path && manualPath) path.textContent = "> LOCATING ./" + manualPath;
           event.preventDefault();
           overlay.classList.remove("is-active");
           void overlay.offsetWidth;
