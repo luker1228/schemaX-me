@@ -151,10 +151,17 @@ const techStack = [
 <BaseLayout title="schemaX 绝密计划" description="schemaX 绝密计划 · 人类大模型 Luke 的技术档案:技术写作、前端教学与可运行 Demo。">
   {/* ===== 开机解密层(首次进站播放一次,sessionStorage 去重)===== */}
   <div class="dossier-boot" id="dossierBoot" role="dialog" aria-label="正在解密档案">
-    <div class="dossier-boot-tag">// SCHEMAX · HUMAN-LARGE-MODEL RUNTIME · BOOT</div>
-    <pre class="dossier-boot-log" id="dossierBootLog"></pre>
-    <div class="dossier-boot-bar"><span id="dossierBootFill"></span></div>
-    <div class="dossier-boot-status" id="dossierBootStatus">解密中…</div>
+    <div class="dossier-boot-console">
+      <div class="dossier-boot-tag">// SCHEMAX · HUMAN-LARGE-MODEL RUNTIME · BOOT</div>
+      <pre class="dossier-boot-log" id="dossierBootLog"></pre>
+      <div class="dossier-boot-bar"><span id="dossierBootFill"></span></div>
+      <div class="dossier-boot-status" id="dossierBootStatus">解密中…</div>
+    </div>
+    <div class="dossier-boot-visual" aria-hidden="true">
+      <img src={`${baseUrl}images/brand/seal-hlm1.png`} alt="" width="1254" height="1254" loading="eager" decoding="async" />
+      <span class="dossier-boot-scan"></span>
+      <span class="dossier-boot-verified">SUBJECT VERIFYING</span>
+    </div>
     <span class="dossier-boot-skip">[ 点击任意位置跳过 / SKIP ]</span>
   </div>
 

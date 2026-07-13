@@ -18,6 +18,13 @@
   --accent-pink: #D030A8;
   --accent-red: #F85850;
   --accent-purple: #A088D0;
+  --phosphor: #22ff88;
+  --phosphor-dim: #0f6b3c;
+  --dossier-bg: #0c0f0d;
+  --dossier-boot-bg:
+    radial-gradient(circle at 76% 50%, rgba(34, 255, 136, 0.09), transparent 36%),
+    repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.035) 0 1px, transparent 1px 4px),
+    var(--dossier-bg);
 
   /* ── 战术手册皮肤 04 · Bone 牛皮纸(浅 · 阅读优先)── */
   --bg: #e6dcc4;

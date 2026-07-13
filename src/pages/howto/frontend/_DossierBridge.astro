@@ -1,7 +1,6 @@
 ---
 // Dossier 风格桥接顶栏 —— 自包含样式(课程页只加载 howto/styles.css,没有 global.css 的
 // dossier token/类/blink keyframe,所以这里全部硬编码,不依赖外部)。
-import DecodeOverlay from "./_DecodeOverlay.astro";
 import ManualBridge from "../_ManualBridge.astro";
 interface Props {
   crumb?: string;
@@ -9,5 +8,4 @@ interface Props {
 const { crumb = "" } = Astro.props;
 ---
 
-<DecodeOverlay />
 <ManualBridge manual="frontend" crumb={crumb} />

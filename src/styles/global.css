@@ -15,6 +15,13 @@
   --green: #00d26a;
   --purple: #b678ff;
   --red: #ff4d4d;
+  --phosphor: #22ff88;
+  --phosphor-dim: #0f6b3c;
+  --dossier-bg: #0c0f0d;
+  --dossier-boot-bg:
+    radial-gradient(circle at 76% 50%, rgba(34, 255, 136, 0.09), transparent 36%),
+    repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.035) 0 1px, transparent 1px 4px),
+    var(--dossier-bg);
   --shadow-sm: 4px 4px 0 0 rgba(255, 255, 255, 0.04);
   --shadow-md: 8px 8px 0 0 rgba(255, 255, 255, 0.05);
   --shadow-lg: 12px 12px 0 0 rgba(255, 255, 255, 0.06);
@@ -2206,10 +2213,7 @@ main {
    全部 scope 在 .dossier / .dossier-boot 下,不污染既有样式
    ============================================================= */
 :root {
-  --phosphor: #22ff88;
-  --phosphor-dim: #0f6b3c;
   --classified: #ff4d4d;
-  --dossier-bg: #0c0f0d;
   --dossier-panel: #0f1311;
   --dossier-panel-2: #141a17;
   --dossier-border: #1f2a24;
@@ -2222,13 +2226,12 @@ main {
   position: fixed;
   inset: 0;
   z-index: 9500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1.1rem;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(320px, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
   padding: clamp(20px, 6vw, 90px);
-  background: var(--dossier-bg);
+  background: var(--dossier-boot-bg);
   color: var(--phosphor);
   cursor: pointer;
   transition: opacity 0.5s ease;
@@ -2236,6 +2239,13 @@ main {
 .dossier-boot.hide {
   opacity: 0;
   pointer-events: none;
+}
+.dossier-boot-console {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 1.1rem;
+  align-content: center;
 }
 .dossier-boot-tag {
   font-family: var(--font-mono);
@@ -2272,6 +2282,98 @@ main {
   font-size: 13px;
   letter-spacing: 0.18em;
   color: var(--yellow);
+}
+.dossier-boot-visual {
+  position: relative;
+  width: min(48vw, 620px);
+  justify-self: end;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(34, 255, 136, 0.45);
+  background: #020704;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(34, 255, 136, 0.12),
+    0 0 44px rgba(34, 255, 136, 0.16);
+}
+.dossier-boot-visual::before,
+.dossier-boot-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dossier-boot-visual::before {
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(255, 73, 73, 0.65) 0 18px, transparent 18px calc(100% - 18px), rgba(255, 73, 73, 0.65) calc(100% - 18px)),
+    linear-gradient(0deg, rgba(255, 73, 73, 0.65) 0 18px, transparent 18px calc(100% - 18px), rgba(255, 73, 73, 0.65) calc(100% - 18px));
+  clip-path: polygon(0 0, 8% 0, 8% 2px, 2px 2px, 2px 8%, 0 8%, 0 0, 100% 0, 92% 0, 92% 2px, calc(100% - 2px) 2px, calc(100% - 2px) 8%, 100% 8%, 100% 0, 100% 100%, 92% 100%, 92% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 92%, 100% 92%, 100% 100%, 0 100%, 8% 100%, 8% calc(100% - 2px), 2px calc(100% - 2px), 2px 92%, 0 92%);
+  opacity: 0.9;
+}
+.dossier-boot-visual::after {
+  z-index: 3;
+  background: repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.12) 0 1px, transparent 1px 5px);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
+.dossier-boot-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: contrast(1.08) saturate(1.05);
+}
+.dossier-boot-scan {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  top: -24%;
+  height: 22%;
+  background: linear-gradient(180deg, transparent, rgba(34, 255, 136, 0.25), transparent);
+  box-shadow: 0 0 30px rgba(34, 255, 136, 0.32);
+  animation: dossier-boot-scan 2.4s linear infinite;
+}
+.dossier-boot-verified {
+  position: absolute;
+  z-index: 5;
+  right: 18px;
+  bottom: 18px;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(34, 255, 136, 0.7);
+  background: rgba(2, 7, 4, 0.78);
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+@keyframes dossier-boot-scan {
+  from { transform: translateY(0); }
+  to { transform: translateY(560%); }
+}
+@media (max-width: 860px) {
+  .dossier-boot {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 1.35rem;
+  }
+
+  .dossier-boot-visual {
+    width: min(82vw, 420px);
+    justify-self: start;
+    order: -1;
+  }
+
+  .dossier-boot-log {
+    min-height: 8em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dossier-boot-scan {
+    animation: none;
+    top: 39%;
+  }
 }
 .dossier-boot-skip {
   position: absolute;

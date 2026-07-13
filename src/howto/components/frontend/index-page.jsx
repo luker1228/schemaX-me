@@ -1,12 +1,10 @@
 import React from "react";
 import { CycleText, PageFrame, SiteNav, withBase } from "./site-components.jsx";
+import { frontendHomeLessons } from "../../manuals/frontend/registry.js";
 
-const lessons = [
+const lessonPreviews = [
   {
-    label: "HTML · 01",
-    title: "HTML vs Markdown",
-    copy: "标签就是给内容套一层含义，和 Markdown 的逻辑完全一样。",
-    href: "lesson-html.html",
+    slug: "lesson-html",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="20" y="30" width="120" height="114" fill="#EFE7D6" stroke="#000" strokeWidth="2"/>
@@ -29,10 +27,7 @@ const lessons = [
     ),
   },
   {
-    label: "HTML · 02",
-    title: "HTML vs Figma",
-    copy: "图层树就是标签树，每一层 div 对应 Figma 里的一个 Frame。",
-    href: "lesson-html-2.html",
+    slug: "lesson-html-2",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="30" y="20" width="110" height="134" fill="#EFE7D6" stroke="#000" strokeWidth="2"/>
@@ -58,10 +53,7 @@ const lessons = [
     ),
   },
   {
-    label: "CSS · 01",
-    title: "CSS 属性清单",
-    copy: "字号、颜色、间距、方向——四类属性覆盖 80% 的日常样式需求。",
-    href: "lesson-css.html",
+    slug: "lesson-css",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="30" y="24" width="258" height="126" fill="#EFE7D6" stroke="#000" strokeWidth="2"/>
@@ -84,10 +76,7 @@ const lessons = [
     ),
   },
   {
-    label: "CSS · 02",
-    title: "CSS vs Figma",
-    copy: "属性面板就是 CSS，Figma 的 Inspector 和写样式说的是同一件事。",
-    href: "lesson-css-2.html",
+    slug: "lesson-css-2",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         {/* Figma inspector panel */}
@@ -115,10 +104,7 @@ const lessons = [
     ),
   },
   {
-    label: "JavaScript",
-    title: "JavaScript：负责交互。",
-    copy: "点击、输入、提交——状态变化就是事件驱动，先认识这个循环。",
-    href: "lesson-js.html",
+    slug: "lesson-js",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         {/* button */}
@@ -143,10 +129,7 @@ const lessons = [
     ),
   },
   {
-    label: "组件",
-    title: "组件：负责复用。",
-    copy: "一段 UI 写一次，到处使用——理解 props 和 children，组件就清楚了。",
-    href: "lesson-react.html",
+    slug: "lesson-react",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         {/* master component */}
@@ -171,10 +154,7 @@ const lessons = [
     ),
   },
   {
-    label: "布局 · 01",
-    title: "布局第一课",
-    copy: "Flex 和 Grid 是两把尺子，搞懂主轴方向，排列就不再靠猜。",
-    href: "lesson-layout.html",
+    slug: "lesson-layout",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         {/* flex row demo */}
@@ -196,10 +176,7 @@ const lessons = [
     ),
   },
   {
-    label: "布局 · 02",
-    title: "布局第二课",
-    copy: "常见页面骨架拆解：顶栏、侧边栏、内容区的排列逻辑。",
-    href: "lesson-layout-2.html",
+    slug: "lesson-layout-2",
     preview: (
       <svg viewBox="0 0 318 174" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         {/* full page skeleton */}
@@ -225,7 +202,16 @@ const lessons = [
       </svg>
     ),
   },
-];
+].reduce((acc, item) => {
+  acc[item.slug] = item.preview;
+  return acc;
+}, {});
+
+const lessons = frontendHomeLessons.map((lesson) => ({
+  ...lesson,
+  title: lesson.cardTitle,
+  preview: lessonPreviews[lesson.slug],
+}));
 
 const faqs = [
   {
