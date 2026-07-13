@@ -2,6 +2,27 @@
   "schemaVersion": 2,
   "generatedAt": "2026-07-14T00:00:00.000Z",
   "title": "Design System: Luke Lab",
+  "tokens": {
+    "colors": {
+      "carbon-black":   "#171717",
+      "deep-void":      "#111111",
+      "panel-strong":   "#1d1d1d",
+      "panel-muted":    "#242424",
+      "iron-border":    "#333333",
+      "aged-ivory":     "#f6ead6",
+      "mortar-gray":    "#9c9384",
+      "wanted-yellow":  "#ffd43b",
+      "cold-wire-cyan": "#00d4ff",
+      "phosphor-green": "#00d26a",
+      "neural-violet":  "#b678ff",
+      "alert-red":      "#ff4d4d"
+    },
+    "shadows": {
+      "sm": "4px 4px 0 0 rgba(255,255,255,0.04)",
+      "md": "8px 8px 0 0 rgba(255,255,255,0.05)",
+      "lg": "12px 12px 0 0 rgba(255,255,255,0.06)"
+    }
+  },
   "extensions": {
     "colorMeta": {
       "carbon-black": {

@@ -1,0 +1,43 @@
+/* AUTO-GENERATED — 不要手动修改
+ * 改颜色请编辑 DESIGN.json → tokens.colors，然后运行: npm run tokens
+ */
+:root {
+  color-scheme: dark;
+
+  /* ── Grounds ── */
+  /* Carbon Black */
+  --bg: #171717;
+  /* Deep Void */
+  --surface: #111111;
+  /* Panel Strong */
+  --surface-strong: #1d1d1d;
+  /* Panel Muted */
+  --surface-muted: #242424;
+  /* Iron Border */
+  --border: #333333;
+  /* Aged Ivory */
+  --text: #f6ead6;
+  /* Mortar Gray */
+  --text-soft: #9c9384;
+  /* Wanted Yellow */
+  --accent: #ffd43b;
+  --yellow: #ffd43b;
+  /* Cold Wire Cyan */
+  --accent-alt: #00d4ff;
+  --cyan: #00d4ff;
+  /* Phosphor Green */
+  --green: #00d26a;
+  /* Neural Violet */
+  --purple: #b678ff;
+  /* Alert Red */
+  --red: #ff4d4d;
+
+  /* ── Derived ── */
+  --accent-soft: rgba(255, 212, 59, 0.12);
+  --bg-grid: rgba(255, 255, 255, 0.035);
+
+  /* ── Elevation ── */
+  --shadow-sm: 4px 4px 0 0 rgba(255,255,255,0.04);
+  --shadow-md: 8px 8px 0 0 rgba(255,255,255,0.05);
+  --shadow-lg: 12px 12px 0 0 rgba(255,255,255,0.06);
+}
