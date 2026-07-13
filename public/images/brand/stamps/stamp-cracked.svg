@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="已破解">
+  <g transform="rotate(-7 380 130)" fill="none" stroke="#ff4d4d" stroke-linecap="square" stroke-linejoin="miter">
+    <path stroke-width="14" d="M74 34h552l60 46v100l-60 46H74l-48-46V80z"/>
+    <path stroke-width="4" opacity=".82" d="M96 58h506l42 32v78l-42 32H96l-32-32V90z"/>
+    <path stroke-width="4" opacity=".55" d="M122 84h432M124 176h430"/>
+    <path stroke-width="5" opacity=".7" d="M116 96h44M600 164h-44M92 122v-26M668 138v26"/>
+  </g>
+  <text x="380" y="166" text-anchor="middle" fill="#ff4d4d"
+        font-family="Noto Sans CJK SC, Source Han Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
+        font-size="112" font-weight="900" letter-spacing="10"
+        transform="rotate(-7 380 130)">已破解</text>
+</svg>

@@ -9,6 +9,7 @@ const manuals = [
   {
     code: "FM-01",
     stamp: "已解密",
+    stampImage: withBase("images/brand/stamps/stamp-cracked.svg"),
     title: "前端战术手册",
     copy: "写给后端、设计和零基础同学的前端速通——HTML 结构、CSS 样式、JavaScript、React 组件与布局,边改边看。",
     meta: "HTML · CSS · JS · React · 布局 →",
@@ -17,6 +18,7 @@ const manuals = [
   {
     code: "FM-02",
     stamp: "待解密",
+    stampImage: withBase("images/brand/stamps/stamp-uncracked.svg"),
     title: "部署战术手册",
     copy: "把应用安全地推上线:环境变量、CI/CD、容器、域名与运维排错。",
     meta: "待部署 · 内容整理中",
@@ -58,39 +60,20 @@ const manuals = [
             <span class="dossier-kicker">// 战术手册 · FIELD MANUALS</span>
             <h2>战术手册</h2>
           </div>
-          <p>每一册都是一个可独立完成的小战场——从前端到部署,陆续上线。挑一本进入。</p>
         </div>
 
-        {/* 手册卡片网格 —— Bone 牛皮纸"纸质档案"卡(暗 hub 上的浅色手册,预告目的地) */}
+        {/* 手册卡片网格 —— Bone 牛皮纸档案夹(暗 hub 上的浅色手册,预告目的地) */}
         <div class="dossier-assets">
           {manuals.map((m) =>
             m.href ? (
-              <a class="dossier-asset manual-card" href={m.href}>
-                <span class="dossier-corner tl"></span>
-                <span class="dossier-corner tr"></span>
-                <span class="dossier-corner bl"></span>
-                <span class="dossier-corner br"></span>
-                <span class="dossier-stamp s1">{m.stamp}</span>
-                <div class="ah">
-                  <span class="aid">{m.code}</span>
-                </div>
+              <a class="dossier-asset manual-card" href={m.href} data-manual-launch>
+                <img class="manual-status-stamp" src={m.stampImage} alt={m.stamp} width="132" height="58" loading="lazy" decoding="async" />
                 <h3>{m.title}</h3>
-                <p>{m.copy}</p>
-                <span class="meta">{m.meta}</span>
               </a>
             ) : (
               <div class="dossier-asset manual-card" aria-disabled="true">
-                <span class="dossier-corner tl"></span>
-                <span class="dossier-corner tr"></span>
-                <span class="dossier-corner bl"></span>
-                <span class="dossier-corner br"></span>
-                <span class="dossier-stamp s1">{m.stamp}</span>
-                <div class="ah">
-                  <span class="aid">{m.code}</span>
-                </div>
+                <img class="manual-status-stamp" src={m.stampImage} alt={m.stamp} width="132" height="58" loading="lazy" decoding="async" />
                 <h3>{m.title}</h3>
-                <p>{m.copy}</p>
-                <span class="meta">{m.meta}</span>
               </div>
             )
           )}
@@ -98,41 +81,125 @@ const manuals = [
       </div>
     </div>
   </section>
+
+  <div class="manual-launch" id="manualLaunch" aria-hidden="true">
+    <div class="manual-launch-box">
+      <span class="manual-launch-stamp">ACCESS GRANTED</span>
+      <div class="manual-launch-card">
+        <img class="manual-launch-status" src={withBase("images/brand/stamps/stamp-cracked.svg")} alt="已解密" width="210" height="72" loading="eager" decoding="async" />
+        <span class="manual-launch-title">前端战术手册</span>
+      </div>
+      <div class="manual-launch-log">
+        <p>&gt; LOCATING ./manuals/frontend</p>
+        <p>&gt; CLEARANCE 已解密</p>
+        <p>&gt; OPENING FIELD MANUAL ...</p>
+      </div>
+      <div class="manual-launch-bar"><i></i></div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var overlay = document.getElementById("manualLaunch");
+      var links = document.querySelectorAll("[data-manual-launch]");
+      if (!overlay || !links.length) return;
+
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", function (event) {
+          var href = this.getAttribute("href");
+          if (!href || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+          if (reduce) return;
+          event.preventDefault();
+          overlay.classList.remove("is-active");
+          void overlay.offsetWidth;
+          overlay.classList.add("is-active");
+          window.setTimeout(function () {
+            window.location.href = href;
+          }, 3000);
+        });
+      }
+    })();
+  </script>
 </BaseLayout>
 
 <style>
-  /* 手册卡 = Bone 牛皮纸纸质档案(钉在暗 dossier hub 上,浅色预告即将进入的浅色手册) */
+  /* 手册卡 = Bone 牛皮纸档案夹(钉在暗 dossier hub 上,浅色预告即将进入的浅色手册) */
+  .dossier-assets {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
+    align-items: start;
+    padding-bottom: 3rem;
+  }
   .manual-card {
-    background: #f3ecd9 !important;
+    position: relative;
+    isolation: isolate;
+    width: min(100%, 320px);
+    min-height: 205px;
+    margin-top: 1.15rem;
+    padding: 0 !important;
+    align-content: start !important;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 38%),
+      #eadfbd !important;
     border-color: #241d13 !important;
+    border-radius: 4px 4px 2px 2px;
     color: #241d13 !important;
     box-shadow: 6px 6px 0 #c8501e !important;
+    overflow: visible !important;
+  }
+  .manual-card::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1.15rem;
+    width: min(12rem, 68%);
+    height: 1.35rem;
+    background: #d8c89d;
+    border: 1px solid #241d13;
+    border-bottom: 0;
+    border-radius: 4px 10px 0 0;
+    clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
+    z-index: -1;
   }
   .manual-card:hover {
+    transform: translateY(-3px) rotate(-0.45deg);
     box-shadow: 8px 8px 0 #c8501e !important;
   }
-  .manual-card .ah .aid {
-    color: #c8501e !important;
+  .manual-card > * {
+    position: relative;
+    z-index: 1;
   }
   .manual-card h3 {
-    color: #241d13 !important;
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    left: 0;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent;
+    border: 0;
+    color: #e7f3ea !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+    text-align: center;
+    text-transform: none !important;
+    letter-spacing: 0.04em;
   }
-  .manual-card p {
-    color: #6b5c42 !important;
-  }
-  .manual-card .meta {
-    color: #46502a !important;
-    border-color: #c8501e !important;
-  }
-  .manual-card .dossier-corner {
-    border-color: #46502a !important;
-  }
-  .manual-card .dossier-stamp {
-    top: 12px !important;
-    right: 12px !important;
-    color: #a81e16 !important;
-    border-color: #a81e16 !important;
-    transform: rotate(-7deg);
+  .manual-status-stamp {
+    position: absolute;
+    top: 4.2rem;
+    left: 50%;
+    width: min(210px, 68%);
+    height: auto;
+    display: block;
+    transform: translateX(-50%) rotate(-7deg);
+    opacity: 0.86;
+    pointer-events: none;
+    user-select: none;
+    mix-blend-mode: multiply;
   }
   /* hub 背景 X 母题(淡)+ 战术手册徽记 */
   .hub-bgx {
@@ -154,5 +221,170 @@ const manuals = [
     width: 120px;
     height: 120px;
     display: inline-block;
+  }
+  .manual-launch {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    background:
+      linear-gradient(transparent 0 48%, rgba(34, 255, 136, 0.18) 50%, transparent 52%),
+      repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.06) 0 1px, transparent 1px 4px),
+      rgba(12, 15, 13, 0.96);
+    color: #22ff88;
+    font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(1.02);
+    transition: opacity 160ms ease, visibility 160ms ease, transform 220ms ease;
+  }
+  .manual-launch.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+  .manual-launch-box {
+    width: min(420px, 100%);
+    display: grid;
+    justify-items: center;
+    gap: 0.85rem;
+  }
+  .manual-launch-stamp {
+    color: #ffd43b;
+    border: 2px solid #ffd43b;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    transform: rotate(-6deg);
+  }
+  .manual-launch-card {
+    position: relative;
+    width: min(320px, 78vw);
+    height: 205px;
+    margin-top: 1.15rem;
+    display: grid;
+    align-content: start;
+    border: 2px solid #241d13;
+    border-radius: 4px 4px 2px 2px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 38%),
+      #eadfbd;
+    color: #241d13;
+    box-shadow: 8px 8px 0 #c8501e;
+    overflow: visible;
+  }
+  .manual-launch-card::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: -1.15rem;
+    width: min(12rem, 68%);
+    height: 1.35rem;
+    background: #d8c89d;
+    border: 2px solid #241d13;
+    border-bottom: 0;
+    border-radius: 4px 10px 0 0;
+    clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
+  }
+  .manual-launch-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent, rgba(34, 255, 136, 0.55), transparent);
+    transform: translateY(-100%);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+  .manual-launch-status {
+    position: absolute;
+    top: 4.2rem;
+    left: 50%;
+    width: min(210px, 68%);
+    height: auto;
+    display: block;
+    transform: translateX(-50%) rotate(-7deg);
+    opacity: 0.86;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    user-select: none;
+  }
+  .manual-launch-title {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    left: 0;
+    width: 100%;
+    color: #e7f3ea;
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.25;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+  .manual-launch-log {
+    width: min(340px, 100%);
+    color: #22ff88;
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+  .manual-launch-log p {
+    margin: 0;
+    opacity: 0;
+  }
+  .manual-launch-log p:nth-child(2) {
+    animation-delay: 640ms;
+  }
+  .manual-launch-log p:nth-child(3) {
+    animation-delay: 1280ms;
+  }
+  .manual-launch-bar {
+    width: min(340px, 100%);
+    height: 8px;
+    border: 1px solid #2c3d33;
+    background: #08120c;
+  }
+  .manual-launch-bar i {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #22ff88;
+    box-shadow: 0 0 12px rgba(34, 255, 136, 0.55);
+  }
+  .manual-launch.is-active .manual-launch-card::after {
+    animation: manual-launch-scan 2600ms ease forwards;
+  }
+  .manual-launch.is-active .manual-launch-log p {
+    animation: manual-launch-line 220ms ease forwards;
+  }
+  .manual-launch.is-active .manual-launch-bar i {
+    animation: manual-launch-fill 2800ms ease forwards;
+  }
+  @keyframes manual-launch-line {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes manual-launch-fill {
+    to {
+      width: 100%;
+    }
+  }
+  @keyframes manual-launch-scan {
+    to {
+      transform: translateY(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .manual-launch,
+    .manual-launch-card::after,
+    .manual-launch-log p,
+    .manual-launch-bar i {
+      animation: none;
+      transition: none;
+    }
   }
 </style>

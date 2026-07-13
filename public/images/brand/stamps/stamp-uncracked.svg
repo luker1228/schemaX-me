@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-label="未破解">
+  <g transform="rotate(4 450 130)" fill="none" stroke="#ff4d4d" stroke-linecap="square" stroke-linejoin="miter">
+    <path stroke-width="14" d="M80 34h686l58 46v100l-58 46H80l-52-46V80z"/>
+    <path stroke-width="4" opacity=".82" d="M106 58h632l40 32v78l-40 32H106l-34-32V90z"/>
+    <path stroke-width="4" opacity=".55" d="M244 84h440M244 176h440"/>
+    <circle cx="168" cy="130" r="42" stroke-width="8" opacity=".95"/>
+    <path stroke-width="10" opacity=".95" d="m138 160 60-60"/>
+  </g>
+  <text x="510" y="166" text-anchor="middle" fill="#ff4d4d"
+        font-family="Noto Sans CJK SC, Source Han Sans SC, PingFang SC, Microsoft YaHei, sans-serif"
+        font-size="112" font-weight="900" letter-spacing="10"
+        transform="rotate(4 450 130)">未破解</text>
+</svg>
