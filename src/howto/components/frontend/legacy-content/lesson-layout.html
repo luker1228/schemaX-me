@@ -100,15 +100,18 @@
           <span class="html2-inline-note-tag">重点</span>
           <p>典型结构是 <code>header + nav + banner + main + footer</code>。适合首页、活动页、产品官网，重点是先把入口、主视觉和内容区分开。</p>
         </div>
-        <article class="layout-recipe-card layout-recipe-card-spacious">
-          <div class="layout-recipe-head">
-            <span class="micro-label">Pattern 01</span>
-            <h3>传统门户 / 官网布局</h3>
-          </div>
-          <div class="layout-react-preview" data-layout-recipe-preview="portal"></div>
-          <div class="layout-html-sample">
-            <span class="layout-prompt-label">HTML 大概长这样</span>
-            <pre><code>&lt;header&gt;
+        <div class="layout-recipe-grid layout-recipe-card-spacious">
+          <article class="layout-recipe-card layout-recipe-card-preview">
+            <div class="layout-recipe-head">
+              <span class="micro-label">Pattern 01</span>
+              <h3>传统门户 / 官网布局</h3>
+            </div>
+            <div class="layout-react-preview" data-layout-recipe-preview="portal"></div>
+          </article>
+          <article class="layout-recipe-card">
+            <div class="layout-html-sample">
+              <span class="layout-prompt-label">HTML 大概长这样</span>
+              <pre><code>&lt;header&gt;
   &lt;nav&gt;Logo / 导航 / 登录&lt;/nav&gt;
 &lt;/header&gt;
 &lt;main&gt;
@@ -120,13 +123,16 @@
   &lt;/section&gt;
 &lt;/main&gt;
 &lt;footer&gt;版权 / 联系方式&lt;/footer&gt;</code></pre>
-          </div>
-          <div class="layout-prompt-block">
-            <span class="layout-prompt-label">可以这样描述</span>
-            <p>做一个门户首页：顶部是 header，里面放 Logo 和导航；中间是大 banner 和几块功能卡片；下方是 footer。桌面端多列，移动端收成单列。</p>
-          </div>
-          <p class="layout-recipe-tip"><strong>关键词：</strong><code>header</code>、<code>nav</code>、<code>banner</code>、<code>main</code>、<code>footer</code></p>
-        </article>
+            </div>
+          </article>
+          <article class="layout-recipe-card">
+            <div class="layout-prompt-block">
+              <span class="layout-prompt-label">可以这样描述</span>
+              <p>做一个门户首页：顶部是 header，里面放 Logo 和导航；中间是大 banner 和几块功能卡片；下方是 footer。桌面端多列，移动端收成单列。</p>
+            </div>
+            <p class="layout-recipe-tip"><strong>关键词：</strong><code>header</code>、<code>nav</code>、<code>banner</code>、<code>main</code>、<code>footer</code></p>
+          </article>
+        </div>
           </div>
         </div>
       </div>
@@ -149,15 +155,18 @@
           <span class="html2-inline-note-tag">重点</span>
           <p>结构上通常是 <code>header + aside + main</code>，其中 <code>aside</code> 贴最左并铺满高度，<code>main</code> 吃掉剩余空间。</p>
         </div>
-        <article class="layout-recipe-card layout-recipe-card-spacious">
-          <div class="layout-recipe-head">
-            <span class="micro-label">Pattern 02</span>
-            <h3>后台管理系统布局</h3>
-          </div>
-          <div class="layout-react-preview" data-layout-recipe-preview="dashboard"></div>
-          <div class="layout-html-sample">
-            <span class="layout-prompt-label">HTML 大概长这样</span>
-            <pre><code>&lt;header&gt;系统头部&lt;/header&gt;
+        <div class="layout-recipe-grid layout-recipe-card-spacious">
+          <article class="layout-recipe-card layout-recipe-card-preview">
+            <div class="layout-recipe-head">
+              <span class="micro-label">Pattern 02</span>
+              <h3>后台管理系统布局</h3>
+            </div>
+            <div class="layout-react-preview" data-layout-recipe-preview="dashboard"></div>
+          </article>
+          <article class="layout-recipe-card">
+            <div class="layout-html-sample">
+              <span class="layout-prompt-label">HTML 大概长这样</span>
+              <pre><code>&lt;header&gt;系统头部&lt;/header&gt;
 &lt;div class="layout-shell"&gt;
   &lt;aside&gt;左侧导航&lt;/aside&gt;
   &lt;main&gt;
@@ -165,13 +174,16 @@
     &lt;section&gt;表格 / 图表 / 表单&lt;/section&gt;
   &lt;/main&gt;
 &lt;/div&gt;</code></pre>
-          </div>
-          <div class="layout-prompt-block">
-            <span class="layout-prompt-label">可以这样描述</span>
-            <p>做一个后台管理系统：顶部是 header；左侧是固定宽度的 aside 导航，贴最左并铺满整条高度；右侧 main 作为主体区域，展示表格、图表和表单；移动端把侧边栏收起。</p>
-          </div>
-          <p class="layout-recipe-tip"><strong>关键词：</strong><code>header</code>、<code>aside</code>、<code>main</code>、<code>固定宽度</code>、<code>占据主体</code></p>
-        </article>
+            </div>
+          </article>
+          <article class="layout-recipe-card">
+            <div class="layout-prompt-block">
+              <span class="layout-prompt-label">可以这样描述</span>
+              <p>做一个后台管理系统：顶部是 header；左侧是固定宽度的 aside 导航，贴最左并铺满整条高度；右侧 main 作为主体区域，展示表格、图表和表单；移动端把侧边栏收起。</p>
+            </div>
+            <p class="layout-recipe-tip"><strong>关键词：</strong><code>header</code>、<code>aside</code>、<code>main</code>、<code>固定宽度</code>、<code>占据主体</code></p>
+          </article>
+        </div>
           </div>
         </div>
       </div>
@@ -194,15 +206,18 @@
           <span class="html2-inline-note-tag">重点</span>
           <p>常见结构是 <code>header + article + aside + footer</code>。主内容是文章，右侧是作者信息、目录和相关文章。</p>
         </div>
-        <article class="layout-recipe-card">
-          <div class="layout-recipe-head">
-            <span class="micro-label">Pattern 03</span>
-            <h3>博客 / 文章详情页布局</h3>
-          </div>
-          <div class="layout-react-preview" data-layout-recipe-preview="blog"></div>
-          <div class="layout-html-sample">
-            <span class="layout-prompt-label">HTML 大概长这样</span>
-            <pre><code>&lt;header&gt;博客导航 / 搜索&lt;/header&gt;
+        <div class="layout-recipe-grid layout-recipe-card-spacious">
+          <article class="layout-recipe-card layout-recipe-card-preview">
+            <div class="layout-recipe-head">
+              <span class="micro-label">Pattern 03</span>
+              <h3>博客 / 文章详情页布局</h3>
+            </div>
+            <div class="layout-react-preview" data-layout-recipe-preview="blog"></div>
+          </article>
+          <article class="layout-recipe-card">
+            <div class="layout-html-sample">
+              <span class="layout-prompt-label">HTML 大概长这样</span>
+              <pre><code>&lt;header&gt;博客导航 / 搜索&lt;/header&gt;
 &lt;main&gt;
   &lt;article&gt;
     &lt;h1&gt;文章标题&lt;/h1&gt;
@@ -215,13 +230,16 @@
   &lt;/aside&gt;
 &lt;/main&gt;
 &lt;footer&gt;版权 / 备案&lt;/footer&gt;</code></pre>
-          </div>
-          <div class="layout-prompt-block">
-            <span class="layout-prompt-label">可以这样描述</span>
-            <p>做一个博客详情页：顶部是 header；中间左边是文章正文 article，右边是 aside，放作者信息、目录和相关文章；底部是 footer；移动端把右侧栏折到下方。</p>
-          </div>
-          <p class="layout-recipe-tip"><strong>关键词：</strong><code>article</code>、<code>aside</code>、<code>目录</code>、<code>footer</code>、<code>单列</code></p>
-        </article>
+            </div>
+          </article>
+          <article class="layout-recipe-card">
+            <div class="layout-prompt-block">
+              <span class="layout-prompt-label">可以这样描述</span>
+              <p>做一个博客详情页：顶部是 header；中间左边是文章正文 article，右边是 aside，放作者信息、目录和相关文章；底部是 footer；移动端把右侧栏折到下方。</p>
+            </div>
+            <p class="layout-recipe-tip"><strong>关键词：</strong><code>article</code>、<code>aside</code>、<code>目录</code>、<code>footer</code>、<code>单列</code></p>
+          </article>
+        </div>
           </div>
         </div>
       </div>

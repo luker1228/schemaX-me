@@ -149,7 +149,7 @@ export function initLegacyEnhancements(root = document) {
     });
   });
 
-  if (root.querySelector("[data-layout-recipe-preview='dashboard']")) {
+  if (root.querySelector("[data-layout-recipe-preview]")) {
     import("./layout-recipe-components.jsx").then(({ mountLayoutRecipePreviews }) => {
       mountLayoutRecipePreviews(root);
     });

@@ -12,7 +12,6 @@ import htmlLessonCss2 from "../../../howto/components/frontend/legacy-content/le
 import htmlLessonJs from "../../../howto/components/frontend/legacy-content/lesson-js.html?raw";
 import htmlLessonLayout from "../../../howto/components/frontend/legacy-content/lesson-layout.html?raw";
 import htmlLessonLayout2 from "../../../howto/components/frontend/legacy-content/lesson-layout-2.html?raw";
-import legacyEnhancementsEntryUrl from "../../../howto/components/frontend/legacy-enhancements-entry.js?url";
 import { frontendLessonPages, getFrontendLegacyLesson } from "../../../howto/manuals/frontend/registry.js";
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
@@ -56,6 +55,7 @@ if (!page || !lessonNav) {
 
     {page.kind === "legacy" ? (
       <LegacyPage
+        client:load
         title={page.title}
         html={legacyHtmlMap[page.htmlKey]}
         currentPath={lessonNav.currentPath}
@@ -69,8 +69,6 @@ if (!page || !lessonNav) {
     ) : page.kind === "prompts" ? (
       <PromptsPage client:load currentPath={lessonNav.currentPath} prev={lessonNav.prev} next={lessonNav.next} />
     ) : null}
-
-    {page.kind === "legacy" ? <script type="module" src={legacyEnhancementsEntryUrl}></script> : null}
 
     <script is:inline define:vars={{
       pushPinUrl: `${baseUrl}props/push-pin-transparent.png`,
