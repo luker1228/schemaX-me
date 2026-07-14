@@ -18,6 +18,7 @@ export function initPlaygrounds(root = document) {
     const baseBeforeJs = playgroundRoot.querySelector("[data-playground-base-before-js]")?.textContent.trim();
     const baseAfterJs = playgroundRoot.querySelector("[data-playground-base-after-js]")?.textContent.trim();
     const html = htmlTemplate.textContent.trim();
+    const squarePreview = playgroundRoot.hasAttribute("data-playground-square-preview");
     if (source) {
       source.value = defaultSource;
     }
@@ -26,7 +27,7 @@ export function initPlaygrounds(root = document) {
       const currentSource = source ? source.value : defaultSource;
       const css = [baseBeforeCss || baseCss, cssTemplate ? currentSource : null, baseAfterCss].filter(Boolean).join("\n");
       const js = [baseBeforeJs, jsTemplate ? currentSource : null, baseAfterJs].filter(Boolean).join("\n");
-      const doc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">${css ? `<style>${css}</style>` : ""}</head><body>${html}${js ? `<script>${js}<\/script>` : ""}</body></html>`;
+      const doc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">${css ? `<style>${css}</style>` : ""}${squarePreview ? "<style>* { border-radius: 0 !important; box-shadow: none !important; }</style>" : ""}</head><body>${html}${js ? `<script>${js}<\/script>` : ""}</body></html>`;
       preview.srcdoc = doc;
     }
 

@@ -442,7 +442,7 @@ textarea {
   height: 88px;
   top: -36px;
   right: -148px;
-  transform: rotate(-6deg);
+  transform: none;
 }
 
 @media (max-width: 1024px) {
@@ -1665,6 +1665,11 @@ textarea {
   gap: 24px;
 }
 
+.atlas-intel-list {
+  display: grid;
+  gap: 12px;
+}
+
 .atlas-section-head {
   margin-bottom: 18px;
   padding-bottom: 0;
@@ -1690,7 +1695,6 @@ textarea {
   gap: 8px;
   align-items: center;
   padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
 }
 
 .atlas-switch-btn {
@@ -1748,6 +1752,30 @@ textarea {
 
 .atlas-intel-card + .atlas-intel-card {
   margin-top: 12px;
+}
+
+.atlas-intel-list .atlas-intel-card {
+  align-items: baseline;
+  margin-top: 0;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.atlas-intel-list .html2-inline-note-tag {
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--accent) !important;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.atlas-intel-list .atlas-intel-card p {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
 }
 
 .atlas-stack + .atlas-intel-card {
@@ -2550,6 +2578,14 @@ textarea {
   @apply gap-[18px];
 }
 
+.playground-section-card {
+  padding: 22px;
+  border: 1.5px solid var(--fg);
+  border-radius: 0;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
 .playground-section.tag-item {
   @apply gap-[26px];
 }
@@ -2776,12 +2812,42 @@ textarea {
   margin-top: 20px;
 }
 
+/* 预览和代码示例独立于正文区，但与教程卡片保持相同的左右节奏。 */
+.layout-recipe-grid-standalone {
+  margin-top: 20px;
+  padding: 0;
+}
+
 .layout-recipe-card-spacious .layout-react-preview {
   margin-top: 8px;
 }
 
 .layout-recipe-card > .layout-prompt-block {
   height: 100%;
+}
+
+/* 提示文案是正文说明，不需要再套一层卡片。 */
+.layout-recipe-note {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+}
+
+.layout-recipe-note .layout-prompt-block {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.layout-recipe-note .layout-prompt-label,
+.layout-recipe-note .layout-prompt-block p,
+.layout-recipe-note .layout-recipe-tip,
+.layout-recipe-note .layout-recipe-tip code {
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .layout-prompt-block,
@@ -2856,6 +2922,11 @@ textarea {
     var(--surface);
   overflow: auto;
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+}
+
+/* CSS 基础课的练习面板与其渲染卡片保持平面化。 */
+[data-playground-square-preview] .guided-css-editor {
+  box-shadow: none;
 }
 
 .guided-css-muted,
@@ -3024,6 +3095,10 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 14px 12px;
+}
+
+.code-mock {
+  border-radius: 0;
 }
 
 .figma-mock .fm-title {
@@ -3342,19 +3417,22 @@ body::after {
 
 /* 绝密水印(对角斜置,极淡) */
 body::before {
-  content: "绝密 · CLASSIFIED";
+  content: "";
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(-26deg);
+  inset: 0;
+  transform: none;
   z-index: -1;
   pointer-events: none;
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 14vw, 11rem);
-  letter-spacing: 0.1em;
-  color: var(--fg);
+  background-color: var(--fg);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='680' viewBox='0 0 1600 680'%3E%3Ctext x='800' y='360' text-anchor='middle' transform='rotate(-26 800 340)' font-family='sans-serif' font-size='120' font-weight='700' letter-spacing='12'%3E%E7%BB%9D%E5%AF%86 %C2%B7 CLASSIFIED%3C/text%3E%3C/svg%3E");
+  mask-repeat: repeat-y;
+  mask-size: 100% 680px;
+  mask-position: center 180px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='680' viewBox='0 0 1600 680'%3E%3Ctext x='800' y='360' text-anchor='middle' transform='rotate(-26 800 340)' font-family='sans-serif' font-size='120' font-weight='700' letter-spacing='12'%3E%E7%BB%9D%E5%AF%86 %C2%B7 CLASSIFIED%3C/text%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-y;
+  -webkit-mask-size: 100% 680px;
+  -webkit-mask-position: center 180px;
   opacity: 0.04;
-  white-space: nowrap;
 }
 
 /* hero 分类印章(右上角斜盖红章) */
@@ -3378,7 +3456,7 @@ body::before {
   letter-spacing: 0.14em;
   text-align: center;
   text-transform: uppercase;
-  transform: rotate(-7deg);
+  transform: none;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -3522,7 +3600,7 @@ body::before {
 }
 
 .deploy-lesson-file:hover {
-  transform: translateY(-3px) rotate(-0.35deg);
+  transform: translateY(-3px);
   box-shadow: 9px 9px 0 #c8501e;
 }
 
@@ -3533,7 +3611,7 @@ body::before {
   color: #ff4d4d;
   border: 1.5px solid #ff4d4d;
   padding: 0.18rem 0.5rem;
-  transform: rotate(-6deg);
+  transform: none;
   font-size: 0.72rem;
   font-weight: 900;
 }
@@ -3711,12 +3789,9 @@ body::before {
 
 /* step-card — 真正的卡片，在 wrap 内浮着 */
 .step-card {
-  --step-card-tilt: 0deg;
-  --step-card-counter-tilt: 0deg;
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  transform: rotate(var(--step-card-tilt));
 }
 
 .step-card-head {
@@ -3726,8 +3801,6 @@ body::before {
   padding: 0.55rem 1.2rem;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
-  transform: rotate(var(--step-card-counter-tilt));
-  transform-origin: left top;
 }
 
 
@@ -3756,8 +3829,26 @@ body::before {
 
 .step-card-body {
   padding: 1.4rem 1.4rem 1.6rem;
-  transform: rotate(var(--step-card-counter-tilt));
-  transform-origin: left top;
+}
+
+.css-playground-intro {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.css-playground-intro p {
+  margin: 0;
+}
+
+.js-playground-intro {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.js-playground-intro p {
+  margin: 0;
 }
 
 /* comparison-card: 在卡片内加容器感 */
@@ -3777,24 +3868,6 @@ body::before {
 
 /* 给卡片 position:relative 用于绝对定位 pin/stamp */
 .step-card { position: relative; overflow: visible; }
-
-/* 微倾斜：卡片外轮廓轻微转动, 文字内容回正 */
-.html-reading-page section:nth-of-type(1)  .step-card { --step-card-tilt: -0.4deg; --step-card-counter-tilt: 0.4deg; }
-.html-reading-page section:nth-of-type(2)  .step-card { --step-card-tilt: 0.5deg; --step-card-counter-tilt: -0.5deg; }
-.html-reading-page section:nth-of-type(3)  .step-card { --step-card-tilt: -0.6deg; --step-card-counter-tilt: 0.6deg; }
-.html-reading-page section:nth-of-type(4)  .step-card { --step-card-tilt: 0.3deg; --step-card-counter-tilt: -0.3deg; }
-.html-reading-page section:nth-of-type(5)  .step-card { --step-card-tilt: -0.5deg; --step-card-counter-tilt: 0.5deg; }
-.html-reading-page section:nth-of-type(6)  .step-card { --step-card-tilt: 0.7deg; --step-card-counter-tilt: -0.7deg; }
-.html-reading-page section:nth-of-type(7)  .step-card { --step-card-tilt: -0.3deg; --step-card-counter-tilt: 0.3deg; }
-.html-reading-page section:nth-of-type(8)  .step-card { --step-card-tilt: 0.6deg; --step-card-counter-tilt: -0.6deg; }
-.html-reading-page section:nth-of-type(9)  .step-card { --step-card-tilt: -0.4deg; --step-card-counter-tilt: 0.4deg; }
-.html-reading-page section:nth-of-type(10) .step-card { --step-card-tilt: 0.5deg; --step-card-counter-tilt: -0.5deg; }
-.html-reading-page section:nth-of-type(11) .step-card { --step-card-tilt: -0.7deg; --step-card-counter-tilt: 0.7deg; }
-.html-reading-page section:nth-of-type(12) .step-card { --step-card-tilt: 0.4deg; --step-card-counter-tilt: -0.4deg; }
-.html-reading-page section:nth-of-type(13) .step-card { --step-card-tilt: -0.3deg; --step-card-counter-tilt: 0.3deg; }
-.html-reading-page section:nth-of-type(14) .step-card { --step-card-tilt: 0.6deg; --step-card-counter-tilt: -0.6deg; }
-.html-reading-page section:nth-of-type(15) .step-card { --step-card-tilt: -0.5deg; --step-card-counter-tilt: 0.5deg; }
-.html-reading-page section:nth-of-type(16) .step-card { --step-card-tilt: 0.4deg; --step-card-counter-tilt: -0.4deg; }
 
 /* 图钉 —— 实物道具图片，5 轮换 */
 .step-card::before {
@@ -3816,11 +3889,11 @@ body::before {
 }
 .html-reading-page section:nth-of-type(5n+1) .step-card::before {
   background-image: var(--prop-push-pin, none);
-  transform: rotate(-6deg);
+  transform: none;
 }
 .html-reading-page section:nth-of-type(5n+2) .step-card::before {
   background-image: var(--prop-thumb, none);
-  transform: rotate(8deg);
+  transform: none;
 }
 .html-reading-page section:nth-of-type(5n+3) .step-card::before {
   background-image: var(--prop-seal, none);
@@ -3828,7 +3901,7 @@ body::before {
   height: 72px;
   top: -34px;
   left: calc(50% - 36px);
-  transform: rotate(-5deg);
+  transform: none;
 }
 .html-reading-page section:nth-of-type(5n+4) .step-card::before {
   background-image: var(--prop-tag, none);
@@ -3837,7 +3910,7 @@ body::before {
   top: -24px;
   left: auto;
   right: -28px;
-  transform: rotate(6deg);
+  transform: none;
 }
 .html-reading-page section:nth-of-type(5n+0) .step-card::before {
   background-image: var(--prop-binder, none);
@@ -3846,7 +3919,33 @@ body::before {
   top: -38px;
   left: auto;
   right: 80px;
-  transform: rotate(-3deg);
+  transform: none;
+}
+
+/* JS 交互练习独立成卡片后，继续使用课程道具作为顶部标记。 */
+[data-od-id="js-click"].step-card::before {
+  background-image: var(--prop-push-pin, none);
+}
+
+[data-od-id="js-input"].step-card::before {
+  background-image: var(--prop-thumb, none);
+}
+
+[data-od-id="js-add"].step-card::before {
+  width: 72px;
+  height: 72px;
+  top: -34px;
+  left: calc(50% - 36px);
+  background-image: var(--prop-seal, none);
+}
+
+[data-od-id="js-delete"].step-card::before {
+  width: 120px;
+  height: 102px;
+  top: -24px;
+  right: -28px;
+  left: auto;
+  background-image: var(--prop-tag, none);
 }
 
 /* 印章 —— ::after，只加在部分卡片上 */
@@ -3857,7 +3956,7 @@ body::before {
   width: fit-content;
   top: 1.1rem;
   right: 1.4rem;
-  transform: rotate(-14deg);
+  transform: none;
   font-family: var(--font-display);
   font-size: 1.05rem;
   font-weight: 900;
@@ -3883,7 +3982,7 @@ body::before {
   width: auto;
   writing-mode: horizontal-tb;
   text-orientation: mixed;
-  transform: rotate(9deg);
+  transform: none;
   font-family: var(--font-display);
   font-size: 0.92rem;
   font-weight: 900;
@@ -3905,7 +4004,7 @@ body::before {
   width: fit-content;
   top: 1.1rem;
   right: 1.4rem;
-  transform: rotate(-8deg);
+  transform: none;
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 900;

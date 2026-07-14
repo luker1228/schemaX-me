@@ -102,24 +102,18 @@ function ComponentSection({ id, category, name, what, terms, uses, prompt, child
             </div>
           </div>
 
-          <div className="step-card">
-            <div className="step-card-head">
-              <span className="step-num">{componentStepMap.get(id) || "REACT"}</span>
-              <span className="step-label">说明</span>
+          <div className="atlas-intel-list">
+            <div className="html2-inline-note atlas-intel-card">
+              <span className="html2-inline-note-tag">这是啥</span>
+              <p>{what}</p>
             </div>
-            <div className="step-card-body">
-              <div className="html2-inline-note atlas-intel-card">
-                <span className="html2-inline-note-tag">这是啥</span>
-                <p>{what}</p>
-              </div>
-              <div className="html2-inline-note atlas-intel-card">
-                <span className="html2-inline-note-tag">前端术语</span>
-                <p>{terms}</p>
-              </div>
-              <div className="html2-inline-note atlas-intel-card">
-                <span className="html2-inline-note-tag">常见用途</span>
-                <p>{uses}</p>
-              </div>
+            <div className="html2-inline-note atlas-intel-card">
+              <span className="html2-inline-note-tag">前端术语</span>
+              <p>{terms}</p>
+            </div>
+            <div className="html2-inline-note atlas-intel-card">
+              <span className="html2-inline-note-tag">常见用途</span>
+              <p>{uses}</p>
             </div>
           </div>
         </div>
