@@ -32,11 +32,37 @@ const tocItems = [
   { id: "atlas-writing", label: "提示词怎么写" },
 ];
 
-function PreviewTabs({ prompt, children }) {
+const componentStepIds = [
+  "atlas-hero",
+  "atlas-navbar",
+  "atlas-sidebar-comp",
+  "atlas-card",
+  "atlas-button",
+  "atlas-cta",
+  "atlas-input",
+  "atlas-textarea",
+  "atlas-form",
+  "atlas-checkbox",
+  "atlas-radio",
+  "atlas-switch",
+  "atlas-select",
+  "atlas-dropdown",
+  "atlas-tabs",
+  "atlas-table",
+  "atlas-empty",
+  "atlas-modal",
+  "atlas-drawer",
+  "atlas-pagination",
+  "atlas-toast",
+];
+
+const componentStepMap = new Map(componentStepIds.map((id, index) => [id, `REACT-${String(index + 1).padStart(2, "0")}`]));
+
+function PreviewTabs({ prompt, children, fullWidth = true }) {
   const [view, setView] = useState("preview");
 
   return (
-    <div className="atlas-stack">
+    <div className={`atlas-stack${fullWidth ? " atlas-stack-full" : ""}`}>
       <div className="atlas-switch" role="tablist" aria-label="组件查看方式">
         <button className={`atlas-switch-btn${view === "preview" ? " is-active" : ""}`} type="button" onClick={() => setView("preview")}>
           预览
@@ -56,29 +82,76 @@ function PreviewTabs({ prompt, children }) {
   );
 }
 
-function ComponentSection({ id, category, name, what, terms, uses, prompt, children }) {
+function ComponentSection({ id, category, name, what, terms, uses, prompt, children, previewFullWidth = true }) {
   return (
-    <section className="lesson-section atlas-item" id={id}>
-      <span className="micro-label">{category}</span>
-      <PreviewTabs prompt={prompt}>{children}</PreviewTabs>
-      <h3 className="atlas-name">{name}</h3>
-      <p className="atlas-copy">这是啥？ {what}</p>
-      <p className="atlas-copy">前端术语： {terms}</p>
-      <p className="atlas-copy">常用来干嘛： {uses}</p>
+    <section className="html2-body-section lesson-section atlas-step-section" id={id}>
+      <div className="wrap">
+        <div className="atlas-step-stack">
+          <div className="step-card">
+            <div className="step-card-head">
+              <span className="step-num">{componentStepMap.get(id) || "REACT"}</span>
+              <span className="step-label">{category}</span>
+            </div>
+            <div className="step-card-body">
+              <div className="section-head atlas-section-head">
+                <div>
+                  <h2 className="section-title">{name}</h2>
+                </div>
+              </div>
+              <PreviewTabs prompt={prompt} fullWidth={previewFullWidth}>{children}</PreviewTabs>
+            </div>
+          </div>
+
+          <div className="step-card">
+            <div className="step-card-head">
+              <span className="step-num">{componentStepMap.get(id) || "REACT"}</span>
+              <span className="step-label">说明</span>
+            </div>
+            <div className="step-card-body">
+              <div className="html2-inline-note atlas-intel-card">
+                <span className="html2-inline-note-tag">这是啥</span>
+                <p>{what}</p>
+              </div>
+              <div className="html2-inline-note atlas-intel-card">
+                <span className="html2-inline-note-tag">前端术语</span>
+                <p>{terms}</p>
+              </div>
+              <div className="html2-inline-note atlas-intel-card">
+                <span className="html2-inline-note-tag">常见用途</span>
+                <p>{uses}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
 
 function NavbarPreview() {
+  const [current, setCurrent] = useState("dashboard");
+  const [query, setQuery] = useState("");
+  const [message, setMessage] = useState("点击导航、输入关键词，或者试一下登录按钮。");
+
+  const labels = {
+    dashboard: "控制台",
+    users: "用户",
+    orders: "订单",
+  };
+
   return (
-    <div className="atlas-demo">
+    <div className="atlas-demo atlas-demo-full">
       <div className="atlas-surface">
         <Layout style={{ minHeight: 64, borderRadius: 12, overflow: "hidden" }}>
           <Header style={{ display: "flex", alignItems: "center", gap: 24, padding: "0 24px", background: "#fff", borderBottom: "1px solid #eee" }}>
             <div style={{ fontWeight: 700, fontSize: 16, color: "#ef7627" }}>Acme Admin</div>
             <Menu
               mode="horizontal"
-              defaultSelectedKeys={["dashboard"]}
+              selectedKeys={[current]}
+              onClick={({ key }) => {
+                setCurrent(key);
+                setMessage(`已切换到 ${labels[key]}。`);
+              }}
               style={{ flex: 1, minWidth: 0, borderBottom: "none", background: "transparent" }}
               items={[
                 { key: "dashboard", icon: <DashboardOutlined />, label: "控制台" },
@@ -86,16 +159,28 @@ function NavbarPreview() {
                 { key: "orders", icon: <ShoppingCartOutlined />, label: "订单" },
               ]}
             />
-            <Input prefix={<SearchOutlined />} placeholder="搜索..." style={{ width: 180 }} />
-            <Button type="primary">登录</Button>
+            <Input
+              prefix={<SearchOutlined />}
+              placeholder="搜索..."
+              style={{ width: 180 }}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onPressEnter={() => setMessage(`搜索关键词：${query || "(空)"}`)}
+            />
+            <Button type="primary" onClick={() => setMessage("点击了登录按钮，通常会打开登录流程。")}>登录</Button>
           </Header>
         </Layout>
+        <p className="atlas-feedback" style={{ marginTop: 12, marginBottom: 0 }}>
+          {message}
+        </p>
       </div>
     </div>
   );
 }
 
 function HeroPreview() {
+  const [message, setMessage] = useState("试一下主 CTA 或 Demo 按钮。");
+
   return (
     <div className="atlas-demo">
       <div
@@ -103,30 +188,32 @@ function HeroPreview() {
         style={{
           padding: 0,
           overflow: "hidden",
-          background: "linear-gradient(135deg, #1f2937 0%, #111827 100%)",
-          color: "#fff",
+          background: "linear-gradient(135deg, #f8f1df 0%, #efe2c2 100%)",
+          color: "#241d13",
+          borderColor: "#c9b792",
         }}
       >
         <div style={{ padding: "28px 28px 32px", display: "grid", gap: 16 }}>
           <Tag color="orange" style={{ width: "fit-content", margin: 0 }}>Landing Hero</Tag>
           <div style={{ display: "grid", gap: 12, maxWidth: 520 }}>
-            <h4 style={{ margin: 0, fontSize: 30, lineHeight: 1.15, color: "#fff" }}>
+            <h4 style={{ margin: 0, fontSize: 30, lineHeight: 1.15, color: "#241d13" }}>
               把数据后台的操作路径，整理成一块能立即理解的首屏。
             </h4>
-            <p style={{ margin: 0, color: "rgba(255,255,255,0.74)", lineHeight: 1.7 }}>
+            <p style={{ margin: 0, color: "rgba(36,29,19,0.72)", lineHeight: 1.7 }}>
               Hero 通常由 headline、supporting copy、primary CTA 和辅助信息组成。用户一进页面，先看这里。
             </p>
           </div>
           <Space wrap>
-            <Button type="primary" size="large">开始试用</Button>
-            <Button size="large">查看 Demo</Button>
+            <Button type="primary" size="large" onClick={() => setMessage("点击了开始试用，通常会进入注册或开通流程。")}>开始试用</Button>
+            <Button size="large" onClick={() => setMessage("点击了查看 Demo，通常会跳到演示页或产品导览。")}>查看 Demo</Button>
           </Space>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "rgba(255,255,255,0.64)", fontSize: 12 }}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "rgba(36,29,19,0.6)", fontSize: 12 }}>
             <span>headline</span>
             <span>supporting copy</span>
             <span>primary CTA</span>
             <span>social proof</span>
           </div>
+          <p className="atlas-feedback" style={{ margin: 0 }}>{message}</p>
         </div>
       </div>
     </div>
@@ -134,6 +221,14 @@ function HeroPreview() {
 }
 
 function SidebarPreview() {
+  const [current, setCurrent] = useState("overview");
+  const labels = {
+    overview: "概览",
+    users: "用户管理",
+    orders: "订单管理",
+    settings: "系统设置",
+  };
+
   return (
     <div className="atlas-demo">
       <div className="atlas-surface">
@@ -141,7 +236,8 @@ function SidebarPreview() {
           <Sider width={200} style={{ background: "#fff", borderRight: "1px solid #eee" }}>
             <Menu
               mode="inline"
-              defaultSelectedKeys={["overview"]}
+              selectedKeys={[current]}
+              onClick={({ key }) => setCurrent(key)}
               style={{ borderRight: "none", paddingTop: 12 }}
               items={[
                 { key: "overview", icon: <DashboardOutlined />, label: "概览" },
@@ -151,7 +247,12 @@ function SidebarPreview() {
               ]}
             />
           </Sider>
-          <Content style={{ padding: 24, color: "#999", background: "#fafafa" }}>主内容区</Content>
+          <Content style={{ padding: 24, color: "#999", background: "#fafafa" }}>
+            <div style={{ display: "grid", gap: 10 }}>
+              <div style={{ fontSize: 16, fontWeight: 600, color: "#333" }}>{labels[current]}</div>
+              <div>当前已切换到 {labels[current]} 面板。</div>
+            </div>
+          </Content>
         </Layout>
       </div>
     </div>
@@ -159,17 +260,20 @@ function SidebarPreview() {
 }
 
 function CardPreview() {
+  const [saved, setSaved] = useState(false);
+
   return (
     <div className="atlas-demo">
       <Card
         style={{ maxWidth: 360, width: "100%" }}
         title="专业版套餐"
-        extra={<Tag color="orange">推荐</Tag>}
+        extra={<Tag color={saved ? "green" : "orange"}>{saved ? "已加入" : "推荐"}</Tag>}
       >
         <div style={{ display: "grid", gap: 12 }}>
           <p style={{ margin: 0, color: "#666" }}>适合需要多人协作和权限管理的团队。</p>
           <div style={{ fontSize: 28, fontWeight: 700 }}>¥199<span style={{ fontSize: 14, fontWeight: 400, color: "#777" }}>/月</span></div>
-          <Button type="primary">立即开通</Button>
+          <Button type="primary" onClick={() => setSaved((value) => !value)}>{saved ? "已加入清单" : "立即开通"}</Button>
+          <p className="atlas-feedback" style={{ margin: 0 }}>{saved ? "这个卡片通常会把套餐加入比较或购买流程。" : "点按钮试试卡片里的主操作。"}</p>
         </div>
       </Card>
     </div>
@@ -200,6 +304,8 @@ function ButtonPreview() {
 }
 
 function CtaPreview() {
+  const [message, setMessage] = useState("CTA 的关键是把下一步动作说清楚。");
+
   return (
     <div className="atlas-demo">
       <div
@@ -218,9 +324,10 @@ function CtaPreview() {
           </p>
         </div>
         <Space wrap>
-          <Button type="primary">立即开通</Button>
-          <Button>联系销售</Button>
+          <Button type="primary" onClick={() => setMessage("主 CTA 被点击，通常会进入转化主路径。")}>立即开通</Button>
+          <Button onClick={() => setMessage("次 CTA 被点击，通常会转到销售咨询或补充说明。")}>联系销售</Button>
         </Space>
+        <p className="atlas-feedback" style={{ margin: 0 }}>{message}</p>
       </div>
     </div>
   );
@@ -256,11 +363,17 @@ function TextareaPreview() {
 
 function FormPreview() {
   const [form] = Form.useForm();
+  const [message, setMessage] = useState("改几个字段，再试试保存或重置。");
 
   return (
     <div className="atlas-demo">
       <div className="atlas-surface" style={{ maxWidth: 460, width: "100%" }}>
-        <Form form={form} layout="vertical" initialValues={{ name: "张三", role: "admin" }}>
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={{ name: "张三", role: "admin" }}
+          onFinish={(values) => setMessage(`已提交：${values.name} / ${values.role}`)}
+        >
           <Form.Item label="姓名" name="name">
             <Input />
           </Form.Item>
@@ -274,10 +387,17 @@ function FormPreview() {
             />
           </Form.Item>
           <Space>
-            <Button type="primary">保存表单</Button>
-            <Button>重置</Button>
+            <Button type="primary" htmlType="submit">保存表单</Button>
+            <Button onClick={() => {
+              form.resetFields();
+              setMessage("表单已重置为初始值。");
+            }}
+            >
+              重置
+            </Button>
           </Space>
         </Form>
+        <p className="atlas-feedback">{message}</p>
       </div>
     </div>
   );
@@ -368,11 +488,14 @@ function SelectPreview() {
 }
 
 function DropdownPreview() {
+  const [value, setValue] = useState("点按钮后弹出一组补充操作。");
+
   return (
     <div className="atlas-demo">
       <Space>
         <Dropdown
           menu={{
+            onClick: ({ key }) => setValue(`当前操作：${key}`),
             items: [
               { key: "edit", label: "编辑" },
               { key: "duplicate", label: "复制" },
@@ -382,7 +505,7 @@ function DropdownPreview() {
         >
           <Button>更多操作</Button>
         </Dropdown>
-        <p className="atlas-feedback" style={{ margin: 0 }}>点按钮后弹出一组补充操作。</p>
+        <p className="atlas-feedback" style={{ margin: 0 }}>{value}</p>
       </Space>
     </div>
   );
@@ -408,11 +531,12 @@ function TabsPreview() {
 }
 
 function TablePreview() {
+  const [selected, setSelected] = useState("还没有选择行内操作。");
   const columns = [
     { title: "姓名", dataIndex: "name", key: "name", render: (t, r) => <Space><Avatar size="small" style={{ backgroundColor: "#ef7627" }}>{t[0]}</Avatar>{t}</Space> },
     { title: "角色", dataIndex: "role", key: "role", render: (r) => <Tag color={r === "管理员" ? "orange" : "default"}>{r}</Tag> },
     { title: "状态", dataIndex: "status", key: "status", render: (s) => <Tag color={s === "启用" ? "green" : "red"}>{s}</Tag> },
-    { title: "操作", key: "action", render: () => <a>查看</a> },
+    { title: "操作", key: "action", render: (_, record) => <Button type="link" style={{ paddingInline: 0 }} onClick={() => setSelected(`查看：${record.name}`)}>查看</Button> },
   ];
   const data = [
     { key: "1", name: "张三", role: "管理员", status: "启用" },
@@ -423,6 +547,7 @@ function TablePreview() {
   return (
     <div className="atlas-demo">
       <Table columns={columns} dataSource={data} pagination={false} size="middle" />
+      <p className="atlas-feedback">{selected}</p>
     </div>
   );
 }
@@ -483,14 +608,16 @@ function PaginationPreview() {
 }
 
 function EmptyPreview() {
+  const [cleared, setCleared] = useState(false);
+
   return (
     <div className="atlas-demo">
       <div className="atlas-surface" style={{ width: "100%" }}>
         <Empty
-          description="当前还没有筛选结果"
+          description={cleared ? "筛选条件已清空，可以重新查看全部结果" : "当前还没有筛选结果"}
           image={Empty.PRESENTED_IMAGE_SIMPLE}
         >
-          <Button type="primary">清空筛选</Button>
+          <Button type="primary" onClick={() => setCleared(true)}>清空筛选</Button>
         </Empty>
       </div>
     </div>
@@ -610,13 +737,30 @@ export function LessonReactApp({ currentPath, prev, next }) {
           </div>
         </header>
 
-        <main className="lesson-shell lesson-main">
+        <main className="html-reading-page lesson-main">
 
           <section className="lesson-layout">
             <article className="lesson-prose">
-              <section className="lesson-section" id="atlas-why">
-                <h2>这章讲什么</h2>
-                <p>这章只做两件事：认识常见组件，学会用正确的前端词写提示词。先看长相，再记名字，写提示词时直接用这些词。</p>
+              <section className="html2-body-section lesson-section atlas-step-section" id="atlas-why">
+                <div className="wrap">
+                  <div className="step-card">
+                    <div className="step-card-head">
+                      <span className="step-num">REACT-00</span>
+                      <span className="step-label">核心</span>
+                    </div>
+                    <div className="step-card-body">
+                      <div className="section-head atlas-section-head">
+                        <div>
+                          <h2 className="section-title">这章讲什么</h2>
+                        </div>
+                      </div>
+                      <div className="html2-inline-note">
+                        <span className="html2-inline-note-tag">核心</span>
+                        <p>这章只做两件事：认识常见组件，学会用正确的前端词写提示词。先看长相，再记名字，写提示词时直接用这些词。</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </section>
 
               <ComponentSection
@@ -873,12 +1017,12 @@ export function LessonReactApp({ currentPath, prev, next }) {
 
               <section className="lesson-section" id="atlas-writing">
                 <h2>提示词怎么写</h2>
-                <div className="callout-card">
-                  <strong>错误写法：</strong>
+                <div className="html2-inline-note">
+                  <span className="html2-inline-note-tag">错误写法</span>
                   <p>搞几个卡片，再来一组选项，没数据的时候给个提示，保存完弹一下。</p>
                 </div>
-                <div className="callout-card analogy">
-                  <strong>更好的写法：</strong>
+                <div className="html2-inline-note">
+                  <span className="html2-inline-note-tag">更好的写法</span>
                   <p>页面顶部做一个 <code>Hero</code>；内容区用 <code>Card</code> 展示套餐；右侧放一个编辑 <code>Form</code>，里面包含 <code>Input</code>、<code>Textarea</code>、<code>Checkbox</code>、<code>Radio</code>、<code>Switch</code>；操作菜单用 <code>Dropdown</code>；列表为空时显示 <code>Empty State</code>；保存成功后弹一个 <code>Toast</code>。</p>
                 </div>
                 <p>当你能把这些词写出来，AI 生成页面的命中率会高很多，因为你和它说的是前端常用词，而不是模糊描述。</p>

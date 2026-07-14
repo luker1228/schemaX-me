@@ -2826,7 +2826,6 @@ img.dossier-stamp.s2 {
   border-color: var(--cyan);
   box-shadow: 2px 2px 0 var(--cyan);
 }
-
 /* 能力矩阵 */
 .dossier-matrix {
   position: relative;

@@ -11,58 +11,6 @@ export function initLegacyEnhancements(root = document) {
     return document.getElementById(id);
   };
 
-  root.querySelectorAll(".nav-links a[data-perspectives]").forEach((link) => {
-    let perspectives = [];
-    try {
-      perspectives = JSON.parse(link.getAttribute("data-perspectives") || "[]");
-    } catch {
-      perspectives = [];
-    }
-    if (!perspectives.length) return;
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "nav-dropdown";
-    link.parentNode.insertBefore(wrapper, link);
-    wrapper.appendChild(link);
-
-    const trigger = document.createElement("button");
-    trigger.type = "button";
-    trigger.className = "nav-dropdown-trigger";
-    trigger.textContent = link.textContent;
-    link.parentNode.replaceChild(trigger, link);
-
-    const menu = document.createElement("div");
-    menu.className = "nav-dropdown-menu";
-    perspectives.forEach((p) => {
-      const item = document.createElement("a");
-      item.href = p.href;
-      item.textContent = p.text;
-      if (p.current) item.classList.add("is-current");
-      menu.appendChild(item);
-    });
-    wrapper.appendChild(menu);
-
-    const toggle = (open) => {
-      wrapper.classList.toggle("is-open", open);
-    };
-    trigger.addEventListener("click", (e) => {
-      e.preventDefault();
-      toggle(!wrapper.classList.contains("is-open"));
-    });
-    const onDocClick = (e) => {
-      if (!wrapper.contains(e.target)) toggle(false);
-    };
-    document.addEventListener("click", onDocClick);
-    const onEsc = (e) => {
-      if (e.key === "Escape") toggle(false);
-    };
-    document.addEventListener("keydown", onEsc);
-    cleanups.push(() => {
-      document.removeEventListener("click", onDocClick);
-      document.removeEventListener("keydown", onEsc);
-    });
-  });
-
   root.querySelectorAll("[data-cycle]").forEach((container) => {
     const items = Array.from(container.querySelectorAll(".cycle-item"));
     if (items.length < 2) return;

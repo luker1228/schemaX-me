@@ -42,9 +42,14 @@
   <article class="lesson-prose">
     <section class="html2-body-section lesson-section" id="deploy-core">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-01</span>
+            <span class="step-label">核心</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>01</strong> / 核心</div>
             <h2 class="section-title">打包镜像，到底在打包什么</h2>
           </div>
         </div>
@@ -64,14 +69,21 @@
         <p>关键认知:镜像里真正运行需要的,只是 <strong>产物 + 运行时环境</strong>。源码、编译器、构建工具,运行时都不该混进去。</p>
         <p>问题也就随之出现了:怎么让这些“运行时不需要的东西”不混进镜像里?这就是整篇文章要解决的事。</p>
         <p>Docker 基础这里不展开，重点只放在:怎么合理使用 Dockerfile，怎么把镜像做对。</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="html2-body-section lesson-section" id="deploy-local-build">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-02</span>
+            <span class="step-label">问题</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>02</strong> / 问题</div>
             <h2 class="section-title">本地构建产物为什么不好</h2>
           </div>
         </div>
@@ -104,14 +116,21 @@ CMD ["./myapp"]</code></pre>
           </div>
         </div>
         <p>做法 A 死在环境不一致，做法 B 死在臃肿不安全。有没有一种方式，既保证环境一致，又能让最终镜像小而安全?答案就是多阶段构建。</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="html2-body-section lesson-section" id="deploy-multi-stage">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-03</span>
+            <span class="step-label">解法</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>03</strong> / 解法</div>
             <h2 class="section-title">把编译和运行分开<br><span class="html2-title-em">多阶段构建</span></h2>
           </div>
         </div>
@@ -149,14 +168,21 @@ CMD ["./myapp"]</code></pre>
           <li><strong>安全</strong>：包越少，攻击面越小，CVE 也越少；很多最小镜像连 shell 都没有</li>
         </ul>
         <p>一个 Dockerfile，一条 <code>docker build</code> 命令，就可以同时完成“受控编译”和“最小运行”这两件事。</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="html2-body-section lesson-section" id="deploy-runtime">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-04</span>
+            <span class="step-label">运行时</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>04</strong> / 运行时</div>
             <h2 class="section-title">不同语言的产物<br><span class="html2-title-em">对应不同运行阶段</span></h2>
           </div>
         </div>
@@ -223,14 +249,21 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
         <p>规律很稳定:运行阶段只装“跑产物必需的最小运行时”。Java 只装 JRE，前端只装 nginx，Go 干脆什么都不装。</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="html2-body-section lesson-section" id="deploy-habits">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-05</span>
+            <span class="step-label">默认习惯</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>05</strong> / 默认习惯</div>
             <h2 class="section-title">打包好镜像的几个默认动作</h2>
           </div>
         </div>
@@ -242,14 +275,21 @@ COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
           <li><strong>合并 RUN</strong>:多条命令用 <code>&amp;&amp;</code> 串起来，减少镜像层数</li>
         </ul>
         <p>这里最值得记住的是“依赖先拷、源码后拷”。源码天天变，依赖很少变。顺序写对了，改一行业务代码就不会触发“重装所有依赖”那一层，CI 时间差很多。</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="html2-body-section lesson-section" id="deploy-config">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-06</span>
+            <span class="step-label">配置</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>06</strong> / 配置</div>
             <h2 class="section-title">
               <span class="html2-title-line">镜像做好了以后</span>
               <span class="html2-title-line"><span class="html2-title-em">运行配置怎么办</span></span>
@@ -294,14 +334,21 @@ COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
           <li><code>.env</code> 这类文件要进 <code>.gitignore</code></li>
           <li>更复杂的密码管理、动态配置更新，可以留到 K8s / Secret / 配置中心那一层解决</li>
         </ul>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="html2-body-section lesson-section" id="deploy-summary">
       <div class="wrap">
+        <div class="step-card">
+          <div class="step-card-head">
+            <span class="step-num">DOCKER-07</span>
+            <span class="step-label">总结</span>
+          </div>
+          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <div class="section-num"><strong>07</strong> / 总结</div>
             <h2 class="section-title">一句话总结</h2>
           </div>
         </div>
@@ -312,6 +359,8 @@ COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
         <pre class="code-block"><code>产物 + 运行时  ──COPY --from──&gt;  最终镜像(小而安全)
 (构建阶段产出)                    (只有这一个会被推送/部署)</code></pre>
         <p>多阶段构建就是把这件事写成标准流程:前段编译，后段运行，最终镜像又小又安全。这才是从“编译产物”到“生产级镜像”的标准姿势。</p>
+          </div>
+        </div>
       </div>
     </section>
   </article>

@@ -54,6 +54,7 @@ const COURSES = [
   { label: "组件", href: "lesson-react.html" },
   {
     label: "布局",
+    href: "lesson-layout.html",
     perspectives: [
       { text: "布局第一课：骨架", href: "lesson-layout.html" },
       { text: "布局第二课：排列", href: "lesson-layout-2.html" },
@@ -64,6 +65,7 @@ const COURSES = [
 function NavDropdown({ course, currentPath }) {
   const [open, setOpen] = useState(false);
   const ref = React.useRef(null);
+  const parentHref = withBase(course.href || course.perspectives?.[0]?.href || "");
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -80,16 +82,19 @@ function NavDropdown({ course, currentPath }) {
 
   return (
     <div className={`nav-dropdown${open ? " is-open" : ""}`} ref={ref}>
+      <a href={parentHref} className={`nav-dropdown-link${currentPath === course.href ? " is-current" : ""}`}>
+        {course.label}
+      </a>
       <button
         type="button"
         className="nav-dropdown-trigger"
+        aria-label={`展开${course.label}子菜单`}
+        aria-expanded={open}
         onClick={(e) => {
           e.preventDefault();
           setOpen((v) => !v);
         }}
-      >
-        {course.label}
-      </button>
+      />
       <div className="nav-dropdown-menu">
         {course.perspectives.map((p) => (
           <a

@@ -39,9 +39,21 @@
   --warn: var(--soft-yellow);
   --success: var(--soft-green);
   --shadow: 4px 4px 0 rgba(40, 30, 15, 0.45);
-  --code-bg: #241d13;
-  --code-fg: #f3ecd9;
-  --code-border: #000000;
+  --howto-code-block-bg: #241d13;
+  --howto-code-block-fg: #f3ecd9;
+  --howto-code-block-border: #000000;
+  --howto-code-input-bg: color-mix(in oklab, white 92%, var(--surface));
+  --howto-code-input-fg: var(--fg);
+  --howto-code-input-border: color-mix(in oklab, var(--fg) 14%, white);
+  --howto-code-panel-bg: color-mix(in oklab, white 92%, var(--surface));
+  --howto-code-panel-fg: var(--fg);
+  --howto-code-panel-border: color-mix(in oklab, var(--fg) 14%, white);
+  --howto-code-preview-bg: #ffffff;
+  --howto-code-preview-fg: #1a1a1a;
+  --howto-code-preview-border: var(--fg);
+  --code-bg: var(--howto-code-block-bg);
+  --code-fg: var(--howto-code-block-fg);
+  --code-border: var(--howto-code-block-border);
   --syn-tag: #c8501e;
   --syn-attr: #6b3fa0;
   --syn-str: #46502a;
@@ -278,12 +290,28 @@ textarea {
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 2px;
+}
+
+.nav-dropdown-link {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 4px 0;
+}
+
+.nav-dropdown-link.is-current {
+  color: var(--accent-strong);
 }
 
 .nav-dropdown-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
   color: inherit;
   font-weight: 600;
   font-size: var(--text-body-sm);
@@ -1112,8 +1140,18 @@ textarea {
 }
 
 .section-num {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
+
 
 .section-sub {
   margin: 0;
@@ -1618,8 +1656,22 @@ textarea {
   @apply pb-0;
 }
 
+.atlas-step-section {
+  padding-block: var(--section-space);
+}
+
+.atlas-step-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.atlas-section-head {
+  margin-bottom: 18px;
+  padding-bottom: 0;
+}
+
 .atlas-demo {
-  width: min(100%, 760px);
+  width: 100%;
   padding: 0 0 24px;
 }
 
@@ -1627,6 +1679,10 @@ textarea {
   width: min(100%, 760px);
   display: grid;
   gap: 0;
+}
+
+.atlas-stack-full {
+  width: 100%;
 }
 
 .atlas-switch {
@@ -1688,6 +1744,14 @@ textarea {
 .atlas-copy strong,
 .atlas-note strong {
   color: var(--fg);
+}
+
+.atlas-intel-card + .atlas-intel-card {
+  margin-top: 12px;
+}
+
+.atlas-stack + .atlas-intel-card {
+  margin-top: 18px;
 }
 
 .atlas-note {
@@ -2785,10 +2849,10 @@ textarea {
   width: 100%;
   min-height: calc(13px * 1.6 + 10px);
   padding: 6px 8px;
-  border: 1px solid color-mix(in oklab, var(--fg) 14%, white);
+  border: 1px solid var(--howto-code-input-border);
   border-radius: 0;
-  background: color-mix(in oklab, white 92%, var(--surface));
-  color: var(--fg);
+  background: var(--howto-code-input-bg);
+  color: var(--howto-code-input-fg);
   resize: none;
   overflow: auto;
 }
@@ -2803,9 +2867,10 @@ textarea {
   width: 100%;
   min-height: 100%;
   height: 100%;
-  border: 1.5px solid var(--fg);
+  border: 1.5px solid var(--howto-code-preview-border);
   border-radius: 0;
-  background: var(--surface);
+  background: var(--howto-code-preview-bg);
+  color: var(--howto-code-preview-fg);
 }
 
 .playground.playground-roomy .playground-editor,
@@ -3173,15 +3238,33 @@ textarea {
 .playground-textarea,
 .playground-source-panel,
 .code-mock pre {
-  background: var(--code-bg) !important;
-  color: var(--code-fg) !important;
-  border-color: var(--code-border) !important;
+  background: var(--howto-code-block-bg) !important;
+  color: var(--howto-code-block-fg) !important;
+  border-color: var(--howto-code-block-border) !important;
+}
+/* guided-css-line 是输入行,不走代码深色主题 */
+.playground-textarea.guided-css-line {
+  background: var(--howto-code-input-bg) !important;
+  color: var(--howto-code-input-fg) !important;
+  border-color: var(--howto-code-input-border) !important;
+}
+
+.playground-source-panel:has(.playground-textarea-plain) {
+  background: var(--howto-code-panel-bg) !important;
+  color: var(--howto-code-panel-fg) !important;
+  border-color: var(--howto-code-panel-border) !important;
+}
+
+.playground-textarea.playground-textarea-plain {
+  background: transparent !important;
+  color: var(--howto-code-panel-fg) !important;
+  border-color: transparent !important;
 }
 /* 渲染预览始终白底(浏览器画布),保证用户 HTML 真实呈现 */
 .preview-content,
 .playground-iframe {
-  background: #ffffff !important;
-  color: #1a1a1a !important;
+  background: var(--howto-code-preview-bg) !important;
+  color: var(--howto-code-preview-fg) !important;
 }
 /* 代码语法 mock 色随主题 */
 .code-mock .ctag { color: var(--syn-tag) !important; }
@@ -3591,18 +3674,18 @@ body::before {
   background: var(--bg);
 }
 
+
 .step-num {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 1.65rem;
-  height: 1.65rem;
-  padding: 0 0.3rem;
-  background: var(--accent);
-  color: #fff;
+  padding: 0;
+  background: transparent;
+  color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
-  font-weight: 600;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   flex-shrink: 0;
 }
 
@@ -3637,23 +3720,7 @@ body::before {
 /* 给卡片 position:relative 用于绝对定位 pin/stamp */
 .step-card { position: relative; overflow: visible; }
 
-/* 微倾斜：每张卡片不同角度 */
-.html-reading-page section:nth-of-type(1)  .step-card { transform: rotate(-0.4deg); }
-.html-reading-page section:nth-of-type(2)  .step-card { transform: rotate(0.5deg); }
-.html-reading-page section:nth-of-type(3)  .step-card { transform: rotate(-0.6deg); }
-.html-reading-page section:nth-of-type(4)  .step-card { transform: rotate(0.3deg); }
-.html-reading-page section:nth-of-type(5)  .step-card { transform: rotate(-0.5deg); }
-.html-reading-page section:nth-of-type(6)  .step-card { transform: rotate(0.7deg); }
-.html-reading-page section:nth-of-type(7)  .step-card { transform: rotate(-0.3deg); }
-.html-reading-page section:nth-of-type(8)  .step-card { transform: rotate(0.6deg); }
-.html-reading-page section:nth-of-type(9)  .step-card { transform: rotate(-0.4deg); }
-.html-reading-page section:nth-of-type(10) .step-card { transform: rotate(0.5deg); }
-.html-reading-page section:nth-of-type(11) .step-card { transform: rotate(-0.7deg); }
-.html-reading-page section:nth-of-type(12) .step-card { transform: rotate(0.4deg); }
-.html-reading-page section:nth-of-type(13) .step-card { transform: rotate(-0.3deg); }
-.html-reading-page section:nth-of-type(14) .step-card { transform: rotate(0.6deg); }
-.html-reading-page section:nth-of-type(15) .step-card { transform: rotate(-0.5deg); }
-.html-reading-page section:nth-of-type(16) .step-card { transform: rotate(0.4deg); }
+/* 卡片本体不旋转，避免命中区域错位影响交互 */
 
 /* 图钉 —— 实物道具图片，5 轮换 */
 .step-card::before {
