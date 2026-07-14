@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" fill="none">
+  <defs>
+    <filter id="paperGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="grain"/>
+      <feColorMatrix type="saturate" values="0" in="grain" result="grayGrain"/>
+      <feBlend in="SourceGraphic" in2="grayGrain" mode="multiply" result="blended"/>
+      <feComponentTransfer in="blended">
+        <feFuncA type="linear" slope="1"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <!-- Tag body with diagonal cut top-right (military tag style) -->
+  <path d="M 12 12 L 196 12 L 228 44 L 228 138 L 12 138 Z" fill="#e6dcc4"/>
+  <path d="M 12 12 L 196 12 L 228 44 L 228 138 L 12 138 Z" stroke="#c8bca4" stroke-width="1.5"/>
+  <!-- Fold shadow on diagonal cut -->
+  <path d="M 196 12 L 196 44 L 228 44" fill="#c8bca4" opacity="0.5"/>
+  <line x1="196" y1="12" x2="228" y2="44" stroke="#b8ac94" stroke-width="1"/>
+
+  <!-- Paper grain texture overlay -->
+  <path d="M 12 12 L 196 12 L 228 44 L 228 138 L 12 138 Z" fill="#e6dcc4" opacity="0.3" filter="url(#paperGrain)"/>
+
+  <!-- Grid lines -->
+  <line x1="12" y1="40" x2="228" y2="40" stroke="#c4b89a" stroke-width="0.5" opacity="0.6"/>
+  <line x1="12" y1="68" x2="228" y2="68" stroke="#c4b89a" stroke-width="0.5" opacity="0.6"/>
+  <line x1="12" y1="96" x2="228" y2="96" stroke="#c4b89a" stroke-width="0.5" opacity="0.6"/>
+  <line x1="12" y1="124" x2="228" y2="124" stroke="#c4b89a" stroke-width="0.5" opacity="0.6"/>
+  <line x1="80" y1="12" x2="80" y2="138" stroke="#c4b89a" stroke-width="0.5" opacity="0.4"/>
+  <line x1="150" y1="12" x2="150" y2="138" stroke="#c4b89a" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Punched hole with metal eyelet -->
+  <circle cx="38" cy="40" r="11" fill="#d4c8b0"/>
+  <circle cx="38" cy="40" r="11" stroke="#b8a890" stroke-width="1.5"/>
+  <circle cx="38" cy="40" r="8" fill="#1e1a14" opacity="0.8"/>
+  <!-- Eyelet metal ring -->
+  <circle cx="38" cy="40" r="11" fill="none" stroke="#a89878" stroke-width="3"/>
+  <circle cx="38" cy="40" r="11" fill="none" stroke="#c8b898" stroke-width="1"/>
+  <!-- Eyelet shine -->
+  <path d="M 30 34 A 11 11 0 0 1 38 28" stroke="#d8c8a8" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- File label area (darker band at top) -->
+  <rect x="12" y="12" width="184" height="22" rx="0" fill="#d4c8a8" opacity="0.4"/>
+
+  <!-- File number header -->
+  <text x="60" y="27" font-family="Courier New, Consolas, monospace" font-size="8.5" font-weight="700" letter-spacing="2" fill="#241d13" opacity="0.75">FIELD INTEL DOSSIER</text>
+
+  <!-- Serial number (prominent) -->
+  <text x="28" y="62" font-family="Courier New, Consolas, monospace" font-size="13.5" font-weight="700" letter-spacing="1.5" fill="#241d13" opacity="0.88">FN-20847-X</text>
+
+  <!-- Classification row -->
+  <text x="28" y="88" font-family="Courier New, Consolas, monospace" font-size="8" letter-spacing="1.5" fill="#241d13" opacity="0.6">CLASS:</text>
+  <text x="82" y="88" font-family="Arial Black, Impact, sans-serif" font-size="9" font-weight="900" letter-spacing="1" fill="#c8501e" opacity="0.85">RESTRICTED</text>
+
+  <!-- Archive code -->
+  <text x="28" y="108" font-family="Courier New, Consolas, monospace" font-size="8" letter-spacing="1.5" fill="#241d13" opacity="0.6">ARCHIVE: 08 · SRC-4 · 2084</text>
+
+  <!-- Stamp mark (small red stamp in corner) -->
+  <g transform="rotate(12 188 120)">
+    <rect x="162" y="108" width="54" height="20" rx="1" fill="none" stroke="#c8501e" stroke-width="1.5" opacity="0.6"/>
+    <text x="189" y="121" font-family="Arial Black, Impact, sans-serif" font-size="8" font-weight="900" letter-spacing="1.5" fill="#c8501e" text-anchor="middle" opacity="0.7">VERIFIED</text>
+  </g>
+
+  <!-- Edge wear marks -->
+  <rect x="12" y="128" width="30" height="10" rx="0" fill="#c8bca4" opacity="0.3"/>
+  <rect x="200" y="12" width="28" height="15" rx="0" fill="#c8bca4" opacity="0.2"/>
+
+  <!-- Drop shadow -->
+  <rect x="16" y="142" width="216" height="6" rx="2" fill="#000" opacity="0.18"/>
+</svg>

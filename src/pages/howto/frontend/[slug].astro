@@ -14,6 +14,8 @@ import htmlLessonLayout from "../../../howto/components/frontend/legacy-content/
 import htmlLessonLayout2 from "../../../howto/components/frontend/legacy-content/lesson-layout-2.html?raw";
 import { frontendLessonPages, getFrontendLegacyLesson } from "../../../howto/manuals/frontend/registry.js";
 
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
 const legacyHtmlMap = {
   "lesson-html": htmlLessonHtml,
   "lesson-html-2": htmlLessonHtml2,
@@ -73,5 +75,20 @@ if (!page || !lessonNav) {
         initLegacyEnhancements(document);
       </script>
     ) : null}
+
+    <script is:inline define:vars={{
+      pushPinUrl: `${baseUrl}props/push-pin-transparent.png`,
+      thumbUrl: `${baseUrl}props/brass-thumbtack-tight-transparent.png`,
+      sealUrl: `${baseUrl}props/classified-seal-transparent.png`,
+      tagUrl: `${baseUrl}props/file-index-tag-transparent.png`,
+      binderUrl: `${baseUrl}props/binder-clip-note-transparent.png`
+    }}>
+      var s = document.documentElement.style;
+      s.setProperty('--prop-push-pin', 'url("' + pushPinUrl + '")');
+      s.setProperty('--prop-thumb',    'url("' + thumbUrl + '")');
+      s.setProperty('--prop-seal',     'url("' + sealUrl + '")');
+      s.setProperty('--prop-tag',      'url("' + tagUrl + '")');
+      s.setProperty('--prop-binder',   'url("' + binderUrl + '")');
+    </script>
   </body>
 </html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luke Lab — 双主题预览</title>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Avenir Next", "Segoe UI", "PingFang SC", sans-serif; }
+a { text-decoration: none; color: inherit; }
+button { font: inherit; cursor: pointer; }
+
+/* ── Theme: Dark (主站) ── */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:             #0a0a0a;
+  --surface:        #111111;
+  --surface-strong: #1a1a1a;
+  --surface-muted:  #222222;
+  --border:         #2a2a2a;
+  --text:           #f6ead6;
+  --text-soft:      #888888;
+  --accent:         #ffd43b;
+  --yellow:         #ffd43b;
+  --cyan:           #00d4ff;
+  --green:          #00d26a;
+  --purple:         #b678ff;
+  --red:            #ff4d4d;
+  --magenta:        #d030a8;
+  --accent-soft:    rgba(255,212,59,0.1);
+  --shadow-sm:      4px 4px 0 0 rgba(255,255,255,0.04);
+  --shadow-md:      6px 6px 0 0 rgba(255,255,255,0.05);
+  --ink:            #ffffff;
+}
+
+/* ── Theme: Light (博客) ── */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg:             #fafaf5;
+  --surface:        #ffffff;
+  --surface-strong: #f0ede6;
+  --surface-muted:  #e8e4dc;
+  --border:         #0d0d0d;
+  --text:           #0d0d0d;
+  --text-soft:      #555555;
+  --accent:         #ffd43b;
+  --yellow:         #ffd43b;
+  --cyan:           #00d4ff;
+  --green:          #00d26a;
+  --purple:         #b678ff;
+  --red:            #ff4d4d;
+  --magenta:        #d030a8;
+  --accent-soft:    rgba(255,212,59,0.12);
+  --shadow-sm:      3px 3px 0 0 #0d0d0d;
+  --shadow-md:      5px 5px 0 0 #0d0d0d;
+  --ink:            #0d0d0d;
+}
+
+/* ── Shared layout ── */
+.page {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ── Toggle bar ── */
+.toggle-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #000;
+  border-bottom: 1px solid #222;
+  font-family: "SFMono-Regular", "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #888;
+}
+.toggle-bar strong { color: #ffd43b; }
+.toggle-btn {
+  display: flex;
+  border: 1px solid #333;
+  overflow: hidden;
+  border-radius: 0;
+}
+.toggle-btn button {
+  padding: 5px 14px;
+  border: none;
+  background: transparent;
+  color: #888;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 120ms, color 120ms;
+}
+.toggle-btn button.active { background: #ffd43b; color: #000; }
+
+/* ── Shell ── */
+.shell {
+  width: min(calc(100% - 48px), 1100px);
+  margin: 0 auto;
+}
+
+/* ── Nav ── */
+.site-nav {
+  position: sticky;
+  top: 41px;
+  z-index: 20;
+  padding: 14px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-name {
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brand-tag {
+  padding: 3px 7px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-family: "SFMono-Regular", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.nav-link {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: "SFMono-Regular", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.nav-link:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 0 currentColor; }
+.nav-link.active { background: var(--accent); color: var(--ink); }
+
+/* ── Hero ── */
+.hero {
+  padding: clamp(80px,10vw,120px) 0 clamp(60px,8vw,96px);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  background: var(--accent-soft);
+  box-shadow: 3px 3px 0 0 var(--border);
+  font-family: "SFMono-Regular", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+.eyebrow .dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  display: inline-block;
+  animation: blink 1.2s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.hero-title {
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  max-width: 14ch;
+  margin-bottom: 24px;
+}
+.hero-title .accent-cyan  { color: var(--cyan); }
+.hero-title .accent-yellow { color: var(--yellow); }
+.hero-body {
+  max-width: 44ch;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin-bottom: 36px;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 0;
+  font-family: "SFMono-Regular", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.btn-primary { background: var(--accent); color: var(--ink); box-shadow: var(--shadow-md); }
+.btn-secondary { background: var(--surface-strong); color: var(--text); box-shadow: var(--shadow-sm); }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 0 currentColor; }
+
+.hero-stats { display: flex; flex-wrap: wrap; gap: 12px; }
+.stat-box {
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  box-shadow: var(--shadow-sm);
+  min-width: 120px;
+}
+.stat-num {
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-num.yellow { color: var(--yellow); }
+.stat-num.cyan   { color: var(--cyan); }
+.stat-num.green  { color: var(--green); }
+.stat-lbl {
+  margin-top: 4px;
+  font-family: "SFMono-Regular", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* ── Section ── */
+.section { padding: clamp(60px,7vw,96px) 0 0; }
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.section-kicker {
+  font-family: "SFMono-Regular", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+/* ── Work cards ── */
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 760px) { .work-grid { grid-template-columns: 1fr; } }
+.work-card {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-height: 220px;
+  padding: 22px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.work-card.yel { box-shadow: 6px 6px 0 0 var(--yellow); }
+.work-card.cyn { box-shadow: 6px 6px 0 0 var(--cyan); }
+.work-card.pur { box-shadow: 6px 6px 0 0 var(--purple); }
+.work-card:hover { transform: translate(-2px,-2px); }
+.work-card.yel:hover { box-shadow: 8px 8px 0 0 var(--yellow); }
+.work-card.cyn:hover { box-shadow: 8px 8px 0 0 var(--cyan); }
+.work-card.pur:hover { box-shadow: 8px 8px 0 0 var(--purple); }
+.card-top { display: flex; justify-content: space-between; }
+.card-kicker {
+  font-family: "SFMono-Regular", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.card-id { font-family: "SFMono-Regular", monospace; font-size: 10px; color: var(--text-soft); }
+.card-title {
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.card-copy { font-size: 0.9rem; line-height: 1.65; color: var(--text-soft); }
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+  font-family: "SFMono-Regular", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* ── Blog section (light特有感) ── */
+.post-list { display: grid; gap: 1px; border-top: 1px solid var(--border); }
+.post-item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 120ms;
+  cursor: pointer;
+}
+.post-item:hover { background: var(--surface-strong); padding-left: 10px; padding-right: 10px; margin-left: -10px; margin-right: -10px; }
+.post-date {
+  font-family: "SFMono-Regular", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.post-title { font-size: 1.05rem; font-weight: 600; line-height: 1.3; }
+.post-tag {
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  font-family: "SFMono-Regular", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.post-tag.yel { border-color: var(--yellow); color: var(--yellow); }
+.post-tag.cyn { border-color: var(--cyan); color: var(--cyan); }
+.post-tag.grn { border-color: var(--green); color: var(--green); }
+
+/* ── Terminal ── */
+.terminal {
+  border: 1px solid var(--border);
+  background: #0a0a0a;
+  margin-top: 28px;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #222;
+  background: #111;
+}
+.terminal-bar i { width: 10px; height: 10px; display: inline-block; }
+.terminal-bar i:nth-child(1) { background: #ff4d4d; }
+.terminal-bar i:nth-child(2) { background: #ffd43b; }
+.terminal-bar i:nth-child(3) { background: #00d26a; }
+.terminal-bar span {
+  margin-left: 6px;
+  font-family: "SFMono-Regular", monospace;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+.terminal-body {
+  padding: 20px;
+  font-family: "SFMono-Regular", monospace;
+  font-size: 13px;
+  line-height: 1.9;
+  color: #aef7c2;
+}
+.terminal-body p { margin: 0; }
+.terminal-body .dim { color: #444; }
+.terminal-body .yel { color: #ffd43b; }
+.terminal-body .cyn { color: #00d4ff; }
+.terminal-body .grn { color: #00d26a; }
+
+/* ── CTA panel ── */
+.cta-panel {
+  margin-top: 64px;
+  padding: 40px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px;
+  box-shadow: var(--shadow-md);
+}
+@media (max-width: 600px) { .cta-panel { grid-template-columns: 1fr; } }
+.cta-title {
+  font-family: "Arial Black", "Archivo Black", Impact, sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cta-title span { color: var(--cyan); }
+.cta-copy { color: var(--text-soft); font-size: 0.95rem; line-height: 1.7; }
+
+/* ── Label strip ── */
+.theme-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0 28px;
+  font-family: "SFMono-Regular", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-top: 60px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.theme-label strong { color: var(--accent); }
+.theme-label::before { content: ""; flex: 1; height: 1px; background: var(--border); }
+</style>
+</head>
+<body>
+
+<!-- Toggle Bar -->
+<div class="toggle-bar">
+  <strong>LUKE LAB</strong>
+  <span>— 双主题预览 —</span>
+  <div class="toggle-btn">
+    <button id="btn-dark"  class="active" onclick="setTheme('dark')">DARK 主站</button>
+    <button id="btn-light"             onclick="setTheme('light')">LIGHT 博客</button>
+  </div>
+</div>
+
+<!-- Page -->
+<div class="page" id="page" data-theme="dark">
+
+  <!-- Nav -->
+  <nav class="site-nav">
+    <div class="shell nav-inner">
+      <div class="brand">
+        <span class="brand-name">Luke Lab</span>
+        <span class="brand-tag">v2.4</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link active" href="#">Lab</a>
+        <a class="nav-link" href="#">Writing</a>
+        <a class="nav-link" href="#">Frontend</a>
+        <a class="nav-link" href="#">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="shell">
+      <div class="eyebrow"><span class="dot"></span> 在线 — Classified</div>
+      <h1 class="hero-title" id="hero-title">
+        BUILD<br>
+        <span class="accent-cyan">DEBUG</span><br>
+        <span class="accent-yellow">SHIP</span>
+      </h1>
+      <p class="hero-body">Luke 的个人技术实验室。收集工程笔记、前端教学和可运行 Demo。把复杂问题讲清楚，把想法做成可以体验的产品。</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary">EXPLORE WORKS →</button>
+        <button class="btn btn-secondary">VIEW SOURCE</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="stat-num yellow">42</div>
+          <div class="stat-lbl">Articles</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num cyan">12</div>
+          <div class="stat-lbl">Demos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num green">3</div>
+          <div class="stat-lbl">Manuals</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works -->
+  <section class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">// 部署资产</div>
+          <h2 class="section-title">Selected<br>Works</h2>
+        </div>
+        <a class="btn btn-secondary" style="align-self:flex-end;">View All →</a>
+      </div>
+      <div class="work-grid">
+        <a class="work-card yel">
+          <div class="card-top"><span class="card-kicker">Tech Writing</span><span class="card-id">A-001</span></div>
+          <div class="card-title">Engineering Notes</div>
+          <div class="card-copy">后端工程、AI Agent、低代码平台、数据模型与部署实践。</div>
+          <div class="card-foot"><span>42 articles</span><span style="color:var(--yellow)">→</span></div>
+        </a>
+        <a class="work-card cyn">
+          <div class="card-top"><span class="card-kicker">Frontend Guide</span><span class="card-id">B-002</span></div>
+          <div class="card-title">Frontend Manual</div>
+          <div class="card-copy">写给后端同学的前端速通手册，从 HTML/CSS 到 React 与组件思维。</div>
+          <div class="card-foot"><span>18 lessons</span><span style="color:var(--cyan)">→</span></div>
+        </a>
+        <a class="work-card pur">
+          <div class="card-top"><span class="card-kicker">Product Demo</span><span class="card-id">C-003</span></div>
+          <div class="card-title">Lab Experiments</div>
+          <div class="card-copy">独立完成的实验性项目与产品 Demo，用真实系统验证想法。</div>
+          <div class="card-foot"><span>12 demos</span><span style="color:var(--purple)">→</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terminal -->
+  <section class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">// 解密终端</div>
+          <h2 class="section-title">System<br>Status</h2>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <i></i><i></i><i></i>
+          <span>luke@classified:~</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="yel">$</span> whoami</p>
+          <p class="grn">luke — senior engineer, self-styled AI model</p>
+          <p class="dim">──────────────────────────────</p>
+          <p><span class="yel">$</span> git log --oneline -3</p>
+          <p><span class="cyn">a8b4d14</span> refactor: restructure howto manual paths</p>
+          <p><span class="cyn">e1885c4</span> feat: add prompts page and site components</p>
+          <p><span class="cyn">7085c7c</span> feat: 修复过程动画</p>
+          <p class="dim">──────────────────────────────</p>
+          <p><span class="yel">$</span> status</p>
+          <p class="grn">● WANTED IN 47 JURISDICTIONS</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog section (visible in both, but styled differently) -->
+  <section class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker" id="blog-kicker">// 最新写作</div>
+          <h2 class="section-title" id="blog-title">Latest<br>Writing</h2>
+        </div>
+      </div>
+      <div class="post-list">
+        <div class="post-item">
+          <span class="post-date">2026-07-10</span>
+          <span class="post-title">为什么你的 React 状态管理在 2026 年还在用 Redux</span>
+          <span class="post-tag yel">BACKEND</span>
+        </div>
+        <div class="post-item">
+          <span class="post-date">2026-06-28</span>
+          <span class="post-title">用 Astro 搭建静态博客：从零到部署</span>
+          <span class="post-tag cyn">FRONTEND</span>
+        </div>
+        <div class="post-item">
+          <span class="post-date">2026-06-15</span>
+          <span class="post-title">AI Agent 的工具调用设计模式</span>
+          <span class="post-tag" style="border-color:var(--purple);color:var(--purple)">AI</span>
+        </div>
+        <div class="post-item">
+          <span class="post-date">2026-05-30</span>
+          <span class="post-title">Docker 生产环境部署最佳实践</span>
+          <span class="post-tag grn">DEPLOY</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="shell">
+      <div class="cta-panel">
+        <div>
+          <div class="cta-title">READY TO BUILD<br><span>SOMETHING GREAT?</span></div>
+          <div class="cta-copy">把想法做成可以体验的产品。所有源码公开。</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-primary">START BUILDING →</button>
+          <button class="btn btn-secondary">READ THE DOCS</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Theme label -->
+  <div class="shell">
+    <div class="theme-label" id="theme-label">
+      <strong>DARK</strong> 主站主题 — Carbon Black #0a0a0a
+    </div>
+  </div>
+
+</div>
+
+<script>
+function setTheme(t) {
+  document.getElementById('page').dataset.theme = t;
+  document.getElementById('btn-dark').classList.toggle('active', t === 'dark');
+  document.getElementById('btn-light').classList.toggle('active', t === 'light');
+
+  if (t === 'light') {
+    document.getElementById('theme-label').innerHTML = '<strong>LIGHT</strong> 博客主题 — Warm White #fafaf5';
+    document.getElementById('hero-title').innerHTML = 'BUILD<br><span class="accent-cyan">DEBUG</span><br><span class="accent-yellow">SHIP</span>';
+    document.getElementById('blog-kicker').textContent = '// Latest Posts';
+    document.getElementById('blog-title').innerHTML = 'Latest<br>Writing';
+  } else {
+    document.getElementById('theme-label').innerHTML = '<strong>DARK</strong> 主站主题 — Carbon Black #0a0a0a';
+    document.getElementById('blog-kicker').textContent = '// 最新写作';
+  }
+}
+</script>
+
+</body>
+</html>

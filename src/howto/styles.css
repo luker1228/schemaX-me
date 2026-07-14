@@ -3559,3 +3559,206 @@ body::before {
     min-height: 190px;
   }
 }
+
+/* ── Task Card Redesign: lesson-html ── */
+
+/* section 只负责间距，不做卡片 */
+.html-reading-page .html2-body-section:not(#html-summary) {
+  padding-block: var(--section-space);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+.html-reading-page .html2-body-section:not(#html-summary) .wrap {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* step-card — 真正的卡片，在 wrap 内浮着 */
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.step-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.65rem;
+  height: 1.65rem;
+  padding: 0 0.3rem;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.step-card-body {
+  padding: 1.4rem 1.4rem 1.6rem;
+}
+
+/* comparison-card: 在卡片内加容器感 */
+.step-card .comparison-card {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0;
+}
+.step-card .comparison-card > div {
+  padding: 1rem 1.2rem;
+}
+.step-card .comparison-card > div + div {
+  border-left: 1px solid var(--border);
+}
+
+/* ── Physicality: tilt + pin + stamp ── */
+
+/* 给卡片 position:relative 用于绝对定位 pin/stamp */
+.step-card { position: relative; overflow: visible; }
+
+/* 微倾斜：每张卡片不同角度 */
+.html-reading-page section:nth-of-type(1)  .step-card { transform: rotate(-0.4deg); }
+.html-reading-page section:nth-of-type(2)  .step-card { transform: rotate(0.5deg); }
+.html-reading-page section:nth-of-type(3)  .step-card { transform: rotate(-0.6deg); }
+.html-reading-page section:nth-of-type(4)  .step-card { transform: rotate(0.3deg); }
+.html-reading-page section:nth-of-type(5)  .step-card { transform: rotate(-0.5deg); }
+.html-reading-page section:nth-of-type(6)  .step-card { transform: rotate(0.7deg); }
+.html-reading-page section:nth-of-type(7)  .step-card { transform: rotate(-0.3deg); }
+.html-reading-page section:nth-of-type(8)  .step-card { transform: rotate(0.6deg); }
+.html-reading-page section:nth-of-type(9)  .step-card { transform: rotate(-0.4deg); }
+.html-reading-page section:nth-of-type(10) .step-card { transform: rotate(0.5deg); }
+.html-reading-page section:nth-of-type(11) .step-card { transform: rotate(-0.7deg); }
+.html-reading-page section:nth-of-type(12) .step-card { transform: rotate(0.4deg); }
+.html-reading-page section:nth-of-type(13) .step-card { transform: rotate(-0.3deg); }
+.html-reading-page section:nth-of-type(14) .step-card { transform: rotate(0.6deg); }
+.html-reading-page section:nth-of-type(15) .step-card { transform: rotate(-0.5deg); }
+.html-reading-page section:nth-of-type(16) .step-card { transform: rotate(0.4deg); }
+
+/* 图钉 —— 实物道具图片，5 轮换 */
+.step-card::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: calc(50% - 18px);
+  width: 36px;
+  height: 36px;
+  border-radius: 0;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: none;
+  z-index: 20;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.45));
+}
+.html-reading-page section:nth-of-type(5n+1) .step-card::before {
+  background-image: var(--prop-push-pin, none);
+  transform: rotate(-6deg);
+}
+.html-reading-page section:nth-of-type(5n+2) .step-card::before {
+  background-image: var(--prop-thumb, none);
+  transform: rotate(8deg);
+}
+.html-reading-page section:nth-of-type(5n+3) .step-card::before {
+  background-image: var(--prop-seal, none);
+  width: 72px;
+  height: 72px;
+  top: -34px;
+  left: calc(50% - 36px);
+  transform: rotate(-5deg);
+}
+.html-reading-page section:nth-of-type(5n+4) .step-card::before {
+  background-image: var(--prop-tag, none);
+  width: 120px;
+  height: 102px;
+  top: -24px;
+  left: auto;
+  right: -28px;
+  transform: rotate(6deg);
+}
+.html-reading-page section:nth-of-type(5n+0) .step-card::before {
+  background-image: var(--prop-binder, none);
+  width: 80px;
+  height: 80px;
+  top: -38px;
+  left: auto;
+  right: 80px;
+  transform: rotate(-3deg);
+}
+
+/* 印章 —— ::after，只加在部分卡片上 */
+.html-reading-page section:nth-of-type(1) .step-card::after {
+  content: "绝密";
+  position: absolute;
+  top: 1.1rem;
+  right: 1.4rem;
+  transform: rotate(-14deg);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stamp);
+  border: 2.5px solid var(--stamp);
+  padding: 3px 10px;
+  opacity: 0.32;
+  pointer-events: none;
+  z-index: 5;
+}
+.html-reading-page section:nth-of-type(5) .step-card::after {
+  content: "紧急";
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.4rem;
+  transform: rotate(10deg);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 2.5px solid var(--accent);
+  padding: 3px 10px;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 5;
+}
+.html-reading-page section:nth-of-type(9) .step-card::after {
+  content: "已解密";
+  position: absolute;
+  top: 1.1rem;
+  right: 1.4rem;
+  transform: rotate(-8deg);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a7a48;
+  border: 2.5px solid #1a7a48;
+  padding: 3px 10px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 5;
+}

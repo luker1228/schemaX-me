@@ -2586,6 +2586,58 @@ main {
   color: var(--yellow);
 }
 
+/* ── 实物道具 Props ── */
+img.dossier-stamp {
+  border: none;
+  padding: 0;
+  background: transparent;
+  display: block;
+}
+img.dossier-stamp.s1 {
+  width: 90px;
+  height: auto;
+  opacity: 0.88;
+}
+img.dossier-stamp.s2 {
+  width: 82px;
+  height: auto;
+  opacity: 0.82;
+}
+
+.prop-thumb, .prop-binder, .prop-pin, .prop-ftag {
+  position: absolute;
+  pointer-events: none;
+  z-index: 12;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));
+}
+.prop-thumb {
+  width: 40px;
+  height: auto;
+  top: -18px;
+  left: -12px;
+  transform: rotate(-8deg);
+}
+.prop-binder {
+  width: 56px;
+  height: auto;
+  top: -26px;
+  right: 16px;
+}
+.prop-pin {
+  width: 34px;
+  height: auto;
+  top: -16px;
+  right: -8px;
+  transform: rotate(12deg);
+}
+.prop-ftag {
+  width: 44px;
+  height: auto;
+  top: -14px;
+  left: 18px;
+  transform: rotate(-4deg);
+}
+
 /* ID 卡 */
 .dossier-id .grid {
   display: grid;
@@ -3143,7 +3195,7 @@ main {
 .dossier-scan {
   position: relative;
   overflow: hidden;
-  padding: 0.9rem 1rem;
+  padding: 0.75rem;
   border: 1px solid var(--dossier-border-bright);
   background:
     repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.035) 0 1px, transparent 1px 5px),
@@ -3161,80 +3213,95 @@ main {
   animation: dossier-stack-scan 3.8s linear infinite;
   pointer-events: none;
 }
+.dossier-scan-sysbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding: 0.38rem 0.75rem;
+  border: 1px solid var(--dossier-border-bright);
+  border-bottom: none;
+  background: #070c09;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+  opacity: 0.72;
+}
+.dossier-scan-sysbar .r {
+  margin-left: auto;
+}
 .dossier-scan-list {
-  position: relative;
-  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.55rem;
+  grid-template-columns: 1fr 1fr;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .dossier-scan-item {
-  position: relative;
-  overflow: hidden;
   display: grid;
-  grid-template-columns: auto 22px minmax(0, 1fr) auto;
+  grid-template-columns: 3.6rem 1.4rem 1fr auto;
   align-items: center;
-  gap: 0.55rem;
-  min-height: 42px;
-  padding: 0.48rem 0.65rem;
-  border: 1px solid var(--dossier-border-bright);
-  background: rgba(8, 16, 11, 0.84);
+  gap: 0.65rem;
+  padding: 0.58rem 0.85rem;
+  border-bottom: 1px solid rgba(0, 210, 106, 0.1);
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--text);
+  transition: background 120ms ease, color 120ms ease;
 }
-.dossier-scan-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(34, 255, 136, 0.14), transparent);
-  opacity: 0;
-  transform: translateX(-72%);
-  transition:
-    opacity 0.16s ease,
-    transform 0.5s ease;
-  pointer-events: none;
+.dossier-scan-item:nth-child(odd) {
+  border-right: 1px solid rgba(0, 210, 106, 0.1);
+}
+.dossier-scan-item:nth-last-child(-n+2) {
+  border-bottom: none;
 }
 .dossier-scan-item:hover {
-  border-color: var(--phosphor);
+  background: rgba(0, 210, 106, 0.04);
   color: var(--phosphor);
-}
-.dossier-scan-item:hover::after {
-  opacity: 1;
-  transform: translateX(72%);
-}
-.dossier-scan-item .scan-prefix {
-  color: var(--phosphor);
-}
-.dossier-scan-item img {
-  width: 1.1rem;
-  height: 1.1rem;
-  object-fit: contain;
 }
 .dossier-scan-item .scan-code {
-  color: var(--text-soft);
-  font-size: 0.68rem;
+  order: 0;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--phosphor);
+  opacity: 0.5;
+}
+.dossier-scan-item img {
+  order: 1;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.dossier-scan-item > span:not(.scan-prefix):not(.scan-code) {
+  order: 2;
+  text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+.dossier-scan-item .scan-prefix {
+  order: 3;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  color: var(--phosphor);
+  border: 1px solid rgba(0, 210, 106, 0.32);
+  padding: 0.1em 0.45em;
+  white-space: nowrap;
+}
 @keyframes dossier-stack-scan {
-  to {
-    transform: translateX(330%);
-  }
+  to { transform: translateX(330%); }
 }
 @media (max-width: 520px) {
   .dossier-scan-list {
     grid-template-columns: 1fr;
   }
-  .dossier-scan-item {
-    grid-template-columns: auto 22px minmax(0, 1fr);
+  .dossier-scan-item:nth-child(odd) {
+    border-right: none;
   }
-  .dossier-scan-item .scan-code {
-    display: none;
+  .dossier-scan-item:last-child {
+    border-bottom: none;
   }
 }
 

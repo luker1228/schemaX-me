@@ -120,6 +120,8 @@ This system is dark because the scenario demands it: an operator's dossier, read
 - Faint dot-grid background at the body level — a data-space underlay
 - System font stack for body/label: no web font loaded, bilingual-safe
 
+**The Terminal-as-Element Rule.** Terminal and hardware aesthetics — scan animations, monospace system bars, PCB trace patterns, chip slot grids — are atmospheric seasoning. They reinforce the intelligence file narrative; they do not replace it. The structural identity is always "classified dossier," never "circuit board." When choosing between an intelligence-report format and a hardware-manual format, the dossier wins every time. A capability list belongs in an operative's asset manifest, not a motherboard schematic.
+
 ## 2. Colors: The Signal Palette
 
 Five accent channels on a carbon substrate. Grounds are the dark infrastructure. Signals are the content identifiers. The two groups never compete — Grounds recede, Signals assert.
@@ -232,6 +234,7 @@ Full sub-theme for the homepage dossier section: dark panels (`#0f1311`) with ph
 - **Do** maintain the body-level grid background (`rgba(255,255,255,0.035)` lines at 24px). It grounds the surface in a data-space register.
 - **Do** keep total accent coverage under 10% per screen. Carbon and iron dominate — color is signal, not decoration.
 - **Do** use `999px` border-radius exclusively for pill tags. The contrast against zero-radius surfaces makes pills legible as a different affordance.
+- **Do** reach for intelligence-file formats (field records, classified manifests, redacted entries, capability lists) before reaching for terminal or hardware formats. Ask: "Would this appear in an intelligence report or a hardware manual?" The report wins.
 
 ### Don't:
 - **Don't** use rounded corners (2px, 4px, 8px, `rounded-lg`) anywhere except `999px` pills. Zero-radius is non-negotiable.
@@ -244,3 +247,4 @@ Full sub-theme for the homepage dossier section: dark panels (`#0f1311`) with ph
 - **Don't** load a web font for body or label text. The system stack handles bilingual content correctly and loads instantly.
 - **Don't** use Dossier sub-theme components (scan panels, registration marks, blinking cursors, redacted fields) outside the dedicated dossier/about section.
 - **Don't** make the design "feel dark" through genre reflex — dark blue + electric neon reads as crypto; dark green reads as finance terminal. Carbon Black with warm ivory is a deliberate departure from those domain reflexes.
+- **Don't** let terminal or hardware aesthetics structurally replace the dossier form. PCB chip grids, motherboard slot layouts, and pixel-art circuit borders are tools — the moment a section reads as a circuit board schematic rather than a classified document, it has lost its identity.
