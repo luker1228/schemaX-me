@@ -1,5 +1,6 @@
 import React from "react";
-import { CycleText, PageFrame, SiteNav, withBase } from "./site-components.jsx";
+import { CycleText, PageFrame, withBase } from "./site-components.jsx";
+import { withBasePath, withHowtoManualPath } from "../../lib/paths.js";
 import { frontendHomeLessons } from "../../manuals/frontend/registry.js";
 
 const lessonPreviews = [
@@ -213,6 +214,13 @@ const lessons = frontendHomeLessons.map((lesson) => ({
   preview: lessonPreviews[lesson.slug],
 }));
 
+const homeHref = withBasePath("/");
+const manualNav = [
+  { href: withBasePath("howto/"), label: "手册总览" },
+  { href: withHowtoManualPath("frontend"), label: "前端手册", current: true },
+  { href: withHowtoManualPath("deploy"), label: "部署手册" },
+];
+
 const faqs = [
   {
     title: "智能助手都能写代码了，为什么还要学这些？",
@@ -233,17 +241,29 @@ export function IndexPage() {
   return (
     <PageFrame title="非前端人的前端战术手册">
       <div className="site-shell">
-        <header className="site-header">
-          <div className="container site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}>
-              <span>前端战术</span><span className="brand-pill">FM-01</span>
+        <header className="site-header manual-topbar-header">
+          <div className="container manual-global-bar">
+            <a className="manual-site-brand" href={homeHref}>
+              <span className="manual-brand-avatar">
+                <img src={withBasePath("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
+              </span>
+              <span className="manual-brand-copy">
+                <span className="manual-brand-mark">schemaX</span>
+                <span className="manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+              </span>
             </a>
-            <SiteNav />
-            <div className="header-actions">
-              <div className="header-search">
-                <input className="search-input" type="search" placeholder="搜索前端战术手册..." aria-label="搜索前端战术手册" />
-              </div>
-              <a className="button" href={withBase("lesson-html.html")}>开始学习 →</a>
+            <div className="manual-global-actions">
+              <nav className="manual-site-nav" aria-label="战术手册导航">
+                {manualNav.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
             </div>
           </div>
         </header>

@@ -1,20 +1,22 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { withBasePath } from "../../howto/lib/paths.js";
+import "../../howto/styles.css";
+import { withBasePath, withHowtoManualPath } from "../../howto/lib/paths.js";
 import { deployManual } from "../../howto/manuals/deploy/registry.js";
 
 const withBase = withBasePath;
 
-// 战术手册索引。新增手册只需往这里加一项；href 为空字符串的渲染为不可点占位卡。
 const manuals = [
   {
     code: "FM-01",
     stamp: "已解密",
     stampImage: withBase("images/brand/stamps/stamp-cracked.svg"),
     title: "前端战术手册",
-    copy: "写给后端、设计和零基础同学的前端速通——HTML 结构、CSS 样式、JavaScript、React 组件与布局,边改边看。",
-    meta: "HTML · CSS · JS · React · 布局 →",
-    href: withBase("howto/frontend/")
+    copy: "写给后端、设计和零基础同学的前端速通。HTML 结构、CSS 样式、JavaScript、React 组件与布局，边改边看。",
+    meta: "HTML · CSS · JS · React · 布局",
+    href: withHowtoManualPath("frontend"),
+    audience: "设计 / 产品 / 运营 / 后端",
+    focus: "把页面拆清楚，把组件说明白，把 AI 改前端这件事做对。",
+    outcome: "看懂页面结构、样式层次、状态变化和组件边界。"
   },
   {
     code: "FM-02",
@@ -22,9 +24,19 @@ const manuals = [
     stampImage: withBase("images/brand/stamps/stamp-cracked.svg"),
     title: deployManual.title,
     copy: deployManual.description,
-    meta: "Docker · 镜像 · 配置 · K8s →",
-    href: withBase("howto/deploy/")
+    meta: "Docker · 镜像 · 配置 · K8s",
+    href: withHowtoManualPath("deploy"),
+    audience: "后端 / 全栈 / 独立开发者",
+    focus: "把产物、镜像、环境和运行边界理清楚，避免上线时才补概念。",
+    outcome: "判断什么该打包、什么该外置、什么该留给运行环境。"
   }
+];
+
+const homeHref = withBase("/");
+const manualNav = [
+  { href: withBase("howto/"), label: "手册总览", current: true },
+  { href: withHowtoManualPath("frontend"), label: "前端手册" },
+  { href: withHowtoManualPath("deploy"), label: "部署手册" }
 ];
 
 const getManualPath = (href: string) => {
@@ -34,190 +46,456 @@ const getManualPath = (href: string) => {
 };
 ---
 
-<BaseLayout
-  title="战术手册 · schemaX 绝密计划"
-  description="schemaX 战术手册:前端、部署等可独立完成的小战场索引。"
->
-  <section class="shell-wide dossier" style="min-height: 72vh;">
-    <div class="dossier-atmosphere" aria-hidden="true"></div>
-    <img class="hub-bgx" src={withBase("images/brand/bg-x.svg")} alt="" aria-hidden="true" />
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>战术手册 · schemaX 绝密计划</title>
+    <meta name="description" content="schemaX 战术手册：前端、部署等可独立完成的小战场索引。" />
+  </head>
+  <body>
+    <div class="site-shell manual-hub-shell">
+      <header class="site-header manual-topbar-header">
+        <div class="container manual-global-bar">
+          <a class="manual-site-brand" href={homeHref}>
+            <span class="manual-brand-avatar">
+              <img src={withBase("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
+            </span>
+            <span class="manual-brand-copy">
+              <span class="manual-brand-mark">schemaX</span>
+              <span class="manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+            </span>
+          </a>
 
-    <div class="dossier-wrap" style="padding-top: 1.5rem;">
-      {/* 顶部状态条 */}
-      <div class="dossier-topbar">
-        <span class="l"
-          >luke@human-llm<span style="color:var(--text-soft)">:~/howto</span>$ ls
-          ./manuals<span class="cur"></span></span
-        >
-        <span class="mid">FIELD MANUALS</span>
-        <span class="r">
-          <span class="dossier-pill rec"><span class="dossier-dot"></span>ACTIVE</span>
-          <span class="dossier-pill sec">绝密</span>
-        </span>
-      </div>
-
-      <div class="hub-emblem">
-        <img src={withBase("images/brand/emblem-field-manual.svg")} alt="战术手册徽记" width="120" height="120" />
-      </div>
-
-      <div class="dossier-section">
-        {/* 章节头 */}
-        <div class="dossier-section-head">
-          <div>
-            <span class="dossier-kicker">// 战术手册 · FIELD MANUALS</span>
-            <h2>战术手册</h2>
+          <div class="manual-global-actions">
+            <nav class="manual-site-nav" aria-label="战术手册导航">
+              {manualNav.map((item) => (
+                <a href={item.href} aria-current={item.current ? "page" : undefined}>
+                  {item.label}
+                </a>
+              ))}
+            </nav>
           </div>
         </div>
+      </header>
 
-        {/* 手册卡片网格 —— Bone 牛皮纸档案夹(暗 hub 上的浅色手册,预告目的地) */}
-        <div class="dossier-assets">
-          {manuals.map((m) =>
-            m.href ? (
-              <a class="dossier-asset manual-card" href={m.href} data-manual-launch data-manual-title={m.title} data-manual-path={getManualPath(m.href)} data-manual-stamp={m.stampImage}>
-                <img class="manual-status-stamp" src={m.stampImage} alt={m.stamp} width="132" height="58" loading="lazy" decoding="async" />
-                <h3>{m.title}</h3>
-              </a>
-            ) : (
-              <div class="dossier-asset manual-card" aria-disabled="true">
-                <img class="manual-status-stamp" src={m.stampImage} alt={m.stamp} width="132" height="58" loading="lazy" decoding="async" />
-                <h3>{m.title}</h3>
+      <main class="container manual-hub-main">
+        <section class="hero manual-overview-hero">
+          <div class="hero-grid">
+            <div class="hero-copy-block">
+              <div class="hero-title-wrap">
+                <h1 class="hero-title-structured manual-overview-title">
+                  <span class="hero-title-row1">战术手册</span>
+                  <span class="accent-text">总览入口</span>
+                </h1>
               </div>
-            )
-          )}
-        </div>
-      </div>
+              <p class="hero-subtitle-structured manual-overview-summary">
+                这里不是文章列表，而是两条可直接进入的学习路线。
+                一条帮你获得前端表达能力，一条帮你建立部署判断力。
+              </p>
+              <div class="hero-actions manual-overview-actions">
+                <a class="button" href={withHowtoManualPath("frontend")}>先看前端 →</a>
+                <a class="button manual-overview-secondary" href={withHowtoManualPath("deploy")}>转看部署 →</a>
+              </div>
+              <div class="hero-search-card bare">
+                <div class="hero-tags">
+                  <span class="tag">手册总览</span>
+                  <span class="tag">按问题选路线</span>
+                  <span class="tag">统一结构</span>
+                  <span class="tag">独立阅读</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="hero-note manual-overview-note">
+              <span class="micro-label">你会在这里拿到什么</span>
+              <p class="hero-note-copy">
+                不是泛泛的知识目录，而是两本手册的入口地图：
+                你先判断自己卡在“页面表达”还是“上线判断”，再进入对应战场。
+              </p>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section manual-overview-section" aria-labelledby="overview-summary">
+          <div class="section-header">
+            <div>
+              <span class="micro-label">OVERVIEW</span>
+              <h2 class="section-title" id="overview-summary">先看地图，再选手册</h2>
+              <p class="section-subtitle">每本手册解决的问题不同，阅读方式也不同。</p>
+            </div>
+          </div>
+
+          <div class="manual-overview-grid">
+            <article class="manual-overview-card">
+              <span class="micro-label">当前收录</span>
+              <h3>两本手册，两类问题</h3>
+              <p>前端手册解决“页面怎么表达”，部署手册解决“应用怎么上线”。</p>
+            </article>
+            <article class="manual-overview-card">
+              <span class="micro-label">适合谁</span>
+              <h3>不是同一批读者</h3>
+              <p>前端更适合设计、产品、运营和后端；部署更适合后端、全栈和独立开发者。</p>
+            </article>
+            <article class="manual-overview-card">
+              <span class="micro-label">阅读方式</span>
+              <h3>按卡点进入</h3>
+              <p>卡在页面表达就进前端，卡在产物、镜像、环境和上线边界就进部署。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section manual-overview-section" aria-labelledby="manual-routes">
+          <div class="section-header">
+            <div>
+              <span class="micro-label">MANUAL ROUTES</span>
+              <h2 class="section-title" id="manual-routes">两条路线</h2>
+              <p class="section-subtitle">选一条先走，不需要同时啃完。</p>
+            </div>
+          </div>
+
+          <div class="manual-hub-grid" aria-label="手册目录">
+            {manuals.map((manual) => (
+              <a
+                class="manual-hub-card"
+                href={manual.href}
+                data-manual-launch
+                data-manual-title={manual.title}
+                data-manual-path={getManualPath(manual.href)}
+                data-manual-stamp={manual.stampImage}
+              >
+                <div class="manual-hub-card-head">
+                  <span class="manual-hub-code">{manual.code}</span>
+                  <span class="manual-hub-meta">{manual.meta}</span>
+                </div>
+                <div class="manual-hub-card-body">
+                  <h2>{manual.title}</h2>
+                  <p>{manual.copy}</p>
+                </div>
+                <div class="manual-hub-card-detail">
+                  <div>
+                    <span class="micro-label">适合人群</span>
+                    <p>{manual.audience}</p>
+                  </div>
+                  <div>
+                    <span class="micro-label">核心焦点</span>
+                    <p>{manual.focus}</p>
+                  </div>
+                  <div>
+                    <span class="micro-label">读完之后</span>
+                    <p>{manual.outcome}</p>
+                  </div>
+                </div>
+                <div class="manual-hub-card-foot">
+                  <img
+                    class="manual-hub-stamp"
+                    src={manual.stampImage}
+                    alt={manual.stamp}
+                    width="132"
+                    height="58"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="manual-hub-enter">进入手册 →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section manual-overview-section manual-overview-end" aria-labelledby="pick-manual">
+          <div class="section-header">
+            <div>
+              <span class="micro-label">QUICK PICK</span>
+              <h2 class="section-title" id="pick-manual">怎么选更快</h2>
+            </div>
+          </div>
+
+          <div class="manual-pick-grid">
+            <article class="manual-pick-card">
+              <span class="micro-label">如果你在想</span>
+              <h3>“我不会描述页面，也不会拆组件”</h3>
+              <p>先去前端手册。先把结构、样式、状态和组件边界建立起来，再谈工程细节。</p>
+              <a href={withHowtoManualPath("frontend")}>进入前端手册 →</a>
+            </article>
+            <article class="manual-pick-card">
+              <span class="micro-label">如果你在想</span>
+              <h3>“我能跑起来，但为什么一部署就坏”</h3>
+              <p>先去部署手册。先把产物、镜像、配置和运行环境之间的边界理清楚。</p>
+              <a href={withHowtoManualPath("deploy")}>进入部署手册 →</a>
+            </article>
+          </div>
+        </section>
+      </main>
     </div>
-  </section>
 
-  <script is:inline>
-    (function () {
-      var links = document.querySelectorAll("[data-manual-launch]");
-      if (!links.length) return;
+    <script is:inline>
+      (function () {
+        var links = document.querySelectorAll("[data-manual-launch]");
+        if (!links.length) return;
 
-      for (var i = 0; i < links.length; i++) {
-        links[i].addEventListener("click", function (event) {
-          var href = this.getAttribute("href");
-          var manualTitle = this.getAttribute("data-manual-title");
-          var manualPath = this.getAttribute("data-manual-path");
-          var manualStamp = this.getAttribute("data-manual-stamp");
-          if (!href || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-          try {
-            sessionStorage.setItem(
-              "howto-manual-transition",
-              JSON.stringify({
-                href: href,
-                title: manualTitle || "",
-                path: manualPath || "",
-                stamp: manualStamp || "",
-                expiresAt: Date.now() + 12000
-              })
-            );
-          } catch (e) {}
-        });
-      }
-    })();
-  </script>
-</BaseLayout>
+        for (var i = 0; i < links.length; i++) {
+          links[i].addEventListener("click", function (event) {
+            var href = this.getAttribute("href");
+            var manualTitle = this.getAttribute("data-manual-title");
+            var manualPath = this.getAttribute("data-manual-path");
+            var manualStamp = this.getAttribute("data-manual-stamp");
+            if (!href || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+            try {
+              sessionStorage.setItem(
+                "howto-manual-transition",
+                JSON.stringify({
+                  href: href,
+                  title: manualTitle || "",
+                  path: manualPath || "",
+                  stamp: manualStamp || "",
+                  expiresAt: Date.now() + 12000
+                })
+              );
+            } catch (e) {}
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
 
 <style>
-  /* 手册卡 = Bone 牛皮纸档案夹(钉在暗 dossier hub 上,浅色预告即将进入的浅色手册) */
-  .dossier-assets {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
-    align-items: start;
-    padding-bottom: 3rem;
-  }
-  .manual-card {
+  .manual-hub-shell {
     position: relative;
-    isolation: isolate;
-    width: min(100%, 320px);
-    min-height: 205px;
-    margin-top: 1.15rem;
-    padding: 0 !important;
-    align-content: start !important;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 38%),
-      #eadfbd !important;
-    border-color: #241d13 !important;
-    border-radius: 4px 4px 2px 2px;
-    color: #241d13 !important;
-    box-shadow: 6px 6px 0 #d43f2a !important;
-    overflow: visible !important;
+      radial-gradient(circle at top right, rgba(0, 168, 248, 0.08), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 28%),
+      var(--bg);
   }
-  .manual-card::before {
+
+  .manual-hub-main {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .manual-overview-hero {
+    padding-top: 1.2rem;
+  }
+
+  .manual-overview-summary {
+    max-width: 24ch;
+  }
+
+  .manual-overview-actions {
+    justify-content: flex-start;
+    gap: 0.8rem;
+  }
+
+  .manual-overview-secondary {
+    background: var(--surface-2);
+  }
+
+  .manual-overview-note {
+    padding-top: 1.6rem;
+    text-align: left;
+  }
+
+  .manual-overview-note .hero-note-copy {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .manual-hub-note,
+  .manual-hub-card {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 28%),
+      var(--surface);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .manual-overview-section {
+    padding-top: 2.4rem;
+  }
+
+  .manual-overview-grid,
+  .manual-pick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .manual-pick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .manual-overview-card,
+  .manual-pick-card {
+    padding: 1.15rem 1.2rem 1.25rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 28%),
+      var(--surface);
+    border: 1.5px solid var(--fg);
+    box-shadow: var(--shadow);
+  }
+
+  .manual-overview-card h3,
+  .manual-pick-card h3 {
+    margin: 0.45rem 0 0;
+    font-size: 1.2rem;
+    line-height: 1.15;
+  }
+
+  .manual-overview-card p,
+  .manual-pick-card p {
+    margin: 0.65rem 0 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+
+  .manual-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .manual-hub-card {
+    display: grid;
+    gap: 1rem;
+    min-height: 420px;
+    padding: 1.15rem;
+    transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  }
+
+  .manual-hub-card::after {
     content: "";
     position: absolute;
-    left: -1px;
-    top: -1.15rem;
-    width: min(12rem, 68%);
-    height: 1.35rem;
-    background: #d8c89d;
-    border: 1px solid #241d13;
-    border-bottom: 0;
-    border-radius: 4px 10px 0 0;
-    clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
-    z-index: -1;
+    inset: 0;
+    background:
+      linear-gradient(135deg, transparent 0 72%, rgba(0, 0, 0, 0.05) 72% 74%, transparent 74%),
+      repeating-linear-gradient(90deg, rgba(36, 29, 19, 0.06) 0 1px, transparent 1px 18px);
+    opacity: 0.45;
+    pointer-events: none;
   }
-  .manual-card:hover {
-    transform: translateY(-3px) rotate(-0.45deg);
-    box-shadow: 8px 8px 0 #d43f2a !important;
+
+  .manual-hub-card:hover,
+  .manual-hub-card:focus-visible {
+    transform: translateY(-4px);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 28%),
+      var(--surface-2);
+    box-shadow: 7px 7px 0 rgba(40, 30, 15, 0.45);
   }
-  .manual-card > * {
+
+  .manual-hub-card > * {
     position: relative;
     z-index: 1;
   }
-  .manual-card h3 {
-    position: absolute;
-    top: calc(100% + 0.9rem);
-    left: 0;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent;
-    border: 0;
-    color: #e7f3ea !important;
-    font-family: var(--font-mono) !important;
-    font-size: clamp(0.78rem, 2.8vw, 0.92rem) !important;
-    line-height: 1.25 !important;
-    text-align: center;
-    text-transform: none !important;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    overflow: visible;
+
+  .manual-hub-card-head,
+  .manual-hub-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
   }
-  .manual-status-stamp {
-    position: absolute;
-    top: 4.2rem;
-    left: 50%;
-    width: min(210px, 68%);
+
+  .manual-hub-code,
+  .manual-hub-meta,
+  .manual-hub-enter {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .manual-hub-code {
+    display: inline-flex;
+    padding: 0.2rem 0.45rem;
+    background: var(--ground-yellow);
+    border: 1px solid var(--border);
+  }
+
+  .manual-hub-meta {
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .manual-hub-card-body h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 0.96;
+    text-transform: uppercase;
+  }
+
+  .manual-hub-card-body p {
+    margin: 0.8rem 0 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+
+  .manual-hub-card-detail {
+    display: grid;
+    gap: 0.85rem;
+    padding-top: 0.15rem;
+    border-top: 1px solid rgba(36, 29, 19, 0.18);
+  }
+
+  .manual-hub-card-detail p {
+    margin: 0.28rem 0 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .manual-hub-stamp {
+    width: 132px;
     height: auto;
-    display: block;
-    transform: translateX(-50%) rotate(-7deg);
-    opacity: 0.86;
-    pointer-events: none;
-    user-select: none;
+    opacity: 0.82;
     mix-blend-mode: multiply;
   }
-  /* hub 背景 X 母题(淡)+ 战术手册徽记 */
-  .hub-bgx {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.16;
-    z-index: 0;
-    pointer-events: none;
+
+  .manual-hub-enter {
+    color: var(--accent);
   }
-  .hub-emblem {
-    position: relative;
-    text-align: center;
-    margin: 1.4rem 0 0.2rem;
+
+  .manual-pick-card a {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
-  .hub-emblem img {
-    width: 120px;
-    height: 120px;
-    display: inline-block;
+
+  @media (max-width: 900px) {
+    .manual-overview-grid,
+    .manual-pick-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .manual-hub-main {
+      padding-top: 1.2rem;
+    }
+
+    .manual-overview-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .manual-hub-card-head,
+    .manual-hub-card-foot {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .manual-hub-meta {
+      text-align: left;
+    }
   }
 </style>

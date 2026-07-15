@@ -28,17 +28,40 @@ const lessons = deployLessons.map((lesson) => ({
   preview,
 }));
 
+const homeHref = withBase("/");
+const manualNav = [
+  { href: withBase("howto/"), label: "手册总览" },
+  { href: withHowtoManualPath("frontend"), label: "前端手册" },
+  { href: withHowtoManualPath("deploy"), label: "部署手册", current: true },
+];
+
 export function DeployIndexPage() {
   return (
     <PageFrame title="部署战术手册">
       <div className="site-shell">
-        <header className="site-header">
-          <div className="container site-header-inner">
-            <a className="brand-mark" href={withHowtoManualPath("deploy")}>
-              <span>部署战术</span><span className="brand-pill">{deployManual.code}</span>
+        <header className="site-header manual-topbar-header">
+          <div className="container manual-global-bar">
+            <a className="manual-site-brand" href={homeHref}>
+              <span className="manual-brand-avatar">
+                <img src={withBase("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
+              </span>
+              <span className="manual-brand-copy">
+                <span className="manual-brand-mark">schemaX</span>
+                <span className="manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+              </span>
             </a>
-            <div className="header-actions">
-              <a className="button" href={lessons[0].href}>开始学习 →</a>
+            <div className="manual-global-actions">
+              <nav className="manual-site-nav" aria-label="战术手册导航">
+                {manualNav.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
             </div>
           </div>
         </header>
