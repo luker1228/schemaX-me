@@ -124,7 +124,7 @@ export function initLegacyEnhancements(root = document) {
 
   cleanups.push(initPlaygrounds(root));
 
-  root.querySelectorAll(".layer-card").forEach((card) => {
+  root.querySelectorAll(".layer-card, .css-pair-card").forEach((card) => {
     const items = Array.from(card.querySelectorAll("[data-key]"));
     const byKey = new Map();
     items.forEach((el) => {

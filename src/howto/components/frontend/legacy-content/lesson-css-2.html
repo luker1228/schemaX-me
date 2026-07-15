@@ -62,24 +62,24 @@
 
     <section class="html2-body-section" id="css-pair" data-od-id="css2-pair-section">
       <div class="wrap">
-        <div class="step-card">
-          <div class="step-card-head">
-            <span class="step-num">CSS2-02</span>
-            <span class="step-label">对照</span>
-          </div>
-          <div class="step-card-body">
         <div class="section-head">
           <div>
             <h2 class="section-title">一个按钮，两种描述<br><span class="html2-title-em">Figma ↔ CSS</span></h2>
           </div>
         </div>
         <div class="html2-inline-note">
-          <span class="html2-inline-note-tag">方式</span>
           <p>同一个按钮，左边是 Figma 属性面板，右边是浏览器看到的 CSS。鼠标移到任意一行，两边会同时高亮，它们是同一个东西。</p>
         </div>
 
-          <div class="layer-card" id="cssPair">
-      <div class="props-mock">
+          <div class="step-card css-pair-card" id="cssPair">
+            <div class="step-card-head">
+              <span class="step-num">CSS2-02</span>
+              <span class="step-label">对照</span>
+            </div>
+            <div class="step-card-body">
+              <div class="pair-grid">
+        <div class="pair-col">
+          <div class="props-mock">
         <div class="pm-section">
           <div class="pm-section-title">Layout · 布局</div>
           <div class="pm-row" data-key="padding">
@@ -116,22 +116,25 @@
             <span class="pm-hint">字色</span>
           </div>
         </div>
-      </div>
+          </div>
+        </div>
 
-      <div class="pair-divider">=</div>
+        <div class="pair-divider" aria-hidden="true">=</div>
 
-      <div class="code-mock">
-        <div class="code-head"><span class="dot"></span><span class="code-fname">style.css</span></div>
+        <div class="pair-col">
+          <div class="code-mock">
 <pre><span class="csel">.button</span> {
-<span class="cline is-flash" data-key="bg">  <span class="ckey">background</span>: <span class="cstr">#EF7627</span>;</span>
-<span class="cline" data-key="color">  <span class="ckey">color</span>: <span class="cstr">#ffffff</span>;</span>
 <span class="cline is-flash" data-key="padding">  <span class="ckey">padding</span>: <span class="cnum">20</span><span class="cstr">px</span>;</span>
 <span class="cline is-flash" data-key="radius">  <span class="ckey">border-radius</span>: <span class="cnum">8</span><span class="cstr">px</span>;</span>
+<span class="cline is-flash" data-key="bg">  <span class="ckey">background</span>: <span class="cstr">#EF7627</span>;</span>
 <span class="cline" data-key="font-size">  <span class="ckey">font-size</span>: <span class="cnum">14</span><span class="cstr">px</span>;</span>
+<span class="cline" data-key="color">  <span class="ckey">color</span>: <span class="cstr">#ffffff</span>;</span>
 }</pre>
+          </div>
+        </div>
       </div>
 
-      <div class="pair-caption pair-caption-2col">
+              <div class="pair-caption pair-caption-2col">
         <div>
           <div class="cap-k">Figma 视角</div>
           选中一个图层，<strong>右侧属性面板</strong>就是它"长什么样"的全部信息。
@@ -140,10 +143,9 @@
           <div class="cap-k">代码视角</div>
           一组 <code>属性: 值</code>。属性名几乎跟 Figma 一样：<code>padding</code> = 内边距、<code>border-radius</code> = 圆角。
         </div>
-      </div>
-    </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
     </section>
   </main>
