@@ -2199,7 +2199,7 @@ main {
    全部 scope 在 .dossier / .dossier-boot 下,不污染既有样式
    ============================================================= */
 :root {
-  --classified: #ff4d4d;
+  --classified: #d43f2a;
   --dossier-panel: #0f1311;
   --dossier-panel-2: #141a17;
   --dossier-border: #1f2a24;

@@ -22,7 +22,7 @@
   </div>
 </header>
 
-<main class="lesson-shell lesson-main">
+<main class="lesson-shell lesson-main deploy-reading-page">
   <aside class="lesson-aside lesson-floating-toc">
     <button type="button" class="toc-toggle" data-toc-toggle aria-expanded="true">目录</button>
     <div class="toc-body" data-toc-body>
@@ -42,35 +42,15 @@
   <article class="lesson-prose">
     <section class="html2-body-section lesson-section" id="deploy-core">
       <div class="wrap">
-        <div class="step-card">
-          <div class="step-card-head">
-            <span class="step-num">DOCKER-01</span>
-            <span class="step-label">核心</span>
-          </div>
-          <div class="step-card-body">
         <div class="section-head">
           <div>
-            <h2 class="section-title">打包镜像，到底在打包什么</h2>
+            <h2 class="section-title">所谓部署，究竟在部署什么？</h2>
           </div>
         </div>
-        <div class="html2-inline-note">
-          <span class="html2-inline-note-tag">核心</span>
-          <p>你真正要部署的，不是源码，而是编译完以后那个“可运行的东西”。</p>
-        </div>
-        <p>代码写完、编译之后,通常会产出一个可运行的产物(artifact):</p>
-        <ul>
-          <li><strong>Go</strong> → 一个二进制文件(<code>myapp</code>)</li>
-          <li><strong>Java</strong> → 一个 JAR 包(<code>app.jar</code>)</li>
-          <li><strong>前端</strong> → 一堆静态文件(<code>dist/</code>)</li>
-        </ul>
-        <p>这些运行的产物本身就是可以执行的。Go 二进制能直接启动，JAR 交给 JVM 就能起进程，前端静态文件交给 Web 服务器就能对外提供页面。平时本地联调，本质上就是在跑这个产物。</p>
-        <p>打包成镜像，本质上就是把它连同运行环境封进一个标准盒子里:</p>
-        <pre class="code-block"><code>源码 --编译--&gt; 产物 artifact --打包--&gt; 镜像 image</code></pre>
-        <p>关键认知:镜像里真正运行需要的,只是 <strong>产物 + 运行时环境</strong>。源码、编译器、构建工具,运行时都不该混进去。</p>
-        <p>问题也就随之出现了:怎么让这些“运行时不需要的东西”不混进镜像里?这就是整篇文章要解决的事。</p>
-        <p>Docker 基础这里不展开，重点只放在:怎么合理使用 Dockerfile，怎么把镜像做对。</p>
-          </div>
-        </div>
+        <p>你真正要部署的，不是源码，而是编译完以后那个“可运行的东西”。</p>
+        <p>代码写完、编译之后，通常会产出一个可运行的产物 artifact：Go 会产出二进制文件 myapp，Java 会产出 JAR 包 app.jar，前端会产出一组静态文件 dist/。</p>
+        <p>这些产物本身就可以被运行。Go 二进制能直接启动，JAR 交给 JVM 就能起进程，前端静态文件交给 Web 服务器就能对外提供页面。平时本地联调，本质上就是在跑这个产物。</p>
+        <p>打包成镜像，本质上就是把产物连同运行环境封进一个标准盒子里：源码 --编译--&gt; 产物 artifact --打包--&gt; 镜像 image。</p>
       </div>
     </section>
 
@@ -84,12 +64,12 @@
           <div class="step-card-body">
         <div class="section-head">
           <div>
-            <h2 class="section-title">本地构建产物为什么不好</h2>
+            <h2 class="section-title">镜像里究竟放什么？</h2>
           </div>
         </div>
-        <div class="comparison-card">
+        <div class="comparison-card deploy-comparison-card">
           <div>
-            <h3><span class="deploy-inline-label">做法 A</span> 本地编译好,直接 COPY 进镜像</h3>
+            <h3>A: 本地编译好,直接 COPY 进镜像</h3>
             <pre class="code-block deploy-code-block"><code class="language-dockerfile">FROM alpine:3.19
 COPY myapp .
 CMD ["./myapp"]</code></pre>
@@ -101,7 +81,7 @@ CMD ["./myapp"]</code></pre>
             </ul>
           </div>
           <div>
-            <h3><span class="deploy-inline-label">做法 B</span> 在镜像里编译</h3>
+            <h3>B: 在镜像里编译</h3>
             <pre class="code-block deploy-code-block"><code class="language-dockerfile">FROM golang:1.22
 WORKDIR /app
 COPY . .
@@ -131,44 +111,62 @@ CMD ["./myapp"]</code></pre>
           <div class="step-card-body">
         <div class="section-head">
           <div>
-            <h2 class="section-title">把编译和运行分开<br><span class="html2-title-em">多阶段构建</span></h2>
+            <h2 class="section-title">把<span class="html2-title-em">编译产物</span>和运行分开<br>多阶段构建</h2>
           </div>
         </div>
-        <div class="html2-inline-note">
-          <span class="html2-inline-note-tag">核心</span>
-          <p>多阶段构建两边的便宜都占了:在受控的构建阶段里编译，保证环境一致；最终运行阶段只保留产物，做到小而安全。</p>
+        <div class="html2-inline-note deploy-card-followup">
+          <p>核心思想非常简单:一个阶段专门编译，另一个阶段只放产物。最终镜像只保留最后一个阶段，前面的 builder 用完即弃</p>
         </div>
-        <p>核心思想非常简单:一个阶段专门编译，另一个阶段只放产物。最终镜像只保留最后一个阶段，前面的 builder 用完即弃。</p>
-        <pre class="code-block"><code class="language-dockerfile">FROM golang:1.22 AS builder
+        <div class="deploy-flow-diagram" aria-label="多阶段构建流程图">
+          <div class="deploy-flow-card">
+            <span class="micro-label">阶段 1 · builder</span>
+            <strong>Go 工具链 + 源码</strong>
+            <span class="deploy-flow-action">go build</span>
+            <span>产物：myapp</span>
+            <em>用完即弃，只取产物</em>
+            <details class="deploy-flow-source">
+              <summary>查看源码</summary>
+              <pre class="code-block"><code class="language-dockerfile">FROM golang:1.22 AS builder
 WORKDIR /app
 COPY . .
-RUN CGO_ENABLED=0 go build -o myapp .
-
-FROM alpine:3.19
+RUN CGO_ENABLED=0 go build -o myapp .</code></pre>
+            </details>
+          </div>
+          <div class="deploy-flow-arrow">
+            <span>COPY --from=builder</span>
+          </div>
+          <div class="deploy-flow-card deploy-flow-card-final">
+            <span class="micro-label">阶段 2 · runtime</span>
+            <strong>alpine + myapp</strong>
+            <em>最终部署的是这个镜像</em>
+            <details class="deploy-flow-source">
+              <summary>查看源码</summary>
+              <pre class="code-block"><code class="language-dockerfile">FROM alpine:3.19
 WORKDIR /app
 COPY --from=builder /app/myapp .
 CMD ["./myapp"]</code></pre>
-        <pre class="code-block"><code>┌──── 阶段 1: builder(用完即弃) ────┐
-│ Go 工具链 + 源码                   │
-│        ↓ go build                 │
-│      产物: myapp                  │  ← 只取这一个
-└───────────────┬───────────────────┘
-                │ COPY --from=builder
-                ▼
-┌──── 阶段 2: runtime(最终镜像) ───┐
-│ alpine + myapp                    │  ← 真正部署的是这个
-└───────────────────────────────────┘</code></pre>
-        <p><code>COPY --from=builder</code> 是关键:跨阶段只取产物,不把构建工具链带进最终镜像。</p>
+            </details>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="deploy-prose-intro deploy-card-followup">
+          <h4 class="item-title"><span class="item-title-accent">跨阶段复制</span></h4>
+          <p><code>COPY --from=builder</code> 是关键：跨阶段只取产物，不把构建工具链带进最终镜像。</p>
+        </div>
         <pre class="code-block"><code>朴素(单阶段):  golang + 源码 + 工具链 + 二进制   ≈ 800 MB
 多阶段(alpine): alpine + 二进制                  ≈ 20 MB</code></pre>
-        <p>为什么要追求小?就三个字:快、省、安全。</p>
-        <ul>
-          <li><strong>快</strong>：镜像小，拉取 / 推送快，Pod 启动快，扩容和滚动更新也都更快</li>
-          <li><strong>省</strong>：仓库存储和跨地域传输都按体积计成本</li>
-          <li><strong>安全</strong>：包越少，攻击面越小，CVE 也越少；很多最小镜像连 shell 都没有</li>
-        </ul>
-        <p>一个 Dockerfile，一条 <code>docker build</code> 命令，就可以同时完成“受控编译”和“最小运行”这两件事。</p>
+        <div class="deploy-focus-card">
+          <div class="deploy-prose-intro">
+            <h4 class="item-title">为什么要追求小？</h4>
+            <p>就三个字：快、省、安全。</p>
           </div>
+          <ul>
+            <li><strong>快</strong>：镜像小，拉取 / 推送快，Pod 启动快，扩容和滚动更新也都更快</li>
+            <li><strong>省</strong>：仓库存储和跨地域传输都按体积计成本</li>
+            <li><strong>安全</strong>：包越少，攻击面越小，CVE 也越少；很多最小镜像连 shell 都没有</li>
+          </ul>
+          <p>一个 Dockerfile，一条 <code>docker build</code> 命令，就可以同时完成“受控编译”和“最小运行”这两件事。</p>
         </div>
       </div>
     </section>
@@ -183,7 +181,7 @@ CMD ["./myapp"]</code></pre>
           <div class="step-card-body">
         <div class="section-head">
           <div>
-            <h2 class="section-title">不同语言的产物<br><span class="html2-title-em">对应不同运行阶段</span></h2>
+            <h2 class="section-title">不同语言的产物<span class="html2-title-em">对应不同运行阶段</span></h2>
           </div>
         </div>
         <p>核心套路都一样:编译阶段 + 运行阶段。真正变化的，只是运行阶段到底要放什么。</p>
@@ -297,7 +295,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
           </div>
         </div>
         <div class="html2-inline-note">
-          <span class="html2-inline-note-tag">原则</span>
           <p>配置不要打进镜像。镜像应该 immutable，环境差异来自外部注入，而不是打出三份不同镜像。</p>
         </div>
         <p>镜像只装“程序”，但程序启动往往还依赖运行时配置，比如数据库连接、业务参数、密钥文件。</p>
@@ -353,7 +350,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
           </div>
         </div>
         <div class="html2-inline-note">
-          <span class="html2-inline-note-tag">结论</span>
           <p>打包镜像的本质 = 只把运行需要的放进镜像,其余(编译器、源码、构建工具)全部留在构建阶段。</p>
         </div>
         <pre class="code-block"><code>产物 + 运行时  ──COPY --from──&gt;  最终镜像(小而安全)
