@@ -1,5 +1,5 @@
 import React from "react";
-import { CycleText, PageFrame, withBase } from "./site-components.jsx";
+import { CycleText, PageFrame, SiteNav, withBase } from "./site-components.jsx";
 import { withBasePath, withHowtoManualPath } from "../../lib/paths.js";
 import { frontendHomeLessons } from "../../manuals/frontend/registry.js";
 
@@ -215,12 +215,6 @@ const lessons = frontendHomeLessons.map((lesson) => ({
 }));
 
 const homeHref = withBasePath("/");
-const manualNav = [
-  { href: withBasePath("howto/"), label: "手册总览" },
-  { href: withHowtoManualPath("frontend"), label: "前端手册", current: true },
-  { href: withHowtoManualPath("deploy"), label: "部署手册" },
-];
-
 const faqs = [
   {
     title: "智能助手都能写代码了，为什么还要学这些？",
@@ -252,20 +246,10 @@ export function IndexPage() {
                 <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
-            <div className="manual-global-actions">
-              <nav className="manual-site-nav" aria-label="战术手册导航">
-                {manualNav.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
+            <div className="manual-global-actions manual-index-chapters">
+              <SiteNav />
             </div>
-            <a className="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
+            <a className="manual-hub-link" href={withBasePath("howto/")}>手册总览</a>
           </div>
         </header>
 

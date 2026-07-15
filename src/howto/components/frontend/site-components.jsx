@@ -118,7 +118,7 @@ export function SiteNav({ currentPath = "" }) {
         course.perspectives ? (
           <NavDropdown key={course.label} course={course} currentPath={currentPath} />
         ) : (
-          <a key={course.label} href={withBase(course.href)}>
+          <a key={course.label} href={withBase(course.href)} className={currentPath === course.href ? "is-current" : ""} aria-current={currentPath === course.href ? "page" : undefined}>
             {course.label}
           </a>
         )
@@ -152,13 +152,25 @@ export function StepNav({ prev, next }) {
   );
 }
 
-const manualNav = [
-  { href: withBasePath("howto/"), label: "手册总览" },
-  { href: withHowtoManualPath("frontend"), label: "前端手册", current: true },
-  { href: withHowtoManualPath("deploy"), label: "部署手册" },
-];
+export function CourseStepNav({ prev, next }) {
+  return (
+    <footer className="course-step-nav" aria-label="课程翻页">
+      {prev ? <a href={withBase(prev.href)}>← {prev.title}</a> : <span />}
+      {next ? <a className="is-next" href={withBase(next.href)}>下一节：{next.title} →</a> : <span>已完成本路线</span>}
+    </footer>
+  );
+}
 
-export function ManualLessonHeader({ currentPath = "", prev = null, next = null }) {
+export function ManualCourseLayout({ prev = null, next = null, children }) {
+  return (
+    <>
+      {children}
+      <CourseStepNav prev={prev} next={next} />
+    </>
+  );
+}
+
+export function ManualLessonHeader({ currentPath = "" }) {
   return (
     <header className="site-header manual-topbar-header">
       <div className="shell shell-wide manual-global-bar">
@@ -171,25 +183,10 @@ export function ManualLessonHeader({ currentPath = "", prev = null, next = null 
             <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
           </span>
         </a>
-        <div className="manual-global-actions">
-          <nav className="manual-site-nav" aria-label="战术手册导航">
-            {manualNav.map((item) => (
-              <a key={item.label} href={item.href} aria-current={item.current ? "page" : undefined}>
-                {item.label}
-              </a>
-            ))}
-          </nav>
+        <div className="manual-global-actions manual-index-chapters">
+          <SiteNav currentPath={currentPath} />
         </div>
-        <a className="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div className="manual-lesson-bar">
-        <div className="container manual-lesson-inner">
-          <nav className="manual-chapter-nav" aria-label="前端手册章节">
-            <span className="manual-chapter-label">前端章节</span>
-            <SiteNav currentPath={currentPath} />
-          </nav>
-          <StepNav prev={prev} next={next} />
-        </div>
+        <a className="manual-hub-link" href={withBasePath("howto/")}>手册总览</a>
       </div>
     </header>
   );

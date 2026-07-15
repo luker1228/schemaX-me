@@ -33,11 +33,6 @@ const manuals = [
 ];
 
 const homeHref = withBase("/");
-const manualNav = [
-  { href: withBase("howto/"), label: "手册总览", current: true },
-  { href: withHowtoManualPath("frontend"), label: "前端手册" },
-  { href: withHowtoManualPath("deploy"), label: "部署手册" }
-];
 
 ---
 
@@ -63,16 +58,13 @@ const manualNav = [
             </span>
           </a>
 
-          <div class="manual-global-actions">
-            <nav class="manual-site-nav" aria-label="战术手册导航">
-              {manualNav.map((item) => (
-                <a href={item.href} aria-current={item.current ? "page" : undefined}>
-                  {item.label}
-                </a>
-              ))}
+          <div class="manual-global-actions manual-hub-actions">
+            <nav class="manual-site-nav" aria-label="手册入口">
+              <a href={withHowtoManualPath("frontend")}>前端手册</a>
+              <a href={withHowtoManualPath("deploy")}>部署手册</a>
             </nav>
           </div>
-          <a class="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="manual-hub-link" href={withBase("howto/")} aria-current="page">手册总览</a>
         </div>
       </header>
 

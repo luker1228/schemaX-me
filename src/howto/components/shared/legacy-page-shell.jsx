@@ -6,7 +6,7 @@ function stripEmbeddedHeader(html) {
   return html.replace(/^\s*<header class="site-header"[\s\S]*?<\/header>\s*/i, "");
 }
 
-export function LegacyPageShell({ title, html, renderHeader = null, rewriteHtml = null, enhance = true }) {
+export function LegacyPageShell({ title, html, renderHeader = null, renderFooter = null, rewriteHtml = null, enhance = true }) {
   const rootRef = useRef(null);
   const renderedHtml = stripEmbeddedHeader(rewriteHtml ? rewriteHtml(html) : html);
 
@@ -24,6 +24,7 @@ export function LegacyPageShell({ title, html, renderHeader = null, rewriteHtml 
       <>
         {renderHeader ? renderHeader() : null}
         <div ref={rootRef} dangerouslySetInnerHTML={{ __html: renderedHtml }} />
+        {renderFooter ? renderFooter() : null}
       </>
     </PageFrame>
   );

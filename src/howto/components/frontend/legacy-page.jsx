@@ -1,6 +1,6 @@
 import React from "react";
 import { withBasePath, withHowtoManualPath } from "../../lib/paths.js";
-import { ManualLessonHeader } from "./site-components.jsx";
+import { CourseStepNav, ManualLessonHeader } from "./site-components.jsx";
 import { LegacyPageShell } from "../shared/legacy-page-shell.jsx";
 
 function rewriteLegacyUrl(rawPath) {
@@ -23,7 +23,8 @@ export function LegacyPage({ title, html, currentPath = "", prev = null, next = 
       title={title}
       html={html}
       rewriteHtml={rewriteLegacyHtmlForBase}
-      renderHeader={() => <ManualLessonHeader currentPath={currentPath} prev={prev} next={next} />}
+      renderHeader={() => <ManualLessonHeader currentPath={currentPath} />}
+      renderFooter={() => <CourseStepNav prev={prev} next={next} />}
     />
   );
 }

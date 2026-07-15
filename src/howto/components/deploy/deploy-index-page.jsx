@@ -29,12 +29,6 @@ const lessons = deployLessons.map((lesson) => ({
 }));
 
 const homeHref = withBase("/");
-const manualNav = [
-  { href: withBase("howto/"), label: "手册总览" },
-  { href: withHowtoManualPath("frontend"), label: "前端手册" },
-  { href: withHowtoManualPath("deploy"), label: "部署手册", current: true },
-];
-
 export function DeployIndexPage() {
   return (
     <PageFrame title="部署战术手册">
@@ -50,20 +44,7 @@ export function DeployIndexPage() {
                 <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
-            <div className="manual-global-actions">
-              <nav className="manual-site-nav" aria-label="战术手册导航">
-                {manualNav.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-            <a className="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
+            <a className="manual-hub-link" href={withBase("howto/")}>手册总览</a>
           </div>
         </header>
 

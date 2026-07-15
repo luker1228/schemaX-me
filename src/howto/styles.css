@@ -186,6 +186,10 @@ textarea {
   justify-content: flex-start;
 }
 
+.manual-hub-actions {
+  margin-right: auto;
+}
+
 .manual-external {
   flex: 0 0 auto;
   margin-left: auto;
@@ -202,6 +206,20 @@ textarea {
 .manual-external:focus-visible {
   color: var(--accent);
 }
+
+.manual-hub-link {
+  margin-left: auto;
+  padding: 0.5rem 0;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.manual-hub-link:hover,
+.manual-hub-link:focus-visible { color: var(--accent); }
 
 .manual-site-brand {
   display: inline-flex;
@@ -289,6 +307,20 @@ textarea {
   border-top: 1px solid var(--border);
   background: var(--surface-2);
 }
+
+.course-step-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100% - 32px, var(--lesson-measure));
+  margin: 4rem auto 5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.course-step-nav a, .course-step-nav span { color: var(--muted); font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700; }
+.course-step-nav a:hover, .course-step-nav a:focus-visible { color: var(--accent); }
+.course-step-nav .is-next { margin-left: auto; color: var(--fg); }
 
 .manual-lesson-inner,
 .manual-chapter-nav {
@@ -536,7 +568,11 @@ textarea {
 }
 
 .nav-dropdown-link.is-current {
-  color: var(--accent-strong);
+  color: var(--accent);
+}
+
+.nav-links > a.is-current {
+  color: var(--accent);
 }
 
 .nav-dropdown-trigger {
@@ -597,7 +633,7 @@ textarea {
 
 .nav-dropdown-menu a.is-current {
   background: color-mix(in oklab, var(--accent) 14%, transparent);
-  color: var(--accent-strong);
+  color: var(--accent);
   font-weight: 700;
 }
 
@@ -2773,6 +2809,9 @@ textarea {
     width: min(calc(100vw - 1.5rem), var(--manual-topbar-shell));
   }
 
+  .course-step-nav { flex-direction: column; width: 100%; margin: 3rem 0 4rem; }
+  .course-step-nav .is-next { margin-left: 0; }
+
   .hero h1 {
     max-width: 100%;
   }
@@ -4336,10 +4375,16 @@ body::before {
 
 .step-card .html2-inline-note {
   gap: 14px;
-  padding: 16px 0 0;
-  border-top: 1px solid color-mix(in srgb, var(--border) 24%, transparent);
-  border-left: 0;
+  /* 作为卡片里的收束说明，分割线两侧要有成组的呼吸感。 */
+  padding: 14px 0 14px 18px;
+  border: 0;
+  border-left: 0 !important;
   background: transparent;
+}
+
+/* 末尾说明不再叠加完整的卡片底部内边距，避免视觉上头轻脚重。 */
+.step-card .html2-inline-note:last-child {
+  margin-bottom: -12px;
 }
 
 .step-card .html2-inline-note-tag {

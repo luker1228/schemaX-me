@@ -1,5 +1,5 @@
 import React from "react";
-import { ManualLessonHeader, PageFrame, PromptLibrary } from "./site-components.jsx";
+import { ManualCourseLayout, ManualLessonHeader, PageFrame, PromptLibrary } from "./site-components.jsx";
 import { getFrontendLegacyLesson } from "../../manuals/frontend/registry.js";
 
 const filters = [
@@ -173,7 +173,8 @@ export function PromptsPage({ currentPath, prev, next }) {
   return (
     <PageFrame title="Prompt Library · 后端同学的前端战术手册">
       <>
-        <ManualLessonHeader currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next} />
+        <ManualLessonHeader currentPath={lesson.currentPath} />
+        <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>
         <main className="container">
           <section className="page-hero">
             <h1 className="page-title">提示词库：把需求讲到 AI 真能执行。</h1>
@@ -183,6 +184,7 @@ export function PromptsPage({ currentPath, prev, next }) {
             <PromptLibrary prompts={prompts} filterLabels={filters} />
           </section>
         </main>
+        </ManualCourseLayout>
       </>
     </PageFrame>
   );

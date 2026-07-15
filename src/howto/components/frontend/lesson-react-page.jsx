@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ConfigProvider, Layout, Menu, Button, Input, Select, Tabs, Table, Modal, Drawer, Pagination, Space, Tag, Avatar, Card, Form, Checkbox, Radio, Switch, Dropdown, Empty, message } from "antd";
 import { UserOutlined, ShoppingCartOutlined, SearchOutlined, DashboardOutlined, TeamOutlined, SettingOutlined } from "@ant-design/icons";
-import { CopyButton, ManualLessonHeader } from "./site-components.jsx";
+import { CopyButton, ManualCourseLayout, ManualLessonHeader } from "./site-components.jsx";
 import { getFrontendLegacyLesson } from "../../manuals/frontend/registry.js";
 
 const { Header, Sider, Content } = Layout;
@@ -700,7 +700,8 @@ export function LessonReactApp({ currentPath, prev, next }) {
       }}
     >
       <>
-        <ManualLessonHeader currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next} />
+        <ManualLessonHeader currentPath={lesson.currentPath} />
+        <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>
         <header className="html2-hero html-reading-hero">
           <div className="lesson-shell">
             <div className="html2-hero-meta">
@@ -1020,6 +1021,7 @@ export function LessonReactApp({ currentPath, prev, next }) {
             <Toc activeId={activeId} />
           </section>
         </main>
+        </ManualCourseLayout>
       </>
     </ConfigProvider>
   );
