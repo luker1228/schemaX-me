@@ -1,0 +1,471 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import sideProfilePortrait from "../../../assets/ip/尖头发侧面.png";
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const patterns = [
+  {
+    slug: "corner-brackets",
+    eyebrow: "Visual Token Group",
+    title: "Corner Brackets",
+    summary: "档案面板和人物照片共用的一组角标语言。左侧看真实渲染，右侧直接拿 HTML / CSS / tokens。",
+    source: "src/styles/global.css:2210",
+    tokens: [
+      ["--corner-bracket-color", "var(--classified)"],
+      ["--corner-bracket-opacity", "0.55"],
+      ["--corner-bracket-panel-size", "14px"],
+      ["--corner-bracket-panel-stroke", "2px"],
+      ["--corner-bracket-panel-offset", "-1px"],
+      ["--corner-bracket-photo-size", "10px"],
+      ["--corner-bracket-photo-stroke", "1.5px"],
+      ["--corner-bracket-photo-offset", "4px"]
+    ],
+    html: `<div class="dossier-panel">
+  <span class="dossier-corner tl"></span>
+  <span class="dossier-corner tr"></span>
+  <span class="dossier-corner bl"></span>
+  <span class="dossier-corner br"></span>
+  ...
+</div>
+
+<div class="dossier-photo">
+  <img src="/subject.png" alt="" />
+  <span class="reg tl"></span>
+  <span class="reg tr"></span>
+  <span class="reg bl"></span>
+  <span class="reg br"></span>
+</div>`,
+    css: `:root {
+  --corner-bracket-color: var(--classified);
+  --corner-bracket-opacity: 0.55;
+  --corner-bracket-panel-size: 14px;
+  --corner-bracket-panel-stroke: 2px;
+  --corner-bracket-panel-offset: -1px;
+  --corner-bracket-photo-size: 10px;
+  --corner-bracket-photo-stroke: 1.5px;
+  --corner-bracket-photo-offset: 4px;
+}
+
+.dossier-corner,
+.dossier-photo .reg {
+  position: absolute;
+  border-color: var(--corner-bracket-color);
+}
+
+.dossier-corner {
+  width: var(--corner-bracket-panel-size);
+  height: var(--corner-bracket-panel-size);
+  border: var(--corner-bracket-panel-stroke) solid var(--corner-bracket-color);
+  opacity: var(--corner-bracket-opacity);
+}
+
+.dossier-photo .reg {
+  width: var(--corner-bracket-photo-size);
+  height: var(--corner-bracket-photo-size);
+  border: var(--corner-bracket-photo-stroke) solid var(--corner-bracket-color);
+}`,
+    notes: [
+      "Panel 和 photo 分开设 token，避免一个尺寸同时兼顾大面板和小照片。",
+      "真正的视觉重点不是 border 本身，而是 offset 带来的“夹在边框外”的机械感。",
+      "如果后面要继续扩展，可以按这个结构继续加别的 pattern 卡。"
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="AI Metadata · Visual Language Reference"
+  description="schemaX 视觉语言 reference：左侧真实预览，右侧 HTML / CSS / tokens，方便快速查阅与复用。"
+>
+  <section class="reference-lab">
+    <div class="shell shell-wide reference-shell">
+      <header class="reference-hero">
+        <div>
+          <span class="reference-kicker">AI METADATA / VISUAL LANGUAGE</span>
+          <h1>Pattern Reference</h1>
+          <p>
+            这里不做抽象说明文档，直接做成可浏览的 pattern lab。
+            每张卡固定为左侧真实展示、右侧源码，后面继续加 token 组时只需要补数据和 preview。
+          </p>
+        </div>
+        <div class="reference-hero-meta">
+          <div>
+            <span>Source Mode</span>
+            <strong>Preview + Code</strong>
+          </div>
+          <div>
+            <span>Route</span>
+            <strong>{baseUrl}ai-metadata/</strong>
+          </div>
+        </div>
+      </header>
+
+      <div class="reference-grid">
+        {patterns.map((pattern) => (
+          <article class="reference-card" id={pattern.slug}>
+            <div class="reference-preview">
+              <div class="reference-card-head">
+                <span>{pattern.eyebrow}</span>
+                <strong>{pattern.title}</strong>
+                <p>{pattern.summary}</p>
+              </div>
+
+              <div class="reference-preview-stack">
+                <section class="dossier-panel reference-panel-sample">
+                  <span class="dossier-corner tl"></span>
+                  <span class="dossier-corner tr"></span>
+                  <span class="dossier-corner bl"></span>
+                  <span class="dossier-corner br"></span>
+
+                  <div class="dossier-panel-head">
+                    <h2>Panel Sample</h2>
+                    <span class="tag loaded">READY</span>
+                  </div>
+
+                  <div class="reference-panel-body">
+                    <p>大面板里角标更重，负责把内容容器钉成“档案夹”。</p>
+                    <div class="reference-signal-row">
+                      <span>OFFSET</span>
+                      <span>-1px</span>
+                    </div>
+                    <div class="reference-signal-row">
+                      <span>STROKE</span>
+                      <span>2px</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="reference-photo-sample">
+                  <div class="dossier-photo">
+                    <img src={sideProfilePortrait.src} alt="Corner bracket preview" width="1024" height="1536" loading="lazy" decoding="async" />
+                    <span class="reg tl"></span>
+                    <span class="reg tr"></span>
+                    <span class="reg bl"></span>
+                    <span class="reg br"></span>
+                    <span class="live">● SCAN LIVE</span>
+                  </div>
+                  <div class="reference-photo-copy">
+                    <strong>Photo Sample</strong>
+                    <p>照片角标更轻，用更小的 size 和 stroke 保持成像层级。</p>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div class="reference-code">
+              <div class="reference-code-head">
+                <div>
+                  <span>Source</span>
+                  <strong>{pattern.source}</strong>
+                </div>
+              </div>
+
+              <section class="reference-token-list">
+                <h2>Tokens</h2>
+                <ul>
+                  {pattern.tokens.map(([name, value]) => (
+                    <li>
+                      <code>{name}</code>
+                      <span>{value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section class="reference-code-block">
+                <h2>HTML</h2>
+                <pre><code>{pattern.html}</code></pre>
+              </section>
+
+              <section class="reference-code-block">
+                <h2>CSS</h2>
+                <pre><code>{pattern.css}</code></pre>
+              </section>
+
+              <section class="reference-notes">
+                <h2>Notes</h2>
+                <ul>
+                  {pattern.notes.map((note) => (
+                    <li>{note}</li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .reference-lab {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(212, 63, 42, 0.16), transparent 22rem),
+      linear-gradient(180deg, #0d0d0d 0%, #141414 100%);
+  }
+
+  .reference-shell {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .reference-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.8fr);
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+    padding: 1.35rem;
+    border: 1px solid rgba(244, 234, 214, 0.18);
+    background: rgba(20, 20, 20, 0.86);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+  }
+
+  .reference-kicker {
+    display: inline-block;
+    margin-bottom: 0.65rem;
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.22em;
+  }
+
+  .reference-hero h1 {
+    margin: 0 0 0.55rem;
+    color: var(--dossier-text);
+    font-size: clamp(2.2rem, 5vw, 4.6rem);
+    letter-spacing: -0.04em;
+  }
+
+  .reference-hero p {
+    max-width: 58ch;
+    margin: 0;
+    color: rgba(244, 234, 214, 0.76);
+    line-height: 1.75;
+  }
+
+  .reference-hero-meta {
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+  }
+
+  .reference-hero-meta div {
+    padding: 1rem;
+    border: 1px solid rgba(244, 234, 214, 0.14);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .reference-hero-meta span,
+  .reference-card-head span,
+  .reference-code-head span,
+  .reference-token-list h2,
+  .reference-code-block h2,
+  .reference-notes h2 {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 234, 214, 0.56);
+  }
+
+  .reference-hero-meta strong,
+  .reference-code-head strong {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--dossier-text);
+    font-size: 1rem;
+  }
+
+  .reference-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .reference-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(21rem, 0.96fr);
+    border: 1px solid rgba(244, 234, 214, 0.16);
+    background: rgba(10, 10, 10, 0.78);
+    overflow: hidden;
+  }
+
+  .reference-preview,
+  .reference-code {
+    padding: 1.2rem;
+  }
+
+  .reference-preview {
+    border-right: 1px solid rgba(244, 234, 214, 0.12);
+    background:
+      linear-gradient(180deg, rgba(255, 212, 59, 0.05), transparent 26%),
+      rgba(19, 19, 19, 0.95);
+  }
+
+  .reference-card-head strong {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--dossier-text);
+    font-size: 1.8rem;
+    letter-spacing: -0.04em;
+  }
+
+  .reference-card-head p {
+    margin: 0.7rem 0 0;
+    color: rgba(244, 234, 214, 0.74);
+    line-height: 1.75;
+  }
+
+  .reference-preview-stack {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.1rem;
+  }
+
+  .reference-panel-sample {
+    min-height: 16.5rem;
+  }
+
+  .reference-panel-body {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .reference-panel-body p,
+  .reference-photo-copy p {
+    margin: 0;
+    color: rgba(244, 234, 214, 0.74);
+    line-height: 1.72;
+  }
+
+  .reference-signal-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+    border-top: 1px dashed rgba(244, 234, 214, 0.18);
+    color: var(--dossier-text);
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+  }
+
+  .reference-photo-sample {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12.5rem) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid rgba(244, 234, 214, 0.12);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .reference-photo-sample .dossier-photo {
+    width: 100%;
+  }
+
+  .reference-photo-copy strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dossier-text);
+    font-size: 1.05rem;
+  }
+
+  .reference-code {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    background:
+      linear-gradient(180deg, rgba(212, 63, 42, 0.06), transparent 16%),
+      #111111;
+  }
+
+  .reference-token-list ul,
+  .reference-notes ul {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.7rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .reference-token-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid rgba(244, 234, 214, 0.1);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .reference-token-list code {
+    color: var(--yellow);
+    font-size: 0.9rem;
+  }
+
+  .reference-token-list span {
+    color: rgba(244, 234, 214, 0.78);
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+  }
+
+  .reference-code-block pre {
+    margin: 0.7rem 0 0;
+    padding: 1rem;
+    overflow-x: auto;
+    border: 1px solid rgba(244, 234, 214, 0.1);
+    background: #0a0a0a;
+  }
+
+  .reference-code-block code {
+    color: #e8dcc3;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    line-height: 1.68;
+    white-space: pre;
+  }
+
+  .reference-notes li {
+    color: rgba(244, 234, 214, 0.78);
+    line-height: 1.72;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .reference-notes li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--classified);
+  }
+
+  @media (max-width: 980px) {
+    .reference-hero,
+    .reference-card,
+    .reference-photo-sample {
+      grid-template-columns: 1fr;
+    }
+
+    .reference-preview {
+      border-right: 0;
+      border-bottom: 1px solid rgba(244, 234, 214, 0.12);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .reference-shell {
+      padding-top: 1.25rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .reference-hero,
+    .reference-preview,
+    .reference-code {
+      padding: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+type Tone = "yellow" | "green" | "red" | "purple";
+
+interface Props {
+  code: string;
+  status: string;
+  title: string;
+  copy: string;
+  meta: string;
+  href?: string;
+  tone?: Tone;
+  className?: string;
+}
+
+const {
+  code,
+  status,
+  title,
+  copy,
+  meta,
+  href,
+  tone = "yellow",
+  className = ""
+} = Astro.props;
+
+const Tag = href ? "a" : "div";
+const cardClass = `dossier-asset acc-${tone}${className ? ` ${className}` : ""}`;
+---
+
+<Tag class={cardClass} href={href}>
+  <div class="ah">
+    <span class="aid">{code}</span>
+    <span class="cls">● {status}</span>
+  </div>
+  <h3>{title}</h3>
+  <p>{copy}</p>
+  <span class="meta">{meta} →</span>
+</Tag>

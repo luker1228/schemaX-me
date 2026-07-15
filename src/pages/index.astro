@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import DossierAssetCard from "../components/DossierAssetCard.astro";
 import graphqlSvg from "../../assets/icons/graphql.svg";
 import dockerSvg from "../../assets/icons/docker.svg";
 import goSvg from "../../assets/icons/go.svg";
@@ -7,7 +8,7 @@ import javaSvg from "../../assets/icons/java.svg";
 import k8sSvg from "../../assets/icons/k8s-official.svg";
 import mysqlSvg from "../../assets/icons/mysql-official.svg";
 import pythonSvg from "../../assets/icons/python.svg";
-import motorcyclePortrait from "../../assets/ip/摩托.png";
+import motorcyclePortrait from "../../assets/ip/摩托11.png";
 import sideProfilePortrait from "../../assets/ip/尖头发侧面.png";
 import { getAllPosts, formatDate } from "../lib/content";
 
@@ -66,7 +67,7 @@ const featuredWorks = [
     title: "前端教学",
     copy: "写给后端同学、设计同学和零基础学习者的前端速通手册,后续从独立仓库接入。",
     href: "#frontend-guide",
-    tone: "cyan",
+    tone: "green",
     meta: "稍后接入"
   },
   {
@@ -75,7 +76,7 @@ const featuredWorks = [
     title: "系列文章",
     copy: "长期系列入口,统一查看 ModelCraft 与后续系列。",
     href: withBase("/blogs/series/"),
-    tone: "yellow",
+    tone: "red",
     meta: "查看全部系列"
   }
 ];
@@ -183,10 +184,6 @@ const techStack = [
       <div class="dossier-hero">
         {/* 主体识别 ID 卡 */}
         <div class="dossier-panel dossier-id">
-          <span class="dossier-corner tl"></span>
-          <span class="dossier-corner tr"></span>
-          <span class="dossier-corner bl"></span>
-          <span class="dossier-corner br"></span>
           <div class="dossier-panel-head">
             <h2>主体识别</h2>
             <span class="tag">REC #LXM-0001</span>
@@ -349,7 +346,7 @@ const techStack = [
             fill.style.width = "100%";
             log.textContent += "\n> ACCESS GRANTED";
             status.textContent = "● 解密完成";
-            status.style.color = "var(--phosphor)";
+            status.style.color = "var(--green)";
             window.clearTimeout(guard);
             window.setTimeout(function () { skip(); }, 600);
           }
@@ -374,7 +371,7 @@ const techStack = [
         <span>SYS: SCHEMAX-HLM1</span>
         <span>BUS: NEURAL-64 // SKILL PATH</span>
         <span>MODE: MIL-DEPLOY</span>
-        <span class="r">REV: 2.6 &nbsp;·&nbsp; LVL: 9 &nbsp;·&nbsp; CLR: GREEN</span>
+        <span class="r">REV: 2.6 &nbsp;·&nbsp; LVL: 9 &nbsp;·&nbsp; CLR: SIGNAL</span>
       </div>
       <div class="dossier-scan">
         <ul class="dossier-scan-list">
@@ -403,15 +400,7 @@ const techStack = [
       </div>
       <div class="dossier-assets">
         {featuredWorks.map((item) => (
-          <a class={`dossier-asset acc-${item.tone}`} href={item.href}>
-            <div class="ah">
-              <span class="aid">{item.code}</span>
-              <span class="cls">● {item.status}</span>
-            </div>
-            <h3>{item.title}</h3>
-            <p>{item.copy}</p>
-            <span class="meta">{item.meta} →</span>
-          </a>
+          <DossierAssetCard {...item} />
         ))}
       </div>
     </div>
