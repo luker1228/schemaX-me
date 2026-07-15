@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ConfigProvider, Layout, Menu, Button, Input, Select, Tabs, Table, Modal, Drawer, Pagination, Space, Tag, Avatar, Card, Form, Checkbox, Radio, Switch, Dropdown, Empty, message } from "antd";
 import { UserOutlined, ShoppingCartOutlined, SearchOutlined, DashboardOutlined, TeamOutlined, SettingOutlined } from "@ant-design/icons";
-import { CopyButton, SiteNav, StepNav, withBase } from "./site-components.jsx";
+import { CopyButton, ManualLessonHeader } from "./site-components.jsx";
 import { getFrontendLegacyLesson } from "../../manuals/frontend/registry.js";
 
 const { Header, Sider, Content } = Layout;
@@ -700,13 +700,7 @@ export function LessonReactApp({ currentPath, prev, next }) {
       }}
     >
       <>
-        <header className="site-header">
-          <div className="lesson-shell site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">FM-01</span></a>
-            <SiteNav currentPath={lesson.currentPath} />
-            <StepNav prev={lesson.prev} next={lesson.next} />
-          </div>
-        </header>
+        <ManualLessonHeader currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next} />
         <header className="html2-hero html-reading-hero">
           <div className="lesson-shell">
             <div className="html2-hero-meta">

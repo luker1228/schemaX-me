@@ -40,14 +40,14 @@ export function DeployIndexPage() {
     <PageFrame title="部署战术手册">
       <div className="site-shell">
         <header className="site-header manual-topbar-header">
-          <div className="container manual-global-bar">
-            <a className="manual-site-brand" href={homeHref}>
-              <span className="manual-brand-avatar">
+          <div className="shell shell-wide manual-global-bar">
+            <a className="brand manual-site-brand" href={homeHref}>
+              <span className="brand-avatar manual-brand-avatar">
                 <img src={withBase("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
               </span>
-              <span className="manual-brand-copy">
-                <span className="manual-brand-mark">schemaX</span>
-                <span className="manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+              <span className="brand-copy manual-brand-copy">
+                <span className="brand-mark manual-brand-mark">schemaX</span>
+                <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
             <div className="manual-global-actions">
@@ -63,6 +63,7 @@ export function DeployIndexPage() {
                 ))}
               </nav>
             </div>
+            <a className="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </header>
 
@@ -91,7 +92,7 @@ export function DeployIndexPage() {
                 </div>
               </div>
               <aside className="hero-note">
-                <span className="micro-label">这份手册解决什么</span>
+                <span className="micro-label hero-note-label">这份手册解决什么</span>
                 <p className="hero-note-copy">不是运维大全，而是先帮你建立上线前最核心的判断力：应用在部署时，到底什么该打包，什么该留在外部。</p>
               </aside>
             </div>

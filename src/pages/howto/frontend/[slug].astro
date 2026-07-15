@@ -1,6 +1,5 @@
 ---
 import "../../../howto/styles.css";
-import DossierBridge from "./_DossierBridge.astro";
 import { LegacyPage } from "../../../howto/components/frontend/legacy-page.jsx";
 import { LessonReactApp } from "../../../howto/components/frontend/lesson-react-page.jsx";
 import { ComponentsPage } from "../../../howto/components/frontend/components-page.jsx";
@@ -51,8 +50,6 @@ if (!page || !lessonNav) {
     <title>{page.title}</title>
   </head>
   <body>
-    <DossierBridge crumb={page.slug} />
-
     {page.kind === "legacy" ? (
       <LegacyPage
         client:load

@@ -39,11 +39,6 @@ const manualNav = [
   { href: withHowtoManualPath("deploy"), label: "部署手册" }
 ];
 
-const getManualPath = (href: string) => {
-  const normalizedBase = (import.meta.env.BASE_URL.replace(/\/?$/, "/")).replace(/\/$/, "");
-  const normalizedHref = href.startsWith(normalizedBase) ? href.slice(normalizedBase.length) : href;
-  return normalizedHref.replace(/^\/+|\/+$/g, "");
-};
 ---
 
 <!doctype html>
@@ -57,14 +52,14 @@ const getManualPath = (href: string) => {
   <body>
     <div class="site-shell manual-hub-shell">
       <header class="site-header manual-topbar-header">
-        <div class="container manual-global-bar">
-          <a class="manual-site-brand" href={homeHref}>
-            <span class="manual-brand-avatar">
+        <div class="shell shell-wide manual-global-bar">
+          <a class="brand manual-site-brand" href={homeHref}>
+            <span class="brand-avatar manual-brand-avatar">
               <img src={withBase("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
             </span>
-            <span class="manual-brand-copy">
-              <span class="manual-brand-mark">schemaX</span>
-              <span class="manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+            <span class="brand-copy manual-brand-copy">
+              <span class="brand-mark manual-brand-mark">schemaX</span>
+              <span class="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
             </span>
           </a>
 
@@ -77,6 +72,7 @@ const getManualPath = (href: string) => {
               ))}
             </nav>
           </div>
+          <a class="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </header>
 
@@ -160,10 +156,6 @@ const getManualPath = (href: string) => {
               <a
                 class="manual-hub-card"
                 href={manual.href}
-                data-manual-launch
-                data-manual-title={manual.title}
-                data-manual-path={getManualPath(manual.href)}
-                data-manual-stamp={manual.stampImage}
               >
                 <div class="manual-hub-card-head">
                   <span class="manual-hub-code">{manual.code}</span>
@@ -230,34 +222,6 @@ const getManualPath = (href: string) => {
       </main>
     </div>
 
-    <script is:inline>
-      (function () {
-        var links = document.querySelectorAll("[data-manual-launch]");
-        if (!links.length) return;
-
-        for (var i = 0; i < links.length; i++) {
-          links[i].addEventListener("click", function (event) {
-            var href = this.getAttribute("href");
-            var manualTitle = this.getAttribute("data-manual-title");
-            var manualPath = this.getAttribute("data-manual-path");
-            var manualStamp = this.getAttribute("data-manual-stamp");
-            if (!href || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-            try {
-              sessionStorage.setItem(
-                "howto-manual-transition",
-                JSON.stringify({
-                  href: href,
-                  title: manualTitle || "",
-                  path: manualPath || "",
-                  stamp: manualStamp || "",
-                  expiresAt: Date.now() + 12000
-                })
-              );
-            } catch (e) {}
-          });
-        }
-      })();
-    </script>
   </body>
 </html>
 
@@ -335,6 +299,9 @@ const getManualPath = (href: string) => {
       linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 28%),
       var(--surface);
     border: 1.5px solid var(--fg);
+  }
+
+  .manual-pick-card {
     box-shadow: var(--shadow);
   }
 

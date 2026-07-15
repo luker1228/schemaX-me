@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ConfigProvider, Layout, Menu, Button, Input, Select, Tabs, Table, Modal, Drawer, Pagination, Space, Tag, Avatar, Form, Spin, Empty, Badge } from "antd";
 import { SearchOutlined, DashboardOutlined, TeamOutlined, SettingOutlined, BellOutlined } from "@ant-design/icons";
-import { CopyButton, PageFrame, SiteNav, StepNav, withBase } from "./site-components.jsx";
+import { CopyButton, ManualLessonHeader, PageFrame } from "./site-components.jsx";
 import { getFrontendLegacyLesson } from "../../manuals/frontend/registry.js";
 
 const { Header, Sider, Content } = Layout;
@@ -209,13 +209,7 @@ export function ComponentsPage({ currentPath, prev, next }) {
   return (
     <PageFrame title="组件认知页 · 后端同学的前端战术手册">
       <ConfigProvider theme={{ token: { colorPrimary: "#ef7627", borderRadius: 8, fontFamily: "inherit" } }}>
-        <header className="site-header">
-          <div className="container site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">FM-01</span></a>
-            <SiteNav currentPath={lesson.currentPath} />
-            <StepNav prev={lesson.prev} next={lesson.next} />
-          </div>
-        </header>
+        <ManualLessonHeader currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next} />
         <main className="container">
           <section className="page-hero">
             <h1 className="page-title">先认识组件，再学会和 AI 说前端语言。</h1>

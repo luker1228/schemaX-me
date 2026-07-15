@@ -1,5 +1,5 @@
 import React from "react";
-import { PageFrame, PromptLibrary, SiteNav, StepNav, withBase } from "./site-components.jsx";
+import { ManualLessonHeader, PageFrame, PromptLibrary } from "./site-components.jsx";
 import { getFrontendLegacyLesson } from "../../manuals/frontend/registry.js";
 
 const filters = [
@@ -173,13 +173,7 @@ export function PromptsPage({ currentPath, prev, next }) {
   return (
     <PageFrame title="Prompt Library · 后端同学的前端战术手册">
       <>
-        <header className="site-header">
-          <div className="container site-header-inner">
-            <a className="brand-mark" href={withBase("index.html")}><span>前端战术</span><span className="brand-pill">FM-01</span></a>
-            <SiteNav currentPath={lesson.currentPath} />
-            <StepNav prev={lesson.prev} next={lesson.next} />
-          </div>
-        </header>
+        <ManualLessonHeader currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next} />
         <main className="container">
           <section className="page-hero">
             <h1 className="page-title">提示词库：把需求讲到 AI 真能执行。</h1>

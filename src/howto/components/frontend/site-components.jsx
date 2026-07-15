@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { withHowtoManualPath } from "../../lib/paths.js";
+import { withBasePath, withHowtoManualPath } from "../../lib/paths.js";
 
 export function withBase(path = "") {
   return withHowtoManualPath("frontend", path);
@@ -149,6 +149,49 @@ export function StepNav({ prev, next }) {
         </a>
       )}
     </div>
+  );
+}
+
+const manualNav = [
+  { href: withBasePath("howto/"), label: "手册总览" },
+  { href: withHowtoManualPath("frontend"), label: "前端手册", current: true },
+  { href: withHowtoManualPath("deploy"), label: "部署手册" },
+];
+
+export function ManualLessonHeader({ currentPath = "", prev = null, next = null }) {
+  return (
+    <header className="site-header manual-topbar-header">
+      <div className="shell shell-wide manual-global-bar">
+        <a className="brand manual-site-brand" href={withBasePath("/")}>
+          <span className="brand-avatar manual-brand-avatar">
+            <img src={withBasePath("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
+          </span>
+          <span className="brand-copy manual-brand-copy">
+            <span className="brand-mark manual-brand-mark">schemaX</span>
+            <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+          </span>
+        </a>
+        <div className="manual-global-actions">
+          <nav className="manual-site-nav" aria-label="战术手册导航">
+            {manualNav.map((item) => (
+              <a key={item.label} href={item.href} aria-current={item.current ? "page" : undefined}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <a className="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div className="manual-lesson-bar">
+        <div className="container manual-lesson-inner">
+          <nav className="manual-chapter-nav" aria-label="前端手册章节">
+            <span className="manual-chapter-label">前端章节</span>
+            <SiteNav currentPath={currentPath} />
+          </nav>
+          <StepNav prev={prev} next={next} />
+        </div>
+      </div>
+    </header>
   );
 }
 

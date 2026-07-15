@@ -1,6 +1,5 @@
 ---
 import "../../../howto/styles.css";
-import DossierBridge from "./_DossierBridge.astro";
 import { DeployLegacyPage } from "../../../howto/components/deploy/deploy-legacy-page.jsx";
 import dockerArtifactImageHtml from "../../../howto/components/deploy/legacy-content/docker-artifact-image.html?raw";
 import { deployLessons, getDeployLessonNeighbors } from "../../../howto/manuals/deploy/registry.js";
@@ -30,8 +29,6 @@ if (!lesson) {
     <title>{lesson.title} · 部署战术手册</title>
   </head>
   <body>
-    <DossierBridge crumb={lesson.slug} />
-
     {lesson.slug === "docker-artifact-image" ? (
       <DeployLegacyPage client:load title={`${lesson.title} · 部署战术手册`} html={dockerArtifactImageHtml} prev={neighbors.prev} next={neighbors.next} />
     ) : (

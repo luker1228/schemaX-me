@@ -242,14 +242,14 @@ export function IndexPage() {
     <PageFrame title="非前端人的前端战术手册">
       <div className="site-shell">
         <header className="site-header manual-topbar-header">
-          <div className="container manual-global-bar">
-            <a className="manual-site-brand" href={homeHref}>
-              <span className="manual-brand-avatar">
+          <div className="shell shell-wide manual-global-bar">
+            <a className="brand manual-site-brand" href={homeHref}>
+              <span className="brand-avatar manual-brand-avatar">
                 <img src={withBasePath("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
               </span>
-              <span className="manual-brand-copy">
-                <span className="manual-brand-mark">schemaX</span>
-                <span className="manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+              <span className="brand-copy manual-brand-copy">
+                <span className="brand-mark manual-brand-mark">schemaX</span>
+                <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
             <div className="manual-global-actions">
@@ -265,6 +265,7 @@ export function IndexPage() {
                 ))}
               </nav>
             </div>
+            <a className="manual-external" href="https://github.com/luker1228" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </header>
 
@@ -297,10 +298,6 @@ export function IndexPage() {
                   </div>
                 </div>
               </div>
-              <aside className="hero-note">
-                <span className="micro-label">这份手册解决什么</span>
-                <p className="hero-note-copy">不是系统培养前端工程师，而是帮设计师、产品、运营和后端快速获得"能看懂页面、能拆组件、能让智能助手改对前端"的表达能力。</p>
-              </aside>
             </div>
           </section>
 

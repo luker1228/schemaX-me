@@ -6,35 +6,36 @@ const navItems = [
   { href: "/#stack", label: "技术栈" },
   { href: "/blogs/", label: "博客" },
   { href: "/howto/", label: "战术手册" },
-  { href: "/#works", label: "内容入口" },
-  { href: "https://github.com/luker1228", label: "GitHub", external: true }
+  { href: "/#works", label: "内容入口" }
 ];
+const githubItem = { href: "https://github.com/luker1228", label: "GitHub" };
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <div class="shell shell-wide">
-    <a class="brand" href={baseUrl}>
-      <span class="brand-avatar">
-        <img src={`${baseUrl}images/brand/logo-min.svg`} alt="schemaX" width="56" height="56" />
-      </span>
-      <span class="brand-copy">
-        <span class="brand-mark">schemaX</span>
-        <span class="brand-subtitle">绝密计划 · CLASSIFIED</span>
-      </span>
-    </a>
-    <nav class="nav">
-      {navItems.map((item) => (
-        <a
-          href={item.external ? item.href : `${baseUrl}${item.href.replace(/^\//, "")}`}
-          aria-current={!item.external && item.href !== "/#about" && currentPath === `${baseUrl}${item.href.replace(/^\//, "")}` ? "page" : undefined}
-          target={item.external ? "_blank" : undefined}
-          rel={item.external ? "noreferrer" : undefined}
-        >
-          {item.label}
-        </a>
-      ))}
-    </nav>
+    <div class="header-primary">
+      <a class="brand" href={baseUrl}>
+        <span class="brand-avatar">
+          <img src={`${baseUrl}images/brand/logo-min.svg`} alt="schemaX" width="56" height="56" />
+        </span>
+        <span class="brand-copy">
+          <span class="brand-mark">schemaX</span>
+          <span class="brand-subtitle">绝密计划 · CLASSIFIED</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="站内导航">
+        {navItems.map((item) => (
+          <a
+            href={`${baseUrl}${item.href.replace(/^\//, "")}`}
+            aria-current={item.href !== "/#about" && currentPath === `${baseUrl}${item.href.replace(/^\//, "")}` ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+    <a class="nav-external" href={githubItem.href} target="_blank" rel="noreferrer">{githubItem.label}</a>
   </div>
 </header>
