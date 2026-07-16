@@ -211,7 +211,7 @@ export function ComponentsPage({ currentPath, prev, next }) {
       <ConfigProvider theme={{ token: { colorPrimary: "#ef7627", borderRadius: 8, fontFamily: "inherit" } }}>
         <ManualLessonHeader currentPath={lesson.currentPath} />
         <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>
-        <main className="container">
+        <main className="container atlas-components-index-page">
           <section className="page-hero">
             <h1 className="page-title">先认识组件，再学会和 AI 说前端语言。</h1>
             <p className="lede">这页是给后端同学的组件词汇表，每个组件都直接渲染真实的 Ant Design 组件，你能点、能输、能看状态。</p>

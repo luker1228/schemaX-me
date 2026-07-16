@@ -9,6 +9,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch as RetroSwitch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,56 +20,20 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import {
-  SidebarProvider,
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-} from "@/components/ui/sidebar";
-
-const ConfigProvider = ({ children }) => children;
-const Layout = ({ children, ...props }) => <div {...props}>{children}</div>;
-const Header = ({ children, ...props }) => <header {...props}>{children}</header>;
-const Sider = ({ children, ...props }) => <aside {...props}>{children}</aside>;
-const Content = ({ children, ...props }) => <main {...props}>{children}</main>;
-const Menu = ({ items = [], selectedKeys = [], onClick }) => <nav>{items.map((item) => <button key={item.key} type="button" className={selectedKeys.includes(item.key) ? "is-active" : ""} onClick={() => onClick?.({ key: item.key })}>{item.icon}{item.label}</button>)}</nav>;
-const Button = ({ type, danger, htmlType, ...props }) => <RetroButton type={htmlType || "button"} variant={danger ? "destructive" : type === "primary" ? "default" : "outline"} {...props} />;
-const Space = ({ children, direction, ...props }) => <div {...props} style={{ display: "flex", flexDirection: direction === "vertical" ? "column" : "row", gap: 8, flexWrap: "wrap", ...props.style }}>{children}</div>;
-const Tag = ({ children, ...props }) => <Badge {...props}>{children}</Badge>;
-const Input = Object.assign((props) => <RetroInput {...props} />, { TextArea: (props) => <Textarea {...props} /> });
-const Select = ({ value, onChange, options = [], ...props }) => <select value={value} onChange={(e) => onChange?.(e.target.value)} {...props}>{options.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select>;
-const Tabs = ({ activeKey, onChange, items = [] }) => <div className="atlas-tabs">{items.map((item) => <RetroButton key={item.key} variant={activeKey === item.key ? "default" : "outline"} onClick={() => onChange(item.key)}>{item.label}</RetroButton>)}</div>;
-const Avatar = ({ children, ...props }) => <span {...props} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", ...props.style }}>{children}</span>;
-const Table = ({ columns = [], dataSource = [] }) => <table><thead><tr>{columns.map((c) => <th key={c.key}>{c.title}</th>)}</tr></thead><tbody>{dataSource.map((row) => <tr key={row.key}>{columns.map((c) => <td key={c.key}>{c.render ? c.render(row[c.dataIndex], row) : row[c.dataIndex]}</td>)}</tr>)}</tbody></table>;
-const Modal = ({ open, title, onCancel, onOk, children }) => open ? <div className="atlas-modal"><div className="atlas-surface"><h3>{title}</h3>{children}<Space><Button onClick={onCancel}>取消</Button><Button danger onClick={onOk}>确认</Button></Space></div></div> : null;
-const Drawer = ({ open, title, onClose, children }) => open ? <aside className="atlas-drawer"><h3>{title}</h3><Button onClick={onClose}>关闭</Button>{children}</aside> : null;
-const Pagination = ({ current, onChange }) => <Space><Button onClick={() => onChange(Math.max(1, current - 1))}>上一页</Button><span>{current}</span><Button onClick={() => onChange(current + 1)}>下一页</Button></Space>;
-const Empty = ({ description, children }) => <div className="atlas-empty"><p>{description}</p>{children}</div>;
-Empty.PRESENTED_IMAGE_SIMPLE = null;
-const Form = Object.assign(({ children, onFinish }) => <form onSubmit={(e) => { e.preventDefault(); onFinish?.(Object.fromEntries(new FormData(e.currentTarget))); }}>{children}</form>, { Item: ({ label, children }) => <label className="atlas-field">{label}{children}</label>, useForm: () => [{ resetFields() {} }] });
-const Dropdown = ({ children, menu }) => <div className="atlas-dropdown">{children}{menu?.items?.map((item) => <button key={item.key} type="button" onClick={() => menu.onClick?.({ key: item.key })}>{item.label}</button>)}</div>;
-const message = { useMessage: () => [{ success() {}, warning() {} }, null] };
-Checkbox.Group = ({ value = [], onChange, options = [] }) => <Space>{options.map((item) => <label key={item.value}><Checkbox checked={value.includes(item.value)} onCheckedChange={(checked) => onChange(value.includes(item.value) ? value.filter((v) => v !== item.value) : [...value, item.value])} />{item.label}</label>)}</Space>;
-const Radio = ({ children, value, checked, onChange }) => <label><input type="radio" value={value} checked={checked} onChange={onChange} />{children}</label>;
-Radio.Group = ({ value, onChange, children }) => <div onChange={(e) => onChange?.(e)}>{children}</div>;
-const Switch = ({ checked, onChange }) => <RetroSwitch checked={checked} onCheckedChange={onChange} />;
-const Icon = () => null;
-const DashboardOutlined = Icon;
-const UserOutlined = Icon;
-const ShoppingCartOutlined = Icon;
-const SearchOutlined = Icon;
-const TeamOutlined = Icon;
-const SettingOutlined = Icon;
+import { RadioGroup as RetroRadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select as RetroSelect, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Tabs as RetroTabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Table as RetroTable, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Pagination as RetroPagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from "@/components/ui/pagination";
+import { Empty as RetroEmpty, EmptyDescription, EmptyContent, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 
 const tocItems = [
   { id: "atlas-why", label: "这章讲什么" },
   { id: "atlas-hero", label: "首屏 Hero" },
   { id: "atlas-navbar", label: "导航栏 Navbar" },
-  { id: "atlas-sidebar-comp", label: "侧边栏 Sidebar" },
   { id: "atlas-card", label: "卡片 Card" },
   { id: "atlas-button", label: "按钮 Button" },
   { id: "atlas-cta", label: "CTA" },
@@ -91,7 +58,6 @@ const tocItems = [
 const componentStepIds = [
   "atlas-hero",
   "atlas-navbar",
-  "atlas-sidebar-comp",
   "atlas-card",
   "atlas-button",
   "atlas-cta",
@@ -115,7 +81,9 @@ const componentStepIds = [
 const componentStepMap = new Map(componentStepIds.map((id, index) => [id, `REACT-${String(index + 1).padStart(2, "0")}`]));
 
 function PreviewTabs({ prompt, children, fullWidth = true }) {
-  const [promptVisible, setPromptVisible] = useState(true);
+  // Prompts are reference material, not the primary reading flow. Keeping them
+  // folded lets the live RetroUI specimen remain the visual focus of a section.
+  const [promptVisible, setPromptVisible] = useState(false);
 
   return (
     <div className={`atlas-component-preview${fullWidth ? " atlas-component-preview-full" : ""}`}>
@@ -184,21 +152,14 @@ function ComponentSection({ id, category, name, what, terms, uses, prompt, child
 }
 
 function NavbarPreview() {
-  const [current, setCurrent] = useState("dashboard");
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("点击导航、输入关键词，或者试一下登录按钮。");
-
-  const labels = {
-    dashboard: "控制台",
-    users: "用户",
-    orders: "订单",
-  };
 
   return (
     <div className="atlas-demo atlas-demo-full">
       <div className="atlas-navbar-preview">
         <div className="atlas-retroui-navbar">
-          <div className="atlas-navbar-brand">Acme Admin</div>
+          <div className="atlas-navbar-brand">Luke UI</div>
           <NavigationMenu viewport={false}>
             <NavigationMenuList>
               <NavigationMenuItem><NavigationMenuTrigger>控制台</NavigationMenuTrigger><NavigationMenuContent><div className="atlas-nav-panel">查看今日概览、待办和系统状态。</div></NavigationMenuContent></NavigationMenuItem>
@@ -208,6 +169,7 @@ function NavbarPreview() {
             </NavigationMenuList>
           </NavigationMenu>
           <RetroInput placeholder="搜索..." value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && setMessage("搜索关键词：" + (query || "(空)"))} />
+          <Avatar aria-label="Luke 的账号"><AvatarFallback>LU</AvatarFallback></Avatar>
           <RetroButton onClick={() => setMessage("点击了登录按钮，通常会打开登录流程。")}>登录</RetroButton>
         </div>
         <p className="atlas-feedback" style={{ marginTop: 12, marginBottom: 0 }}>
@@ -225,13 +187,7 @@ function HeroPreview() {
     <div className="atlas-demo">
       <div
         className="atlas-surface"
-        style={{
-          padding: 0,
-          overflow: "hidden",
-          background: "linear-gradient(135deg, #f8f1df 0%, #efe2c2 100%)",
-          color: "#241d13",
-          borderColor: "#c9b792",
-        }}
+        style={{ padding: 0, overflow: "hidden", background: "#ffdc58", color: "#241d13", border: "2px solid #241d13", boxShadow: "5px 5px 0 #241d13" }}
       >
         <div style={{ padding: "28px 28px 32px", display: "grid", gap: 16 }}>
           <Badge style={{ width: "fit-content", margin: 0 }}>Landing Hero</Badge>
@@ -239,7 +195,7 @@ function HeroPreview() {
             <h4 style={{ margin: 0, fontSize: 30, lineHeight: 1.15, color: "#241d13" }}>
               把数据后台的操作路径，整理成一块能立即理解的首屏。
             </h4>
-            <p style={{ margin: 0, color: "rgba(36,29,19,0.72)", lineHeight: 1.7 }}>
+            <p style={{ margin: 0, color: "#282828", lineHeight: 1.7 }}>
               Hero 通常由 headline、supporting copy、primary CTA 和辅助信息组成。用户一进页面，先看这里。
             </p>
           </div>
@@ -247,7 +203,7 @@ function HeroPreview() {
             <RetroButton size="lg" onClick={() => setMessage("点击了开始试用，通常会进入注册或开通流程。")}>开始试用</RetroButton>
             <RetroButton variant="outline" size="lg" onClick={() => setMessage("点击了查看 Demo，通常会跳到演示页或产品导览。")}>查看 Demo</RetroButton>
           </div>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "rgba(36,29,19,0.6)", fontSize: 12 }}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "#282828", fontSize: 12 }}>
             <span>headline</span>
             <span>supporting copy</span>
             <span>primary CTA</span>
@@ -255,45 +211,6 @@ function HeroPreview() {
           </div>
           <p className="atlas-feedback" style={{ margin: 0 }}>{message}</p>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function SidebarPreview() {
-  const [current, setCurrent] = useState("overview");
-  const labels = {
-    overview: "概览",
-    users: "用户管理",
-    orders: "订单管理",
-    settings: "系统设置",
-  };
-
-  return (
-    <div className="atlas-demo">
-      <div className="atlas-surface">
-        <SidebarProvider style={{ minHeight: 280 }}>
-          <Sidebar>
-            <SidebarContent>
-              <SidebarGroup>
-                <SidebarGroupLabel>导航</SidebarGroupLabel>
-                <SidebarMenu>
-                  {Object.entries(labels).map(([key, label]) => (
-                    <SidebarMenuItem key={key}>
-                      <SidebarMenuButton isActive={current === key} onClick={() => setCurrent(key)}>
-                        {label}
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroup>
-            </SidebarContent>
-          </Sidebar>
-          <div className="atlas-sidebar-content">
-            <strong>{labels[current]}</strong>
-            <span>当前已切换到 {labels[current]} 面板。</span>
-          </div>
-        </SidebarProvider>
       </div>
     </div>
   );
@@ -349,16 +266,11 @@ function CtaPreview() {
     <div className="atlas-demo">
       <div
         className="atlas-surface"
-        style={{
-          display: "grid",
-          gap: 16,
-          background: "#fff7ed",
-          borderColor: "#fdba74",
-        }}
+        style={{ display: "grid", gap: 16, background: "#ffdc58", border: "2px solid #241d13", boxShadow: "5px 5px 0 #241d13" }}
       >
         <div style={{ display: "grid", gap: 8 }}>
           <h4 style={{ margin: 0, fontSize: 22, lineHeight: 1.2 }}>把试用用户转成正式开通</h4>
-          <p style={{ margin: 0, color: "#7c5a42", lineHeight: 1.7 }}>
+          <p style={{ margin: 0, color: "#282828", lineHeight: 1.7 }}>
             CTA 是 call to action，核心是明确告诉用户下一步做什么。
           </p>
         </div>
@@ -401,41 +313,26 @@ function TextareaPreview() {
 }
 
 function FormPreview() {
-  const [form] = Form.useForm();
+  const [name, setName] = useState("张三");
+  const [role, setRole] = useState("admin");
   const [message, setMessage] = useState("改几个字段，再试试保存或重置。");
 
   return (
     <div className="atlas-demo">
       <div className="atlas-surface" style={{ maxWidth: 460, width: "100%" }}>
-        <Form
-          form={form}
-          layout="vertical"
-          initialValues={{ name: "张三", role: "admin" }}
-          onFinish={(values) => setMessage(`已提交：${values.name} / ${values.role}`)}
-        >
-          <Form.Item label="姓名" name="name">
-            <Input />
-          </Form.Item>
-          <Form.Item label="角色" name="role">
-            <Select
-              options={[
-                { value: "admin", label: "管理员" },
-                { value: "editor", label: "编辑" },
-                { value: "guest", label: "访客" },
-              ]}
-            />
-          </Form.Item>
-          <Space>
-            <Button type="primary" htmlType="submit">保存表单</Button>
-            <Button onClick={() => {
-              form.resetFields();
-              setMessage("表单已重置为初始值。");
-            }}
-            >
-              重置
-            </Button>
-          </Space>
-        </Form>
+        <form onSubmit={(event) => { event.preventDefault(); setMessage(`已提交：${name} / ${role}`); }}>
+          <label className="atlas-field">姓名<RetroInput value={name} onChange={(event) => setName(event.target.value)} /></label>
+          <label className="atlas-field">角色
+            <RetroSelect value={role} onValueChange={setRole}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent><SelectItem value="admin">管理员</SelectItem><SelectItem value="editor">编辑</SelectItem><SelectItem value="guest">访客</SelectItem></SelectContent>
+            </RetroSelect>
+          </label>
+          <div className="atlas-inline-row">
+            <RetroButton type="submit">保存表单</RetroButton>
+            <RetroButton type="button" variant="outline" onClick={() => { setName("张三"); setRole("admin"); setMessage("表单已重置为初始值。"); }}>重置</RetroButton>
+          </div>
+        </form>
         <p className="atlas-feedback">{message}</p>
       </div>
     </div>
@@ -449,15 +346,11 @@ function CheckboxPreview() {
     <div className="atlas-demo">
       <div className="atlas-surface" style={{ maxWidth: 420, width: "100%" }}>
         <div style={{ marginBottom: 12, fontWeight: 600 }}>通知方式</div>
-        <Checkbox.Group
-          value={value}
-          onChange={setValue}
-          options={[
-            { label: "邮件通知", value: "email" },
-            { label: "短信通知", value: "sms" },
-            { label: "站内消息", value: "site" },
-          ]}
-        />
+        <div className="atlas-choice-list">
+          {[{ label: "邮件通知", value: "email" }, { label: "短信通知", value: "sms" }, { label: "站内消息", value: "site" }].map((item) => (
+            <label key={item.value}><Checkbox checked={value.includes(item.value)} onCheckedChange={(checked) => setValue(checked ? [...value, item.value] : value.filter((entry) => entry !== item.value))} />{item.label}</label>
+          ))}
+        </div>
         <p className="atlas-feedback">已选：<span>{value.join(" / ") || "(空)"}</span></p>
       </div>
     </div>
@@ -471,13 +364,9 @@ function RadioPreview() {
     <div className="atlas-demo">
       <div className="atlas-surface" style={{ maxWidth: 420, width: "100%" }}>
         <div style={{ marginBottom: 12, fontWeight: 600 }}>可见范围</div>
-        <Radio.Group value={value} onChange={(e) => setValue(e.target.value)}>
-          <Space direction="vertical">
-            <Radio value="public">公开</Radio>
-            <Radio value="team">仅团队可见</Radio>
-            <Radio value="private">仅自己可见</Radio>
-          </Space>
-        </Radio.Group>
+        <RetroRadioGroup value={value} onValueChange={setValue} className="atlas-choice-list">
+          {[['public', '公开'], ['team', '仅团队可见'], ['private', '仅自己可见']].map(([key, label]) => <label key={key}><RadioGroupItem value={key} />{label}</label>)}
+        </RetroRadioGroup>
         <p className="atlas-feedback">当前选择：<span>{value}</span></p>
       </div>
     </div>
@@ -495,7 +384,7 @@ function SwitchPreview() {
             <div style={{ fontWeight: 600, marginBottom: 4 }}>允许公开访问</div>
             <div style={{ color: "#666", fontSize: 13 }}>关闭后，未登录用户将无法查看此页面。</div>
           </div>
-          <Switch checked={checked} onChange={setChecked} />
+          <RetroSwitch checked={checked} onCheckedChange={setChecked} />
         </div>
         <p className="atlas-feedback">当前状态：<span>{checked ? "开启" : "关闭"}</span></p>
       </div>
@@ -509,17 +398,7 @@ function SelectPreview() {
   return (
     <div className="atlas-demo">
       <div style={{ width: 200 }}>
-        <Select
-          value={value}
-          onChange={setValue}
-          style={{ width: "100%" }}
-          options={[
-            { value: "all", label: "全部角色" },
-            { value: "admin", label: "管理员" },
-            { value: "user", label: "普通用户" },
-            { value: "guest", label: "访客" },
-          ]}
-        />
+        <RetroSelect value={value} onValueChange={setValue}><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">全部角色</SelectItem><SelectItem value="admin">管理员</SelectItem><SelectItem value="user">普通用户</SelectItem><SelectItem value="guest">访客</SelectItem></SelectContent></RetroSelect>
         <p className="atlas-feedback">当前选择：<span>{value}</span></p>
       </div>
     </div>
@@ -531,21 +410,10 @@ function DropdownPreview() {
 
   return (
     <div className="atlas-demo">
-      <Space>
-        <Dropdown
-          menu={{
-            onClick: ({ key }) => setValue(`当前操作：${key}`),
-            items: [
-              { key: "edit", label: "编辑" },
-              { key: "duplicate", label: "复制" },
-              { key: "archive", label: "归档" },
-            ],
-          }}
-        >
-          <Button>更多操作</Button>
-        </Dropdown>
+      <div className="atlas-inline-row">
+        <DropdownMenu><DropdownMenuTrigger asChild><RetroButton>更多操作</RetroButton></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem onSelect={() => setValue("当前操作：编辑")}>编辑</DropdownMenuItem><DropdownMenuItem onSelect={() => setValue("当前操作：复制")}>复制</DropdownMenuItem><DropdownMenuItem onSelect={() => setValue("当前操作：归档")}>归档</DropdownMenuItem></DropdownMenuContent></DropdownMenu>
         <p className="atlas-feedback" style={{ margin: 0 }}>{value}</p>
-      </Space>
+      </div>
     </div>
   );
 }
@@ -555,15 +423,7 @@ function TabsPreview() {
 
   return (
     <div className="atlas-demo">
-      <Tabs
-        activeKey={value}
-        onChange={setValue}
-        items={[
-          { key: "all", label: "全部" },
-          { key: "published", label: "已发布" },
-          { key: "draft", label: "草稿" },
-        ]}
-      />
+      <RetroTabs value={value} onValueChange={setValue}><TabsList><TabsTrigger value="all">全部</TabsTrigger><TabsTrigger value="published">已发布</TabsTrigger><TabsTrigger value="draft">草稿</TabsTrigger></TabsList><TabsContent value={value}>正在查看「{value}」内容。</TabsContent></RetroTabs>
       <p className="atlas-feedback">当前面板：<span>{value}</span></p>
     </div>
   );
@@ -571,12 +431,6 @@ function TabsPreview() {
 
 function TablePreview() {
   const [selected, setSelected] = useState("还没有选择行内操作。");
-  const columns = [
-    { title: "姓名", dataIndex: "name", key: "name", render: (t, r) => <Space><Avatar size="small" style={{ backgroundColor: "#ef7627" }}>{t[0]}</Avatar>{t}</Space> },
-    { title: "角色", dataIndex: "role", key: "role", render: (r) => <Tag color={r === "管理员" ? "orange" : "default"}>{r}</Tag> },
-    { title: "状态", dataIndex: "status", key: "status", render: (s) => <Tag color={s === "启用" ? "green" : "red"}>{s}</Tag> },
-    { title: "操作", key: "action", render: (_, record) => <Button type="link" style={{ paddingInline: 0 }} onClick={() => setSelected(`查看：${record.name}`)}>查看</Button> },
-  ];
   const data = [
     { key: "1", name: "张三", role: "管理员", status: "启用" },
     { key: "2", name: "李四", role: "访客", status: "禁用" },
@@ -585,7 +439,7 @@ function TablePreview() {
 
   return (
     <div className="atlas-demo">
-      <Table columns={columns} dataSource={data} pagination={false} size="middle" />
+      <RetroTable><TableHeader><TableRow><TableHead>姓名</TableHead><TableHead>角色</TableHead><TableHead>状态</TableHead><TableHead>操作</TableHead></TableRow></TableHeader><TableBody>{data.map((row) => <TableRow key={row.key}><TableCell>{row.name}</TableCell><TableCell><Badge>{row.role}</Badge></TableCell><TableCell><Badge variant={row.status === "启用" ? "default" : "outline"}>{row.status}</Badge></TableCell><TableCell><RetroButton variant="link" onClick={() => setSelected(`查看：${row.name}`)}>查看</RetroButton></TableCell></TableRow>)}</TableBody></RetroTable>
       <p className="atlas-feedback">{selected}</p>
     </div>
   );
@@ -596,18 +450,7 @@ function ModalPreview() {
 
   return (
     <div className="atlas-demo">
-      <Button type="primary" onClick={() => setOpen(true)}>打开确认框</Button>
-      <Modal
-        open={open}
-        title="确认删除？"
-        onCancel={() => setOpen(false)}
-        onOk={() => setOpen(false)}
-        okText="确认"
-        cancelText="取消"
-        okButtonProps={{ danger: true }}
-      >
-        <p>删除后不可恢复。</p>
-      </Modal>
+      <Dialog open={open} onOpenChange={setOpen}><DialogTrigger asChild><RetroButton>打开确认框</RetroButton></DialogTrigger><DialogContent><DialogHeader><DialogTitle>确认删除？</DialogTitle><DialogDescription>删除后不可恢复。</DialogDescription></DialogHeader><DialogFooter><DialogClose asChild><RetroButton variant="outline">取消</RetroButton></DialogClose><RetroButton variant="destructive" onClick={() => setOpen(false)}>确认删除</RetroButton></DialogFooter></DialogContent></Dialog>
     </div>
   );
 }
@@ -617,20 +460,7 @@ function DrawerPreview() {
 
   return (
     <div className="atlas-demo">
-      <Button type="primary" onClick={() => setOpen(true)}>打开详情</Button>
-      <Drawer
-        title="用户详情"
-        open={open}
-        onClose={() => setOpen(false)}
-        width={360}
-        extra={<Button onClick={() => setOpen(false)}>关闭</Button>}
-      >
-        <p style={{ color: "#666", marginBottom: 12 }}>手机号、角色、最后登录时间</p>
-        <div style={{ display: "grid", gap: 10 }}>
-          <div style={{ height: 12, background: "#eee", borderRadius: 6 }} />
-          <div style={{ height: 12, background: "#eee", borderRadius: 6, width: "70%" }} />
-        </div>
-      </Drawer>
+      <Sheet open={open} onOpenChange={setOpen}><SheetTrigger asChild><RetroButton>打开详情</RetroButton></SheetTrigger><SheetContent><SheetHeader><SheetTitle>用户详情</SheetTitle></SheetHeader><p style={{ margin: "0 16px" }}>手机号、角色、最后登录时间</p></SheetContent></Sheet>
     </div>
   );
 }
@@ -640,7 +470,7 @@ function PaginationPreview() {
 
   return (
     <div className="atlas-demo">
-      <Pagination current={page} pageSize={5} total={30} onChange={setPage} />
+      <RetroPagination><PaginationContent><PaginationItem><PaginationPrevious href="#atlas-pagination" text="上一页" onClick={(event) => { event.preventDefault(); setPage(Math.max(1, page - 1)); }} /></PaginationItem><PaginationItem><RetroButton variant="outline" aria-current="page">{page}</RetroButton></PaginationItem><PaginationItem><PaginationNext href="#atlas-pagination" text="下一页" onClick={(event) => { event.preventDefault(); setPage(page + 1); }} /></PaginationItem></PaginationContent></RetroPagination>
       <p className="atlas-feedback">当前页：<span>{page}</span></p>
     </div>
   );
@@ -652,27 +482,16 @@ function EmptyPreview() {
   return (
     <div className="atlas-demo">
       <div className="atlas-surface" style={{ width: "100%" }}>
-        <Empty
-          description={cleared ? "筛选条件已清空，可以重新查看全部结果" : "当前还没有筛选结果"}
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-        >
-          <Button type="primary" onClick={() => setCleared(true)}>清空筛选</Button>
-        </Empty>
+        <RetroEmpty><EmptyHeader><EmptyTitle>{cleared ? "筛选已清空" : "当前没有筛选结果"}</EmptyTitle><EmptyDescription>{cleared ? "可以重新查看全部结果。" : "试试更换关键词或清空筛选条件。"}</EmptyDescription></EmptyHeader><EmptyContent><RetroButton onClick={() => setCleared(true)}>清空筛选</RetroButton></EmptyContent></RetroEmpty>
       </div>
     </div>
   );
 }
 
 function ToastPreview() {
-  const [messageApi, contextHolder] = message.useMessage();
-
   return (
     <div className="atlas-demo">
-      {contextHolder}
-      <Space>
-        <Button type="primary" onClick={() => messageApi.success("保存成功")}>成功提示</Button>
-        <Button onClick={() => messageApi.warning("网络有点慢，正在重试")}>警告提示</Button>
-      </Space>
+      <div className="atlas-inline-row"><RetroButton onClick={() => toast.success("保存成功", { description: "你的设置已写入草稿。" })}>成功提示</RetroButton><RetroButton variant="outline" onClick={() => toast.warning("网络有点慢", { description: "正在自动重试，请稍候。" })}>警告提示</RetroButton></div>
       <p className="atlas-feedback">Toast / Message 是短暂浮现的轻提示，不会打断页面流程。</p>
     </div>
   );
@@ -735,19 +554,11 @@ export function LessonReactApp({ currentPath, prev, next }) {
   }, []);
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#ef7627",
-          borderRadius: 8,
-          fontFamily: "inherit",
-        },
-      }}
-    >
       <>
         <ManualLessonHeader currentPath={lesson.currentPath} />
         <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>
-        <header className="html2-hero html-reading-hero">
+        <div className="atlas-components-page">
+        <header className="html2-hero html-reading-hero atlas-components-hero">
           <div className="lesson-shell">
             <div className="html2-hero-meta">
               <span className="html2-pill html2-pill-fill">先认词 · COMPONENTS</span>
@@ -819,18 +630,6 @@ export function LessonReactApp({ currentPath, prev, next }) {
                 prompt="页面顶部放一个 Topbar / Navbar，左侧是 Logo，中间是导航，右侧是搜索和用户头像。"
               >
                 <NavbarPreview />
-              </ComponentSection>
-
-              <ComponentSection
-                id="atlas-sidebar-comp"
-                category="Navigation"
-                name="侧边栏 Sidebar"
-                what="侧边栏。通常竖着放在页面左边，用来切换主功能区。"
-                terms="sidebar、sider、menu。"
-                uses="管理后台导航、工作台入口、系统菜单切换。"
-                prompt="左侧放一个 Sidebar，支持当前菜单高亮，适合后台系统。"
-              >
-                <SidebarPreview />
               </ComponentSection>
 
               <ComponentSection
@@ -1066,8 +865,9 @@ export function LessonReactApp({ currentPath, prev, next }) {
             <Toc activeId={activeId} />
           </section>
         </main>
+        <Toaster position="top-right" richColors closeButton />
+        </div>
         </ManualCourseLayout>
       </>
-    </ConfigProvider>
   );
 }

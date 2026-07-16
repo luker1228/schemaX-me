@@ -2143,6 +2143,96 @@ textarea {
   gap: 24px;
 }
 
+/* RetroUI's docs use a clean warm-white canvas. This page keeps the archive
+   structure, but switches the React component lesson to that lighter surface. */
+.atlas-components-page {
+  --bg: #fff7e8;
+  --surface: #fffdf7;
+  --surface-2: #fff2ce;
+  --fg: #241d13;
+  --muted: #6b5c42;
+  --border: #241d13;
+  --shadow: 4px 4px 0 #241d13;
+  min-height: 100vh;
+  background: #fff7e8;
+}
+
+.atlas-components-page .lesson-main {
+  background:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    #fff7e8;
+}
+
+.atlas-components-page .html2-hero-side {
+  background: #fffdf7;
+}
+
+/* All frontend lessons share the same reading canvas. The selector is scoped
+   to pages that actually render a lesson, so blog and deploy surfaces retain
+   their own atmospheres. */
+body:has(.html-reading-page),
+body:has(.atlas-components-page),
+body:has(.atlas-components-index-page) {
+  --bg: #fff7e8;
+  --surface: #fffdf7;
+  --surface-2: #fff2ce;
+  --fg: #241d13;
+  --muted: #6b5c42;
+  --border: #241d13;
+  --shadow: 4px 4px 0 #241d13;
+  background: #fff7e8;
+}
+
+body:has(.html-reading-page) .html2-hero,
+body:has(.atlas-components-index-page) .page-hero {
+  background: #fff7e8;
+}
+
+body:has(.html-reading-page) .html-reading-page,
+body:has(.atlas-components-index-page) .atlas-components-index-page {
+  background:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    #fff7e8;
+}
+
+/* Deploy uses a separate React shell, so it needs an explicit hook instead of
+   relying on the frontend lesson selector above. */
+body:has(.deploy-manual-page),
+body:has(.deploy-reading-page) {
+  --bg: #fff7e8;
+  --surface: #fffdf7;
+  --surface-2: #fff2ce;
+  --fg: #241d13;
+  --muted: #6b5c42;
+  --border: #241d13;
+  --shadow: 4px 4px 0 #241d13;
+  background: #fff7e8;
+}
+
+body:has(.deploy-manual-page) .deploy-manual-page,
+body:has(.deploy-reading-page) .deploy-reading-page,
+body:has(.deploy-reading-page) .html2-hero {
+  background:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    #fff7e8;
+}
+
+body:has(.deploy-manual-page) .lesson-card,
+body:has(.deploy-manual-page) .faq-item,
+body:has(.deploy-reading-page) .html2-hero-side,
+body:has(.deploy-reading-page) .step-card,
+body:has(.deploy-reading-page) .comparison-card,
+body:has(.deploy-reading-page) .deploy-focus-card,
+body:has(.deploy-reading-page) .deploy-flow-card {
+  border-radius: 0;
+  border-color: #241d13;
+  box-shadow: 4px 4px 0 #241d13;
+  background: #fffdf7;
+}
+
 .atlas-item {
   @apply gap-4;
 }
@@ -2241,37 +2331,84 @@ textarea {
 
 .atlas-component-preview {
   --retroui-background: #fff7e8;
-  --retroui-foreground: #000;
+  --retroui-foreground: #241d13;
   --retroui-primary: #ffdc58;
   --retroui-primary-hover: #ffd12e;
-  --retroui-primary-foreground: #000;
-  --retroui-secondary: #000;
-  --retroui-secondary-foreground: #fff;
+  --retroui-primary-foreground: #241d13;
+  --retroui-secondary: #241d13;
+  --retroui-secondary-foreground: #fffaf0;
   --retroui-muted: #efe7d6;
   --retroui-accent: #ffe7a3;
-  --retroui-border: #000;
+  --retroui-border: #241d13;
   --retroui-destructive: #e63946;
-  --retroui-destructive-foreground: #fff;
-  --retroui-ring: #000;
-  width: min(100%, 68ch);
+  --retroui-destructive-foreground: #fffaf0;
+  --retroui-ring: #241d13;
+  width: 100%;
   overflow: hidden;
-  border: 1px solid #241d13;
+  border: 2px solid #241d13;
   border-radius: 0;
   background: #fff9ef;
+  box-shadow: 6px 6px 0 #241d13;
 }
 
 .atlas-component-preview-full {
-  width: min(100%, 68ch);
+  width: 100%;
   margin-inline: 0;
 }
 
 .atlas-component-live {
   display: flex;
-  min-height: 288px;
+  min-height: clamp(184px, 20vw, 248px);
   align-items: center;
   justify-content: center;
-  padding: 28px;
-  background: #fff9ef;
+  padding: 32px;
+  background:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.045) 1px, transparent 1px) 0 0 / 20px 20px,
+    linear-gradient(rgba(36, 29, 19, 0.045) 1px, transparent 1px) 0 0 / 20px 20px,
+    #fff9ef;
+  position: relative;
+}
+
+.atlas-component-live::before {
+  content: "LIVE SPECIMEN · TRY IT";
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  color: #6b5c42;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.atlas-inline-row,
+.atlas-choice-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.atlas-choice-list {
+  display: grid;
+  align-items: start;
+}
+
+.atlas-choice-list label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+
+.atlas-toast-notice {
+  width: fit-content;
+  margin-top: 14px;
+  border: 2px solid #000;
+  background: #ffdc58;
+  padding: 9px 12px;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 #000;
 }
 
 .atlas-component-live > * {
@@ -2287,9 +2424,78 @@ textarea {
   width: 100%;
 }
 
+/* RetroUI uses tactile, square controls. Keep the library's behavior, while
+   making every specimen read as one coherent neobrutalist system. */
+.atlas-component-preview [data-slot="button"],
+.atlas-component-preview [data-slot="input"],
+.atlas-component-preview [data-slot="textarea"],
+.atlas-component-preview [data-slot="select-trigger"],
+.atlas-component-preview [data-slot="tabs-list"],
+.atlas-component-preview [data-slot="tabs-trigger"],
+.atlas-component-preview [data-slot="card"],
+.atlas-component-preview [data-slot="table-container"],
+.atlas-component-preview [data-slot="empty"] {
+  border-radius: 0;
+}
+
+.atlas-component-preview [data-slot="button"] {
+  border: 2px solid #241d13;
+  box-shadow: 3px 3px 0 #241d13;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.atlas-component-preview [data-slot="button"]:hover,
+.atlas-component-preview [data-slot="button"]:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 #241d13;
+}
+
+.atlas-component-preview [data-slot="input"],
+.atlas-component-preview [data-slot="textarea"],
+.atlas-component-preview [data-slot="select-trigger"] {
+  border: 2px solid #241d13;
+  background: #fffdf7;
+  box-shadow: 2px 2px 0 rgba(36, 29, 19, 0.2);
+}
+
+.atlas-component-preview [data-slot="card"],
+.atlas-component-preview [data-slot="table-container"],
+.atlas-component-preview [data-slot="empty"] {
+  border-color: #241d13;
+  background: #fffdf7;
+  box-shadow: 4px 4px 0 #241d13;
+}
+
+.atlas-component-preview [data-slot="card-header"],
+.atlas-component-preview [data-slot="card-content"],
+.atlas-component-preview [data-slot="card-footer"] {
+  border-radius: 0;
+}
+
+.atlas-component-preview [data-slot="tabs-list"] {
+  border: 2px solid #241d13;
+  background: #fffdf7;
+  box-shadow: 3px 3px 0 #241d13;
+}
+
+.atlas-component-preview [data-slot="tabs-trigger"] {
+  border-radius: 0;
+}
+
+.atlas-component-preview [data-slot="checkbox"],
+.atlas-component-preview [data-slot="radio-group-item"],
+.atlas-component-preview [data-slot="switch"],
+.atlas-component-preview [data-slot="switch-thumb"] {
+  border-color: #241d13;
+  border-radius: 0;
+}
+
 .atlas-component-prompt {
   border-top: 2px solid #241d13;
-  background: #eee5d5;
+  background: #f0e6d3;
 }
 
 .atlas-component-prompt-content {
@@ -2305,7 +2511,7 @@ textarea {
   font-family: var(--font-mono);
   font-size: 0.92rem;
   line-height: 1.8;
-  text-align: center;
+  text-align: left;
 }
 
 .atlas-component-copy-button.atlas-component-copy-button {
@@ -2329,7 +2535,7 @@ textarea {
 
 .atlas-component-prompt-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 12px 18px;
   background: #eee5d5;
 }
@@ -2341,18 +2547,18 @@ textarea {
 }
 
 .atlas-component-prompt-toggle {
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
+  border: 1px solid #241d13 !important;
+  background: #fff9ef !important;
+  box-shadow: 2px 2px 0 #241d13 !important;
   color: #241d13 !important;
-  transform: none !important;
+  transform: none;
 }
 
 .atlas-component-prompt-toggle:hover,
 .atlas-component-prompt-toggle:active {
-  background: #e2d5c0 !important;
-  box-shadow: none !important;
-  transform: none !important;
+  background: #ffdc58 !important;
+  box-shadow: 3px 3px 0 #241d13 !important;
+  transform: translate(-1px, -1px) !important;
 }
 
 .atlas-component-copy-button:focus-visible {
@@ -2371,6 +2577,7 @@ textarea {
   gap: 18px;
   padding: 14px 18px;
   border: 2px solid #241d13;
+  box-shadow: 4px 4px 0 #241d13;
   background: #fff9ef;
 }
 
@@ -2396,6 +2603,14 @@ textarea {
   border: 2px solid #241d13;
   background: #fff9ef;
   line-height: 1.6;
+}
+
+/* The content column is 960px. A 180px fixed rail is only safe once there is
+   enough side space to place it outside that column. */
+@media (max-width: 1499px) {
+  .lesson-floating-toc {
+    display: none;
+  }
 }
 
 .atlas-retroui-button-demo {
@@ -2998,6 +3213,28 @@ textarea {
   .atlas-navbar-demo {
     grid-template-columns: 1fr;
     justify-items: start;
+  }
+
+  .atlas-retroui-navbar {
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .atlas-retroui-navbar [data-slot="navigation-menu"] {
+    order: 3;
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .atlas-retroui-navbar [data-slot="navigation-menu-list"] {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .atlas-retroui-navbar [data-slot="input"] {
+    flex: 1;
+    min-width: 0;
   }
 }
 

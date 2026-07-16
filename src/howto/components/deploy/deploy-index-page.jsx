@@ -32,7 +32,7 @@ const homeHref = withBase("/");
 export function DeployIndexPage() {
   return (
     <PageFrame title="部署战术手册">
-      <div className="site-shell">
+      <div className="site-shell deploy-manual-page">
         <header className="site-header manual-topbar-header">
           <div className="shell shell-wide manual-global-bar">
             <a className="brand manual-site-brand" href={homeHref}>
