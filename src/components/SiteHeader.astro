@@ -5,12 +5,12 @@ const navItems = [
   { href: "/", label: "首页" },
   { href: "/#stack", label: "技术栈" },
   { href: "/blogs/", label: "博客" },
-  { href: "/howto/", label: "战术手册" },
   { href: "/#works", label: "内容入口" }
 ];
 const githubItem = { href: "https://github.com/luker1228", label: "GitHub" };
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const currentPath = Astro.url.pathname;
+
 ---
 
 <header class="site-header">
@@ -36,6 +36,12 @@ const currentPath = Astro.url.pathname;
         ))}
       </nav>
     </div>
-    <a class="nav-external" href={githubItem.href} target="_blank" rel="noreferrer">{githubItem.label}</a>
+    <div class="header-actions" aria-label="外部入口">
+      <a class="header-action header-action-manual" href={`${baseUrl}howto/`}>战术手册</a>
+      <a class="header-action header-action-github" href={githubItem.href} target="_blank" rel="noreferrer">
+        <span aria-hidden="true">◉</span>
+        {githubItem.label}
+      </a>
+    </div>
   </div>
 </header>

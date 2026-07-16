@@ -186,7 +186,7 @@ export function ManualLessonHeader({ currentPath = "" }) {
         <div className="manual-global-actions manual-index-chapters">
           <SiteNav currentPath={currentPath} />
         </div>
-        <a className="manual-hub-link" href={withBasePath("howto/")}>手册总览</a>
+        <a className="manual-hub-link" href={withBasePath("howto/")}>战术手册</a>
       </div>
     </header>
   );

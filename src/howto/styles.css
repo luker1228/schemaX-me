@@ -52,9 +52,9 @@
   --fg: #241d13;
   --muted: #6b5c42;
   --border: #2a2218;
-  --accent: #d43f2a;
-  --accent-strong: #46502a;
-  --stamp: #a81e16;
+  --accent: #ffd43b;
+  --accent-strong: #a85f00;
+  --stamp: #a85f00;
   --warn: var(--soft-yellow);
   --success: var(--soft-green);
   --shadow: 4px 4px 0 rgba(40, 30, 15, 0.45);
@@ -73,7 +73,7 @@
   --code-bg: var(--howto-code-block-bg);
   --code-fg: var(--howto-code-block-fg);
   --code-border: var(--howto-code-block-border);
-  --syn-tag: #d43f2a;
+  --syn-tag: #a85f00;
   --syn-attr: #6b3fa0;
   --syn-str: #46502a;
   --radius-sm: 2px;
@@ -228,17 +228,29 @@ textarea {
 
 .manual-hub-link {
   margin-left: auto;
-  padding: 0.5rem 0;
-  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.65rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--border);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
 }
 
 .manual-hub-link:hover,
-.manual-hub-link:focus-visible { color: var(--accent); }
+.manual-hub-link:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--border);
+  background: var(--accent);
+  color: var(--ink);
+}
 
 .manual-site-brand {
   display: inline-flex;
@@ -2209,6 +2221,40 @@ body:has(.deploy-reading-page) {
   --border: #241d13;
   --shadow: 4px 4px 0 #241d13;
   background: #fff7e8;
+}
+
+/* Frontend manual index uses the same paper-and-grid surface as deploy. */
+body:has(.frontend-manual-page) {
+  --bg: #fff7e8;
+  --surface: #fffdf7;
+  --surface-2: #fff2ce;
+  --fg: #241d13;
+  --ink: #241d13;
+  --muted: #6b5c42;
+  --border: #241d13;
+  --accent: #ffd43b;
+  --accent-strong: #a85f00;
+  --shadow: 4px 4px 0 rgba(36, 29, 19, 0.24);
+  background-color: #fff7e8;
+  background-image:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(36, 29, 19, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+body:has(.frontend-manual-page) .frontend-manual-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    #fff7e8;
+}
+
+body:has(.frontend-manual-page) .frontend-manual-page .lesson-card,
+body:has(.frontend-manual-page) .frontend-manual-page .faq-item {
+  border-color: #241d13;
+  background: #fffdf7;
+  box-shadow: 4px 4px 0 #241d13;
 }
 
 body:has(.deploy-manual-page) .deploy-manual-page,
@@ -4550,7 +4596,7 @@ body::before {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 38%), #eadfbd;
   color: #241d13;
   text-decoration: none;
-  box-shadow: 7px 7px 0 #d43f2a;
+  box-shadow: 7px 7px 0 var(--accent);
   transition: transform 140ms ease, box-shadow 140ms ease;
 }
 
@@ -4570,15 +4616,15 @@ body::before {
 
 .deploy-lesson-file:hover {
   transform: translateY(-3px);
-  box-shadow: 9px 9px 0 #d43f2a;
+  box-shadow: 9px 9px 0 var(--accent);
 }
 
 .deploy-lesson-status {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: #d43f2a;
-  border: 1.5px solid #d43f2a;
+  color: var(--accent-strong);
+  border: 1.5px solid var(--accent-strong);
   padding: 0.18rem 0.5rem;
   transform: none;
   font-size: 0.72rem;
@@ -4586,7 +4632,7 @@ body::before {
 }
 
 .deploy-lesson-id {
-  color: #d43f2a;
+  color: var(--accent-strong);
   font-size: 0.78rem;
   font-weight: 900;
 }
@@ -4717,7 +4763,7 @@ body::before {
 .deploy-lesson-body blockquote {
   margin: 0;
   padding: 1rem 1.2rem;
-  border-left: 4px solid #d43f2a;
+  border-left: 4px solid var(--accent);
   background: #08120c;
   color: #ffd43b;
   font-size: 1.15rem;

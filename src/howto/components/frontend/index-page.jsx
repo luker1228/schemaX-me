@@ -234,7 +234,7 @@ const faqs = [
 export function IndexPage() {
   return (
     <PageFrame title="非前端人的前端战术手册">
-      <div className="site-shell">
+      <div className="site-shell frontend-manual-page">
         <header className="site-header manual-topbar-header">
           <div className="shell shell-wide manual-global-bar">
             <a className="brand manual-site-brand" href={homeHref}>
@@ -249,7 +249,7 @@ export function IndexPage() {
             <div className="manual-global-actions manual-index-chapters">
               <SiteNav />
             </div>
-            <a className="manual-hub-link" href={withBasePath("howto/")}>手册总览</a>
+            <a className="manual-hub-link" href={withBasePath("howto/")}>战术手册</a>
           </div>
         </header>
 

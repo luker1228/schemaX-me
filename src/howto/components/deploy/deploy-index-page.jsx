@@ -44,7 +44,7 @@ export function DeployIndexPage() {
                 <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
-            <a className="manual-hub-link" href={withBase("howto/")}>手册总览</a>
+            <a className="manual-hub-link" href={withBase("howto/")}>战术手册</a>
           </div>
         </header>
 

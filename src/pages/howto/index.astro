@@ -32,7 +32,6 @@ const manuals = [
   }
 ];
 
-const homeHref = withBase("/");
 
 ---
 
@@ -48,7 +47,7 @@ const homeHref = withBase("/");
     <div class="site-shell manual-hub-shell">
       <header class="site-header manual-topbar-header">
         <div class="shell shell-wide manual-global-bar">
-          <a class="brand manual-site-brand" href={homeHref}>
+          <a class="brand manual-site-brand" href={withBase("/")}>
             <span class="brand-avatar manual-brand-avatar">
               <img src={withBase("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
             </span>
@@ -64,7 +63,7 @@ const homeHref = withBase("/");
               <a href={withHowtoManualPath("deploy")}>部署手册</a>
             </nav>
           </div>
-          <a class="manual-hub-link" href={withBase("howto/")} aria-current="page">手册总览</a>
+          <a class="manual-hub-link" href={withBase("howto/")} aria-current="page">战术手册</a>
         </div>
       </header>
 
@@ -219,11 +218,36 @@ const homeHref = withBase("/");
 
 <style>
   .manual-hub-shell {
+    --bg: #fff7e8;
+    --surface: #fffdf7;
+    --surface-2: #fff2ce;
+    --fg: #241d13;
+    --ink: #241d13;
+    --muted: #6b5c42;
+    --border: #241d13;
+    --accent: #ffd43b;
+    --accent-strong: #a85f00;
+    --shadow: 4px 4px 0 rgba(36, 29, 19, 0.24);
     position: relative;
     background:
-      radial-gradient(circle at top right, rgba(0, 168, 248, 0.08), transparent 24%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 28%),
+      radial-gradient(circle at top right, rgba(255, 212, 59, 0.18), transparent 24%),
+      linear-gradient(rgba(36, 29, 19, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(36, 29, 19, 0.055) 1px, transparent 1px),
       var(--bg);
+    background-size: auto, 24px 24px, 24px 24px, auto;
+  }
+
+  .manual-hub-shell .manual-topbar-header {
+    background: rgba(255, 253, 247, 0.94);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .manual-hub-shell .manual-site-nav a[aria-current="page"],
+  .manual-hub-shell .manual-hub-link[aria-current="page"] {
+    background: var(--accent);
+    color: var(--ink);
+    border: 1px solid var(--border);
+    box-shadow: 4px 4px 0 var(--border);
   }
 
   .manual-hub-main {
@@ -342,7 +366,7 @@ const homeHref = withBase("/");
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 28%),
       var(--surface-2);
-    box-shadow: 7px 7px 0 rgba(40, 30, 15, 0.45);
+    box-shadow: 7px 7px 0 var(--border);
   }
 
   .manual-hub-card > * {

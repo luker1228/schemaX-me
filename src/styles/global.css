@@ -1,5 +1,10 @@
 @import "./tokens.css";
 
+/* Primary action color shared by the dossier CTA and the site navigation. */
+:root {
+  --command-yellow: var(--yellow);
+}
+
 :root {
   /* 子主题 token — 不由脚本生成，手动维护 */
   --phosphor: #f4ead6;
@@ -105,6 +110,44 @@ select {
   align-items: center;
   gap: clamp(1rem, 3vw, 3rem);
   min-width: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.header-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.65rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--border);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.header-action:hover,
+.header-action:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--border);
+  background: var(--command-yellow);
+  color: #241d13;
+}
+
+.header-action-github {
+  background: var(--command-yellow);
+  color: #241d13;
 }
 
 .brand {
@@ -238,8 +281,10 @@ select {
 }
 
 .nav a[aria-current="page"] {
-  background: transparent;
-  color: var(--accent);
+  background: var(--command-yellow);
+  color: #241d13;
+  border: 1px solid #241d13;
+  box-shadow: 4px 4px 0 #241d13;
 }
 
 .series-sidebar-item.is-active,
@@ -2088,6 +2133,10 @@ main {
     gap: 1rem;
   }
 
+  .header-actions {
+    justify-content: flex-start;
+  }
+
   .nav {
     justify-content: flex-start;
   }
@@ -2861,7 +2910,7 @@ img.dossier-stamp.s2 {
   height: 42px;
   padding: 0 1.1rem;
   border: 1px solid var(--text-strong);
-  background: var(--yellow);
+  background: var(--command-yellow);
   color: #171717;
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -3271,6 +3320,231 @@ img.dossier-stamp.s2 {
   text-shadow: none;
 }
 
+/* ── 首页浅色 dossier 皮肤 ─────────────────────────────────────
+   首页与启动解密层仍保留 dossier 叙事，但主体画布和课程页统一为
+   RetroUI 的浅暖色纸面。所有规则都由 .dossier 祖先限定，不影响博客正文。 */
+body:has(.dossier) {
+  color-scheme: light;
+  --bg: #fff7e8;
+  --surface: #fffdf7;
+  --surface-strong: #fff2ce;
+  --surface-muted: #f0e6d3;
+  --border: #241d13;
+  --text: #241d13;
+  --text-strong: #241d13;
+  --text-soft: #6b5c42;
+  --bg-grid: rgba(36, 29, 19, 0.055);
+  --accent: #ffd43b;
+  --yellow: #ffd43b;
+  --command-yellow: #ffd43b;
+  --yellow-ink: #a85f00;
+  --dossier-bg: #fff7e8;
+  --dossier-panel: #fffdf7;
+  --dossier-panel-2: #fff2ce;
+  --dossier-border: #241d13;
+  --dossier-border-bright: #6b5c42;
+  --dossier-text: #241d13;
+  --phosphor: #241d13;
+  --phosphor-dim: #6b5c42;
+  background:
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px),
+    #fff7e8;
+  background-size: 24px 24px, 24px 24px, auto;
+}
+
+body:has(.dossier) .site-header {
+  background: rgba(255, 253, 247, 0.94);
+  border-bottom-color: #241d13;
+}
+
+body:has(.dossier) .dossier-boot {
+  --accent: #ffd43b;
+  --yellow: #ffd43b;
+}
+
+body:has(.dossier) .dossier {
+  color: #241d13;
+}
+
+body:has(.dossier) .dossier-atmosphere::before {
+  background:
+    linear-gradient(90deg, rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(rgba(36, 29, 19, 0.035) 1px, transparent 1px) 0 0 / 28px 28px;
+  mix-blend-mode: normal;
+}
+
+body:has(.dossier) .dossier-atmosphere::after {
+  background: radial-gradient(120% 90% at 50% 40%, transparent 58%, rgba(112, 82, 36, 0.06) 100%);
+}
+
+body:has(.dossier) .dossier-topbar,
+body:has(.dossier) .dossier-panel,
+body:has(.dossier) .dossier-asset,
+body:has(.dossier) .dossier-proto,
+body:has(.dossier) .dossier-scan,
+body:has(.dossier) .dossier-terminal {
+  background: #fffdf7;
+  border-color: #241d13;
+  color: #241d13;
+  box-shadow: 6px 6px 0 rgba(36, 29, 19, 0.22);
+}
+
+body:has(.dossier) .dossier-topbar .l,
+body:has(.dossier) .dossier-topbar .cur,
+body:has(.dossier) .dossier-proto .pid,
+body:has(.dossier) .dossier-scan-sysbar,
+body:has(.dossier) .dossier-terminal .tbody {
+  color: #241d13;
+}
+
+body:has(.dossier) .dossier-panel-head,
+body:has(.dossier) .dossier-rec,
+body:has(.dossier) .dossier-proto,
+body:has(.dossier) .dossier-scan-item {
+  border-color: rgba(36, 29, 19, 0.25);
+}
+
+body:has(.dossier) .dossier-slogan {
+  background: rgba(255, 212, 59, 0.2);
+  color: #241d13;
+}
+
+body:has(.dossier) .dossier-btn {
+  background: var(--command-yellow);
+}
+
+/* Editorial index: the blog uses the same warm paper and primary command
+   color as the refreshed homepage, while keeping the dossier's structure. */
+body:has(.blog-page) {
+  color-scheme: light;
+  --bg: #fff7e8;
+  --surface: #fffdf7;
+  --surface-strong: #fff2ce;
+  --surface-muted: #f0e6d3;
+  --border: #241d13;
+  --text: #241d13;
+  --text-strong: #241d13;
+  --text-soft: #6b5c42;
+  --accent: var(--command-yellow);
+  --yellow: var(--command-yellow);
+  --bg-grid: rgba(36, 29, 19, 0.055);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+body:has(.blog-page) .site-header {
+  background: rgba(255, 253, 247, 0.94);
+  border-bottom-color: var(--border);
+}
+
+body:has(.blog-page) .blog-page-head {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(36, 29, 19, 0.28);
+}
+
+body:has(.blog-page) .blog-page-title {
+  color: var(--text);
+  text-shadow: 5px 5px 0 rgba(255, 212, 59, 0.72);
+}
+
+body:has(.blog-page) .blog-directory-shell,
+body:has(.blog-page) .blog-featured-media,
+body:has(.blog-page) .blog-featured-panel,
+body:has(.blog-page) .blog-card,
+body:has(.blog-page) .blog-list-item {
+  border-color: var(--border);
+  box-shadow: 4px 4px 0 rgba(36, 29, 19, 0.22);
+}
+
+body:has(.blog-page) .blog-directory-root,
+body:has(.blog-page) .blog-directory-group-summary,
+body:has(.blog-page) .blog-meta-avatar,
+body:has(.blog-page) .blog-card-media,
+body:has(.blog-page) .blog-featured-placeholder,
+body:has(.blog-page) .blog-card-placeholder {
+  background: var(--surface-strong);
+  border-color: var(--border);
+}
+
+body:has(.blog-page) .blog-directory-root.is-active,
+body:has(.blog-page) .blog-directory-root[aria-current="page"],
+body:has(.blog-page) .blog-directory-group-summary.is-active,
+body:has(.blog-page) .blog-directory-group-summary[aria-current="page"] {
+  background: var(--command-yellow);
+  color: #241d13;
+}
+
+body:has(.blog-page) .blog-directory-group-summary.is-active .blog-directory-group-title,
+body:has(.blog-page) .blog-directory-group-summary[aria-current="page"] .blog-directory-group-title,
+body:has(.blog-page) .blog-card-tag,
+body:has(.blog-page) .blog-list-tag {
+  color: #241d13;
+}
+
+body:has(.blog-page) .blog-featured-panel {
+  background: var(--surface);
+}
+
+body:has(.blog-page) .blog-featured-panel .site-button-primary {
+  background: var(--command-yellow);
+  color: #241d13;
+  border-color: var(--border);
+  box-shadow: 4px 4px 0 var(--border);
+}
+
+body:has(.blog-page) .blog-list-item:hover,
+body:has(.blog-page) .blog-list-item:focus-visible,
+body:has(.blog-page) .blog-card:hover,
+body:has(.blog-page) .blog-card:focus-visible {
+  border-color: var(--border);
+  box-shadow: 6px 6px 0 var(--border);
+}
+
+body:has(.dossier) .dossier-bar i {
+  background: repeating-linear-gradient(90deg, #f5c84b 0 8px, rgba(245, 200, 75, 0.62) 8px 10px);
+}
+
+body:has(.dossier) .dossier-btn.ghost {
+  color: #241d13;
+  border-color: #241d13;
+  box-shadow: 4px 4px 0 #6b5c42;
+}
+
+body:has(.dossier) .dossier-btn.ghost:hover {
+  color: #241d13;
+  border-color: #241d13;
+  box-shadow: 2px 2px 0 #241d13;
+}
+
+body:has(.dossier) .dossier-bar,
+body:has(.dossier) .dossier-terminal .tbar,
+body:has(.dossier) .dossier-scan-sysbar {
+  background: #f0e6d3;
+  border-color: #6b5c42;
+}
+
+body:has(.dossier) .dossier-rec:hover,
+body:has(.dossier) .dossier-proto:hover {
+  background: #fff2ce;
+}
+
+body:has(.dossier) .dossier-section-head p,
+body:has(.dossier) .dossier-asset p,
+body:has(.dossier) .dossier-asset .meta,
+body:has(.dossier) .dossier-terminal .ttitle {
+  color: #6b5c42;
+}
+
+body:has(.dossier) .site-footer .footer-inner {
+  background: #fffdf7;
+  border-color: #241d13;
+  box-shadow: 6px 6px 0 rgba(36, 29, 19, 0.2);
+}
+
 /* ---------- 技术栈扫描条 ---------- */
 .dossier-scan {
   position: relative;
@@ -3414,4 +3688,34 @@ img.dossier-stamp.s2 {
   max-width: 30rem;
   color: var(--text-soft);
   line-height: 1.7;
+}
+
+/* The active home link uses the same primary command treatment as
+   .dossier-btn, so the yellow token has one unmistakable meaning: act here. */
+body:has(.dossier) .nav a[aria-current="page"] {
+  background: var(--command-yellow);
+  color: #241d13;
+  border: 1px solid #241d13;
+  box-shadow: 4px 4px 0 #241d13;
+}
+
+body:has(.dossier) .nav a:hover,
+body:has(.dossier) .nav a:focus-visible {
+  background: #fff2ce;
+  color: #241d13;
+  border: 1px solid #241d13;
+  box-shadow: 4px 4px 0 #241d13;
+}
+
+body:has(.dossier) .dossier-panel-head h2,
+body:has(.dossier) .dossier-kicker,
+body:has(.dossier) .dossier-stat .row .val,
+body:has(.dossier) .dossier-field .v.omega,
+body:has(.dossier) .dossier-asset .aid,
+body:has(.dossier) .dossier-scan-item .scan-code {
+  color: var(--yellow-ink);
+}
+
+body:has(.dossier) .dossier-btn {
+  background: var(--command-yellow);
 }
