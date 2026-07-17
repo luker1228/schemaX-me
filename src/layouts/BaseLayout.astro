@@ -1,5 +1,5 @@
 ---
-import SiteHeader from "../components/SiteHeader.astro";
+import ManualHeader from "../components/ManualHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import "../styles/global.css";
 
@@ -35,7 +35,7 @@ const ogImage = new URL(baseUrl + "images/brand/og.png", Astro.site ?? "https://
   </head>
   <body>
     <div class="site-shell">
-      <SiteHeader />
+      <ManualHeader />
       <main>
         <slot />
       </main>

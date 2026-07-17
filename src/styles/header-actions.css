@@ -1,0 +1,13 @@
+/* Shared outlined action buttons used by the public and tactics headers. */
+.header-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.65rem; }
+.header-action {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.65rem;
+  padding: 0.5rem 0.8rem; border: 1px solid var(--border);
+  background: var(--surface-strong, var(--surface-2)); color: var(--text, var(--fg));
+  font-family: "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--border);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+.header-action:hover, .header-action:focus-visible { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--border); background: var(--command-yellow, var(--accent)); color: #241d13; }
+.header-action-github, .header-action-manual, .manual-hub-link { background: var(--command-yellow, var(--accent)); color: #241d13; }

@@ -1,0 +1,62 @@
+---
+import BrandIdentity from "./BrandIdentity.astro";
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const currentPath = Astro.url.pathname;
+
+interface Props {
+  variant?: "site" | "manual";
+  navItems?: Array<{ href: string; label: string }>;
+  manualHref?: string;
+  manualLabel?: string;
+  showGithub?: boolean;
+}
+
+const {
+  variant = "site",
+  navItems = [
+    { href: "/", label: "首页" },
+    { href: "/#stack", label: "技术栈" },
+    { href: "/blogs/", label: "博客" },
+    { href: "/#works", label: "内容入口" }
+  ],
+  manualHref = `${baseUrl}howto/`,
+  manualLabel = "战术手册",
+  showGithub = true
+} = Astro.props;
+
+const resolveHref = (href: string) => {
+  if (href.startsWith(baseUrl) || /^[a-z]+:/i.test(href) || href.startsWith("#")) return href;
+  return `${baseUrl}${href.replace(/^\//, "")}`;
+};
+
+const isManual = variant === "manual";
+---
+
+<header class:list={["site-header", { "manual-topbar-header": isManual }]}>
+  <div class:list={["shell", "shell-wide", { "manual-global-bar": isManual }]}>
+    <div class="header-primary">
+      <BrandIdentity href={resolveHref("/")} imageSrc={resolveHref("images/brand/logo-min.svg")} manual={isManual} />
+
+      <nav class:list={["nav", { "manual-site-nav": isManual }]} aria-label={isManual ? "手册入口" : "站内导航"}>
+        {navItems.map((item) => (
+          <a href={resolveHref(item.href)} aria-current={!isManual && currentPath === resolveHref(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <div class="header-actions" aria-label="外部入口">
+      <a class:list={["header-action", { "manual-hub-link": isManual, "header-action-manual": !isManual }]} href={manualHref} aria-current={isManual ? "page" : undefined}>
+        {manualLabel}
+      </a>
+      {showGithub && (
+        <a class="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer">
+          <span aria-hidden="true">◉</span>
+          GitHub
+        </a>
+      )}
+    </div>
+  </div>
+</header>

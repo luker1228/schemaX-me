@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
+@import "../styles/brand.css";
+@import "../styles/header-actions.css";
 
 @theme inline {
   --font-head: var(--font-display);
@@ -163,13 +165,20 @@ textarea {
 .hero-actions,
 .hero-tags,
 .nav-links,
-.header-actions,
 .meta-row,
 .chips,
 .footer-grid {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* Shared header geometry used by the public site and the tactics manual. */
+.header-primary {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
+  min-width: 0;
 }
 
 .site-header-inner {
@@ -179,10 +188,16 @@ textarea {
 
 /* Keep manual navigation in the same light, outlined system as the page. */
 .manual-topbar-header {
+  padding: 0.9rem 0;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.46), transparent 42%),
     var(--surface);
-  box-shadow: 0 2px 0 rgba(42, 34, 24, 0.18);
+  border-bottom: 2px solid var(--border);
+  box-shadow: none;
+}
+
+.manual-topbar-header .manual-global-bar {
+  min-height: 56px;
 }
 
 .manual-global-bar,
@@ -228,74 +243,6 @@ textarea {
 
 .manual-hub-link {
   margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.65rem;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid var(--border);
-  background: var(--accent);
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 4px 4px 0 var(--border);
-  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
-}
-
-.manual-hub-link:hover,
-.manual-hub-link:focus-visible {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--border);
-  background: var(--accent);
-  color: var(--ink);
-}
-
-.manual-site-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.9rem;
-  flex: 0 0 auto;
-  min-width: 0;
-}
-
-.manual-brand-avatar {
-  width: 3.5rem;
-  height: 3.5rem;
-  flex: 0 0 3.5rem;
-  overflow: hidden;
-  border: 0;
-  box-shadow: 4px 4px 0 0 rgba(40, 30, 15, 0.18);
-  background: var(--surface-2);
-}
-
-.manual-brand-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-
-.manual-brand-copy {
-  display: grid;
-  gap: 0.15rem;
-}
-
-.manual-brand-mark {
-  color: var(--fg);
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  letter-spacing: 0.04em;
-  line-height: 0.95;
-  text-transform: uppercase;
-}
-
-.manual-brand-subtitle {
-  color: var(--muted);
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .manual-site-nav {
@@ -448,17 +395,6 @@ textarea {
   50% {
     opacity: 0;
   }
-}
-
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  flex: 0 0 auto;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .brand-pill,

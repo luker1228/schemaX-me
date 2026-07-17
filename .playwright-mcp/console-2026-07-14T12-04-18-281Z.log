@@ -1,5 +1,0 @@
-[    6367ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4323/node_modules/.vite/deps/chunk-I7ZEO7M7.js?v=11ae5dc7:20102
-[    6993ms] [ERROR] Warning: [antd: Space] `direction` is deprecated. Please use `orientation` instead. @ http://127.0.0.1:4323/node_modules/.vite/deps/antd.js?v=a65c1f41:2219
-[    7029ms] [ERROR] Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead. @ http://127.0.0.1:4323/node_modules/.vite/deps/antd.js?v=a65c1f41:2219
-[    7063ms] [ERROR] Warning: [antd: List] The `List` component is deprecated. And will be removed in next major version. @ http://127.0.0.1:4323/node_modules/.vite/deps/antd.js?v=a65c1f41:2219
-[    7273ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:4323/favicon.ico:0
