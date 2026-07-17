@@ -30,7 +30,10 @@ export function DeployLegacyPage({ title, html, prev = null, next = null }) {
             <a className="brand-mark" href={withHowtoManualPath("deploy")}>
               <span>部署战术</span><span className="brand-pill">FM-02</span>
             </a>
-            <a className="manual-hub-link" href={withBasePath("howto/")}>战术手册</a>
+            <div className="header-actions" aria-label="固定入口">
+              <a className="header-action header-action-manual" href={withBasePath("howto/")}>战术手册</a>
+              <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
+            </div>
           </div>
         </header>
       )}

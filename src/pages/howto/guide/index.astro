@@ -1,0 +1,108 @@
+---
+import "../../../howto/styles.css";
+import { getCollection } from "astro:content";
+import ManualHeader from "../../../components/ManualHeader.astro";
+import { withBasePath, withHowtoManualPath } from "../../../howto/lib/paths.js";
+import { blogManual, guideLessons, toGuideLesson } from "../../../howto/manuals/guide/registry.js";
+
+const withBase = withBasePath;
+const authoredLessons = (await getCollection("guides")).filter((entry) => !entry.data.hidden).map(toGuideLesson).sort((a, b) => a.order - b.order);
+const allGuideLessons = [...guideLessons, ...authoredLessons];
+const articleGuideSlugs = new Set(["html-reading-hero", "article-content", "lesson-nav"]);
+const articleGuideLessons = allGuideLessons.filter((lesson) => articleGuideSlugs.has(lesson.slug));
+const homepageGuideLessons = allGuideLessons.filter((lesson) => !articleGuideSlugs.has(lesson.slug));
+const faqs = [
+  ["一份手册应该先写什么？", "待填充：先明确读者、目标和完成标准，再开始安排章节。"],
+  ["每章需要包含哪些内容？", "待填充：统一章节模板，让读者能快速找到目标、步骤、示例和检查点。"],
+  ["如何判断手册可以发布？", "待填充：找一个真实读者从头执行，记录卡点并补齐缺失说明。"],
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{blogManual.title} · schemaX 绝密计划</title>
+    <meta name="description" content={blogManual.description} />
+  </head>
+  <body>
+    <div class="site-shell frontend-manual-page">
+      <ManualHeader
+        variant="manual"
+        navItems={[
+          { href: withHowtoManualPath("frontend"), label: "前端手册" },
+          { href: withHowtoManualPath("deploy"), label: "部署手册" },
+          { href: withHowtoManualPath("guide"), label: "指导手册" }
+        ]}
+        manualHref={withBase("howto/")}
+        manualLabel="战术手册"
+      />
+
+      <main class="container">
+        <section class="hero" id="hero">
+          <div class="hero-grid">
+            <div class="hero-copy-block">
+              <div class="hero-title-wrap">
+                <h1 class="hero-title-structured">
+                  <span class="hero-title-row1">如何写 <img aria-hidden="true" class="hero-decor hero-decor-heart" src={withBase("howto/frontend/decor/heart.svg")} alt="" /></span>
+                  <span class="accent-text">指导手册</span>
+                </h1>
+              </div>
+              <p class="hero-subtitle-structured">{blogManual.description} 这是一张组件地图，先选结构，再填入你的课程内容。</p>
+              <div class="hero-actions"><a class="button" href="#components">查看组件 →</a></div>
+              <div class="hero-search-card bare"><div class="hero-tags">
+                {['目标', '路线', '章节', '维护'].map((tag) => <span class="tag">{tag}</span>)}
+              </div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section guide-map-section guide-map-homepage" id="components">
+          <div class="section-header">
+            <div class="section-kicker-wrap">
+              <img aria-hidden="true" class="section-decor-compas" src={withBase("howto/frontend/decor/compas.svg")} alt="" />
+              <span class="section-kicker">教程文章</span>
+            </div>
+            <p class="section-subtitle">面向长文阅读。先建立文章预期，再组织标题层级，最后让读者继续下一篇。</p>
+          </div>
+          <div class="lesson-card-grid">
+            {articleGuideLessons.map(({ slug, label, title, summary }) => (
+              <a class="lesson-card" href={withHowtoManualPath("guide", slug)} aria-label={`查看${title}说明`}>
+                <div class="lesson-card-preview"><span class="micro-label">{label}</span></div>
+                <div class="lesson-card-body"><span class="lesson-card-label">{label}</span><h3 class="lesson-card-title">{title}</h3><p class="lesson-card-copy">{summary}</p></div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section section-spacious guide-map-section guide-map-homepage">
+          <div class="section-header">
+            <div class="section-kicker-wrap">
+              <span class="section-kicker">教程首页</span>
+            </div>
+            <p class="section-subtitle">面向课程选择。用首屏、标签、入口卡片和检查点，把读者带入一条可继续的学习路线。</p>
+          </div>
+          <div class="lesson-card-grid">
+            {homepageGuideLessons.map(({ slug, label, title, summary }) => (
+              <a class="lesson-card" href={withHowtoManualPath("guide", slug)} aria-label={`查看${title}说明`}>
+                <div class="lesson-card-preview"><span class="micro-label">{label}</span></div>
+                <div class="lesson-card-body"><span class="lesson-card-label">{label}</span><h3 class="lesson-card-title">{title}</h3><p class="lesson-card-copy">{summary}</p></div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section section-spacious" id="faq">
+          <div class="section-header"><div><div class="section-kicker-wrap"><span class="section-kicker">USAGE NOTES</span></div><p class="section-subtitle">组件是约束，不是装饰。先说明使用场景，再决定是否需要新组件。</p></div></div>
+          <div class="faq-grid">
+            {faqs.map(([title, copy], index) => <details class="faq-item" open={index === 0}><summary>{title}</summary><p>{copy}</p></details>)}
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+</style>

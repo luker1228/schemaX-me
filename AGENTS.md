@@ -45,6 +45,7 @@ src/pages/
 - 当前的草稿工作区在主仓库 `../sources/drafts/`；这里的 `drafts/` 只用于避免旧路径断裂
 - `howto` 下的长正文手册页，优先使用 `legacy-content/*.html + *LegacyPage` 渲染静态 HTML 产物；尤其是从外部仓库迁入原文时，默认先整理成 HTML 产物，不要继续手写大段 JSX 正文
 - 即使是部署手册的 HTML 正文产物，样式也优先复用 `src/howto/components/frontend` 现有这套页面结构和 CSS 约定；不要为正文内容再单独发明一套平行的长期样式体系，除非明确需要独立视觉语言
+- 新增任何 howto 手册（包括博客写作、前端、部署等）必须复用 `/howto/frontend/` 已验证的统一 UI 骨架与 CSS class（如 `frontend-manual-page`、`hero`、`lesson-card-grid`、`faq-grid`）；仅替换标题、课程内容和导航数据，不得另起一套总览页面样式。
 
 ## CI/CD
 

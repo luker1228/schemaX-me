@@ -1,0 +1,545 @@
+---
+import "../../../howto/styles.css";
+import { getCollection } from "astro:content";
+import { CourseNavigator } from "../../../howto/components/shared/course-navigator.jsx";
+import LessonArticleSection from "../../../howto/components/shared/LessonArticleSection.astro";
+import ArticlePreviewCard from "../../../howto/components/shared/ArticlePreviewCard.astro";
+import PreviewCodeExample from "../../../howto/components/shared/PreviewCodeExample.astro";
+import ManualHeader from "../../../components/ManualHeader.astro";
+import { withBasePath, withHowtoManualPath } from "../../../howto/lib/paths.js";
+import { blogManual, guideLessons, toGuideLesson } from "../../../howto/manuals/guide/registry.js";
+
+export async function getStaticPaths() {
+  const authoredLessons = (await getCollection("guides")).filter((entry) => !entry.data.hidden).map(toGuideLesson).sort((a, b) => a.order - b.order);
+  const lessons = [...guideLessons, ...authoredLessons];
+  return lessons.map((lesson, index) => ({
+    params: { slug: lesson.slug },
+    props: {
+      lesson,
+      previous: guideLessons[index - 1] ?? null,
+      next: guideLessons[index + 1] ?? null,
+    },
+  }));
+}
+
+const { lesson, previous, next } = Astro.props;
+const codeLanguage = lesson?.language ?? "html";
+const codeLanguageLabel = codeLanguage === "markdown" ? "Markdown" : "HTML";
+const lessonHtml = lesson?.html?.replaceAll("lesson-article-hero-copy", "lesson-article-hero-content") ?? "";
+const guideIndex = { href: withHowtoManualPath("guide"), label: "全部卡片" };
+const guidePrevious = previous ? { href: withHowtoManualPath("guide", previous.slug), label: previous.title } : null;
+const guideNext = next ? { href: withHowtoManualPath("guide", next.slug), label: next.title } : null;
+const isArticleLesson = lesson?.label?.startsWith("ARTICLE");
+const articleHeroMeta = lesson?.slug === "article-content"
+  ? ["教程文章 · ARTICLE", "正文结构 · CONTENT", "H2 至 H4"]
+  : ["教程文章 · ARTICLE", "文章 Hero · ENTRY", "建立阅读预期"];
+const previewCardCss = `.lesson-article-preview-card {
+  border: 1px solid color-mix(in oklab, var(--border) 58%, transparent);
+  border-radius: 4px;
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--border);
+}`;
+const articleBodyCss = `.lesson-article-preview-card p {
+  margin: 0;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.75;
+}
+
+/* 相邻正文段落之间的间距。 */
+.lesson-article-preview-card p + p {
+  margin-top: 1rem;
+}`;
+const blockquoteCss = `.lesson-article-inline-note {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.lesson-article-inline-note::before {
+  content: "“";
+  font-family: Georgia, serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 0.62;
+}
+
+.lesson-article-inline-note p {
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.75;
+}`;
+const codeBlockExample = `<section class="lesson-example">
+  <h2>代码块</h2>
+  <p>用代码说明一个可复用的结构。</p>
+</section>`;
+const codeBlockCss = `.guide-code {
+  padding: 0.875rem 1rem;
+  background: #f0e7d6;
+  font-family: var(--font-mono);
+  line-height: 1.7;
+}`;
+const previewCodePairCss = `.lesson-preview-code-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.lesson-preview-code-panel {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.lesson-preview-code-pair.is-code-collapsed .lesson-preview-code-panel {
+  grid-template-rows: 6.5rem;
+}`;
+
+if (!lesson) {
+  throw new Error(`Unknown guide lesson: ${Astro.params.slug}`);
+}
+
+function escapeHtml(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function highlightLine(line, language) {
+  if (language === "css") {
+    const escaped = escapeHtml(line);
+    return escaped
+      .replace(/^(\s*)([.#]?[\w-]+)(\s*\{)/, '$1<span class="code-token-tag">$2</span>$3')
+      .replace(/(\b[\w-]+)(:)/g, '<span class="code-token-attribute">$1</span><span class="code-token-operator">$2</span>')
+      .replace(/(var\(--[\w-]+\)|#[\da-fA-F]{3,8}|\d+(?:\.\d+)?(?:rem|px|vw|%))/g, '<span class="code-token-string">$1</span>');
+  }
+  return line.split(/(<[^>]*>)/g).map((part) => {
+    const tag = part.match(/^(<\/?)([A-Za-z][\w-]*)(.*?)(\/?>)$/);
+    if (!tag) return escapeHtml(part);
+    const [, opener, name, attributes, closer] = tag;
+    const highlightedAttributes = escapeHtml(attributes)
+      .replace(/(\s)([\w-]+)(=)/g, '$1<span class="code-token-attribute">$2</span><span class="code-token-operator">$3</span>')
+      .replace(/(&quot;.*?&quot;)/g, '<span class="code-token-string">$1</span>');
+    return `${escapeHtml(opener)}<span class="code-token-tag">${name}</span>${highlightedAttributes}${escapeHtml(closer)}`;
+  }).join("");
+}
+
+function prettyCss(css) {
+  return css.split("}").map((block) => {
+    const [selector, declarations] = block.split("{");
+    if (!selector?.trim() || declarations === undefined) return "";
+    const properties = declarations.split(";").map((property) => property.trim()).filter(Boolean);
+    return `${selector.trim()} {\n${properties.map((property) => `  ${property};`).join("\n")}\n}`;
+  }).filter(Boolean).join("\n\n");
+}
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{lesson.title} · {blogManual.title}</title>
+    <meta name="description" content={lesson.summary} />
+  </head>
+  <body class="guide-manual-body">
+    <div class="site-shell guide-manual-page">
+      <ManualHeader
+        variant="manual"
+        navItems={[
+          { href: withHowtoManualPath("frontend"), label: "前端手册" },
+          { href: withHowtoManualPath("deploy"), label: "部署手册" },
+          { href: withHowtoManualPath("guide"), label: "指导手册" }
+        ]}
+        manualHref={withBasePath("howto/")}
+        manualLabel="战术手册"
+        showBrandSubtitle={false}
+      />
+
+      <main class:list={["container", "guide-lesson-page", { "guide-component-doc": lesson.slug === "hero", "guide-article-lesson": isArticleLesson }]}>
+        <CourseNavigator previous={guidePrevious} index={guideIndex} next={guideNext} placement="top" label="组件课程导航" />
+        {isArticleLesson ? (
+          <header class="lesson-article-hero html-reading-hero guide-article-lesson-hero">
+            <div class="lesson-shell">
+              <div class="lesson-article-hero-meta lesson-article-hero-meta-side">
+                <span class="lesson-article-hero-pill lesson-article-hero-pill-fill">{articleHeroMeta[0]}</span>
+                <span class="lesson-article-hero-pill">{articleHeroMeta[1]}</span>
+                <span class="lesson-article-hero-label">{articleHeroMeta[2]}</span>
+              </div>
+              <div class="lesson-article-hero-grid">
+                <div class="lesson-article-hero-content">
+                  <h1 class="page-title"><span class="lesson-article-hero-title-line">{lesson.title}</span></h1>
+                  <p class="lesson-article-hero-summary">{lesson.summary}</p>
+                </div>
+              </div>
+            </div>
+          </header>
+        ) : (
+          <section class="hero guide-lesson-hero lesson-shell">
+            <div class="hero-grid">
+              <div class="hero-copy-block">
+                {lesson.slug === "hero" ? <span class="guide-doc-breadcrumb">GUIDE / COMPONENTS</span> : <span class="micro-label">{lesson.label} / GUIDE COMPONENT</span>}
+                <h1 class="hero-title-structured">{lesson.title}</h1>
+                <p class="hero-subtitle-structured">{lesson.summary}</p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {lesson.slug !== "hero" && lesson.slug !== "article-content" && (
+          <section class="section lesson-shell">
+            <div class="section-header">
+              <div class="section-kicker-wrap"><span class="section-kicker">场景说明</span></div>
+              <p class="section-subtitle">{lesson.purpose}</p>
+            </div>
+          </section>
+        )}
+
+        {lesson.slug === "hero" && (
+          <section class="section guide-preview-section lesson-shell">
+            <div class="section-header">
+              <div class="section-kicker-wrap"><span class="section-kicker">示例</span></div>
+              <p class="section-subtitle">下面这块使用的正是随后代码中的 HTML 与 class。</p>
+            </div>
+            <div class="guide-live-preview">
+              <section class="hero">
+                <div class="hero-grid">
+                  <div class="hero-copy-block">
+                    <h1 class="hero-title-structured">课程 Hero 标题区</h1>
+                    <p class="hero-subtitle-structured">课程开始时，用一个完整的标题区交代主题、学习收益和起步动作。</p>
+                    <div class="hero-actions">
+                      <a class="button" href="#lesson">开始课程 →</a>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </section>
+        )}
+
+        {lesson.slug === "lesson-nav" && (
+          <section class="section guide-preview-section lesson-shell">
+            <div class="section-header">
+              <div class="section-kicker-wrap"><span class="section-kicker">实际渲染效果</span></div>
+              <p class="section-subtitle">这就是课程页顶部与底部使用的共享导航组件。</p>
+            </div>
+            <CourseNavigator previous={guidePrevious} index={guideIndex} next={guideNext} placement="preview" label="组件课程导航示例" />
+          </section>
+        )}
+
+        {lesson.slug === "html-reading-hero" && (
+          <section class="section guide-preview-section lesson-shell">
+            <div class="section-header">
+              <div class="section-kicker-wrap"><span class="section-kicker">实际渲染效果</span></div>
+              <p class="section-subtitle">用并列标题与纵向元信息，先建立文章的阅读预期。</p>
+            </div>
+            <header class="lesson-article-hero html-reading-hero">
+              <div class="lesson-shell">
+                <div class="lesson-article-hero-meta"><span class="lesson-article-hero-pill lesson-article-hero-pill-fill">Markdown 对照 · COMPARE</span><span class="lesson-article-hero-pill">HTML 第一课 · 语法对照</span><span class="lesson-article-hero-label">阅读时长 ≈ 12 分钟</span></div>
+                <div class="lesson-article-hero-grid">
+                  <div class="lesson-article-hero-content"><h1 class="page-title"><span class="lesson-article-hero-title-line">Markdown</span><span class="lesson-article-hero-title-line">怎么翻成 <span class="lesson-article-hero-title-em">HTML</span></span></h1></div>
+                  <div class="lesson-article-hero-side"><div class="lesson-article-hero-row"><span class="lesson-article-hero-key">本页讲什么</span><span class="lesson-article-hero-value">Markdown ↔ HTML</span></div><div class="lesson-article-hero-row"><span class="lesson-article-hero-key">内容形式</span><span class="lesson-article-hero-value">语法对照 + 实时渲染</span></div><div class="lesson-article-hero-row"><span class="lesson-article-hero-key">适合谁</span><span class="lesson-article-hero-value">后端 / 新手 / 会 Markdown 的人</span></div><div class="lesson-article-hero-row"><span class="lesson-article-hero-key">目标</span><span class="lesson-article-hero-value">看见符号就想到标签</span></div></div>
+                </div>
+              </div>
+            </header>
+          </section>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="文章标题级别" className="guide-preview-section">
+            <p class="guide-article-body-label">预览</p>
+            <ArticlePreviewCard>
+              <section>
+                <h2>文章二级标题</h2>
+                <section>
+                  <h3>文章三级标题</h3>
+                  <section>
+                    <h4>文章四级标题</h4>
+                  </section>
+                </section>
+              </section>
+            </ArticlePreviewCard>
+            <p class="guide-article-body-label">正文 Markdown 格式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language={codeLanguage} data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label={`复制 ${codeLanguageLabel} 代码`}><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language={codeLanguage}>{lessonHtml.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", codeLanguage)}></span>)}</code></pre>
+            </figure>
+            <p class="guide-article-body-label">正文 CSS 样式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(lesson.css).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+            </figure>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="预览区的样式">
+            <ArticlePreviewCard>
+              <p>这是一块预览区。</p>
+            </ArticlePreviewCard>
+            <p class="guide-article-body-label">CSS 样式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(previewCardCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+            </figure>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="正文的样式">
+            <ArticlePreviewCard>
+              <p>这是一段正文，用来说明当前章节要解决的问题与读者将获得的结果。</p>
+              <p>第二段继续补充关键判断、示例背景或下一步动作，让读者可以顺着内容完成学习。</p>
+            </ArticlePreviewCard>
+            <p class="guide-article-body-label">CSS 样式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(articleBodyCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+            </figure>
+            <blockquote class="lesson-article-inline-note">
+              <p><code>p + p</code> 表示选择紧跟在另一个 <code>p</code> 后面的段落，因此为第二段及后续段落加入间距。</p>
+            </blockquote>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="引用块">
+            <p class="guide-article-body-label">正文批注条</p>
+            <blockquote class="lesson-article-inline-note">
+              <p><code>p + p</code> 表示选择紧跟在另一个 <code>p</code> 后面的段落，因此为第二段及后续段落加入间距。</p>
+            </blockquote>
+            <p class="guide-article-body-label">高亮纸条</p>
+            <aside class="lesson-article-highlight-note">
+              <p><code>p + p</code> 为连续段落建立稳定的阅读间距。</p>
+            </aside>
+            <p class="guide-article-body-label">CSS 样式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(blockquoteCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+            </figure>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="代码块">
+            <p class="guide-article-body-label">预览</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="html" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 HTML 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="html">{codeBlockExample.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "html")}></span>)}</code></pre>
+            </figure>
+            <p class="guide-article-body-label">CSS 样式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(codeBlockCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+            </figure>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="HTML + CSS 组合展示">
+            <div class="guide-code-tabs" data-code-tabs>
+              <div class="guide-code-tablist" role="tablist" aria-label="代码语言切换">
+                <button type="button" role="tab" aria-selected="true" aria-controls="code-panel-html" id="code-tab-html" data-code-tab="html">HTML</button>
+                <button type="button" role="tab" aria-selected="false" aria-controls="code-panel-css" id="code-tab-css" data-code-tab="css">CSS</button>
+              </div>
+              <div role="tabpanel" id="code-panel-html" aria-labelledby="code-tab-html" data-code-panel="html">
+                <figure class="guide-code-figure">
+                  <pre class="guide-code" tabindex="0" data-language="html" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 HTML 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="html">{codeBlockExample.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "html")}></span>)}</code></pre>
+                </figure>
+              </div>
+              <div role="tabpanel" id="code-panel-css" aria-labelledby="code-tab-css" data-code-panel="css" hidden>
+                <figure class="guide-code-figure">
+                  <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(codeBlockCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+                </figure>
+              </div>
+              <button class="guide-code-combined-copy" type="button" data-copy-html-css>复制 HTML + CSS</button>
+            </div>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection title="预览块 + 代码块">
+            <PreviewCodeExample>
+              <ArticlePreviewCard slot="preview">
+                <p>这是一块预览区。</p>
+              </ArticlePreviewCard>
+              <Fragment slot="code">
+                <figure class="guide-code-figure">
+                  <pre class="guide-code" tabindex="0" data-language="html" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 HTML 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="html">{codeBlockExample.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "html")}></span>)}</code></pre>
+                </figure>
+              </Fragment>
+            </PreviewCodeExample>
+            <p class="guide-article-body-label">CSS 样式</p>
+            <figure class="guide-code-figure">
+              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(previewCodePairCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+            </figure>
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug !== "article-content" && (
+          <section class="section guide-code-section lesson-shell">
+            <div class="section-header">
+              <div class="section-kicker-wrap"><span class="section-kicker">{codeLanguage === "markdown" ? "Markdown 标题范式" : "HTML 结构与 class"}</span></div>
+              <p class="section-subtitle">代码中的标题和说明与当前场景保持一致，展示实际使用的内容结构。</p>
+            </div>
+          <figure class="guide-code-figure">
+            <pre class="guide-code" tabindex="0" data-language={codeLanguage} data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label={`复制 ${codeLanguageLabel} 代码`}><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-1h10"></path></svg></button><code data-line-numbers data-language={codeLanguage}>{lessonHtml.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", codeLanguage)}></span>)}</code></pre>
+          </figure>
+          </section>
+        )}
+
+        {lesson.slug !== "article-content" && (
+          <section class="section guide-code-section guide-css-section lesson-shell">
+            <div class="guide-css-heading">
+              <h2>CSS 实际样子</h2>
+              <p>以下是对应 class 的关键视觉规则，完整定义复用全局手册样式。</p>
+            </div>
+          <figure class="guide-code-figure">
+            <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(lesson.css).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
+          </figure>
+          </section>
+        )}
+
+        <CourseNavigator previous={guidePrevious} index={guideIndex} next={guideNext} placement="bottom" label="组件课程导航" />
+
+      </main>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.querySelectorAll("[data-copy-code]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const code = button.parentElement?.querySelector("code");
+      if (!code) return;
+      await navigator.clipboard.writeText(code.innerText);
+      button.setAttribute("data-copied", "true");
+      button.setAttribute("aria-label", "已复制");
+      window.setTimeout(() => {
+        button.removeAttribute("data-copied");
+        button.setAttribute("aria-label", code.dataset.language === "css" ? "复制 CSS 代码" : "复制 HTML 代码");
+      }, 1400);
+    });
+  });
+
+  document.querySelectorAll("[data-toggle-preview-code]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const pair = button.closest(".lesson-preview-code-pair");
+      if (!pair) return;
+      const collapsed = pair.classList.toggle("is-code-collapsed");
+      button.setAttribute("aria-expanded", String(!collapsed));
+      const label = button.querySelector("span");
+      if (label) label.textContent = collapsed ? "展开代码" : "收起代码";
+      const icon = button.lastElementChild;
+      if (icon) icon.textContent = collapsed ? "↓" : "↑";
+    });
+  });
+
+  document.querySelectorAll("[data-code-tabs]").forEach((tabs) => {
+    const buttons = [...tabs.querySelectorAll("[data-code-tab]")];
+    const panels = [...tabs.querySelectorAll("[data-code-panel]")];
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const language = button.dataset.codeTab;
+        buttons.forEach((item) => item.setAttribute("aria-selected", String(item === button)));
+        panels.forEach((panel) => { panel.hidden = panel.dataset.codePanel !== language; });
+      });
+    });
+  });
+
+  document.querySelectorAll("[data-copy-html-css]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const tabs = button.closest("[data-code-tabs]");
+      const html = tabs?.querySelector('[data-code-panel="html"] code')?.innerText ?? "";
+      const css = tabs?.querySelector('[data-code-panel="css"] code')?.innerText ?? "";
+      await navigator.clipboard.writeText(`<!-- HTML -->\n${html}\n\n/* CSS */\n${css}`);
+      button.textContent = "已复制 HTML + CSS";
+      window.setTimeout(() => { button.textContent = "复制 HTML + CSS"; }, 1400);
+    });
+  });
+</script>
+
+<style>
+  :global(body.guide-manual-body) {
+    --bg: #fff7e8;
+    --surface: #fffdf7;
+    --surface-2: #fff2ce;
+    --fg: #241d13;
+    --muted: #6b5c42;
+    --border: #241d13;
+    --shadow: 4px 4px 0 #241d13;
+    background: #fff7e8;
+    background-image: none;
+  }
+  .guide-manual-page { min-height: 100vh; background: #fff7e8; }
+  .guide-lesson-page { padding-bottom: 4.5rem; }
+  .guide-lesson-hero { padding-bottom: 2rem; }
+  .guide-article-lesson-hero { padding: clamp(2rem, 5vw, 4rem) 0; }
+  .guide-article-lesson-hero .lesson-shell { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.8fr); gap: 28px; align-items: end; }
+  .guide-article-lesson-hero .lesson-article-hero-grid { display: contents; }
+  .guide-article-lesson-hero .lesson-article-hero-content { grid-column: 1; }
+  .guide-article-lesson-hero .lesson-article-hero-meta { grid-column: 2; grid-row: 1; margin: 0; }
+  .guide-article-lesson-hero .page-title { max-width: 12ch; }
+  .lesson-article-hero-summary { max-width: 48ch; margin: 1rem 0 0; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.55; }
+  .guide-component-doc { max-width: none; }
+  .guide-component-doc .guide-lesson-hero { padding: clamp(1.75rem, 4vw, 3.5rem) 0 clamp(2rem, 4vw, 3.5rem); border-bottom: 1px solid var(--border); }
+  .guide-component-doc .hero-grid { display: block; }
+  .guide-component-doc .hero-copy-block { max-width: 48rem; margin: 0; text-align: left; }
+  .guide-doc-breadcrumb { display: block; margin-bottom: 0.85rem; color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; }
+  .guide-component-doc .hero-title-structured { font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 1; letter-spacing: -0.045em; }
+  .guide-component-doc .hero-subtitle-structured { max-width: 42ch; margin-top: 1.25rem; color: #756b5c; font-size: clamp(1.15rem, 2.25vw, 1.55rem); line-height: 1.45; }
+  .guide-component-doc .guide-preview-section { padding-top: clamp(2rem, 4vw, 3.5rem); }
+  .guide-component-doc .guide-code-section { padding-top: clamp(2.5rem, 5vw, 4.5rem); }
+  .guide-component-doc .section-header { gap: 0.6rem; }
+  .guide-component-doc .section-kicker-wrap { display: block; }
+  .guide-component-doc .section-kicker { padding: 0; background: transparent; font-family: var(--font-body); font-size: clamp(1.45rem, 2.5vw, 2rem); font-weight: 800; letter-spacing: -0.02em; }
+  .guide-component-doc .section-subtitle { max-width: 52ch; font-size: 1rem; line-height: 1.55; }
+  .guide-component-doc .guide-css-section { padding-top: clamp(2.5rem, 5vw, 4.5rem); }
+  .guide-component-doc .guide-css-heading h2 { max-width: none; color: var(--fg); font-family: var(--font-body); font-size: clamp(1.45rem, 2.5vw, 2rem); font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; }
+  .guide-component-doc .guide-css-heading p { max-width: 52ch; margin-top: 0.6rem; color: var(--muted); font-size: 1rem; line-height: 1.55; }
+  .guide-preview-section { padding-top: 0; }
+  .guide-live-preview { margin-top: 1.5rem; border: 2px solid var(--border); background: #fff7e7; }
+  .guide-live-preview .hero { padding: clamp(2rem, 5vw, 4rem) 1.25rem; }
+  .guide-component-doc .guide-live-preview .hero-copy-block { max-width: 40rem; }
+  .guide-component-doc .guide-live-preview .hero-title-structured { font-size: clamp(1.75rem, 3vw, 2.65rem); }
+  .guide-component-doc .guide-live-preview .hero-subtitle-structured { font-size: 1rem; }
+  .guide-preview-section .lesson-article-hero { margin-top: 1.5rem; background: #fff7e7; }
+  .guide-preview-section .lesson-article-hero .lesson-shell { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.8fr); gap: 28px; align-items: end; }
+  .guide-preview-section .lesson-article-hero-grid { display: contents; }
+  .guide-preview-section .lesson-article-hero-content { grid-column: 1; }
+  .guide-preview-section .lesson-article-hero-meta { display: grid; grid-column: 2; grid-row: 1; gap: 0; width: 100%; margin: 0; padding: 18px 20px; border: 1.5px solid var(--fg); background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 88%, white), var(--surface)); box-shadow: var(--shadow); }
+  .guide-preview-section .lesson-article-hero-meta > * { width: 100%; min-height: 44px; padding: 12px 0; border: 0; border-bottom: 1px solid color-mix(in oklab, var(--fg) 16%, transparent); border-radius: 0; background: transparent; color: var(--ink); text-transform: none; }
+  .guide-preview-section .lesson-article-hero-meta > *:last-child { border-bottom: 0; }
+  .guide-preview-section .lesson-article-hero-label { color: var(--muted); }
+  .guide-preview-section .lesson-article-hero-side { display: none; }
+  :global(.lesson-nav-preview) { width: 100%; margin: 1.5rem 0 0; }
+  .guide-code-section { padding-top: 0; }
+  .guide-css-section { padding-top: clamp(3rem, 7vw, 6rem); }
+  .guide-css-heading h2 { max-width: 14ch; margin: 0; color: #0b0805; font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.25rem); line-height: 1; letter-spacing: -0.03em; }
+  .guide-css-heading p { max-width: 42ch; margin: 1rem 0 0; color: #756b5c; font-size: clamp(1.1rem, 1.8vw, 1.45rem); line-height: 1.5; }
+  .guide-code-figure { width: 100%; max-width: none; margin: 1.5rem 0 0; }
+  .guide-article-body-label + .guide-code-figure { margin-top: 0.75rem; }
+  .guide-code { position: relative; margin: 0; padding: 0.875rem 1rem; overflow: auto; outline: none; background: #f0e7d6; color: #1f2328; font-family: var(--font-mono); font-size: clamp(0.78rem, 1.5vw, 1rem); line-height: 1.7; }
+  .guide-code code[data-line-numbers] { display: grid; counter-reset: line; }
+  .guide-code [data-line] { display: block; min-width: max-content; }
+  .guide-code [data-line]::before { display: inline-block; width: 2.5rem; margin-right: 1.5rem; color: #57606a; content: counter(line); counter-increment: line; text-align: right; user-select: none; }
+  .code-token-tag { color: #116329; }
+  .code-token-attribute { color: #0550ae; }
+  .code-token-operator { color: #cf222e; }
+  .code-token-string { color: #0a3069; }
+  .guide-code-copy { position: absolute; top: 0.75rem; right: 0.5rem; z-index: 1; display: inline-flex; width: 1.75rem; height: 1.75rem; align-items: center; justify-content: center; border: 0; border-radius: 0.25rem; background: #f0e7d6; color: #1f2328; cursor: pointer; opacity: 0.75; }
+  .guide-code-copy svg { width: 1rem; height: 1rem; }
+  .guide-code-copy:hover, .guide-code-copy:focus-visible { background: #f3f4f6; opacity: 1; outline: 2px solid #0969da; outline-offset: 2px; }
+  .guide-code-copy[data-copied] { color: #1a7f37; opacity: 1; }
+  .guide-code-tabs { overflow: hidden; border: 0; }
+  .guide-code-tablist { display: flex; background: transparent; }
+  .guide-code-tablist button { min-width: 6rem; padding: 0.7rem 1rem; border: 0; background: transparent; color: var(--muted); font: 400 0.9rem/1 var(--font-body); cursor: pointer; }
+  .guide-code-tablist button[aria-selected="true"] { background: #f0e7d6; color: var(--fg); }
+  .guide-code-tabs .guide-code-figure { margin: 0; }
+  .guide-code-combined-copy { display: flex; width: 100%; min-height: 3.25rem; align-items: center; justify-content: center; border: 0; background: #f0e7d6; color: var(--fg); font: 400 1rem/1 var(--font-body); cursor: pointer; }
+  .guide-code-combined-copy:hover, .guide-code-combined-copy:focus-visible { background: var(--surface-2); outline: 1px solid var(--border); outline-offset: -1px; }
+  @media (max-width: 700px) {
+    .guide-article-lesson-hero .lesson-shell { grid-template-columns: 1fr; }
+    .guide-article-lesson-hero .lesson-article-hero-content, .guide-article-lesson-hero .lesson-article-hero-meta { grid-column: 1; }
+    .guide-article-lesson-hero .lesson-article-hero-meta { grid-row: 2; }
+    .guide-preview-section .lesson-article-hero .lesson-shell { grid-template-columns: 1fr; }
+    .guide-preview-section .lesson-article-hero-content, .guide-preview-section .lesson-article-hero-meta { grid-column: 1; }
+    .guide-preview-section .lesson-article-hero-meta { grid-row: 2; }
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+</style>

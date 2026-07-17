@@ -3,9 +3,10 @@ interface Props {
   href: string;
   manual?: boolean;
   imageSrc: string;
+  showSubtitle?: boolean;
 }
 
-const { href, manual = false, imageSrc } = Astro.props;
+const { href, manual = false, imageSrc, showSubtitle = true } = Astro.props;
 ---
 
 <a class:list={["brand", { "manual-site-brand": manual }]} href={href}>
@@ -14,6 +15,6 @@ const { href, manual = false, imageSrc } = Astro.props;
   </span>
   <span class:list={["brand-copy", { "manual-brand-copy": manual }]}>
     <span class:list={["brand-mark", { "manual-brand-mark": manual }]}>schemaX</span>
-    <span class:list={["brand-subtitle", { "manual-brand-subtitle": manual }]}>绝密计划 · classified</span>
+    {showSubtitle && <span class:list={["brand-subtitle", { "manual-brand-subtitle": manual }]}>绝密计划 · classified</span>}
   </span>
 </a>

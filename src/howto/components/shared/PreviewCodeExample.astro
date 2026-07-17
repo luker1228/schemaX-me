@@ -1,0 +1,15 @@
+---
+interface Props {
+  initiallyExpanded?: boolean;
+}
+
+const { initiallyExpanded = false } = Astro.props;
+---
+
+<div class:list={["lesson-preview-code-pair", { "is-code-collapsed": !initiallyExpanded }]}>
+  <slot name="preview" />
+  <div class="lesson-preview-code-panel"><slot name="code" /></div>
+  <button class="lesson-preview-code-toggle" type="button" data-toggle-preview-code aria-expanded={String(initiallyExpanded)}>
+    <span>{initiallyExpanded ? "收起代码" : "展开代码"}</span><span aria-hidden="true">{initiallyExpanded ? "↑" : "↓"}</span>
+  </button>
+</div>

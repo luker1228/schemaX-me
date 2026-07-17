@@ -3,6 +3,7 @@ import "../../howto/styles.css";
 import ManualHeader from "../../components/ManualHeader.astro";
 import { withBasePath, withHowtoManualPath } from "../../howto/lib/paths.js";
 import { deployManual } from "../../howto/manuals/deploy/registry.js";
+import { blogManual } from "../../howto/manuals/guide/registry.js";
 
 const withBase = withBasePath;
 
@@ -30,6 +31,18 @@ const manuals = [
     audience: "后端 / 全栈 / 独立开发者",
     focus: "把产物、镜像、环境和运行边界理清楚，避免上线时才补概念。",
     outcome: "判断什么该打包、什么该外置、什么该留给运行环境。"
+  },
+  {
+    code: blogManual.code,
+    stamp: "已解密",
+    stampImage: withBase("images/brand/stamps/stamp-cracked.svg"),
+    title: blogManual.title,
+    copy: blogManual.description,
+    meta: blogManual.meta,
+    href: withHowtoManualPath("guide"),
+    audience: blogManual.audience,
+    focus: blogManual.focus,
+    outcome: blogManual.outcome
   }
 ];
 
@@ -50,7 +63,8 @@ const manuals = [
         variant="manual"
         navItems={[
           { href: withHowtoManualPath("frontend"), label: "前端手册" },
-          { href: withHowtoManualPath("deploy"), label: "部署手册" }
+          { href: withHowtoManualPath("deploy"), label: "部署手册" },
+          { href: withHowtoManualPath("guide"), label: "指导手册" }
         ]}
         manualHref={withBase("howto/")}
         manualLabel="战术手册"
@@ -224,7 +238,7 @@ const manuals = [
   }
 
   .manual-hub-shell .manual-site-nav a[aria-current="page"],
-  .manual-hub-shell .manual-hub-link[aria-current="page"] {
+  .manual-hub-shell .header-action-manual[aria-current="page"] {
     background: var(--accent);
     color: var(--ink);
     border: 1px solid var(--border);

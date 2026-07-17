@@ -44,7 +44,10 @@ export function DeployIndexPage() {
                 <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
-            <a className="manual-hub-link" href={withBase("howto/")}>战术手册</a>
+            <div className="header-actions" aria-label="固定入口">
+              <a className="header-action header-action-manual" href={withBase("howto/")}>战术手册</a>
+              <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
+            </div>
           </div>
         </header>
 

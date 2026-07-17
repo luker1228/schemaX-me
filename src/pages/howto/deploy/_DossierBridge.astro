@@ -1,9 +1,0 @@
----
-import ManualBridge from "../_ManualBridge.astro";
-interface Props {
-  crumb?: string;
-}
-const { crumb = "" } = Astro.props;
----
-
-<ManualBridge manual="deploy" crumb={crumb} />

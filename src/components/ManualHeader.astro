@@ -10,6 +10,7 @@ interface Props {
   manualHref?: string;
   manualLabel?: string;
   showGithub?: boolean;
+  showBrandSubtitle?: boolean;
 }
 
 const {
@@ -22,7 +23,8 @@ const {
   ],
   manualHref = `${baseUrl}howto/`,
   manualLabel = "战术手册",
-  showGithub = true
+  showGithub = true,
+  showBrandSubtitle = true
 } = Astro.props;
 
 const resolveHref = (href: string) => {
@@ -36,7 +38,7 @@ const isManual = variant === "manual";
 <header class:list={["site-header", { "manual-topbar-header": isManual }]}>
   <div class:list={["shell", "shell-wide", { "manual-global-bar": isManual }]}>
     <div class="header-primary">
-      <BrandIdentity href={resolveHref("/")} imageSrc={resolveHref("images/brand/logo-min.svg")} manual={isManual} />
+      <BrandIdentity href={resolveHref("/")} imageSrc={resolveHref("images/brand/logo-min.svg")} manual={isManual} showSubtitle={showBrandSubtitle} />
 
       <nav class:list={["nav", { "manual-site-nav": isManual }]} aria-label={isManual ? "手册入口" : "站内导航"}>
         {navItems.map((item) => (
@@ -47,8 +49,8 @@ const isManual = variant === "manual";
       </nav>
     </div>
 
-    <div class="header-actions" aria-label="外部入口">
-      <a class:list={["header-action", { "manual-hub-link": isManual, "header-action-manual": !isManual }]} href={manualHref} aria-current={isManual ? "page" : undefined}>
+    <div class="header-actions" aria-label="固定入口">
+      <a class="header-action header-action-manual" href={manualHref} aria-current={isManual ? "page" : undefined}>
         {manualLabel}
       </a>
       {showGithub && (

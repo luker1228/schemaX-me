@@ -40,7 +40,7 @@
   align-items: center;
   gap: 10px;
   flex: 0 0 auto;
-  font-family: "Arial Black", "Archivo Black", Impact, "Helvetica Neue", sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(1.1rem, 2vw, 1.5rem);
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -51,7 +51,7 @@
 
 .brand-subtitle {
   color: var(--text-soft, var(--muted));
-  font-family: "Arial Black", "Archivo Black", Impact, "Helvetica Neue", sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.82rem;
   letter-spacing: 0.08em;

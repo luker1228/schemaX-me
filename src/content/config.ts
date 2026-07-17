@@ -20,7 +20,22 @@ const drafts = defineCollection({
   schema: commonSchema
 });
 
+const guides = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    purpose: z.string(),
+    label: z.string().default("GUIDE"),
+    order: z.number().default(100),
+    hidden: z.boolean().default(false),
+    language: z.enum(["html", "markdown"]).default("html"),
+    html: z.string(),
+    css: z.string()
+  })
+});
+
 export const collections = {
   posts,
-  drafts
+  drafts,
+  guides
 };

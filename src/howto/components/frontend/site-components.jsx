@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { withBasePath, withHowtoManualPath } from "../../lib/paths.js";
+import { CourseNavigator } from "../shared/course-navigator.jsx";
 
 export function withBase(path = "") {
   return withHowtoManualPath("frontend", path);
@@ -152,13 +153,14 @@ export function StepNav({ prev, next }) {
   );
 }
 
-export function CourseStepNav({ prev, next }) {
-  return (
-    <footer className="course-step-nav" aria-label="课程翻页">
-      {prev ? <a href={withBase(prev.href)}>← {prev.title}</a> : <span />}
-      {next ? <a className="is-next" href={withBase(next.href)}>下一节：{next.title} →</a> : <span>已完成本路线</span>}
-    </footer>
-  );
+export function CourseStepNav({ prev, next, placement = "bottom" }) {
+  return <CourseNavigator
+    placement={placement}
+    label="课程翻页"
+    previous={prev ? { href: withBase(prev.href), label: prev.title } : null}
+    index={{ href: withBasePath("howto/frontend/"), label: "全部课程" }}
+    next={next ? { href: withBase(next.href), label: next.title } : null}
+  />;
 }
 
 export function ManualCourseLayout({ prev = null, next = null, children }) {
@@ -186,7 +188,10 @@ export function ManualLessonHeader({ currentPath = "" }) {
         <div className="manual-global-actions manual-index-chapters">
           <SiteNav currentPath={currentPath} />
         </div>
-        <a className="manual-hub-link" href={withBasePath("howto/")}>战术手册</a>
+        <div className="header-actions" aria-label="固定入口">
+          <a className="header-action header-action-manual" href={withBasePath("howto/")}>战术手册</a>
+          <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
+        </div>
       </div>
     </header>
   );

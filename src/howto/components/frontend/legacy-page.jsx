@@ -23,7 +23,7 @@ export function LegacyPage({ title, html, currentPath = "", prev = null, next = 
       title={title}
       html={html}
       rewriteHtml={rewriteLegacyHtmlForBase}
-      renderHeader={() => <ManualLessonHeader currentPath={currentPath} />}
+      renderHeader={() => <><ManualLessonHeader currentPath={currentPath} /><CourseStepNav prev={prev} next={next} placement="top" /></>}
       renderFooter={() => <CourseStepNav prev={prev} next={next} />}
     />
   );

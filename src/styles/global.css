@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "./tokens.css";
 @import "./brand.css";
 @import "./header-actions.css";
@@ -21,8 +22,9 @@
   --radius: 0;
   --shell: 78rem;
   --shell-wide: 88rem;
-  --font-display: "Arial Black", "Archivo Black", "Impact", "Helvetica Neue", sans-serif;
-  --font-sans: "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-display: "Space Grotesk", "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-head: var(--font-display);
+  --font-sans: "Space Grotesk", "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-mono: "SFMono-Regular", "JetBrains Mono", "Consolas", monospace;
 }
 

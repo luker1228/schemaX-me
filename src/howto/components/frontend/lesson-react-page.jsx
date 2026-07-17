@@ -558,25 +558,25 @@ export function LessonReactApp({ currentPath, prev, next }) {
         <ManualLessonHeader currentPath={lesson.currentPath} />
         <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>
         <div className="atlas-components-page">
-        <header className="html2-hero html-reading-hero atlas-components-hero">
+        <header className="lesson-article-hero html-reading-hero atlas-components-hero">
           <div className="lesson-shell">
-            <div className="html2-hero-meta">
-              <span className="html2-pill html2-pill-fill">先认词 · COMPONENTS</span>
-              <span className="html2-pill">组件课 · 词汇认知</span>
-              <span className="html2-label">阅读时长 ≈ 10 分钟</span>
+            <div className="lesson-article-hero-meta">
+              <span className="lesson-article-hero-pill lesson-article-hero-pill-fill">先认词 · COMPONENTS</span>
+              <span className="lesson-article-hero-pill">组件课 · 词汇认知</span>
+              <span className="lesson-article-hero-label">阅读时长 ≈ 10 分钟</span>
             </div>
-            <div className="html2-hero-grid">
-              <div className="html2-hero-copy">
+            <div className="lesson-article-hero-grid">
+              <div className="lesson-article-hero-content">
                 <h1 className="page-title">
-                  <span className="html2-title-line">先认<span className="html2-title-em">组件</span></span>
-                  <span className="html2-title-line">再会写提示词</span>
+                  <span className="lesson-article-hero-title-line">先认<span className="lesson-article-hero-title-em">组件</span></span>
+                  <span className="lesson-article-hero-title-line">再会写提示词</span>
                 </h1>
               </div>
-              <div className="html2-hero-side">
-                <div className="html2-hero-row"><span className="html2-hero-k">本页讲什么</span><span className="html2-hero-v">组件词汇表</span></div>
-                <div className="html2-hero-row"><span className="html2-hero-k">内容形式</span><span className="html2-hero-v">真实组件 + 提示词</span></div>
-                <div className="html2-hero-row"><span className="html2-hero-k">适合谁</span><span className="html2-hero-v">后端 / 新手 / 非前端</span></div>
-                <div className="html2-hero-row"><span className="html2-hero-k">目标</span><span className="html2-hero-v">看到块就知道怎么叫</span></div>
+              <div className="lesson-article-hero-side">
+                <div className="lesson-article-hero-row"><span className="lesson-article-hero-key">本页讲什么</span><span className="lesson-article-hero-value">组件词汇表</span></div>
+                <div className="lesson-article-hero-row"><span className="lesson-article-hero-key">内容形式</span><span className="lesson-article-hero-value">真实组件 + 提示词</span></div>
+                <div className="lesson-article-hero-row"><span className="lesson-article-hero-key">适合谁</span><span className="lesson-article-hero-value">后端 / 新手 / 非前端</span></div>
+                <div className="lesson-article-hero-row"><span className="lesson-article-hero-key">目标</span><span className="lesson-article-hero-value">看到块就知道怎么叫</span></div>
               </div>
             </div>
           </div>
