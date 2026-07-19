@@ -2,48 +2,42 @@
  * 改颜色请编辑 DESIGN.json → tokens.colors，然后运行: npm run tokens
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* ── Grounds ── */
-  /* Carbon Black */
-  --bg: #171717;
-  /* Deep Void */
-  --surface: #111111;
-  /* Panel Strong */
-  --surface-strong: #1d1d1d;
-  /* Panel Muted */
-  --surface-muted: #242424;
-  /* Iron Border */
-  --border: #333333;
-  /* Aged Ivory */
-  --text: #f6ead6;
-  /* Mortar Gray */
-  --text-soft: #9c9384;
-  /* Wanted Yellow */
-  --accent: #ffd43b;
-  --yellow: #ffd43b;
-  /* Cold Wire Cyan */
-  --accent-alt: #00d4ff;
-  --cyan: #00d4ff;
-  /* Phosphor Green */
-  --green: #00d26a;
-  /* Neural Violet */
-  --purple: #b678ff;
+  /* ── Colors ── */
+  /* Paper */
+  --bg: #FFF7E8;
+  /* Paper Card */
+  --surface: #FFFFFF;
+  /* Paper Code */
+  --surface-muted: #EFE7D6;
+  /* Ink */
+  --text: #000000;
+  --border: #000000;
+  /* Ink Muted */
+  --text-soft: #6B6355;
+  /* Yellow */
+  --accent: #FFDC58;
+  --yellow: #FFDC58;
+  /* Mint */
+  --mint: #01FFCC;
+  /* Purple */
+  --purple: #C4A1FF;
+  /* Pink */
+  --pink: #FF30CD;
   /* Alert Red */
   --red: #ff4d4d;
-  /* Field Green */
-  --green-ink: #1f7a3a;
-  /* Field Red */
-  --red-ink: #b3261e;
-  /* Field Violet */
-  --purple-ink: #7a3fb0;
+  /* Phosphor Green */
+  --green: #00d26a;
 
   /* ── Derived ── */
-  --accent-soft: rgba(255, 212, 59, 0.12);
-  --bg-grid: rgba(255, 255, 255, 0.035);
+  --surface-strong: #FFF2D0;
+  --accent-soft: rgba(255, 220, 88, 0.18);
+  --bg-grid: rgba(0, 0, 0, 0.045);
+  --command-yellow: #FFDC58;
 
   /* ── Elevation ── */
-  --shadow-sm: 4px 4px 0 0 rgba(255,255,255,0.04);
-  --shadow-md: 8px 8px 0 0 rgba(255,255,255,0.05);
-  --shadow-lg: 12px 12px 0 0 rgba(255,255,255,0.06);
+  --shadow-sm: 2px 2px 0 0 #000000;
+  --shadow-md: 3px 3px 0 0 #000000;
+  --shadow-lg: 4px 4px 0 0 #000000;
 }

@@ -13,7 +13,6 @@ const palette = [
   { name: "PAPER", hex: "#f6ead6", role: "正文纸面 / Aged Ivory", tone: "paper" },
   { name: "ACID", hex: "#ffd43b", role: "CTA / 编号 / Wanted Yellow", tone: "acid" },
   { name: "LIME", hex: "#00d26a", role: "在线 / 数据 / Phosphor Green", tone: "lime" },
-  { name: "CYAN", hex: "#00d4ff", role: "链接 / 悬停 / Cold Wire Cyan", tone: "cyan" },
   { name: "REDACT", hex: "#ff4d4d", role: "印章 / 警示 / Alert Red", tone: "red" }
 ];
 
@@ -166,7 +165,7 @@ const grammar = [
           <span class="dossier-kicker">§3 · shape</span>
           <h2>边框 · 圆角 · 阴影</h2>
         </div>
-        <p>默认硬边,圆角最多 8px。阴影是错位印刷感,不是漂浮卡片——允许 4px 4px 0 var(--acid),禁止柔雾。</p>
+        <p>卡片和控件 4px 圆角，pill tag 用 9999px，其余全部直角。阴影是错位印刷感，不是漂浮卡片——允许 4px 4px 0 #000，禁止柔雾。</p>
       </div>
 
       <div class="design-dna-shape-grid">
@@ -194,10 +193,10 @@ const grammar = [
           <div class="design-dna-shape-label">RADIUS · 圆角</div>
           <div class="design-dna-shape-stack">
             <span class="design-dna-shape-demo radius-0">0</span>
-            <span class="design-dna-shape-demo radius-sm">4px</span>
-            <span class="design-dna-shape-demo radius-md">8px</span>
+            <span class="design-dna-shape-demo radius-sm">4px (cap)</span>
+            <span class="design-dna-shape-demo radius-pill">9999px (pill only)</span>
           </div>
-          <div class="design-dna-shape-note">最多 8px,默认 0</div>
+          <div class="design-dna-shape-note">卡片 / 控件 4px，pill tag 9999px，其余 0</div>
         </div>
       </div>
     </section>
@@ -685,10 +684,6 @@ const grammar = [
       --swatch-demo-bg: #00d26a;
       --swatch-demo-fg: #082515;
     }
-    .design-dna-page .design-dna-swatch-demo.tone-cyan {
-      --swatch-demo-bg: #00d4ff;
-      --swatch-demo-fg: #062433;
-    }
     .design-dna-page .design-dna-swatch-demo.tone-red {
       --swatch-demo-bg: #ff4d4d;
       --swatch-demo-fg: #2a0707;
@@ -836,11 +831,11 @@ const grammar = [
     .design-dna-page .design-dna-shape-demo.border-mid { border: 2px solid var(--dossier-border-bright); }
     .design-dna-page .design-dna-shape-demo.border-thick { border: 3px solid var(--text); }
     .design-dna-page .design-dna-shape-demo.shadow-sm { border: 1px solid var(--text); box-shadow: 4px 4px 0 var(--accent); }
-    .design-dna-page .design-dna-shape-demo.shadow-md { border: 1px solid var(--text); box-shadow: 8px 8px 0 var(--cyan); }
+    .design-dna-page .design-dna-shape-demo.shadow-md { border: 1px solid var(--text); box-shadow: 8px 8px 0 var(--green); }
     .design-dna-page .design-dna-shape-demo.shadow-lg { border: 1px solid var(--text); box-shadow: 12px 12px 0 var(--red); }
     .design-dna-page .design-dna-shape-demo.radius-0 { border: 2px solid var(--text); border-radius: 0; }
     .design-dna-page .design-dna-shape-demo.radius-sm { border: 2px solid var(--text); border-radius: 4px; }
-    .design-dna-page .design-dna-shape-demo.radius-md { border: 2px solid var(--text); border-radius: 8px; }
+    .design-dna-page .design-dna-shape-demo.radius-pill { border: 2px solid var(--text); border-radius: 9999px; }
     .design-dna-page .design-dna-shape-note {
       font-family: var(--font-mono);
       font-size: 10.5px;

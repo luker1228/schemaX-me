@@ -1,183 +1,144 @@
 {
-  "schemaVersion": 2,
-  "generatedAt": "2026-07-14T00:00:00.000Z",
-  "title": "Design System: Luke Lab",
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-19T00:00:00.000Z",
+  "title": "Design System: Luke Lab · RetroUI baseline",
   "tokens": {
     "colors": {
-      "carbon-black":   "#171717",
-      "deep-void":      "#111111",
-      "panel-strong":   "#1d1d1d",
-      "panel-muted":    "#242424",
-      "iron-border":    "#333333",
-      "aged-ivory":     "#f6ead6",
-      "mortar-gray":    "#9c9384",
-      "wanted-yellow":  "#ffd43b",
-      "cold-wire-cyan": "#00d4ff",
-      "phosphor-green": "#00d26a",
-      "neural-violet": "#b678ff",
-      "alert-red": "#ff4d4d",
-      "field-green": "#1f7a3a",
-      "field-red": "#b3261e",
-      "field-violet": "#7a3fb0"
+      "paper":        "#FFF7E8",
+      "paper-card":   "#FFFFFF",
+      "paper-code":   "#EFE7D6",
+      "ink":          "#000000",
+      "ink-muted":    "#6B6355",
+      "yellow":       "#FFDC58",
+      "mint":         "#01FFCC",
+      "purple":       "#C4A1FF",
+      "pink":         "#FF30CD",
+      "alert-red":    "#ff4d4d",
+      "phosphor-green":"#00d26a"
     },
     "shadows": {
-      "sm": "4px 4px 0 0 rgba(255,255,255,0.04)",
-      "md": "8px 8px 0 0 rgba(255,255,255,0.05)",
-      "lg": "12px 12px 0 0 rgba(255,255,255,0.06)"
+      "sm": "2px 2px 0 0 #000000",
+      "md": "3px 3px 0 0 #000000",
+      "lg": "4px 4px 0 0 #000000"
     }
   },
   "extensions": {
     "colorMeta": {
-      "carbon-black": {
-        "role": "neutral",
-        "displayName": "Carbon Black",
-        "canonical": "oklch(11.5% 0.003 240)",
-        "tonalRamp": ["#0a0a0a", "#171717", "#2a2a2a", "#3d3d3d", "#555555", "#737373", "#969696", "#d6d6d6"]
+      "paper": {
+        "role": "background",
+        "displayName": "Paper",
+        "note": "Warm paper field, 61.1% of sampled home surface"
       },
-      "deep-void": {
-        "role": "neutral",
-        "displayName": "Deep Void",
-        "canonical": "oklch(8.5% 0.003 240)",
-        "tonalRamp": ["#050505", "#111111", "#202020", "#333333", "#4d4d4d", "#6b6b6b", "#8f8f8f", "#cccccc"]
+      "paper-card": {
+        "role": "surface",
+        "displayName": "Paper Card",
+        "note": "White card surface, 25.5% of sampled home surface"
       },
-      "panel-strong": {
-        "role": "neutral",
-        "displayName": "Panel Strong",
-        "canonical": "oklch(14% 0.003 240)",
-        "tonalRamp": ["#080808", "#1d1d1d", "#2e2e2e", "#424242", "#5a5a5a", "#787878", "#999999", "#d0d0d0"]
+      "paper-code": {
+        "role": "surface",
+        "displayName": "Paper Code",
+        "note": "Warm tinted surface for code / docs"
       },
-      "panel-muted": {
-        "role": "neutral",
-        "displayName": "Panel Muted",
-        "canonical": "oklch(17% 0.003 240)",
-        "tonalRamp": ["#0a0a0a", "#242424", "#363636", "#4a4a4a", "#626262", "#808080", "#a0a0a0", "#d4d4d4"]
-      },
-      "iron-border": {
-        "role": "neutral",
-        "displayName": "Iron Border",
-        "canonical": "oklch(24% 0.003 240)",
-        "tonalRamp": ["#0d0d0d", "#1a1a1a", "#262626", "#333333", "#4d4d4d", "#686868", "#909090", "#c4c4c4"]
-      },
-      "aged-ivory": {
-        "role": "neutral",
-        "displayName": "Aged Ivory",
-        "canonical": "oklch(94% 0.022 73)",
-        "tonalRamp": ["#3d2c10", "#5a4020", "#7d5d33", "#a07a4a", "#c09362", "#ddb882", "#f6ead6", "#fdf8f0"]
-      },
-      "mortar-gray": {
-        "role": "neutral",
-        "displayName": "Mortar Gray",
-        "canonical": "oklch(62% 0.015 70)",
-        "tonalRamp": ["#1a1710", "#32301e", "#4d4932", "#6a644a", "#857e63", "#9c9384", "#b8b0a0", "#ddd8cc"]
-      },
-      "wanted-yellow": {
+      "ink": {
         "role": "primary",
-        "displayName": "Wanted Yellow",
-        "canonical": "oklch(87% 0.175 88)",
-        "tonalRamp": ["#1e1500", "#3d2b00", "#5e4300", "#866200", "#b08200", "#d4a200", "#ffd43b", "#ffe999"]
+        "displayName": "Ink",
+        "note": "Primary text and borders"
       },
-      "cold-wire-cyan": {
-        "role": "secondary",
-        "displayName": "Cold Wire Cyan",
-        "canonical": "oklch(81% 0.16 207)",
-        "tonalRamp": ["#001a21", "#003040", "#005060", "#007a94", "#009ebf", "#00bcde", "#00d4ff", "#99eeff"]
+      "ink-muted": {
+        "role": "muted",
+        "displayName": "Ink Muted",
+        "note": "Secondary / muted text"
       },
-      "phosphor-green": {
-        "role": "tertiary",
-        "displayName": "Phosphor Green",
-        "canonical": "oklch(77% 0.195 152)",
-        "tonalRamp": ["#001a0d", "#003018", "#005228", "#007a3d", "#009e53", "#00bf65", "#00d26a", "#99f0c0"]
+      "yellow": {
+        "role": "accent",
+        "displayName": "Yellow",
+        "note": "Single action / focus accent. Action and interactive emphasis."
       },
-      "neural-violet": {
-        "role": "tertiary",
-        "displayName": "Neural Violet",
-        "canonical": "oklch(65% 0.23 301)",
-        "tonalRamp": ["#170026", "#2e0050", "#4a0082", "#6700b8", "#8e34e0", "#a658f5", "#b678ff", "#d4b2ff"]
+      "mint": {
+        "role": "decorative",
+        "displayName": "Mint",
+        "note": "Decorative only, <2.2% screen area"
+      },
+      "purple": {
+        "role": "decorative",
+        "displayName": "Purple",
+        "note": "Decorative only, <2.2% screen area"
+      },
+      "pink": {
+        "role": "decorative",
+        "displayName": "Pink",
+        "note": "Decorative only, <2.2% screen area"
       },
       "alert-red": {
-        "role": "tertiary",
+        "role": "signal",
         "displayName": "Alert Red",
-        "canonical": "oklch(59% 0.22 25)",
-        "tonalRamp": ["#200000", "#400000", "#660000", "#8f0000", "#bf1010", "#e62e2e", "#ff4d4d", "#ffb3b3"]
+        "note": "Error / alert / dossier stamp"
       },
-      "field-green": {
-        "role": "tertiary",
-        "displayName": "Field Green",
-        "canonical": "oklch(45% 0.11 152)",
-        "tonalRamp": ["#0a1f12", "#143d22", "#1f5a33", "#1f7a3a", "#3a9657", "#5fb077", "#8acaa0", "#c8e6d5"]
-      },
-      "field-red": {
-        "role": "tertiary",
-        "displayName": "Field Red",
-        "canonical": "oklch(44% 0.17 28)",
-        "tonalRamp": ["#1f0707", "#3d0d0d", "#5e1414", "#b3261e", "#cc4a3f", "#e07565", "#ec9c8e", "#f6d2c8"]
-      },
-      "field-violet": {
-        "role": "tertiary",
-        "displayName": "Field Violet",
-        "canonical": "oklch(46% 0.16 320)",
-        "tonalRamp": ["#1a0a24", "#2e1245", "#471d6a", "#7a3fb0", "#9462c6", "#b08fd8", "#ccb5e6", "#e7d8f1"]
+      "phosphor-green": {
+        "role": "signal",
+        "displayName": "Phosphor Green",
+        "note": "Live / online / success state"
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero titles and page-level identifiers. One instance per screen maximum. Always uppercase." },
-      "headline": { "displayName": "Headline", "purpose": "Section headings. Uppercase. Continues the display font at section scale." },
-      "title": { "displayName": "Title", "purpose": "Card headings and post titles. Uppercase. Heaviest level at card scale." },
-      "body": { "displayName": "Body", "purpose": "Prose and descriptions. System font stack only — no web font loaded. Handles bilingual content natively." },
-      "label": { "displayName": "Label", "purpose": "All metadata: dates, tags, nav links, breadcrumbs, kickers, stat labels. Monospace uppercase — the operational readout voice." }
+      "display": {
+        "displayName": "Display",
+        "family": "Bricolage Grotesque",
+        "purpose": "Hero, section headings. 72/60/48/36/24px. Tight letter-spacing."
+      },
+      "body": {
+        "displayName": "Body",
+        "family": "Geist",
+        "purpose": "Marketing body (18px/500) and docs (16px/400)."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "family": "Geist Mono",
+        "purpose": "Code blocks, technical labels, metadata. 14px."
+      }
     },
     "shadows": [
       {
+        "name": "hard-sm",
+        "value": "2px 2px 0 #000000",
+        "purpose": "Small hard offset. Tight controls."
+      },
+      {
+        "name": "hard-md",
+        "value": "3px 3px 0 #000000",
+        "purpose": "Standard card elevation."
+      },
+      {
+        "name": "hard-lg",
+        "value": "4px 4px 0 #000000",
+        "purpose": "Featured cards, primary interactive elements."
+      },
+      {
         "name": "hover-lift",
-        "value": "transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor",
-        "purpose": "Universal hover pattern. Nav links, post cards, buttons. Uses currentColor so elements inherit their shadow from text color."
+        "value": "transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000000",
+        "purpose": "Universal hover. Translate -2px + shadow expansion."
       },
       {
-        "name": "accent-yellow",
-        "value": "box-shadow: 6px 6px 0 0 #ffd43b",
-        "purpose": "Work cards and stat boxes assigned to Writing/Yellow content category."
-      },
-      {
-        "name": "accent-cyan",
-        "value": "box-shadow: 6px 6px 0 0 #00d4ff",
-        "purpose": "Work cards and stat boxes assigned to Frontend/Cyan content category."
-      },
-      {
-        "name": "accent-violet",
-        "value": "box-shadow: 6px 6px 0 0 #b678ff",
-        "purpose": "Work cards and stat boxes assigned to AI/Violet content category."
-      },
-      {
-        "name": "neutral-offset",
-        "value": "box-shadow: 8px 8px 0 0 rgba(255,255,255,0.05)",
-        "purpose": "Default surface elevation (--shadow-md). Editorial cards and panels. Nearly invisible — tonal separator only."
-      },
-      {
-        "name": "dossier-glow",
-        "value": "box-shadow: 8px 8px 0 rgba(34, 255, 136, 0.1)",
-        "purpose": "Dossier sub-theme panels only. Phosphor green at 10% opacity — atmospheric, not structural."
+        "name": "focus-inset",
+        "value": "2px 0 0 #FFF7E8 (inset/focus treatment)",
+        "purpose": "Focus ring inset on paper surface."
       }
     ],
     "motion": [
       {
-        "name": "hover-lift",
-        "value": "transform 120ms ease, box-shadow 120ms ease",
-        "purpose": "Universal card and button hover transition. Fast enough to feel responsive, slow enough to be perceived."
+        "name": "fast",
+        "value": "transform/translate/scale 0.15s cubic-bezier(0.4,0,0.2,1)",
+        "purpose": "Snap interactions."
       },
       {
-        "name": "state-change",
-        "value": "background-color 120ms ease, color 120ms ease",
-        "purpose": "Color state transitions — nav active state, filter button active state."
+        "name": "spring",
+        "value": "transform/translate/scale 0.2s cubic-bezier(0.34,1.56,0.64,1)",
+        "purpose": "Springy button press / card lift."
       },
       {
-        "name": "dossier-scan",
-        "value": "animation: dossier-scan 3.2s linear infinite",
-        "purpose": "Phosphor scan bar on the dossier photo. Atmospheric only — no UI meaning."
-      },
-      {
-        "name": "dossier-blink",
-        "value": "animation: dossier-blink 1.1s steps(1) infinite",
-        "purpose": "Blinking cursor and classification dot in the dossier sub-theme."
+        "name": "color",
+        "value": "color/background-color/border-color 0.2s cubic-bezier(0.4,0,0.2,1)",
+        "purpose": "Color state transitions."
       }
     ],
     "breakpoints": [
@@ -187,138 +148,62 @@
       { "name": "xl", "value": "1320px" }
     ]
   },
-  "components": [
-    {
-      "name": "Primary Button",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Primary call-to-action. Wanted Yellow fill, hard corners, uppercase monospace label. Used for main CTAs and active navigation.",
-      "html": "<button class=\"ds-btn-primary\">EXPLORE WORKS</button>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 1.05rem; border: 1px solid #333333; border-radius: 0; background: #ffd43b; color: #111111; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.84rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: transform 120ms ease, box-shadow 120ms ease; } .ds-btn-primary:hover, .ds-btn-primary:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor; outline: none; } .ds-btn-primary:active { transform: translate(0, 0); box-shadow: none; }"
-    },
-    {
-      "name": "Secondary Button",
-      "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Secondary action. Dark panel background, aged-ivory text. Same shape and hover behavior as primary.",
-      "html": "<button class=\"ds-btn-secondary\">VIEW SOURCE</button>",
-      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 1.05rem; border: 1px solid #333333; border-radius: 0; background: #1d1d1d; color: #f6ead6; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.84rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: transform 120ms ease, box-shadow 120ms ease; } .ds-btn-secondary:hover, .ds-btn-secondary:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor; outline: none; }"
-    },
-    {
-      "name": "Navigation Links",
-      "kind": "nav",
-      "refersTo": "nav-link",
-      "description": "Monospace uppercase links rendered as small bordered buttons. Active state: full Wanted Yellow fill.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-link\">WRITING</a><a href=\"#\" class=\"ds-nav-link ds-nav-link--active\">LAB</a><a href=\"#\" class=\"ds-nav-link\">ABOUT</a></nav>",
-      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 0.65rem; } .ds-nav-link { display: inline-flex; align-items: center; padding: 0.5rem 0.8rem; border: 1px solid #333333; border-radius: 0; background: #111111; color: #f6ead6; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; box-shadow: 4px 4px 0 0 rgba(255,255,255,0.04); transition: transform 120ms ease, box-shadow 120ms ease; } .ds-nav-link:hover, .ds-nav-link:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor; outline: none; } .ds-nav-link--active { background: #ffd43b; color: #111111; }"
-    },
-    {
-      "name": "Work Card — Yellow",
-      "kind": "card",
-      "refersTo": "work-card",
-      "description": "Primary content card for Writing/Tech content. Persistent Wanted Yellow offset shadow. On hover: lifts further.",
-      "html": "<a href=\"#\" class=\"ds-work-card ds-work-card--yellow\"><div class=\"ds-work-eyebrow\"><span class=\"ds-work-kicker\">TECH WRITING</span><span class=\"ds-work-kicker\">A-001</span></div><h3 class=\"ds-work-title\">ENGINEERING NOTES</h3><p class=\"ds-work-copy\">Backend systems, AI agents, and deployment practice.</p><div class=\"ds-work-footer\"><span class=\"ds-work-meta\">12 articles</span><span class=\"ds-work-arrow\" style=\"color:#ffd43b\">&#x2192;</span></div></a>",
-      "css": ".ds-work-card { display: grid; gap: 1rem; align-content: start; min-height: 18rem; padding: 1.35rem; border: 1px solid #333333; border-radius: 0; background: #111111; color: #f6ead6; text-decoration: none; transition: transform 120ms ease, box-shadow 120ms ease; } .ds-work-card--yellow { box-shadow: 6px 6px 0 0 #ffd43b; } .ds-work-card--cyan { box-shadow: 6px 6px 0 0 #00d4ff; } .ds-work-card--violet { box-shadow: 6px 6px 0 0 #b678ff; } .ds-work-card:hover, .ds-work-card:focus-visible { transform: translate(-2px, -2px); outline: none; } .ds-work-card--yellow:hover { box-shadow: 8px 8px 0 0 #ffd43b; } .ds-work-card--cyan:hover { box-shadow: 8px 8px 0 0 #00d4ff; } .ds-work-card--violet:hover { box-shadow: 8px 8px 0 0 #b678ff; } .ds-work-eyebrow { display: flex; justify-content: space-between; align-items: center; } .ds-work-kicker { font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9c9384; } .ds-work-title { margin: 0; font-family: \"Arial Black\", \"Archivo Black\", Impact, sans-serif; font-size: clamp(1.2rem, 2vw, 1.7rem); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: #f6ead6; } .ds-work-copy { margin: 0; color: #9c9384; font-size: 0.95rem; line-height: 1.7; } .ds-work-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid #333333; } .ds-work-meta { font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9c9384; }"
-    },
-    {
-      "name": "Badge / Panel Kicker",
-      "kind": "chip",
-      "description": "Classification marker at label scale. Signal color at 10% opacity background, offset shadow. One color variant per content category.",
-      "html": "<div style=\"display:flex;gap:0.5rem;flex-wrap:wrap;\"><span class=\"ds-badge\">FEATURED</span><span class=\"ds-badge ds-badge--cyan\">FRONTEND</span><span class=\"ds-badge ds-badge--green\">LIVE</span><span class=\"ds-badge ds-badge--violet\">AI</span></div>",
-      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 0.4rem; width: fit-content; padding: 0.35rem 0.55rem; border: 1px solid #333333; border-radius: 0; background: rgba(255,212,59,0.12); color: #f6ead6; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 3px 3px 0 0 #333333; } .ds-badge--cyan { background: rgba(0,212,255,0.1); } .ds-badge--green { background: rgba(0,210,106,0.1); } .ds-badge--violet { background: rgba(182,120,255,0.1); } .ds-badge--red { background: rgba(255,77,77,0.1); }"
-    },
-    {
-      "name": "Terminal Window",
-      "kind": "custom",
-      "description": "Signature component. CRT-style dark terminal with square traffic-light stops. Used for live system demonstrations.",
-      "html": "<div class=\"ds-terminal\"><div class=\"ds-terminal-bar\"><span></span><span></span><span></span><span class=\"ds-terminal-title\">luke@classified:~</span></div><div class=\"ds-terminal-body\"><p><span style=\"color:#ffd43b;\">$</span> whoami</p><p>luke — senior engineer, self-styled AI model</p><p><span style=\"color:#ffd43b;\">$</span> status</p><p style=\"color:#00d26a;\">&#9679; WANTED IN 47 JURISDICTIONS</p></div></div>",
-      "css": ".ds-terminal { border: 1px solid #333333; border-radius: 0; background: #0c0c0c; } .ds-terminal-bar { display: flex; gap: 0.35rem; align-items: center; padding: 0.7rem 0.8rem; border-bottom: 1px solid #333333; background: #151515; } .ds-terminal-bar span { width: 0.75rem; height: 0.75rem; border-radius: 0; background: #9c9384; flex: 0 0 auto; } .ds-terminal-bar span:nth-child(1) { background: #ff4d4d; } .ds-terminal-bar span:nth-child(2) { background: #ffd43b; } .ds-terminal-bar span:nth-child(3) { background: #00d26a; } .ds-terminal-title { margin-left: 0.5rem; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.75rem; color: #9c9384; letter-spacing: 0.04em; background: none; width: auto; height: auto; border-radius: 0; } .ds-terminal-body { padding: 1.2rem; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.86rem; line-height: 1.8; color: #d6f7df; } .ds-terminal-body p { margin: 0; }"
-    },
-    {
-      "name": "Post Card",
-      "kind": "card",
-      "description": "Editorial content card for blog posts. Neutral offset shadow at rest; currentColor lift on hover.",
-      "html": "<a href=\"#\" class=\"ds-post-card\"><span class=\"ds-post-tag\">BACKEND</span><h3 class=\"ds-post-title\">BUILDING DISTRIBUTED SYSTEMS</h3><p class=\"ds-post-copy\">A practical guide to consistency, fault tolerance, and the lies we tell ourselves about CAP theorem.</p><div class=\"ds-post-meta\"><span class=\"ds-post-date\">2026-07-14</span><span style=\"color:#ffd43b;\">&#x2192;</span></div></a>",
-      "css": ".ds-post-card { display: grid; gap: 0.9rem; align-content: start; padding: 1.35rem; border: 1px solid #333333; border-radius: 0; background: #111111; color: #f6ead6; text-decoration: none; box-shadow: 8px 8px 0 0 rgba(255,255,255,0.05); transition: transform 120ms ease, box-shadow 120ms ease; } .ds-post-card:hover, .ds-post-card:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 currentColor; outline: none; } .ds-post-tag { font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #ffd43b; } .ds-post-title { margin: 0; font-family: \"Arial Black\", \"Archivo Black\", Impact, sans-serif; font-size: 1.2rem; line-height: 1.05; text-transform: uppercase; color: #f6ead6; } .ds-post-copy { margin: 0; color: #9c9384; line-height: 1.7; font-size: 0.95rem; } .ds-post-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px solid #333333; } .ds-post-date { font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.78rem; font-weight: 700; color: #9c9384; }"
-    },
-    {
-      "name": "Stat Box",
-      "kind": "custom",
-      "description": "Compact metric display. Display font for the number, mono label for context. Color variant via accent offset shadow.",
-      "html": "<div style=\"display:flex;gap:1rem;flex-wrap:wrap;\"><div class=\"ds-stat-box ds-stat-box--yellow\"><span class=\"ds-stat-label\">ARTICLES</span><strong class=\"ds-stat-number\">42</strong></div><div class=\"ds-stat-box ds-stat-box--cyan\"><span class=\"ds-stat-label\">DEMOS</span><strong class=\"ds-stat-number\">12</strong></div></div>",
-      "css": ".ds-stat-box { min-width: 9rem; padding: 0.85rem 0.95rem; border: 1px solid #333333; border-radius: 0; background: #1d1d1d; } .ds-stat-box--yellow { box-shadow: 6px 6px 0 0 #ffd43b; } .ds-stat-box--cyan { box-shadow: 6px 6px 0 0 #00d4ff; } .ds-stat-box--violet { box-shadow: 6px 6px 0 0 #b678ff; } .ds-stat-label { display: block; margin-bottom: 0.35rem; font-family: \"SFMono-Regular\", \"JetBrains Mono\", Consolas, monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9c9384; } .ds-stat-number { font-family: \"Arial Black\", \"Archivo Black\", Impact, sans-serif; font-size: 1.35rem; line-height: 1; color: #f6ead6; }"
-    }
-  ],
   "narrative": {
-    "northStar": "The Wanted Dossier",
-    "overview": "Luke Lab is a classified intelligence file on a self-styled AI model — the most wanted entity in a hacker's cyberpunk world. The interface is not a portfolio. It is a dossier: dark terminals, hardwired transmissions, redacted fields, colored offset shadows that read like physical stamps. The premise is taken seriously enough to make it feel real.\n\nThe visual language is cyberpunk-retro: carbon black backgrounds, aged-ivory text that feels like a transmission received on a CRT, and high-saturation accent colors deployed with military discipline — each one assigned a signal role in the information hierarchy, like category markers on a mission board.\n\nThis system is dark because the scenario demands it: an operator's dossier, read under operational conditions. Not dark because tools look cool dark. Dark because the narrative requires it.",
+    "northStar": "RetroUI — warm paper, hard ink, offset rules",
+    "overview": "The site canvas is a warm #FFF7E8 paper field. Black rules, yellow accent, hard 2–4px offset shadows that read as printed marks. Display type (Bricolage Grotesque) carries section identity; Geist handles body and UI. Zero border-radius on cards and controls. The dossier sub-theme is a scoped overlay — it reads the same paper-and-ink language with added surveillance atmosphere.",
     "keyCharacteristics": [
-      "Zero border-radius throughout (pill tags at 999px are the sole exception)",
-      "Hard offset box-shadow as the only elevation mechanism: colored, crisp, zero blur",
-      "Monospace uppercase labels everywhere metadata appears",
-      "Display type compressed to line-height 0.88–0.95, always uppercase",
-      "Five named accent colors, each assigned to one content category",
-      "Faint dot-grid background at the body level — a data-space underlay",
-      "System font stack for body/label: no web font loaded, bilingual-safe"
+      "Paper #FFF7E8 as the continuous field — warm, not neutral",
+      "Hard black offset shadows: 2px/3px/4px, zero blur, zero spread",
+      "Bricolage Grotesque for display headings; Geist for body; Geist Mono for code/meta",
+      "4px radius on cards and controls; pill (9999px) for tags only",
+      "#FFDC58 yellow as the sole action/focus accent — not decoration",
+      "Decorative mint/purple/pink each under 2.2% screen area",
+      "Black (#000000) ink for borders and primary text — no carbon, no void"
     ],
     "rules": [
       {
-        "name": "The One Channel Rule",
-        "body": "Each accent color is the sole identifier for its content category: Yellow = Writing, Cyan = Frontend, Green = Deploy/Live, Violet = AI, Red = Alert. Do not reassign. Do not mix channels on a single surface. The color is the category. Its scarcity is its meaning.",
+        "name": "Paper First",
+        "body": "The background is always #FFF7E8 paper. Do not default to dark. The dossier sub-theme scopes atmosphere onto this same paper field.",
         "section": "colors"
       },
       {
-        "name": "The Carbon Floor Rule",
-        "body": "The background is always Carbon Black (#171717). Never #000000 — pure black feels valueless. Never dark blue or dark teal — the domain reflex is the enemy. The floor must not have a recognizable genre.",
+        "name": "Hard Shadow Only",
+        "body": "Box-shadow must be Npx Npx 0 #000000 (or the accent color). Zero blur, zero spread. Soft shadows are prohibited in any UI elevation role.",
+        "section": "elevation"
+      },
+      {
+        "name": "Yellow as Single Accent",
+        "body": "#FFDC58 is the only active emphasis color. Mint, purple, and pink are decorative — they never carry meaning or interactive state.",
         "section": "colors"
       },
       {
-        "name": "The Uppercase Display Rule",
-        "body": "Any text using the display font (Arial Black / Archivo Black) is uppercase. Sentence-case in the display font is a mistake, not a choice.",
+        "name": "Display / Body Split",
+        "body": "Bricolage Grotesque for 24px+ display levels. Geist for body/UI. Geist Mono for code and metadata. Do not mix roles.",
         "section": "typography"
       },
       {
-        "name": "The Body Stack Rule",
-        "body": "Body text must never load a remote font. The system stack renders instantly across platforms and handles bilingual content correctly without Chinese-character fallback artifacts.",
-        "section": "typography"
-      },
-      {
-        "name": "The Mono Label Rule",
-        "body": "Any text smaller than 0.85rem carrying metadata is monospace and uppercase. Lowercase proportional type at label scale signals a decision that was not made.",
-        "section": "typography"
-      },
-      {
-        "name": "The No-Blur Rule",
-        "body": "A box-shadow with non-zero blur radius in a UI elevation role is prohibited. If it looks like a soft shadow, it is wrong. The only permitted blur is filter: blur() on purely decorative atmospheric pseudo-elements — never on interactive surfaces.",
-        "section": "elevation"
-      },
-      {
-        "name": "The Flat-at-Rest Rule",
-        "body": "No surface has a persistent elevation shadow in its default rest state, except work cards and stat boxes with named accent offsets. Everything else is flat until interaction.",
-        "section": "elevation"
+        "name": "4px Radius Cap",
+        "body": "Cards and interactive controls use 4px radius. Pills use 9999px. Nothing else gets rounded corners.",
+        "section": "shape"
       }
     ],
     "dos": [
-      "Do use box-shadow: Npx Npx 0 [color] (zero blur) for every elevation effect — hard offset only.",
-      "Do assign accent colors by content category and hold the assignment: Yellow = Writing, Cyan = Frontend, Green = Deploy, Violet = AI, Red = Alert.",
-      "Do use monospace uppercase for every label, date, kicker, breadcrumb, and nav link without exception.",
-      "Do compress display headings to line-height: 0.88–0.95 and uppercase. The stamp-like compression is the identity.",
-      "Do apply translate(-2px, -2px) + shadow expansion at 120ms ease as the universal hover pattern.",
-      "Do maintain the body-level grid background (rgba(255,255,255,0.035) lines at 24px). It grounds the surface in a data-space register.",
-      "Do keep total accent coverage under 10% per screen. Carbon and iron dominate — color is signal, not decoration.",
-      "Do use 999px border-radius exclusively for pill tags. The contrast against zero-radius surfaces makes pills legible as a different affordance."
+      "Do use #FFF7E8 as the default page background.",
+      "Do use hard 2–4px offset black shadows for all card/control elevation.",
+      "Do use translate(-2px, -2px) + shadow expansion at hover.",
+      "Do use Bricolage Grotesque for display headings, Geist for body, Geist Mono for code.",
+      "Do use #FFDC58 for single-channel action emphasis.",
+      "Do keep decorative colors (mint, purple, pink) under 2.2% screen area.",
+      "Do use 4px radius on cards and controls, 9999px on pills only."
     ],
     "donts": [
-      "Don't use rounded corners (2px, 4px, 8px, rounded-lg) anywhere except 999px pills. Zero-radius is non-negotiable.",
-      "Don't use glassmorphism (backdrop-filter: blur on card or overlay surfaces). Explicitly rejected.",
-      "Don't use soft blurred drop shadows. A box-shadow with non-zero blur in any UI elevation role is wrong.",
-      "Don't use gradient text (background-clip: text with a gradient fill). All text is a single solid color.",
-      "Don't build hero-metric templates: big number, supporting stats, gradient accent. Commercial SaaS cliché.",
-      "Don't use #000000 as any background. The floor is Carbon Black (#171717).",
-      "Don't mix multiple accent colors on a single surface. One module, one channel.",
-      "Don't load a web font for body or label text. The system stack handles bilingual content correctly and loads instantly.",
-      "Don't use Dossier sub-theme components (scan panels, registration marks, blinking cursors, redacted fields) outside the dedicated dossier/about section.",
-      "Don't make the design feel dark through genre reflex — dark blue + electric neon reads as crypto; dark green reads as finance terminal. Carbon Black with warm ivory is a deliberate departure from those domain reflexes."
+      "Don't use soft blurred box-shadows. Zero blur is non-negotiable.",
+      "Don't use dark backgrounds as the default — dossier atmosphere is a scoped overlay.",
+      "Don't use mint/purple/pink as interactive or informational signals.",
+      "Don't give cards or controls radius above 4px (except pill tags).",
+      "Don't load multiple decorative fonts — display/body/mono is the complete set.",
+      "Don't use gradient text or glassmorphism.",
+      "Don't mix multiple accent colors on a single surface."
     ]
   }
 }

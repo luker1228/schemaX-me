@@ -99,14 +99,11 @@ const cardClass = [
   text-transform: uppercase;
   }
 
-  /* 状态点按 tone 着色,作为唯一的「类别信号」(One Signal Rule)。
-     用 *-ink 变体:浅纸面上的深色版,读得清、不刺眼。
-     token 源:DESIGN.json field-* → npm run tokens → tokens.css。
-     --yellow-ink 在 global.css 的 body:has(.dossier) 浅色皮肤段定义。 */
-  .fm-card-status[data-tone="yellow"] { color: var(--yellow-ink); }
-  .fm-card-status[data-tone="green"]  { color: var(--green-ink); }
-  .fm-card-status[data-tone="red"]    { color: var(--red-ink); }
-  .fm-card-status[data-tone="purple"] { color: var(--purple-ink); }
+  /* 状态点按 tone 着色，用 accent/signal token，在纸面上清晰可读。 */
+  .fm-card-status[data-tone="yellow"] { color: var(--accent); }
+  .fm-card-status[data-tone="green"]  { color: #1a5c38; }
+  .fm-card-status[data-tone="red"]    { color: var(--red); }
+  .fm-card-status[data-tone="purple"] { color: #6b3fb0; }
 
   /* —— Body:标题 + 描述 —— */
   .fm-card-title {
