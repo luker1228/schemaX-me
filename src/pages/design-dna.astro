@@ -536,7 +536,7 @@ const grammar = [
       padding: clamp(1.6rem, 3.5vw, 2.6rem);
       background: var(--dossier-panel);
       border: 1px solid var(--dossier-border);
-      box-shadow: 8px 8px 0 rgba(36, 29, 19, 0.22);
+      box-shadow: 8px 8px 0 color-mix(in srgb, var(--ink-warm) 22%, transparent);
     }
     .design-dna-page .design-dna-hero-meta {
       display: flex;
@@ -669,24 +669,24 @@ const grammar = [
       color: var(--swatch-demo-fg, var(--text));
     }
     .design-dna-page .design-dna-swatch-demo.tone-dark {
-      --swatch-demo-bg: #171717;
-      --swatch-demo-fg: #f6ead6;
+      --swatch-demo-bg: var(--charcoal);
+      --swatch-demo-fg: var(--paper-code);
     }
     .design-dna-page .design-dna-swatch-demo.tone-paper {
-      --swatch-demo-bg: #f6ead6;
+      --swatch-demo-bg: var(--paper-code);
       --swatch-demo-fg: #241d13;
     }
     .design-dna-page .design-dna-swatch-demo.tone-acid {
-      --swatch-demo-bg: #ffd43b;
-      --swatch-demo-fg: #171717;
+      --swatch-demo-bg: var(--yellow);
+      --swatch-demo-fg: var(--charcoal);
     }
     .design-dna-page .design-dna-swatch-demo.tone-lime {
       --swatch-demo-bg: #00d26a;
-      --swatch-demo-fg: #082515;
+      --swatch-demo-fg: var(--charcoal);
     }
     .design-dna-page .design-dna-swatch-demo.tone-red {
       --swatch-demo-bg: #ff4d4d;
-      --swatch-demo-fg: #2a0707;
+      --swatch-demo-fg: var(--ink-warm);
     }
 
     /* ============================================================
@@ -730,7 +730,7 @@ const grammar = [
     .design-dna-page .design-dna-specimen-marker {
       margin: 0 0 1.2rem;
       padding: 0.6rem 0.85rem;
-      background: rgba(255, 212, 59, 0.22);
+      background: color-mix(in srgb, var(--yellow) 22%, transparent);
       border-left: 3px solid var(--accent);
       color: var(--text);
       font-size: 13px;
@@ -946,7 +946,7 @@ const grammar = [
       right: 0;
       top: -40%;
       height: 40%;
-      background: linear-gradient(transparent, rgba(0, 212, 255, 0.55), transparent);
+      background: linear-gradient(transparent, color-mix(in srgb, var(--svg-blue) 55%, transparent), transparent);
       animation: design-dna-scan 2.6s linear infinite;
       pointer-events: none;
     }
@@ -1041,7 +1041,7 @@ const grammar = [
 
     /* —— C2/C7 嵌套 panel demo:用更浅一档背景,跟外层 card 区分 —— */
     .design-dna-page .design-dna-nested-panel {
-      box-shadow: 4px 4px 0 rgba(36, 29, 19, 0.18);
+      box-shadow: 4px 4px 0 color-mix(in srgb, var(--ink-warm) 18%, transparent);
       padding: 0.8rem 0.95rem;
     }
 
@@ -1118,7 +1118,7 @@ const grammar = [
     }
     .design-dna-page .design-dna-grammar-card.tone-red .design-dna-grammar-code { color: var(--red); }
     .design-dna-page .design-dna-grammar-card.tone-yellow .design-dna-grammar-code { color: var(--yellow-ink, var(--accent)); }
-    .design-dna-page .design-dna-grammar-card.tone-green .design-dna-grammar-code { color: #0a5c33; }
+    .design-dna-page .design-dna-grammar-card.tone-green .design-dna-grammar-code { color: var(--dark-void); }
     .design-dna-page .design-dna-grammar-status { color: var(--green); }
     .design-dna-page .design-dna-grammar-title {
       margin: 0 0 0.5rem;
@@ -1169,7 +1169,7 @@ const grammar = [
       padding: 1.2rem 1.4rem;
       background: var(--dossier-panel);
       border: 1px solid var(--dossier-border);
-      box-shadow: 8px 8px 0 rgba(36, 29, 19, 0.22);
+      box-shadow: 8px 8px 0 color-mix(in srgb, var(--ink-warm) 22%, transparent);
     }
     .design-dna-page .design-dna-signature-num {
       font-family: var(--font-display);

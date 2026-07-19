@@ -25,12 +25,12 @@ const buttonGroupVariants = cva(
     "has-[>[data-slot=button-group]]:gap-2 has-[>[data-slot=button-group]]:border-0 has-[>[data-slot=button-group]]:bg-transparent has-[>[data-slot=button-group]]:shadow-none! has-[>[data-slot=button-group]]:translate-x-0! has-[>[data-slot=button-group]]:translate-y-0!",
     // The hovered/pressed segment darkens in place via a full-bleed inset tint, so
     // you can still tell which segment you're acting on while the frame presses.
-    "[&>:is(button,a):hover]:shadow-[inset_0_0_0_999px_#00000012]! [&>:is(button,a):active]:shadow-[inset_0_0_0_999px_#0000001f]!",
+    "[&>:is(button,a):hover]:shadow-[inset_0_0_0_999px_color-mix(in srgb, var(--text) 7%, transparent)]! [&>:is(button,a):active]:shadow-[inset_0_0_0_999px_color-mix(in srgb, var(--text) 12%, transparent)]!",
 
-    "dark:[&>:is(button,a):hover]:shadow-[inset_0_0_0_999px_#ffffff1f]! dark:[&>:is(button,a):active]:shadow-[inset_0_0_0_999px_#ffffff33]!",
+    "dark:[&>:is(button,a):hover]:shadow-[inset_0_0_0_999px_color-mix(in srgb, var(--paper-card) 12%, transparent)]! dark:[&>:is(button,a):active]:shadow-[inset_0_0_0_999px_color-mix(in srgb, var(--paper-card) 20%, transparent)]!",
     // Solid dark segments (secondary) always lighten on hover — a dark tint would
     // be invisible on a black button in light mode.
-    "[&>:is(button,a)[data-variant=secondary]:hover]:shadow-[inset_0_0_0_999px_#ffffff2b]! [&>:is(button,a)[data-variant=secondary]:active]:shadow-[inset_0_0_0_999px_#ffffff45]!",
+    "[&>:is(button,a)[data-variant=secondary]:hover]:shadow-[inset_0_0_0_999px_color-mix(in srgb, var(--paper-card) 17%, transparent)]! [&>:is(button,a)[data-variant=secondary]:active]:shadow-[inset_0_0_0_999px_color-mix(in srgb, var(--paper-card) 27%, transparent)]!",
     "[&>:is(button,a):focus-visible]:relative [&>:is(button,a):focus-visible]:z-10"
   ),
   {

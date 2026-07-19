@@ -19,7 +19,7 @@ function DashboardLayoutPreview() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#ef7627",
+          colorPrimary: "var(--red)",
           borderRadius: 0,
           fontFamily:
             'Instrument Sans, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
@@ -38,7 +38,7 @@ function DashboardLayoutPreview() {
               borderBottom: "1.5px solid #1a1a1a",
             }}
           >
-            <div style={{ fontWeight: 800, letterSpacing: "0.04em", color: "#ef7627", whiteSpace: "nowrap" }}>Acme Admin</div>
+            <div style={{ fontWeight: 800, letterSpacing: "0.04em", color: "var(--red)", whiteSpace: "nowrap" }}>Acme Admin</div>
             <Menu
               mode="horizontal"
               defaultSelectedKeys={["dashboard"]}
@@ -53,8 +53,8 @@ function DashboardLayoutPreview() {
             <Button type="primary">登录</Button>
           </Header>
           <Layout>
-            <Sider width={220} style={{ background: "#fbfaf6", borderRight: "1.5px solid #1a1a1a" }}>
-              <div style={{ padding: "18px 16px 10px", fontSize: 12, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#666" }}>
+            <Sider width={220} style={{ background: "var(--paper-card)", borderRight: "1.5px solid #1a1a1a" }}>
+              <div style={{ padding: "18px 16px 10px", fontSize: 12, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-soft)" }}>
                 导航
               </div>
               <Menu
@@ -68,7 +68,7 @@ function DashboardLayoutPreview() {
                 ]}
               />
             </Sider>
-            <Content style={{ padding: 18, background: "linear-gradient(180deg, #fffdf8, #f7f4ec)" }}>
+            <Content style={{ padding: 18, background: "linear-gradient(180deg, var(--paper-card), var(--paper))" }}>
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
                 <Card size="small" title="本周概览" extra={<Tag color="orange">24h</Tag>}>
                   <Space size={12} wrap>
@@ -79,10 +79,10 @@ function DashboardLayoutPreview() {
                 </Card>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 12 }}>
                   <Card size="small" title="最近订单">
-                    <div style={{ color: "#666", lineHeight: 1.8 }}>订单列表 / 状态 / 金额</div>
+                    <div style={{ color: "var(--text-soft)", lineHeight: 1.8 }}>订单列表 / 状态 / 金额</div>
                   </Card>
                   <Card size="small" title="系统消息">
-                    <div style={{ color: "#666", lineHeight: 1.8 }}>部署完成 / 定时任务 / 异常提醒</div>
+                    <div style={{ color: "var(--text-soft)", lineHeight: 1.8 }}>部署完成 / 定时任务 / 异常提醒</div>
                   </Card>
                 </div>
               </Space>
@@ -99,7 +99,7 @@ function PortalLayoutPreview() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#ef7627",
+          colorPrimary: "var(--red)",
           borderRadius: 0,
           fontFamily:
             'Instrument Sans, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
@@ -109,7 +109,7 @@ function PortalLayoutPreview() {
       <div style={{ minHeight: 320 }}>
         <Layout style={{ minHeight: 320, borderRadius: 0, overflow: "hidden", border: "1.5px solid #1a1a1a", background: "#fff" }}>
           <Header style={{ display: "flex", alignItems: "center", gap: 16, padding: "0 20px", background: "#fff", borderBottom: "1.5px solid #1a1a1a" }}>
-            <div style={{ fontWeight: 800, letterSpacing: "0.04em", color: "#ef7627", whiteSpace: "nowrap" }}>Acme Portal</div>
+            <div style={{ fontWeight: 800, letterSpacing: "0.04em", color: "var(--red)", whiteSpace: "nowrap" }}>Acme Portal</div>
             <Menu
               mode="horizontal"
               defaultSelectedKeys={["home"]}
@@ -122,16 +122,16 @@ function PortalLayoutPreview() {
             />
             <Button>登录</Button>
           </Header>
-          <Content style={{ padding: 18, background: "linear-gradient(180deg, #fffdf8, #f7f4ec)" }}>
+          <Content style={{ padding: 18, background: "linear-gradient(180deg, var(--paper-card), var(--paper))" }}>
             <Space direction="vertical" size={14} style={{ width: "100%" }}>
               <Card
                 size="small"
-                style={{ background: "linear-gradient(135deg, #fff7eb, #fef3e6)" }}
+                style={{ background: "linear-gradient(135deg, var(--paper), var(--paper))" }}
                 bodyStyle={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}
               >
                 <div>
                   <Title level={4} style={{ margin: 0 }}>把首页入口、宣传语和内容区分开</Title>
-                  <Paragraph style={{ margin: "6px 0 0", color: "#666" }}>header / nav / banner / main / footer 是最常见的官网骨架。</Paragraph>
+                  <Paragraph style={{ margin: "6px 0 0", color: "var(--text-soft)" }}>header / nav / banner / main / footer 是最常见的官网骨架。</Paragraph>
                 </div>
                 <Button type="primary">立即开始</Button>
               </Card>
@@ -158,7 +158,7 @@ function PortalLayoutPreview() {
               </div>
             </Space>
           </Content>
-          <div style={{ padding: "14px 20px", borderTop: "1.5px solid #1a1a1a", background: "#fff", fontSize: 13, color: "#666" }}>
+          <div style={{ padding: "14px 20px", borderTop: "1.5px solid #1a1a1a", background: "#fff", fontSize: 13, color: "var(--text-soft)" }}>
             版权 / 联系方式 / 备案信息
           </div>
         </Layout>
@@ -172,7 +172,7 @@ function BlogLayoutPreview() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#ef7627",
+          colorPrimary: "var(--red)",
           borderRadius: 0,
           fontFamily:
             'Instrument Sans, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
@@ -182,7 +182,7 @@ function BlogLayoutPreview() {
       <div style={{ minHeight: 320 }}>
         <Layout style={{ minHeight: 320, borderRadius: 0, overflow: "hidden", border: "1.5px solid #1a1a1a", background: "#fff" }}>
           <Header style={{ display: "flex", alignItems: "center", gap: 16, padding: "0 20px", background: "#fff", borderBottom: "1.5px solid #1a1a1a" }}>
-            <div style={{ fontWeight: 800, letterSpacing: "0.04em", color: "#ef7627", whiteSpace: "nowrap" }}>How to Frontend</div>
+            <div style={{ fontWeight: 800, letterSpacing: "0.04em", color: "var(--red)", whiteSpace: "nowrap" }}>How to Frontend</div>
             <Menu
               mode="horizontal"
               defaultSelectedKeys={["posts"]}
@@ -196,10 +196,10 @@ function BlogLayoutPreview() {
             <Input prefix={<SearchOutlined />} placeholder="搜索文章" style={{ width: 160 }} />
           </Header>
           <Layout>
-            <Content style={{ padding: 18, background: "linear-gradient(180deg, #fffdf8, #f7f4ec)" }}>
+            <Content style={{ padding: 18, background: "linear-gradient(180deg, var(--paper-card), var(--paper))" }}>
               <Card size="small" style={{ marginBottom: 12 }}>
                 <Title level={4} style={{ margin: 0 }}>文章标题：如何把布局说清楚</Title>
-                <Paragraph style={{ margin: "8px 0 0", color: "#666" }}>
+                <Paragraph style={{ margin: "8px 0 0", color: "var(--text-soft)" }}>
                   Article 区域负责正文，下面按段落、代码块和评论区组织内容。
                 </Paragraph>
               </Card>
@@ -211,20 +211,20 @@ function BlogLayoutPreview() {
                 </Card>
                 <Card size="small" title="评论区">
                   <Space align="center" size={8}>
-                    <Avatar style={{ backgroundColor: "#ef7627" }}>L</Avatar>
+                    <Avatar style={{ backgroundColor: "var(--red)" }}>L</Avatar>
                     <Text>读者在这里留言和互动</Text>
                   </Space>
                 </Card>
               </Space>
             </Content>
-            <Sider width={240} style={{ background: "#fbfaf6", borderLeft: "1.5px solid #1a1a1a" }}>
+            <Sider width={240} style={{ background: "var(--paper-card)", borderLeft: "1.5px solid #1a1a1a" }}>
               <div style={{ padding: 18, display: "grid", gap: 12 }}>
                 <Card size="small" title="作者信息">
                   <Space align="center" size={12}>
-                    <Avatar style={{ backgroundColor: "#ef7627" }}>A</Avatar>
+                    <Avatar style={{ backgroundColor: "var(--red)" }}>A</Avatar>
                     <div>
                       <div style={{ fontWeight: 700 }}>Alex</div>
-                      <div style={{ color: "#666" }}>前端工程师</div>
+                      <div style={{ color: "var(--text-soft)" }}>前端工程师</div>
                     </div>
                   </Space>
                 </Card>
@@ -244,7 +244,7 @@ function BlogLayoutPreview() {
               </div>
             </Sider>
           </Layout>
-          <div style={{ padding: "14px 20px", borderTop: "1.5px solid #1a1a1a", background: "#fff", fontSize: 13, color: "#666" }}>
+          <div style={{ padding: "14px 20px", borderTop: "1.5px solid #1a1a1a", background: "#fff", fontSize: 13, color: "var(--text-soft)" }}>
             版权 / 备案 / 关于
           </div>
         </Layout>

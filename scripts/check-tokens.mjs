@@ -141,6 +141,10 @@ for (const file of files) {
     const trimmed = line.trim()
     if (trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*')) return
 
+    // JS 数据对象里的 `hex: "#xxx"` 是当作「数据」消费的(如色板渲染),
+    // 不是颜色「使用点」,放过。
+    if (/\bhex\s*:\s*["']?#?[0-9a-fA-F]/i.test(line)) return
+
     // 皮肤定义块内放过
     if (rel.endsWith('.css') && isInSkinDefinitionBlock(lines, idx)) return
 

@@ -203,8 +203,8 @@ const patterns = [
   .reference-lab {
     min-height: 100vh;
     background:
-      radial-gradient(circle at top left, rgba(212, 63, 42, 0.16), transparent 22rem),
-      linear-gradient(180deg, #0d0d0d 0%, #141414 100%);
+      radial-gradient(circle at top left, color-mix(in srgb, var(--red) 16%, transparent), transparent 22rem),
+      linear-gradient(180deg, var(--text) 0%, var(--charcoal) 100%);
   }
 
   .reference-shell {
@@ -218,9 +218,9 @@ const patterns = [
     gap: 1.5rem;
     margin-bottom: 1.75rem;
     padding: 1.35rem;
-    border: 1px solid rgba(244, 234, 214, 0.18);
-    background: rgba(20, 20, 20, 0.86);
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+    border: 1px solid color-mix(in srgb, var(--paper-code) 18%, transparent);
+    background: color-mix(in srgb, var(--charcoal) 86%, transparent);
+    box-shadow: 0 18px 60px color-mix(in srgb, var(--text) 24%, transparent);
   }
 
   .reference-kicker {
@@ -242,7 +242,7 @@ const patterns = [
   .reference-hero p {
     max-width: 58ch;
     margin: 0;
-    color: rgba(244, 234, 214, 0.76);
+    color: color-mix(in srgb, var(--paper-code) 76%, transparent);
     line-height: 1.75;
   }
 
@@ -254,8 +254,8 @@ const patterns = [
 
   .reference-hero-meta div {
     padding: 1rem;
-    border: 1px solid rgba(244, 234, 214, 0.14);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid color-mix(in srgb, var(--paper-code) 14%, transparent);
+    background: color-mix(in srgb, var(--paper-card) 3%, transparent);
   }
 
   .reference-hero-meta span,
@@ -269,7 +269,7 @@ const patterns = [
     font-size: 0.74rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(244, 234, 214, 0.56);
+    color: color-mix(in srgb, var(--paper-code) 56%, transparent);
   }
 
   .reference-hero-meta strong,
@@ -288,8 +288,8 @@ const patterns = [
   .reference-card {
     display: grid;
     grid-template-columns: minmax(0, 1.04fr) minmax(21rem, 0.96fr);
-    border: 1px solid rgba(244, 234, 214, 0.16);
-    background: rgba(10, 10, 10, 0.78);
+    border: 1px solid color-mix(in srgb, var(--paper-code) 16%, transparent);
+    background: color-mix(in srgb, var(--text) 78%, transparent);
     overflow: hidden;
   }
 
@@ -299,10 +299,10 @@ const patterns = [
   }
 
   .reference-preview {
-    border-right: 1px solid rgba(244, 234, 214, 0.12);
+    border-right: 1px solid color-mix(in srgb, var(--paper-code) 12%, transparent);
     background:
-      linear-gradient(180deg, rgba(255, 212, 59, 0.05), transparent 26%),
-      rgba(19, 19, 19, 0.95);
+      linear-gradient(180deg, color-mix(in srgb, var(--yellow) 5%, transparent), transparent 26%),
+      color-mix(in srgb, var(--charcoal) 95%, transparent);
   }
 
   .reference-card-head strong {
@@ -315,7 +315,7 @@ const patterns = [
 
   .reference-card-head p {
     margin: 0.7rem 0 0;
-    color: rgba(244, 234, 214, 0.74);
+    color: color-mix(in srgb, var(--paper-code) 74%, transparent);
     line-height: 1.75;
   }
 
@@ -337,7 +337,7 @@ const patterns = [
   .reference-panel-body p,
   .reference-photo-copy p {
     margin: 0;
-    color: rgba(244, 234, 214, 0.74);
+    color: color-mix(in srgb, var(--paper-code) 74%, transparent);
     line-height: 1.72;
   }
 
@@ -346,7 +346,7 @@ const patterns = [
     justify-content: space-between;
     gap: 0.75rem;
     padding: 0.55rem 0;
-    border-top: 1px dashed rgba(244, 234, 214, 0.18);
+    border-top: 1px dashed color-mix(in srgb, var(--paper-code) 18%, transparent);
     color: var(--dossier-text);
     font-family: var(--font-mono);
     font-size: 0.86rem;
@@ -359,8 +359,8 @@ const patterns = [
     gap: 1rem;
     align-items: center;
     padding: 1rem;
-    border: 1px solid rgba(244, 234, 214, 0.12);
-    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid color-mix(in srgb, var(--paper-code) 12%, transparent);
+    background: color-mix(in srgb, var(--paper-card) 3%, transparent);
   }
 
   .reference-photo-sample .dossier-photo {
@@ -379,8 +379,8 @@ const patterns = [
     gap: 1rem;
     align-content: start;
     background:
-      linear-gradient(180deg, rgba(212, 63, 42, 0.06), transparent 16%),
-      #111111;
+      linear-gradient(180deg, color-mix(in srgb, var(--red) 6%, transparent), transparent 16%),
+      var(--charcoal);
   }
 
   .reference-token-list ul,
@@ -398,8 +398,8 @@ const patterns = [
     gap: 1rem;
     align-items: center;
     padding: 0.7rem 0.85rem;
-    border: 1px solid rgba(244, 234, 214, 0.1);
-    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid color-mix(in srgb, var(--paper-code) 10%, transparent);
+    background: color-mix(in srgb, var(--paper-card) 3%, transparent);
   }
 
   .reference-token-list code {
@@ -408,7 +408,7 @@ const patterns = [
   }
 
   .reference-token-list span {
-    color: rgba(244, 234, 214, 0.78);
+    color: color-mix(in srgb, var(--paper-code) 78%, transparent);
     font-family: var(--font-mono);
     font-size: 0.86rem;
   }
@@ -417,12 +417,12 @@ const patterns = [
     margin: 0.7rem 0 0;
     padding: 1rem;
     overflow-x: auto;
-    border: 1px solid rgba(244, 234, 214, 0.1);
-    background: #0a0a0a;
+    border: 1px solid color-mix(in srgb, var(--paper-code) 10%, transparent);
+    background: var(--text);
   }
 
   .reference-code-block code {
-    color: #e8dcc3;
+    color: var(--paper-code);
     font-family: var(--font-mono);
     font-size: 0.86rem;
     line-height: 1.68;
@@ -430,7 +430,7 @@ const patterns = [
   }
 
   .reference-notes li {
-    color: rgba(244, 234, 214, 0.78);
+    color: color-mix(in srgb, var(--paper-code) 78%, transparent);
     line-height: 1.72;
     padding-left: 1.1rem;
     position: relative;
@@ -452,7 +452,7 @@ const patterns = [
 
     .reference-preview {
       border-right: 0;
-      border-bottom: 1px solid rgba(244, 234, 214, 0.12);
+      border-bottom: 1px solid color-mix(in srgb, var(--paper-code) 12%, transparent);
     }
   }
 

@@ -14,7 +14,16 @@
       "purple":       "#C4A1FF",
       "pink":         "#FF30CD",
       "alert-red":    "#ff4d4d",
-      "phosphor-green":"#00d26a"
+      "phosphor-green":"#00d26a",
+      "ink-warm":     "#241d13",
+      "ink-warm-soft":"#6b5c42",
+      "amber-ink":    "#a85f00",
+      "svg-blue":     "#00A8F8",
+      "svg-pink":     "#D030A8",
+      "svg-green":    "#00C870",
+      "svg-purple":   "#A088D0",
+      "dark-void":    "#1E1E1B",
+      "charcoal":     "#1a1a1a"
     },
     "shadows": {
       "sm": "2px 2px 0 0 #000000",

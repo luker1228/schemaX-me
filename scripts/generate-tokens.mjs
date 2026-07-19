@@ -13,10 +13,11 @@ const design = JSON.parse(readFileSync(resolve(root, 'DESIGN.json'), 'utf-8'))
 const { colors, shadows } = design.tokens
 
 // ── CSS 变量名映射 ──────────────────────────────────────────────────
+// 每个 DESIGN token 可暴露多个语义别名,便于源码按语义引用。
 const COLOR_VARS = {
-  'paper':         ['--bg'],
-  'paper-card':    ['--surface'],
-  'paper-code':    ['--surface-muted'],
+  'paper':         ['--bg', '--paper'],
+  'paper-card':    ['--surface', '--paper-card'],
+  'paper-code':    ['--surface-muted', '--paper-code'],
   'ink':           ['--text', '--border'],
   'ink-muted':     ['--text-soft'],
   'yellow':        ['--accent', '--yellow'],
@@ -24,7 +25,16 @@ const COLOR_VARS = {
   'purple':        ['--purple'],
   'pink':          ['--pink'],
   'alert-red':     ['--red'],
-  'phosphor-green':['--green'],
+  'phosphor-green':['--green', '--phosphor-green'],
+  'ink-warm':      ['--ink-warm'],
+  'ink-warm-soft': ['--ink-warm-soft'],
+  'amber-ink':     ['--amber-ink'],
+  'svg-blue':      ['--svg-blue'],
+  'svg-pink':      ['--svg-pink'],
+  'svg-green':     ['--svg-green'],
+  'svg-purple':    ['--svg-purple'],
+  'dark-void':     ['--dark-void'],
+  'charcoal':      ['--charcoal'],
 }
 
 function hexToRgba(hex, alpha) {

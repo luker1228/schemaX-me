@@ -150,14 +150,14 @@ const title = "后端同学的前端课程";
 
 <style>
   :global(html.arrival-pending) {
-    background: #0c0f0d;
+    background: var(--charcoal);
   }
   :global(html.arrival-active),
   :global(html.arrival-active body) {
     overflow: hidden;
   }
   :global(html.arrival-pending body) {
-    background: #0c0f0d;
+    background: var(--charcoal);
   }
   :global(html.arrival-pending [data-arrival-content]) {
     opacity: 0;
@@ -191,8 +191,8 @@ const title = "后端同学的前端课程";
     z-index: 4;
     width: 100%;
     height: 1px;
-    background: rgba(152, 255, 201, 0.34);
-    box-shadow: 0 0 18px rgba(34, 255, 136, 0.32);
+    background: color-mix(in srgb, var(--paper-code) 34%, transparent);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--phosphor-green) 32%, transparent);
     opacity: 1;
     transform: translateY(-50%);
     transition: opacity 420ms ease;
@@ -218,15 +218,15 @@ const title = "后端同学的前端课程";
     position: relative;
     z-index: 2;
     padding: clamp(1.1rem, 3vw, 1.6rem);
-    border: 1px solid rgba(74, 255, 176, 0.28);
+    border: 1px solid color-mix(in srgb, var(--mint) 28%, transparent);
     border-radius: 24px;
     background:
-      linear-gradient(180deg, rgba(20, 54, 36, 0.72), rgba(7, 14, 11, 0.9)),
-      rgba(5, 10, 8, 0.94);
+      linear-gradient(180deg, color-mix(in srgb, var(--dark-void) 72%, transparent), color-mix(in srgb, var(--text) 90%, transparent)),
+      color-mix(in srgb, var(--text) 94%, transparent);
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-      0 24px 80px rgba(0, 0, 0, 0.42),
-      0 0 48px rgba(34, 255, 136, 0.12);
+      0 0 0 1px color-mix(in srgb, var(--paper-card) 4%, transparent) inset,
+      0 24px 80px color-mix(in srgb, var(--text) 42%, transparent),
+      0 0 48px color-mix(in srgb, var(--phosphor-green) 12%, transparent);
     overflow: hidden;
     opacity: 0;
     transform: translateY(10px) scale(0.985);
@@ -250,12 +250,12 @@ const title = "后端同学的前端课程";
   }
   .arrival-shell::before {
     background:
-      radial-gradient(circle at top right, rgba(34, 255, 136, 0.18), transparent 28%),
-      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      radial-gradient(circle at top right, color-mix(in srgb, var(--phosphor-green) 18%, transparent), transparent 28%),
+      linear-gradient(90deg, transparent, color-mix(in srgb, var(--paper-card) 5%, transparent), transparent);
     opacity: 0.8;
   }
   .arrival-shell::after {
-    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 4px);
+    background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--paper-card) 3%, transparent) 0 1px, transparent 1px 4px);
     mix-blend-mode: screen;
     opacity: 0.3;
   }
@@ -270,10 +270,10 @@ const title = "后端同学的前端课程";
     text-transform: uppercase;
   }
   .arrival-label {
-    color: rgba(230, 255, 244, 0.74);
+    color: color-mix(in srgb, var(--paper-card) 74%, transparent);
   }
   .arrival-state {
-    color: #ffd43b;
+    color: var(--yellow);
   }
   .arrival-grid {
     display: grid;
@@ -284,9 +284,9 @@ const title = "后端同学的前端课程";
   .arrival-frame,
   .arrival-side {
     position: relative;
-    border: 1px solid rgba(74, 255, 176, 0.22);
+    border: 1px solid color-mix(in srgb, var(--mint) 22%, transparent);
     border-radius: 20px;
-    background: rgba(6, 13, 10, 0.7);
+    background: color-mix(in srgb, var(--text) 70%, transparent);
   }
   .arrival-frame {
     min-height: 360px;
@@ -297,7 +297,7 @@ const title = "后端同学的前端课程";
     position: absolute;
     width: 22px;
     height: 22px;
-    border-color: #7dffbf;
+    border-color: var(--paper-code);
     border-style: solid;
     border-width: 0;
     opacity: 0.88;
@@ -330,9 +330,9 @@ const title = "后端同学的前端课程";
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgba(34, 255, 136, 0.05), transparent 24%, transparent 76%, rgba(34, 255, 136, 0.06)),
-      repeating-linear-gradient(90deg, rgba(34, 255, 136, 0.06) 0 1px, transparent 1px 48px),
-      repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.05) 0 1px, transparent 1px 40px);
+      linear-gradient(180deg, color-mix(in srgb, var(--phosphor-green) 5%, transparent), transparent 24%, transparent 76%, color-mix(in srgb, var(--phosphor-green) 6%, transparent)),
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--phosphor-green) 6%, transparent) 0 1px, transparent 1px 48px),
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--phosphor-green) 5%, transparent) 0 1px, transparent 1px 40px);
     opacity: 0.65;
   }
   .arrival-target {
@@ -343,7 +343,7 @@ const title = "后端同学的前端课程";
   }
   .arrival-ring {
     position: absolute;
-    border: 1px solid rgba(122, 255, 193, 0.34);
+    border: 1px solid color-mix(in srgb, var(--paper-code) 34%, transparent);
     border-radius: 50%;
   }
   .arrival-ring.ring-a {
@@ -367,7 +367,7 @@ const title = "后端同学的前端课程";
     right: 10%;
     top: 0;
     height: 72px;
-    background: linear-gradient(180deg, rgba(144, 255, 204, 0), rgba(144, 255, 204, 0.42), rgba(144, 255, 204, 0));
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--paper-code) 42%, transparent), transparent);
     filter: blur(2px);
     transform: translateY(-120%);
     animation: arrival-beam-scan 1800ms ease-in-out 120ms forwards;
@@ -383,8 +383,8 @@ const title = "后端同学的前端课程";
     left: 50%;
     display: block;
     transform: translateX(-50%);
-    background: linear-gradient(180deg, rgba(194, 255, 223, 0.92), rgba(40, 255, 144, 0.16));
-    box-shadow: 0 0 18px rgba(81, 255, 166, 0.16);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--paper-code) 92%, transparent), color-mix(in srgb, var(--phosphor-green) 16%, transparent));
+    box-shadow: 0 0 18px color-mix(in srgb, var(--mint) 16%, transparent);
   }
   .arrival-head-shape {
     top: 8px;
@@ -403,7 +403,7 @@ const title = "后端同学的前端课程";
     position: absolute;
     right: 18px;
     bottom: 18px;
-    color: #98ffc9;
+    color: var(--paper-code);
     font-size: 0.84rem;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -414,9 +414,9 @@ const title = "后端同学的前端课程";
     left: 18px;
     bottom: 18px;
     padding: 0.36rem 0.65rem;
-    border: 1px solid rgba(152, 255, 201, 0.42);
-    background: rgba(2, 7, 4, 0.72);
-    color: #effff5;
+    border: 1px solid color-mix(in srgb, var(--paper-code) 42%, transparent);
+    background: color-mix(in srgb, var(--text) 72%, transparent);
+    color: var(--paper-card);
     font-size: clamp(1rem, 2.4vw, 1.22rem);
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -435,7 +435,7 @@ const title = "后端同学的前端课程";
     align-content: center;
   }
   .arrival-kicker {
-    color: rgba(236, 255, 246, 0.58);
+    color: color-mix(in srgb, var(--paper-card) 58%, transparent);
     font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -445,26 +445,26 @@ const title = "后端同学的前端课程";
     gap: 0.45rem;
   }
   .arrival-dossier strong {
-    color: #effff5;
+    color: var(--paper-card);
     font-size: clamp(1.15rem, 3vw, 1.5rem);
     line-height: 1.05;
     letter-spacing: 0.02em;
   }
   .arrival-dossier p {
     margin: 0;
-    color: rgba(152, 255, 201, 0.9);
+    color: color-mix(in srgb, var(--paper-code) 90%, transparent);
     font-size: 0.82rem;
     line-height: 1.6;
   }
   .arrival-log {
     width: 100%;
-    color: #22ff88;
+    color: var(--phosphor-green);
     font-size: 0.78rem;
     line-height: 1.7;
     padding: 0.95rem 1rem;
-    border: 1px solid rgba(74, 255, 176, 0.15);
+    border: 1px solid color-mix(in srgb, var(--mint) 15%, transparent);
     border-radius: 14px;
-    background: rgba(9, 18, 13, 0.68);
+    background: color-mix(in srgb, var(--charcoal) 68%, transparent);
   }
   .arrival-log p {
     margin: 0;

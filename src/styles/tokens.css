@@ -7,10 +7,13 @@
   /* ── Colors ── */
   /* Paper */
   --bg: #FFF7E8;
+  --paper: #FFF7E8;
   /* Paper Card */
   --surface: #FFFFFF;
+  --paper-card: #FFFFFF;
   /* Paper Code */
   --surface-muted: #EFE7D6;
+  --paper-code: #EFE7D6;
   /* Ink */
   --text: #000000;
   --border: #000000;
@@ -29,6 +32,25 @@
   --red: #ff4d4d;
   /* Phosphor Green */
   --green: #00d26a;
+  --phosphor-green: #00d26a;
+  /* ink-warm */
+  --ink-warm: #241d13;
+  /* ink-warm-soft */
+  --ink-warm-soft: #6b5c42;
+  /* amber-ink */
+  --amber-ink: #a85f00;
+  /* svg-blue */
+  --svg-blue: #00A8F8;
+  /* svg-pink */
+  --svg-pink: #D030A8;
+  /* svg-green */
+  --svg-green: #00C870;
+  /* svg-purple */
+  --svg-purple: #A088D0;
+  /* dark-void */
+  --dark-void: #1E1E1B;
+  /* charcoal */
+  --charcoal: #1a1a1a;
 
   /* ── Derived ── */
   --surface-strong: #FFF2D0;

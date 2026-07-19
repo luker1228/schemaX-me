@@ -68,10 +68,10 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
     inset: 0;
     z-index: 9999;
     background:
-      repeating-linear-gradient(0deg, rgba(34, 255, 136, 0.04) 0 1px, transparent 1px 3px),
-      radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.6) 100%),
-      #0c0f0d;
-    color: #22ff88;
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--phosphor-green) 4%, transparent) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 90% at 50% 40%, transparent 55%, color-mix(in srgb, var(--text) 60%, transparent) 100%),
+      var(--charcoal);
+    color: var(--phosphor-green);
     font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
     display: flex;
     align-items: center;
@@ -89,8 +89,8 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
     top: 14px;
     right: 16px;
     background: transparent;
-    border: 1.5px solid #2c3d33;
-    color: #6f8a7a;
+    border: 1.5px solid var(--dark-void);
+    color: var(--text-soft);
     font-family: inherit;
     font-size: 11px;
     letter-spacing: 0.14em;
@@ -98,8 +98,8 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
     cursor: pointer;
   }
   .dec-skip:hover {
-    color: #ffd43b;
-    border-color: #ffd43b;
+    color: var(--yellow);
+    border-color: var(--yellow);
   }
   .dec-box {
     max-width: 30rem;
@@ -109,8 +109,8 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
     justify-items: center;
   }
   .dec-stamp {
-    color: #d43f2a;
-    border: 2.5px solid #d43f2a;
+    color: var(--red);
+    border: 2.5px solid var(--red);
     padding: 3px 12px;
     letter-spacing: 0.16em;
     font-weight: 800;
@@ -124,13 +124,13 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
     line-height: 0.95;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #e7f3ea;
-    text-shadow: 0 0 18px rgba(34, 255, 136, 0.18);
+    color: var(--paper);
+    text-shadow: 0 0 18px color-mix(in srgb, var(--phosphor-green) 18%, transparent);
   }
   .dec-log {
     font-size: 0.82rem;
     line-height: 1.9;
-    color: #22ff88;
+    color: var(--phosphor-green);
     text-align: left;
     width: 100%;
     max-width: 22rem;
@@ -158,15 +158,15 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
     width: 100%;
     max-width: 22rem;
     height: 10px;
-    background: #08120c;
-    border: 1px solid #2c3d33;
+    background: var(--text);
+    border: 1px solid var(--dark-void);
   }
   .dec-bar i {
     display: block;
     height: 100%;
     width: 0;
-    background: #22ff88;
-    box-shadow: 0 0 10px rgba(34, 255, 136, 0.5);
+    background: var(--phosphor-green);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--phosphor-green) 50%, transparent);
     animation: dec-fill 1500ms ease forwards;
   }
   @keyframes dec-fill {
@@ -177,6 +177,6 @@ const decArt = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}images/brand/boo
   .dec-status {
     font-size: 0.74rem;
     letter-spacing: 0.12em;
-    color: #6f8a7a;
+    color: var(--text-soft);
   }
 </style>

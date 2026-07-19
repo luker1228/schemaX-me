@@ -195,7 +195,7 @@ function HeroPreview() {
             <h4 style={{ margin: 0, fontSize: 30, lineHeight: 1.15, color: "#241d13" }}>
               把数据后台的操作路径，整理成一块能立即理解的首屏。
             </h4>
-            <p style={{ margin: 0, color: "#282828", lineHeight: 1.7 }}>
+            <p style={{ margin: 0, color: "var(--dark-void)", lineHeight: 1.7 }}>
               Hero 通常由 headline、supporting copy、primary CTA 和辅助信息组成。用户一进页面，先看这里。
             </p>
           </div>
@@ -203,7 +203,7 @@ function HeroPreview() {
             <RetroButton size="lg" onClick={() => setMessage("点击了开始试用，通常会进入注册或开通流程。")}>开始试用</RetroButton>
             <RetroButton variant="outline" size="lg" onClick={() => setMessage("点击了查看 Demo，通常会跳到演示页或产品导览。")}>查看 Demo</RetroButton>
           </div>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "#282828", fontSize: 12 }}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", color: "var(--dark-void)", fontSize: 12 }}>
             <span>headline</span>
             <span>supporting copy</span>
             <span>primary CTA</span>
@@ -225,8 +225,8 @@ function CardPreview() {
         <CardHeader><CardTitle>专业版套餐 <Badge>{saved ? "已加入" : "推荐"}</Badge></CardTitle></CardHeader>
         <CardContent>
         <div style={{ display: "grid", gap: 12 }}>
-          <p style={{ margin: 0, color: "#666" }}>适合需要多人协作和权限管理的团队。</p>
-          <div style={{ fontSize: 28, fontWeight: 700 }}>¥199<span style={{ fontSize: 14, fontWeight: 400, color: "#777" }}>/月</span></div>
+          <p style={{ margin: 0, color: "var(--text-soft)" }}>适合需要多人协作和权限管理的团队。</p>
+          <div style={{ fontSize: 28, fontWeight: 700 }}>¥199<span style={{ fontSize: 14, fontWeight: 400, color: "var(--text-soft)" }}>/月</span></div>
           <RetroButton onClick={() => setSaved((value) => !value)}>{saved ? "已加入清单" : "立即开通"}</RetroButton>
           <p className="atlas-feedback" style={{ margin: 0 }}>{saved ? "这个卡片通常会把套餐加入比较或购买流程。" : "点按钮试试卡片里的主操作。"}</p>
         </div>
@@ -270,7 +270,7 @@ function CtaPreview() {
       >
         <div style={{ display: "grid", gap: 8 }}>
           <h4 style={{ margin: 0, fontSize: 22, lineHeight: 1.2 }}>把试用用户转成正式开通</h4>
-          <p style={{ margin: 0, color: "#282828", lineHeight: 1.7 }}>
+          <p style={{ margin: 0, color: "var(--dark-void)", lineHeight: 1.7 }}>
             CTA 是 call to action，核心是明确告诉用户下一步做什么。
           </p>
         </div>
@@ -290,7 +290,7 @@ function InputPreview() {
   return (
     <div className="atlas-demo">
       <div style={{ maxWidth: 320 }}>
-        <label style={{ display: "block", marginBottom: 6, fontSize: 13, color: "#666" }}>用户名</label>
+        <label style={{ display: "block", marginBottom: 6, fontSize: 13, color: "var(--text-soft)" }}>用户名</label>
         <RetroInput value={value} onChange={(e) => setValue(e.target.value)} />
         <p className="atlas-feedback">当前输入：<span>{value || "(空)"}</span></p>
       </div>
@@ -304,7 +304,7 @@ function TextareaPreview() {
   return (
     <div className="atlas-demo">
       <div style={{ maxWidth: 520, width: "100%" }}>
-        <label style={{ display: "block", marginBottom: 6, fontSize: 13, color: "#666" }}>需求描述</label>
+        <label style={{ display: "block", marginBottom: 6, fontSize: 13, color: "var(--text-soft)" }}>需求描述</label>
         <Textarea rows={5} value={value} onChange={(e) => setValue(e.target.value)} placeholder="输入多行文案或说明" />
         <p className="atlas-feedback">适合放较长内容、备注、评论、Prompt 草稿。</p>
       </div>
@@ -382,7 +382,7 @@ function SwitchPreview() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <div>
             <div style={{ fontWeight: 600, marginBottom: 4 }}>允许公开访问</div>
-            <div style={{ color: "#666", fontSize: 13 }}>关闭后，未登录用户将无法查看此页面。</div>
+            <div style={{ color: "var(--text-soft)", fontSize: 13 }}>关闭后，未登录用户将无法查看此页面。</div>
           </div>
           <RetroSwitch checked={checked} onCheckedChange={setChecked} />
         </div>
