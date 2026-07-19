@@ -31,6 +31,12 @@
   --purple: #b678ff;
   /* Alert Red */
   --red: #ff4d4d;
+  /* Field Green */
+  --green-ink: #1f7a3a;
+  /* Field Red */
+  --red-ink: #b3261e;
+  /* Field Violet */
+  --purple-ink: #7a3fb0;
 
   /* ── Derived ── */
   --accent-soft: rgba(255, 212, 59, 0.12);

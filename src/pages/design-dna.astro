@@ -1,0 +1,1223 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DossierAssetCard from "../components/DossierAssetCard.astro";
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, "")}`;
+
+// —— 设计 DNA · THEME LAB ——
+// 配色 token 来自 tokens.css 的实际值,字体/形状/motif 来自 dossier 设计系统
+
+const palette = [
+  { name: "INK", hex: "#171717", role: "页面主底 / Carbon Black", tone: "dark" },
+  { name: "PAPER", hex: "#f6ead6", role: "正文纸面 / Aged Ivory", tone: "paper" },
+  { name: "ACID", hex: "#ffd43b", role: "CTA / 编号 / Wanted Yellow", tone: "acid" },
+  { name: "LIME", hex: "#00d26a", role: "在线 / 数据 / Phosphor Green", tone: "lime" },
+  { name: "CYAN", hex: "#00d4ff", role: "链接 / 悬停 / Cold Wire Cyan", tone: "cyan" },
+  { name: "REDACT", hex: "#ff4d4d", role: "印章 / 警示 / Alert Red", tone: "red" }
+];
+
+const typeScale = [
+  { token: "hero / display", size: "clamp(3rem, 8vw, 7rem)", weight: "700", sample: "人类大模型" },
+  { token: "section head", size: "clamp(1.5rem, 3vw, 2.8rem)", weight: "700", sample: "外勤记录" },
+  { token: "body", size: "15px ~ 17px", weight: "400", sample: "正文清晰耐读,中性无衬线。" },
+  { token: "mono / meta", size: "11px ~ 13px", weight: "700", sample: "STATUS: ONLINE" },
+  { token: "big numeral", size: "clamp(4rem, 10vw, 10rem)", weight: "900", sample: "03" }
+];
+
+const grammar = [
+  {
+    code: "MOD-01",
+    title: "CYBERPUNK",
+    desc: "扫描、荧光、系统警示、机械编号、危险感、在线感。",
+    examples: ["扫描条", "状态灯闪烁", "荧光 acid", "REC 印章"],
+    tone: "red"
+  },
+  {
+    code: "MOD-02",
+    title: "ZINE",
+    desc: "撞版、编号、边注、拼贴、裁切式标题、低保真印刷感。",
+    examples: ["大编号", "脚注边注", "issue tag", "局部出血"],
+    tone: "yellow"
+  },
+  {
+    code: "MOD-03",
+    title: "RETROUI",
+    desc: "厚边框、硬阴影、凸起按钮、窗口栏、状态条、旧机器界面。",
+    examples: ["硬阴影 4px", "厚边框 panel", "塑料键帽按钮", "角标对位"],
+    tone: "green"
+  }
+];
+---
+
+<BaseLayout
+  title="设计 DNA · THEME LAB · Luke"
+  description="Luke 站点的设计 DNA——cyberpunk + zine + retroui 三层语法、配色 token、字体阶梯、motif 装备清单,以 Theme Lab 形式自我指涉展示。"
+>
+  <div class="design-dna-page dossier">
+
+    {/* ===== HERO · THEME LAB ===== */}
+    <section class="shell-wide design-dna-hero" id="top">
+      <div class="design-dna-hero-grid">
+        <div class="design-dna-hero-meta">
+          <span class="design-dna-pill">THEME LAB</span>
+          <span class="design-dna-pill omega">ISSUE 03</span>
+        </div>
+
+        <h1 class="design-dna-title">
+          设计 <span class="design-dna-title-accent">DNA</span>
+        </h1>
+
+        <p class="design-dna-tagline">
+          // 9 个轴 · 一套语法 · 这页就是它自己的样本。
+        </p>
+
+        <p class="design-dna-lead">
+          外层像系统,内层像杂志,交互像旧机器。配色 token、字体阶梯、形状规则、motif 装备——全部以实物 demo 呈现,不靠描述。
+        </p>
+
+        <div class="design-dna-hero-actions">
+          <a class="dossier-btn" href="#colors">▸ 探索色板</a>
+          <a class="dossier-btn ghost" href="#components">查看组件</a>
+        </div>
+      </div>
+    </section>
+
+    {/* ===== §1 COLORS · 配色 token ===== */}
+    <section class="shell-wide dossier-section design-dna-section" id="colors">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">§1 · colors</span>
+          <h2>配色 token</h2>
+        </div>
+        <p>六个语义色,黑灰底 65% / 纸白 15% / 荧光强调 20%。acid + lime 是默认双核,redact 只打点。</p>
+      </div>
+
+      <div class="dossier-panel design-dna-panel">
+        <div class="dossier-panel-head">
+          <h2>PALETTE · 6 TOKENS</h2>
+          <span class="tag loaded">● 已加载</span>
+        </div>
+
+        <ul class="design-dna-swatch-list">
+          {palette.map((c) => (
+            <li class={`design-dna-swatch tone-${c.tone}`}>
+              <span class="design-dna-swatch-chip" style={`--swatch:${c.hex}`}></span>
+              <div class="design-dna-swatch-body">
+                <span class="design-dna-swatch-name">{c.name}</span>
+                <span class="design-dna-swatch-hex">{c.hex}</span>
+                <span class="design-dna-swatch-role">{c.role}</span>
+                <span class={`design-dna-swatch-demo tone-${c.tone}`}>BTN</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    {/* ===== §2 TYPE · 字体 specimen ===== */}
+    <section class="shell-wide dossier-section design-dna-section" id="type">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">§2 · type</span>
+          <h2>字体 specimen</h2>
+        </div>
+        <p>中文标题走粗黑工业感,正文走中性无衬线,英文辅助走等宽体。标题要有压迫感,正文要能喘气。</p>
+      </div>
+
+      <div class="dossier-panel design-dna-panel">
+        <div class="dossier-panel-head">
+          <h2>TYPE · SPECIMEN</h2>
+          <span class="tag">--font-display / --font-mono</span>
+        </div>
+
+        <div class="design-dna-specimen-top">
+          <div class="design-dna-specimen-glyph" aria-hidden="true">Aa</div>
+          <div class="design-dna-specimen-info">
+            <div class="design-dna-specimen-display">人类大模型 LUKE</div>
+            <div class="design-dna-specimen-mono">luke@human-llm:~$ make page --style=dossier</div>
+          </div>
+        </div>
+
+        <div class="design-dna-specimen-marker">
+          // 一个 section 内最多一个「极端排版动作」。英文不是翻译件,而是版面节奏器。
+        </div>
+
+        <div class="design-dna-type-table">
+          <div class="design-dna-type-row design-dna-type-head">
+            <span>TOKEN</span><span>SIZE</span><span>WEIGHT</span><span>SAMPLE</span>
+          </div>
+          {typeScale.map((row) => (
+            <div class="design-dna-type-row">
+              <span class="design-dna-type-token">{row.token}</span>
+              <span class="design-dna-type-size">{row.size}</span>
+              <span class="design-dna-type-weight">{row.weight}</span>
+              <span class="design-dna-type-sample">{row.sample}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ===== §3 SHAPE · 边框 / 圆角 / 阴影 ===== */}
+    <section class="shell-wide dossier-section design-dna-section" id="shape">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">§3 · shape</span>
+          <h2>边框 · 圆角 · 阴影</h2>
+        </div>
+        <p>默认硬边,圆角最多 8px。阴影是错位印刷感,不是漂浮卡片——允许 4px 4px 0 var(--acid),禁止柔雾。</p>
+      </div>
+
+      <div class="design-dna-shape-grid">
+        <div class="dossier-panel design-dna-shape-card">
+          <div class="design-dna-shape-label">BORDER · 厚边框</div>
+          <div class="design-dna-shape-stack">
+            <span class="design-dna-shape-demo border-thin">1px solid</span>
+            <span class="design-dna-shape-demo border-mid">2px solid</span>
+            <span class="design-dna-shape-demo border-thick">3px solid</span>
+          </div>
+          <div class="design-dna-shape-note">默认 1px,强调位用 2-3px</div>
+        </div>
+
+        <div class="dossier-panel design-dna-shape-card">
+          <div class="design-dna-shape-label">SHADOW · 硬阴影</div>
+          <div class="design-dna-shape-stack">
+            <span class="design-dna-shape-demo shadow-sm">4px offset</span>
+            <span class="design-dna-shape-demo shadow-md">8px offset</span>
+            <span class="design-dna-shape-demo shadow-lg">12px offset</span>
+          </div>
+          <div class="design-dna-shape-note">错位印刷,不是浮层</div>
+        </div>
+
+        <div class="dossier-panel design-dna-shape-card">
+          <div class="design-dna-shape-label">RADIUS · 圆角</div>
+          <div class="design-dna-shape-stack">
+            <span class="design-dna-shape-demo radius-0">0</span>
+            <span class="design-dna-shape-demo radius-sm">4px</span>
+            <span class="design-dna-shape-demo radius-md">8px</span>
+          </div>
+          <div class="design-dna-shape-note">最多 8px,默认 0</div>
+        </div>
+      </div>
+    </section>
+
+    {/* ===== §4 PATTERN · motif 装备清单 ===== */}
+    <section class="shell-wide dossier-section design-dna-section" id="pattern">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">§4 · pattern</span>
+          <h2>motif 装备清单</h2>
+        </div>
+        <p>每个 motif 就是它自己的实物演示——不靠描述,靠触感。</p>
+      </div>
+
+      <div class="design-dna-motif-grid">
+        <div class="design-dna-motif-cell">
+          <div class="design-dna-motif-label">硬阴影 · HARD SHADOW</div>
+          <span class="design-dna-motif-demo with-shadow">4px 4px 0 acid</span>
+        </div>
+        <div class="design-dna-motif-cell restricted">
+          <div class="design-dna-motif-label">
+            角标对位 · REGISTRATION
+            <span class="design-dna-motif-tag">ID 卡专属</span>
+          </div>
+          <span class="design-dna-motif-demo with-corners">
+            <span class="dossier-corner tl"></span>
+            <span class="dossier-corner tr"></span>
+            <span class="dossier-corner bl"></span>
+            <span class="dossier-corner br"></span>
+            四角 L 形
+          </span>
+          <p class="design-dna-motif-note">⚠ 铁律:仅首页 §2 主体识别卡(.dossier-id)可用,其它任何位置禁止现场渲染。</p>
+        </div>
+        <div class="design-dna-motif-cell">
+          <div class="design-dna-motif-label">状态灯 · STATUS DOT</div>
+          <span class="design-dna-motif-demo with-blink"><span class="dossier-dot"></span>● ONLINE</span>
+        </div>
+        <div class="design-dna-motif-cell">
+          <div class="design-dna-motif-label">印章 · STAMP</div>
+          <span class="design-dna-motif-demo with-stamp">
+            <span class="dossier-stamp s1">CLASSIFIED</span>
+            贴角红章
+          </span>
+        </div>
+        <div class="design-dna-motif-cell">
+          <div class="design-dna-motif-label">涂黑 · REDACTED</div>
+          <span class="design-dna-motif-demo">
+            <span class="dossier-redacted">机密内容 hover 揭示</span>
+          </span>
+        </div>
+        <div class="design-dna-motif-cell">
+          <div class="design-dna-motif-label">扫描条 · SCANBAR</div>
+          <span class="design-dna-motif-demo with-scan">
+            <span class="design-dna-scanbar"></span>
+            CRT 扫描
+          </span>
+        </div>
+      </div>
+    </section>
+
+    {/* ===== §5 COMPONENTS · 组件样本(首页真实组件,共享同一份 dossier class) ===== */}
+    <section class="shell-wide dossier-section design-dna-section" id="components">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">§5 · components</span>
+          <h2>组件样本</h2>
+        </div>
+        <p>下面每个组件都是首页正在使用的同款——同一份 class、同一份样式,没有另写 demo。改这里就是改首页。</p>
+      </div>
+
+      <div class="design-dna-comp-list">
+
+        {/* —— C1 · dossier-btn 按钮 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C1 · <code>.dossier-btn</code></div>
+            <span class="design-dna-comp-where">§1 hero CTA</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="design-dna-btn-row">
+              <a class="dossier-btn" href="#components">▸ Primary</a>
+              <a class="dossier-btn ghost" href="#components">Secondary</a>
+            </div>
+            <p class="design-dna-comp-note">// 主按钮 acid 黄底硬阴影,ghost 副按钮透明描边。<code>:hover</code> 位移 2px。</p>
+          </div>
+        </article>
+
+        {/* —— C2 · dossier-panel + head + tag 容器 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C2 · <code>.dossier-panel</code> + <code>.dossier-panel-head</code></div>
+            <span class="design-dna-comp-where">§2 / §4</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-panel design-dna-nested-panel">
+              <div class="dossier-panel-head">
+                <h2>SUBJECT</h2>
+                <span class="tag loaded">● 已加载</span>
+              </div>
+              <p class="design-dna-comp-note" style="margin:0;">// 8×8 硬阴影 + 1px 墨水边 + 角标对位 + 虚线 head 分隔</p>
+            </div>
+          </div>
+        </article>
+
+        {/* —— C3 · dossier-photo 扫描框 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C3 · <code>.dossier-photo</code> 扫描框</div>
+            <span class="design-dna-comp-where">§2 ID 卡</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-photo design-dna-demo-photo">
+              <img src={withBase("images/brand/hlm1-side-profile.png")} alt="主体样本" width="400" height="600" loading="lazy" />
+              <span class="scanbar"></span>
+              <span class="reg tl"></span>
+              <span class="reg tr"></span>
+              <span class="reg bl"></span>
+              <span class="reg br"></span>
+              <span class="live">● 扫描中</span>
+            </div>
+            <p class="design-dna-comp-note">// 红色 scanbar 垂直扫描 + 四角 reg 对位 + 底部 live 状态</p>
+          </div>
+        </article>
+
+        {/* —— C4 · dossier-field 字段表 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C4 · <code>.dossier-field</code> 字段表</div>
+            <span class="design-dna-comp-where">§2 ID 卡</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-fields">
+              <div class="dossier-field"><span class="k">代号</span><span class="v">LUKE</span></div>
+              <div class="dossier-field"><span class="k">评级</span><span class="v omega">◉ OMEGA</span></div>
+              <div class="dossier-field"><span class="k">状态</span><span class="v green">● ONLINE</span></div>
+            </div>
+            <p class="design-dna-comp-note">// mono key + 值支持 <code>.v.green</code> / <code>.v.omega</code> 状态色</p>
+          </div>
+        </article>
+
+        {/* —— C5 · dossier-stat 能力矩阵条 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C5 · <code>.dossier-stat</code> + <code>.dossier-bar</code></div>
+            <span class="design-dna-comp-where">§2 能力矩阵</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-stat">
+              <div class="row">
+                <span class="name">好奇心</span>
+                <span class="val">94</span>
+              </div>
+              <div class="dossier-bar"><i style="width:94%"></i></div>
+            </div>
+            <div class="dossier-stat">
+              <div class="row">
+                <span class="name">工程直觉</span>
+                <span class="val">90</span>
+              </div>
+              <div class="dossier-bar"><i style="width:90%"></i></div>
+            </div>
+            <p class="design-dna-comp-note">// 黄色条纹填充条 + mono 数值,首页由 JS 做 count-up 生长</p>
+          </div>
+        </article>
+
+        {/* —— C6 · dossier-scan-item 技术栈扫描行 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C6 · <code>.dossier-scan-item</code> 扫描行</div>
+            <span class="design-dna-comp-where">§3 技术栈</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-scan">
+              <ul class="dossier-scan-list">
+                <li class="dossier-scan-item">
+                  <span class="scan-code">MOD-01</span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" width="18" height="18" loading="lazy" />
+                  <span>PYTHON</span>
+                  <span class="scan-prefix">已激活</span>
+                </li>
+                <li class="dossier-scan-item">
+                  <span class="scan-code">MOD-02</span>
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" width="18" height="18" loading="lazy" />
+                  <span>TYPESCRIPT</span>
+                  <span class="scan-prefix">已激活</span>
+                </li>
+              </ul>
+            </div>
+            <p class="design-dna-comp-note">// 黄色 MOD 编号 + 图标 + 名称 + 绿色激活 chip,带横向扫描光带</p>
+          </div>
+        </article>
+
+        {/* —— C7 · dossier-rec 博客记录行 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C7 · <code>.dossier-rec</code> 记录行</div>
+            <span class="design-dna-comp-where">§4 博客</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-panel dossier-records design-dna-nested-panel">
+              <a class="dossier-rec" href="#components">
+                <span class="id">REC-0042</span>
+                <span class="lv open">已解密</span>
+                <span class="date">2026-07-12</span>
+                <span class="title">样本文章标题</span>
+              </a>
+              <a class="dossier-rec" href="#components">
+                <span class="id">REC-0041</span>
+                <span class="lv open">已解密</span>
+                <span class="date">2026-06-30</span>
+                <span class="title">另一篇外勤记录</span>
+              </a>
+            </div>
+            <p class="design-dna-comp-note">// id 黄 mono + 状态 chip + 日期 + 标题,<code>.lv.open/.part/.secret</code> 三态</p>
+          </div>
+        </article>
+
+        {/* —— C8 · DossierAssetCard 课程卡(真实 Astro 组件) —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C8 · <code>&lt;DossierAssetCard /&gt;</code> 组件</div>
+            <span class="design-dna-comp-where">§5 课程</span>
+          </div>
+          <div class="design-dna-comp-body design-dna-asset-demo">
+            <DossierAssetCard
+              code="CRS-DEMO"
+              status="已上线"
+              title="样本手册"
+              copy="这是 DossierAssetCard 组件的真实渲染,与首页课程区共用同一份代码。"
+              meta="查看手册"
+              href="#components"
+              tone="green"
+            />
+            <p class="design-dna-comp-note">// 唯一真正的 Astro 组件:head(code+status) / body(title+desc) / foot(meta)</p>
+          </div>
+        </article>
+
+        {/* —— C9 · dossier-section-head section 头 —— */}
+        <article class="dossier-panel design-dna-comp-card">
+          <div class="design-dna-comp-head">
+            <div class="design-dna-comp-label">C9 · <code>.dossier-section-head</code></div>
+            <span class="design-dna-comp-where">所有 section</span>
+          </div>
+          <div class="design-dna-comp-body">
+            <div class="dossier-section-head" style="margin:0;">
+              <div>
+                <span class="dossier-kicker">// KICKER</span>
+                <h2 style="margin:0;font-size:1.4rem;">SECTION 标题</h2>
+              </div>
+              <p style="margin:0;max-width:18rem;">本页所有 section 的头部都由这个组件渲染。</p>
+            </div>
+            <p class="design-dna-comp-note">// kicker 小字 + h2 display 大写 + 右侧描述,非对称两端对齐</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    {/* ===== §6 GRAMMAR · 三层语法 ===== */}
+    <section class="shell-wide dossier-section design-dna-section" id="grammar">
+      <div class="dossier-section-head">
+        <div>
+          <span class="dossier-kicker">§6 · grammar</span>
+          <h2>三层语法</h2>
+        </div>
+        <p>外层像系统,内层像杂志,交互像旧机器——三种语言叠加,不是任一单独成立。</p>
+      </div>
+
+      <div class="design-dna-grammar-grid">
+        {grammar.map((g) => (
+          <article class={`dossier-panel design-dna-grammar-card tone-${g.tone}`}>
+            <div class="design-dna-grammar-head">
+              <span class="design-dna-grammar-code">{g.code}</span>
+              <span class="design-dna-grammar-status">● LOADED</span>
+            </div>
+            <h3 class="design-dna-grammar-title">{g.title}</h3>
+            <p class="design-dna-grammar-desc">{g.desc}</p>
+            <ul class="design-dna-grammar-examples">
+              {g.examples.map((ex) => (
+                <li>{ex}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* ===== 收尾印章行 ===== */}
+    <section class="shell-wide design-dna-signature-section">
+      <div class="design-dna-signature">
+        <span class="design-dna-signature-num">// 03</span>
+        <div class="design-dna-signature-mid">
+          <span class="design-dna-signature-note">ISSUE 03 · CLASSIFIED · LUKE · 地下实验室出品</span>
+          <span class="design-dna-signature-sub">// 这是不是 Luke 的世界,而不是任意一个赛博模板。</span>
+        </div>
+        <span class="design-dna-signature-seal">◉ OMEGA</span>
+      </div>
+    </section>
+
+  </div>
+
+  <style is:global>
+    /* ============================================================
+       设计 DNA · THEME LAB
+       全部 scope 在 .design-dna-page 下,沿用 dossier 浅色皮肤
+       ============================================================ */
+
+    .design-dna-page.dossier {
+      padding: clamp(2rem, 5vw, 4rem) 0 4rem;
+    }
+
+    /* 独立页面比首页 64rem 宽,但比全站 88rem 收一点,保持聚焦 */
+    .design-dna-page .shell-wide {
+      width: min(calc(100% - 2rem), 72rem);
+    }
+    .design-dna-page .dossier-section {
+      margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    }
+    .design-dna-page .dossier-section-head {
+      margin-bottom: 1.4rem;
+    }
+    .design-dna-page .dossier-section-head h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+    }
+
+    /* ============================================================
+       HERO · THEME LAB
+       ============================================================ */
+    .design-dna-page .design-dna-hero {
+      padding: clamp(1.5rem, 4vw, 2.5rem) 0 1rem;
+    }
+    .design-dna-page .design-dna-hero-grid {
+      display: grid;
+      gap: 1rem;
+      position: relative;
+      padding: clamp(1.6rem, 3.5vw, 2.6rem);
+      background: var(--dossier-panel);
+      border: 1px solid var(--dossier-border);
+      box-shadow: 8px 8px 0 rgba(36, 29, 19, 0.22);
+    }
+    .design-dna-page .design-dna-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .design-dna-page .design-dna-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.6rem;
+      border: 1px solid currentColor;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-pill.omega {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .design-dna-page .design-dna-title {
+      margin: 0.4rem 0 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.8rem, 9vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .design-dna-page .design-dna-title-accent {
+      display: inline-block;
+      background: linear-gradient(180deg, transparent 58%, var(--accent) 58%);
+      padding: 0 0.08em;
+    }
+    .design-dna-page .design-dna-tagline {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: clamp(11px, 1.4vw, 13px);
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-lead {
+      margin: 0.4rem 0 0;
+      max-width: 46rem;
+      font-size: clamp(14px, 1.6vw, 17px);
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .design-dna-page .design-dna-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+    }
+
+    /* ============================================================
+       通用 panel 容器
+       ============================================================ */
+    .design-dna-page .design-dna-panel { padding: 1.4rem 1.5rem; }
+
+    /* ============================================================
+       §1 COLORS · swatch 网格
+       ============================================================ */
+    .design-dna-page .design-dna-swatch-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    @media (max-width: 720px) {
+      .design-dna-page .design-dna-swatch-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 440px) {
+      .design-dna-page .design-dna-swatch-list { grid-template-columns: 1fr; }
+    }
+    .design-dna-page .design-dna-swatch {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem;
+      padding: 0.7rem;
+      background: var(--dossier-panel-2);
+      border: 1px solid var(--dossier-border);
+    }
+    .design-dna-page .design-dna-swatch-chip {
+      width: 54px;
+      height: 54px;
+      background: var(--swatch);
+      border: 1px solid var(--dossier-border-bright);
+      flex: 0 0 auto;
+    }
+    .design-dna-page .design-dna-swatch-body {
+      display: grid;
+      gap: 0.18rem;
+      align-content: start;
+    }
+    .design-dna-page .design-dna-swatch-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--yellow-ink, var(--accent));
+    }
+    .design-dna-page .design-dna-swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+    .design-dna-page .design-dna-swatch-role {
+      font-size: 11px;
+      color: var(--text-soft);
+      line-height: 1.35;
+    }
+    /* swatch 内的 mini 按钮 demo:用该 token 色做的按钮 */
+    .design-dna-page .design-dna-swatch-demo {
+      justify-self: start;
+      margin-top: 0.35rem;
+      padding: 0.15rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--dossier-border-bright);
+      background: var(--swatch-demo-bg, transparent);
+      color: var(--swatch-demo-fg, var(--text));
+    }
+    .design-dna-page .design-dna-swatch-demo.tone-dark {
+      --swatch-demo-bg: #171717;
+      --swatch-demo-fg: #f6ead6;
+    }
+    .design-dna-page .design-dna-swatch-demo.tone-paper {
+      --swatch-demo-bg: #f6ead6;
+      --swatch-demo-fg: #241d13;
+    }
+    .design-dna-page .design-dna-swatch-demo.tone-acid {
+      --swatch-demo-bg: #ffd43b;
+      --swatch-demo-fg: #171717;
+    }
+    .design-dna-page .design-dna-swatch-demo.tone-lime {
+      --swatch-demo-bg: #00d26a;
+      --swatch-demo-fg: #082515;
+    }
+    .design-dna-page .design-dna-swatch-demo.tone-cyan {
+      --swatch-demo-bg: #00d4ff;
+      --swatch-demo-fg: #062433;
+    }
+    .design-dna-page .design-dna-swatch-demo.tone-red {
+      --swatch-demo-bg: #ff4d4d;
+      --swatch-demo-fg: #2a0707;
+    }
+
+    /* ============================================================
+       §2 TYPE · specimen
+       ============================================================ */
+    .design-dna-page .design-dna-specimen-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.2rem;
+      align-items: center;
+      padding: 0.4rem 0 0.9rem;
+    }
+    @media (max-width: 560px) {
+      .design-dna-page .design-dna-specimen-top { grid-template-columns: 1fr; }
+    }
+    .design-dna-page .design-dna-specimen-glyph {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(4rem, 12vw, 7rem);
+      line-height: 0.85;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .design-dna-page .design-dna-specimen-info {
+      display: grid;
+      gap: 0.5rem;
+    }
+    .design-dna-page .design-dna-specimen-display {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+    .design-dna-page .design-dna-specimen-mono {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      letter-spacing: 0.06em;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-specimen-marker {
+      margin: 0 0 1.2rem;
+      padding: 0.6rem 0.85rem;
+      background: rgba(255, 212, 59, 0.22);
+      border-left: 3px solid var(--accent);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    /* 字号阶梯表 */
+    .design-dna-page .design-dna-type-table {
+      display: grid;
+      border: 1px solid var(--dossier-border);
+    }
+    .design-dna-page .design-dna-type-row {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 0.6fr 1.4fr;
+      gap: 0.8rem;
+      padding: 0.6rem 0.85rem;
+      border-bottom: 1px solid var(--dossier-border);
+      font-size: 13px;
+      align-items: baseline;
+    }
+    .design-dna-page .design-dna-type-row:last-child { border-bottom: none; }
+    .design-dna-page .design-dna-type-row.design-dna-type-head {
+      background: var(--dossier-panel-2);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-type-token {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--yellow-ink, var(--accent));
+      letter-spacing: 0.06em;
+    }
+    .design-dna-page .design-dna-type-size {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-type-weight {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-type-sample {
+      color: var(--text);
+      font-weight: 600;
+    }
+    @media (max-width: 640px) {
+      .design-dna-page .design-dna-type-row {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+      }
+      .design-dna-page .design-dna-type-row.design-dna-type-head { display: none; }
+    }
+
+    /* ============================================================
+       §3 SHAPE · 三栏 demo
+       ============================================================ */
+    .design-dna-page .design-dna-shape-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 760px) {
+      .design-dna-page .design-dna-shape-grid { grid-template-columns: 1fr; }
+    }
+    .design-dna-page .design-dna-shape-card { padding: 1rem 1.1rem; }
+    .design-dna-page .design-dna-shape-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--yellow-ink, var(--accent));
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px dashed var(--dossier-border-bright);
+    }
+    .design-dna-page .design-dna-shape-stack {
+      display: grid;
+      gap: 0.7rem;
+      margin-bottom: 0.7rem;
+    }
+    .design-dna-page .design-dna-shape-demo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      background: var(--dossier-panel-2);
+    }
+    .design-dna-page .design-dna-shape-demo.border-thin { border: 1px solid var(--dossier-border-bright); }
+    .design-dna-page .design-dna-shape-demo.border-mid { border: 2px solid var(--dossier-border-bright); }
+    .design-dna-page .design-dna-shape-demo.border-thick { border: 3px solid var(--text); }
+    .design-dna-page .design-dna-shape-demo.shadow-sm { border: 1px solid var(--text); box-shadow: 4px 4px 0 var(--accent); }
+    .design-dna-page .design-dna-shape-demo.shadow-md { border: 1px solid var(--text); box-shadow: 8px 8px 0 var(--cyan); }
+    .design-dna-page .design-dna-shape-demo.shadow-lg { border: 1px solid var(--text); box-shadow: 12px 12px 0 var(--red); }
+    .design-dna-page .design-dna-shape-demo.radius-0 { border: 2px solid var(--text); border-radius: 0; }
+    .design-dna-page .design-dna-shape-demo.radius-sm { border: 2px solid var(--text); border-radius: 4px; }
+    .design-dna-page .design-dna-shape-demo.radius-md { border: 2px solid var(--text); border-radius: 8px; }
+    .design-dna-page .design-dna-shape-note {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-soft);
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================================================
+       §4 PATTERN · motif 装备
+       ============================================================ */
+    .design-dna-page .design-dna-motif-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 760px) {
+      .design-dna-page .design-dna-motif-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .design-dna-page .design-dna-motif-grid { grid-template-columns: 1fr; }
+    }
+    .design-dna-page .design-dna-motif-cell {
+      position: relative;
+      display: grid;
+      gap: 0.7rem;
+      padding: 1rem 1.1rem;
+      background: var(--dossier-panel);
+      border: 1px solid var(--dossier-border);
+    }
+    .design-dna-page .design-dna-motif-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--yellow-ink, var(--accent));
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    /* 受限 motif 警示标记:ID 卡专属等铁律提示 */
+    .design-dna-page .design-dna-motif-tag {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 0.08rem 0.4rem;
+      text-transform: uppercase;
+    }
+    .design-dna-page .design-dna-motif-note {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--red);
+      letter-spacing: 0.02em;
+    }
+    .design-dna-page .design-dna-motif-demo {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      background: var(--dossier-panel-2);
+      border: 1px solid var(--dossier-border);
+      width: fit-content;
+    }
+    .design-dna-page .design-dna-motif-demo.with-shadow {
+      box-shadow: 4px 4px 0 var(--accent);
+    }
+    .design-dna-page .design-dna-motif-demo.with-corners {
+      --corner-bracket-panel-size: 9px;
+      --corner-bracket-panel-stroke: 1.5px;
+      --corner-bracket-panel-offset: -2px;
+      --corner-bracket-color: var(--accent);
+      --corner-bracket-opacity: 0.95;
+    }
+    .design-dna-page .design-dna-motif-demo.with-blink .dossier-dot {
+      background: var(--green);
+    }
+    .design-dna-page .design-dna-motif-demo.with-stamp {
+      padding-right: 4.4rem;
+    }
+    .design-dna-page .design-dna-motif-demo.with-stamp .dossier-stamp {
+      position: absolute;
+      top: -10px;
+      right: -8px;
+      font-size: 9.5px;
+      border-width: 2px;
+      padding: 0.12em 0.4em;
+      opacity: 0.92;
+    }
+    /* 扫描条 demo */
+    .design-dna-page .design-dna-motif-demo.with-scan {
+      position: relative;
+      overflow: hidden;
+    }
+    .design-dna-page .design-dna-scanbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -40%;
+      height: 40%;
+      background: linear-gradient(transparent, rgba(0, 212, 255, 0.55), transparent);
+      animation: design-dna-scan 2.6s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes design-dna-scan {
+      0% { top: -40%; }
+      100% { top: 100%; }
+    }
+
+    /* ============================================================
+       §5 COMPONENTS · 组件样本(首页真实组件,共享 dossier class)
+       ============================================================ */
+
+    /* —— 主组件列表:9 个真实组件,纵向单列阅读,每卡占满宽 —— */
+    .design-dna-page .design-dna-comp-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 760px) {
+      .design-dna-page .design-dna-comp-list { grid-template-columns: 1fr; }
+    }
+    .design-dna-page .design-dna-comp-card {
+      padding: 1.1rem 1.2rem;
+      display: grid;
+      gap: 0.8rem;
+      align-content: start;
+    }
+
+    /* 组件卡头部:左侧 label + 右侧「使用位置」标注 */
+    .design-dna-page .design-dna-comp-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px dashed var(--dossier-border-bright);
+    }
+    .design-dna-page .design-dna-comp-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--yellow-ink, var(--accent));
+    }
+    .design-dna-page .design-dna-comp-label code {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text);
+      background: var(--dossier-panel-2);
+      padding: 0.05em 0.35em;
+      border: 1px solid var(--dossier-border);
+    }
+    .design-dna-page .design-dna-comp-where {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      padding: 0.12rem 0.5rem;
+      border: 1px solid var(--dossier-border-bright);
+    }
+    .design-dna-page .design-dna-comp-body {
+      display: grid;
+      gap: 0.7rem;
+      align-content: start;
+    }
+    .design-dna-page .design-dna-comp-note {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: var(--text-soft);
+      letter-spacing: 0.02em;
+    }
+    .design-dna-page .design-dna-comp-note code {
+      font-family: var(--font-mono);
+      color: var(--yellow-ink, var(--accent));
+      background: var(--dossier-panel-2);
+      padding: 0.05em 0.3em;
+      border: 1px solid var(--dossier-border);
+    }
+
+    /* —— C1 按钮行 —— */
+    .design-dna-page .design-dna-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    /* —— C2/C7 嵌套 panel demo:用更浅一档背景,跟外层 card 区分 —— */
+    .design-dna-page .design-dna-nested-panel {
+      box-shadow: 4px 4px 0 rgba(36, 29, 19, 0.18);
+      padding: 0.8rem 0.95rem;
+    }
+
+    /* —— C3 photo demo:固定一个中等尺寸,不要撑爆 card —— */
+    .design-dna-page .design-dna-demo-photo {
+      width: clamp(140px, 40%, 200px);
+      aspect-ratio: 2 / 3;
+    }
+
+    /* —— C6 scan demo:限制高度,只露 2 行 —— */
+    .design-dna-page .design-dna-comp-card .dossier-scan { padding: 0.5rem; }
+    .design-dna-page .design-dna-comp-card .dossier-scan-list { grid-template-columns: 1fr; }
+    .design-dna-page .design-dna-comp-card .dossier-scan-item:nth-child(odd) { border-right: none; }
+    .design-dna-page .design-dna-comp-card .dossier-scan-item {
+      grid-template-columns: 3.6rem 1.4rem 1fr auto;
+      padding: 0.5rem 0.7rem;
+      font-size: 0.78rem;
+    }
+    .design-dna-page .design-dna-comp-card .dossier-scan-item img { width: 18px; height: 18px; }
+
+    /* —— C7 records demo:嵌套 panel,收紧 padding —— */
+    .design-dna-page .design-dna-comp-card .dossier-records { margin-top: 0; }
+    .design-dna-page .design-dna-comp-card .dossier-rec {
+      grid-template-columns: 80px 70px 100px 1fr;
+      gap: 0.6rem;
+      padding: 0.55rem 0.7rem;
+      font-size: 12px;
+    }
+    @media (max-width: 520px) {
+      .design-dna-page .design-dna-comp-card .dossier-rec {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+    }
+
+    /* —— C8 DossierAssetCard demo —— */
+    .design-dna-page .design-dna-asset-demo .fm-card {
+      padding: 1rem 1.1rem;
+    }
+    .design-dna-page .design-dna-asset-demo .fm-card-title {
+      font-size: 1.1rem;
+    }
+    .design-dna-page .design-dna-asset-demo .fm-card-desc {
+      font-size: 0.85rem;
+    }
+
+    /* ============================================================
+       §6 GRAMMAR · 三层语法
+       ============================================================ */
+    .design-dna-page .design-dna-grammar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 760px) {
+      .design-dna-page .design-dna-grammar-grid { grid-template-columns: 1fr; }
+    }
+    .design-dna-page .design-dna-grammar-card {
+      position: relative;
+      padding: 1.2rem 1.25rem;
+    }
+    .design-dna-page .design-dna-grammar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
+      margin-bottom: 0.7rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px dashed var(--dossier-border-bright);
+    }
+    .design-dna-page .design-dna-grammar-card.tone-red .design-dna-grammar-code { color: var(--red); }
+    .design-dna-page .design-dna-grammar-card.tone-yellow .design-dna-grammar-code { color: var(--yellow-ink, var(--accent)); }
+    .design-dna-page .design-dna-grammar-card.tone-green .design-dna-grammar-code { color: #0a5c33; }
+    .design-dna-page .design-dna-grammar-status { color: var(--green); }
+    .design-dna-page .design-dna-grammar-title {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .design-dna-page .design-dna-grammar-desc {
+      margin: 0 0 0.8rem;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+    .design-dna-page .design-dna-grammar-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .design-dna-page .design-dna-grammar-examples li {
+      padding: 0.18rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      border: 1px solid var(--dossier-border-bright);
+      background: var(--dossier-panel-2);
+    }
+
+    /* ============================================================
+       收尾印章行
+       ============================================================ */
+    .design-dna-page .design-dna-signature-section {
+      margin-top: clamp(2.5rem, 5vw, 3.5rem);
+      padding-top: 1.4rem;
+    }
+    .design-dna-page .design-dna-signature {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      padding: 1.2rem 1.4rem;
+      background: var(--dossier-panel);
+      border: 1px solid var(--dossier-border);
+      box-shadow: 8px 8px 0 rgba(36, 29, 19, 0.22);
+    }
+    .design-dna-page .design-dna-signature-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .design-dna-page .design-dna-signature-mid {
+      flex: 1 1 auto;
+      display: grid;
+      gap: 0.25rem;
+      min-width: 220px;
+    }
+    .design-dna-page .design-dna-signature-note {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+    .design-dna-page .design-dna-signature-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-soft);
+      letter-spacing: 0.06em;
+    }
+    .design-dna-page .design-dna-signature-seal {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      padding: 0.3rem 0.7rem;
+      border: 2px solid var(--accent);
+    }
+
+    /* —— reduced-motion:关掉扫描条和状态灯闪烁 —— */
+    @media (prefers-reduced-motion: reduce) {
+      .design-dna-page .design-dna-scanbar,
+      .design-dna-page .dossier-dot { animation: none !important; }
+    }
+  </style>
+</BaseLayout>

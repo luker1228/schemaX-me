@@ -2,12 +2,13 @@
 interface Props {
   title: string;
   className?: string;
+  id?: string;
 }
 
-const { title, className } = Astro.props;
+const { title, className, id } = Astro.props;
 ---
 
-<section class:list={["section", "lesson-shell", "lesson-article-section", className]}>
+<section id={id} class:list={["section", "lesson-shell", "lesson-article-section", className]}>
   <h2 class="lesson-article-section-title">{title}</h2>
   <slot />
 </section>

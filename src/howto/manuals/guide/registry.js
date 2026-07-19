@@ -57,7 +57,7 @@ article h4 {
   margin-top: 1.5rem;
   font-family: var(--font-display);
   font-size: clamp(1rem, 1.5vw, 1.2rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.4;
 }`
   });

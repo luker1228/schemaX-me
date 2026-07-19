@@ -233,24 +233,24 @@ const faqs = [
 
 export function IndexPage() {
   return (
-    <PageFrame title="非前端人的前端战术手册">
+    <PageFrame title="非前端人的前端课程">
       <div className="site-shell frontend-manual-page">
         <header className="site-header manual-topbar-header">
           <div className="shell shell-wide manual-global-bar">
             <a className="brand manual-site-brand" href={homeHref}>
-              <span className="brand-avatar manual-brand-avatar">
+              <span className="brand-logo manual-brand-logo">
                 <img src={withBasePath("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
               </span>
-              <span className="brand-copy manual-brand-copy">
-                <span className="brand-mark manual-brand-mark">schemaX</span>
-                <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+              <span className="brand-text manual-brand-text">
+                <span className="brand-name manual-brand-name">schemaX</span>
+                <span className="brand-tagline manual-brand-tagline">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
             <div className="manual-global-actions manual-index-chapters">
               <SiteNav />
             </div>
             <div className="header-actions" aria-label="固定入口">
-              <a className="header-action header-action-manual" href={withBasePath("howto/")}>战术手册</a>
+              <a className="header-action header-action-manual" href={withBasePath("howto/")}>课程</a>
               <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
             </div>
           </div>
@@ -266,7 +266,7 @@ export function IndexPage() {
                       非前端人的
                       <img aria-hidden="true" className="hero-decor hero-decor-heart" src={withBase("decor/heart.svg")} alt="" />
                     </span>
-                    <span className="accent-text">前端战术手册</span>
+                    <span className="accent-text">前端课程</span>
                   </h1>
                 </div>
                 <p className="hero-subtitle-structured">
@@ -336,10 +336,10 @@ export function IndexPage() {
         <footer className="footer">
           <div className="container footer-grid">
             <div className="footer-col">
-              <a className="brand-mark" href={withBase("index.html")}>
-                <span>前端战术</span><span className="brand-pill">FM-01</span>
+              <a className="brand-name" href={withBase("index.html")}>
+                <span>前端战术</span><span className="brand-badge">FM-01</span>
               </a>
-              <p className="card-copy">给设计师、产品、运营和后端的前端战术手册：理解结构、样式、交互与组件语言。</p>
+              <p className="card-copy">给设计师、产品、运营和后端的前端课程：理解结构、样式、交互与组件语言。</p>
             </div>
             <div className="footer-col">
               <span className="footer-caption">课程</span>

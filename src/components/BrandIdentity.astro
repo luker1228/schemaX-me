@@ -10,11 +10,11 @@ const { href, manual = false, imageSrc, showSubtitle = true } = Astro.props;
 ---
 
 <a class:list={["brand", { "manual-site-brand": manual }]} href={href}>
-  <span class:list={["brand-avatar", { "manual-brand-avatar": manual }]}>
+  <span class:list={["brand-logo", { "manual-brand-logo": manual }]}>
     <img src={imageSrc} alt="schemaX" width="56" height="56" />
   </span>
-  <span class:list={["brand-copy", { "manual-brand-copy": manual }]}>
-    <span class:list={["brand-mark", { "manual-brand-mark": manual }]}>schemaX</span>
-    {showSubtitle && <span class:list={["brand-subtitle", { "manual-brand-subtitle": manual }]}>绝密计划 · classified</span>}
+  <span class:list={["brand-text", { "manual-brand-text": manual }]}>
+    <span class:list={["brand-name", { "manual-brand-name": manual }]}>schemaX</span>
+    {showSubtitle && <span class:list={["brand-tagline", { "manual-brand-tagline": manual }]}>绝密计划 · classified</span>}
   </span>
 </a>

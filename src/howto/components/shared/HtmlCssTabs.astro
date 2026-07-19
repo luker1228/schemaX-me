@@ -1,0 +1,47 @@
+---
+interface Props {
+  id: string;
+  html: string;
+  css: string;
+}
+
+const { id, html, css } = Astro.props;
+
+function formatCss(value: string) {
+  return value.split("}").map((block) => {
+    const [selector, declarations] = block.split("{");
+    if (!selector?.trim() || declarations === undefined) return "";
+    const properties = declarations.split(";").map((property) => property.trim()).filter(Boolean);
+    return `${selector.trim()} {\n${properties.map((property) => `  ${property};`).join("\n")}\n}`;
+  }).filter(Boolean).join("\n\n");
+}
+
+const htmlTabId = `${id}-html`;
+const cssTabId = `${id}-css`;
+---
+
+<div class="guide-code-tabs" data-code-tabs>
+  <div class="guide-code-tablist" role="tablist" aria-label="代码语言切换">
+    <button type="button" role="tab" aria-selected="true" aria-controls={`${htmlTabId}-panel`} id={htmlTabId} data-code-tab="html">HTML</button>
+    <button type="button" role="tab" aria-selected="false" aria-controls={`${cssTabId}-panel`} id={cssTabId} data-code-tab="css">CSS</button>
+  </div>
+  <div role="tabpanel" id={`${htmlTabId}-panel`} aria-labelledby={htmlTabId} data-code-panel="html">
+    <figure class="guide-code-figure"><pre class="guide-code" tabindex="0" data-language="html"><code>{html}</code></pre></figure>
+  </div>
+  <div role="tabpanel" id={`${cssTabId}-panel`} aria-labelledby={cssTabId} data-code-panel="css" hidden>
+    <figure class="guide-code-figure"><pre class="guide-code" tabindex="0" data-language="css"><code>{formatCss(css)}</code></pre></figure>
+  </div>
+  <button class="guide-code-combined-copy" type="button" data-copy-html-css>复制 HTML + CSS</button>
+</div>
+
+<style>
+  .guide-code-tabs { overflow: hidden; margin-top: 1.5rem; border: 0; background: transparent; }
+  .guide-code-tablist { display: flex; background: transparent; }
+  .guide-code-tablist button { min-width: 6rem; padding: 0.7rem 1rem; border: 0; background: transparent; color: var(--muted); font: 400 0.9rem/1 var(--font-body); cursor: pointer; }
+  .guide-code-tablist button[aria-selected="true"] { background: #f0e7d6; color: var(--fg); }
+  .guide-code-figure { width: 100%; max-width: none; margin: 0; }
+  .guide-code { position: relative; margin: 0; padding: 0.875rem 1rem; overflow: auto; background: #f0e7d6; color: #1f2328; font-family: var(--font-mono); font-size: clamp(0.78rem, 1.5vw, 1rem); line-height: 1.7; }
+  .guide-code code { display: block; min-width: max-content; white-space: pre; }
+  .guide-code-combined-copy { display: flex; width: 100%; min-height: 3.25rem; align-items: center; justify-content: center; border: 0; background: #f0e7d6; color: var(--fg); font: 400 1rem/1 var(--font-body); cursor: pointer; }
+  .guide-code-combined-copy:hover, .guide-code-combined-copy:focus-visible, .guide-code-combined-copy:active, .guide-code-combined-copy[data-copied] { background: var(--ground-yellow); color: var(--fg); outline: 0; }
+</style>

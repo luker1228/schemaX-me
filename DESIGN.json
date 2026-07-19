@@ -14,8 +14,11 @@
       "wanted-yellow":  "#ffd43b",
       "cold-wire-cyan": "#00d4ff",
       "phosphor-green": "#00d26a",
-      "neural-violet":  "#b678ff",
-      "alert-red":      "#ff4d4d"
+      "neural-violet": "#b678ff",
+      "alert-red": "#ff4d4d",
+      "field-green": "#1f7a3a",
+      "field-red": "#b3261e",
+      "field-violet": "#7a3fb0"
     },
     "shadows": {
       "sm": "4px 4px 0 0 rgba(255,255,255,0.04)",
@@ -96,6 +99,24 @@
         "displayName": "Alert Red",
         "canonical": "oklch(59% 0.22 25)",
         "tonalRamp": ["#200000", "#400000", "#660000", "#8f0000", "#bf1010", "#e62e2e", "#ff4d4d", "#ffb3b3"]
+      },
+      "field-green": {
+        "role": "tertiary",
+        "displayName": "Field Green",
+        "canonical": "oklch(45% 0.11 152)",
+        "tonalRamp": ["#0a1f12", "#143d22", "#1f5a33", "#1f7a3a", "#3a9657", "#5fb077", "#8acaa0", "#c8e6d5"]
+      },
+      "field-red": {
+        "role": "tertiary",
+        "displayName": "Field Red",
+        "canonical": "oklch(44% 0.17 28)",
+        "tonalRamp": ["#1f0707", "#3d0d0d", "#5e1414", "#b3261e", "#cc4a3f", "#e07565", "#ec9c8e", "#f6d2c8"]
+      },
+      "field-violet": {
+        "role": "tertiary",
+        "displayName": "Field Violet",
+        "canonical": "oklch(46% 0.16 320)",
+        "tonalRamp": ["#1a0a24", "#2e1245", "#471d6a", "#7a3fb0", "#9462c6", "#b08fd8", "#ccb5e6", "#e7d8f1"]
       }
     },
     "typographyMeta": {

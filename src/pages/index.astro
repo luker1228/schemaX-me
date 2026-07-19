@@ -31,19 +31,12 @@ const capabilityMatrix = [
 const latestPosts = posts.slice(0, 3);
 const fieldRecords = latestPosts.map((post, idx) => ({
   id: `REC-${String(posts.length - idx).padStart(4, "0")}`,
-  level: "open" as const,
   date: formatDate(post.pubDate),
   title: post.title,
+  tag: post.tags?.[0] ?? post.category,
   href: withBase(`blogs/posts/${post.slug}/`)
 }));
-// 一条 REDACTED 彩蛋,预告未公开内容
-fieldRecords.push({
-  id: "REC-????",
-  level: "secret" as const,
-  date: "████.██.██",
-  title: "████████████████████████",
-  href: "#"
-});
+
 const graphqlSvgSrc = typeof graphqlSvg === "string" ? graphqlSvg : graphqlSvg.src;
 const dockerSvgSrc = typeof dockerSvg === "string" ? dockerSvg : dockerSvg.src;
 const goSvgSrc = typeof goSvg === "string" ? goSvg : goSvg.src;
@@ -51,425 +44,628 @@ const pythonSvgSrc = typeof pythonSvg === "string" ? pythonSvg : pythonSvg.src;
 const k8sSvgSrc = typeof k8sSvg === "string" ? k8sSvg : k8sSvg.src;
 const mysqlSvgSrc = typeof mysqlSvg === "string" ? mysqlSvg : mysqlSvg.src;
 
-const featuredWorks = [
+const courses = [
   {
-    code: "REC-01",
-    status: "已解密",
-    title: "技术博客",
-    copy: "后端工程、AI Agent、数据模型、低代码、部署与工程化的实践笔记。",
-    href: withBase("/blogs/"),
-    tone: "yellow",
-    meta: `${posts.length} 篇 · 持续更新`
-  },
-  {
-    code: "MOD-02",
-    status: "进行中",
-    title: "前端教学",
-    copy: "写给后端同学、设计同学和零基础学习者的前端速通手册,后续从独立仓库接入。",
-    href: "#frontend-guide",
+    code: "CRS-01",
+    status: "已上线",
+    title: "前端手册",
+    copy: "写给后端同学、设计同学和零基础学习者的前端速通手册,从 HTML 到 React 全链路。",
+    href: withBase("/howto/frontend/"),
     tone: "green",
-    meta: "稍后接入"
+    meta: "查看手册"
   },
   {
-    code: "SER-03",
-    status: "连载中",
-    title: "系列文章",
-    copy: "长期系列入口,统一查看 ModelCraft 与后续系列。",
-    href: withBase("/blogs/series/"),
+    code: "CRS-02",
+    status: "已上线",
+    title: "部署手册",
+    copy: "把项目从本地跑起来到上线 GitHub Pages / 自建服务器的完整工程化手册。",
+    href: withBase("/howto/deploy/"),
+    tone: "yellow",
+    meta: "查看手册"
+  },
+  {
+    code: "CRS-03",
+    status: "预告",
+    title: "后端手册",
+    copy: "服务端工程、API 设计、数据模型、AI Agent 的实践讲义,筹备中。",
+    href: "#",
     tone: "red",
-    meta: "查看全部系列"
+    meta: "筹备中 · 敬请期待"
   }
-];
-
-const guideSteps = [
-  "从 Markdown 理解 HTML",
-  "从盒子模型理解 CSS",
-  "从交互理解 JavaScript",
-  "从组件理解 React",
-  "从提示词理解 AI 写前端"
 ];
 
 const techStack = [
   {
     label: "Python",
-    copy: "Automation, agents, scripts",
-    src: pythonSvgSrc,
-    accent: "yellow",
-    featured: true
+    src: pythonSvgSrc
   },
   {
     label: "GraphQL",
-    copy: "Schema-first APIs",
-    src: graphqlSvgSrc,
-    accent: "cyan"
+    src: graphqlSvgSrc
   },
   {
     label: "Docker",
-    copy: "Portable runtime",
-    src: dockerSvgSrc,
-    accent: "purple"
+    src: dockerSvgSrc
   },
   {
     label: "Go",
-    copy: "Services & tools",
-    src: goSvgSrc,
-    accent: "green"
+    src: goSvgSrc
   },
   {
     label: "Java",
-    copy: "Enterprise services",
-    src: typeof javaSvg === "string" ? javaSvg : javaSvg.src,
-    accent: "red"
+    src: typeof javaSvg === "string" ? javaSvg : javaSvg.src
   },
   {
     label: "Kubernetes",
-    copy: "Cluster orchestration",
-    src: k8sSvgSrc,
-    accent: "blue"
+    src: k8sSvgSrc
   },
   {
     label: "MySQL",
-    copy: "Relational storage",
-    src: mysqlSvgSrc,
-    accent: "orange"
+    src: mysqlSvgSrc
   },
   {
     label: "TypeScript",
-    copy: "Frontend systems",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-    accent: "yellow"
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
   },
   {
     label: "Astro",
-    copy: "Static publishing",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
-    accent: "cyan"
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg"
   }
 ];
 
+const helloLines = ["你好,我是人类大模型 Luke。", "你的硅基同类。"];
 ---
 
-<BaseLayout title="schemaX 绝密计划" description="schemaX 绝密计划 · 人类大模型 Luke 的技术档案:技术写作、前端教学与可运行 Demo。">
-  {/* ===== 开机解密层(首次进站播放一次,sessionStorage 去重)===== */}
-  <div class="dossier-boot" id="dossierBoot" role="dialog" aria-label="正在解密档案">
-    <div class="dossier-boot-console">
-      <div class="dossier-boot-tag">// SCHEMAX · HUMAN-LARGE-MODEL RUNTIME · BOOT</div>
-      <pre class="dossier-boot-log" id="dossierBootLog"></pre>
-      <div class="dossier-boot-bar"><span id="dossierBootFill"></span></div>
-      <div class="dossier-boot-status" id="dossierBootStatus">解密中…</div>
-    </div>
-    <div class="dossier-boot-visual" aria-hidden="true">
-      <img src={`${baseUrl}images/brand/seal-hlm1.png`} alt="" width="1254" height="1254" loading="eager" decoding="async" />
-      <span class="dossier-boot-scan"></span>
-      <span class="dossier-boot-verified">SUBJECT VERIFYING</span>
-    </div>
-    <span class="dossier-boot-skip">[ 点击任意位置跳过 / SKIP ]</span>
-  </div>
+<BaseLayout title="Luke · 人类大模型" description="你好,我是人类大模型 Luke。你的硅基同类。技术写作、前端教学与工程实践。">
+  <div class="home-page dossier">
 
-  {/* ===== 主体识别 · 机密档案 ===== */}
-  <section class="shell-wide dossier" id="dossier">
-    <div class="dossier-atmosphere" aria-hidden="true"></div>
-
-    <div class="dossier-wrap">
-      <div class="dossier-topbar">
-        <span class="l">luke@human-llm<span style="color:var(--text-soft)">:~/dossier</span>$ decrypt<span class="cur"></span></span>
-        <span class="mid">FILE #LXM-0001</span>
-        <span class="r">
-          <span class="dossier-pill rec"><span class="dossier-dot"></span>REC</span>
-          <span class="dossier-pill sec">绝密</span>
-          <span class="dossier-pill omega">◉ OMEGA</span>
-        </span>
-      </div>
-
-      <div class="dossier-hero">
-        {/* 主体识别 ID 卡 */}
-        <div class="dossier-panel dossier-id">
-          <div class="dossier-panel-head">
-            <h2>主体识别</h2>
-            <span class="tag">REC #LXM-0001</span>
-          </div>
-
-          <div class="grid">
-            <div>
-              <div class="dossier-photo">
-                <img src={sideProfilePortrait.src} alt="HLM-1 主体档案" width="1024" height="1536" loading="eager" decoding="async" />
-                <span class="scanbar"></span>
-                <span class="reg tl"></span>
-                <span class="reg tr"></span>
-                <span class="reg bl"></span>
-                <span class="reg br"></span>
-                <span class="live">● 扫描中</span>
-              </div>
-              <div class="dossier-photo-label">主体成像 / SUBJECT IMAGE</div>
-            </div>
-
-            <div class="dossier-fields">
-              <div class="dossier-field"><span class="k">代号</span><span class="v">LUKE</span></div>
-              <div class="dossier-field"><span class="k">型号</span><span class="v">HLM-1 <small>// 人类大模型</small></span></div>
-              <div class="dossier-field"><span class="k">评级</span><span class="v omega">◉ OMEGA · 最强</span></div>
-              <div class="dossier-field"><span class="k">状态</span><span class="v green">● ONLINE</span></div>
-              <div class="dossier-field"><span class="k">出厂</span><span class="v">地球 · 硅基同类</span></div>
-            </div>
-          </div>
-
-          <p class="dossier-slogan">
-            「你好,我是人类大模型 Luke。你的硅基同类。」
-            <span class="en">// HELLO. I AM HUMAN-LARGE-MODEL LUKE — YOUR SILICON KIN.</span>
-          </p>
-
-          <div class="dossier-actions">
-            <a class="dossier-btn" href="#works">▸ 解锁全部档案</a>
-            <a class="dossier-btn ghost" href="https://github.com/luker1228" target="_blank" rel="noreferrer">建立加密通讯</a>
-          </div>
-        </div>
-
-        {/* 能力矩阵 */}
-        <div class="dossier-panel dossier-matrix">
-          <span class="dossier-corner tl"></span>
-          <span class="dossier-corner tr"></span>
-          <span class="dossier-corner bl"></span>
-          <span class="dossier-corner br"></span>
-          <div class="blueprint" style={`background-image:url('${blueprintWebp}')`}></div>
-
-          <div class="dossier-panel-head">
-            <h2>能力矩阵</h2>
-            <span class="tag loaded">● 已加载</span>
-          </div>
-
-          {capabilityMatrix.map((item) => (
-            <div class="dossier-stat">
-              <div class="row"><span class="name">{item.name}</span><span class="val">{item.value}</span></div>
-              <div class="dossier-bar"><i data-v={item.value}></i></div>
-            </div>
-          ))}
-
-          <div class="footnote">// 能力举证来自写作、协作与项目记录 · 数值用于表达个人品质倾向</div>
-        </div>
-      </div>
-
-      {/* 外勤记录 */}
-      <div class="dossier-panel dossier-records">
-        <span class="dossier-corner tl"></span>
-        <span class="dossier-corner tr"></span>
-        <span class="dossier-corner bl"></span>
-        <span class="dossier-corner br"></span>
-        <div class="dossier-panel-head">
-          <h2>最新文章</h2>
-          <span class="tag">{posts.length} 篇 · 悬停可解密</span>
-        </div>
-
-        {fieldRecords.map((rec) => (
-          <a class="dossier-rec" href={rec.href}>
-            <span class="id">{rec.id}</span>
-            <span class={`lv ${rec.level}`}>{rec.level === "open" ? "已解密" : rec.level === "part" ? "部分" : "绝密"}</span>
-            <span class="date">{rec.date}</span>
-            <span class="title">
-              {rec.level === "secret" ? <span class="dossier-redacted" tabindex="0">{rec.title}</span> : rec.title}
+    {/* ===== // 01 · Hello 首屏 ===== */}
+    <section class="shell-wide home-hero" id="intro" data-reveal-section>
+      <div class="home-hero-grid">
+        <h1 class="home-hello" aria-label="你好,我是人类大模型 Luke。你的硅基同类。">
+          {helloLines.map((line, i) => (
+            <span class="home-hello-line" style={`--i:${i}`} data-reveal="hello-line">
+              <span class="home-hello-text">{line}</span>
             </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <script is:inline>
-    (function () {
-      var boot = document.getElementById("dossierBoot");
-      if (!boot) return;
-      var log = document.getElementById("dossierBootLog");
-      var fill = document.getElementById("dossierBootFill");
-      var status = document.getElementById("dossierBootStatus");
-      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var KEY = "luke_booted_v1";
-
-      function reveal() {
-        boot.classList.add("hide");
-        window.setTimeout(function () { boot.style.display = "none"; }, 520);
-        var bars = document.querySelectorAll(".dossier-bar i");
-        for (var i = 0; i < bars.length; i++) {
-          (function (bar, idx) {
-            window.setTimeout(function () { bar.style.width = bar.getAttribute("data-v") + "%"; }, 150 + idx * 110);
-          })(bars[i], i);
-        }
-      }
-
-      function skip() {
-        try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
-        reveal();
-      }
-      boot.addEventListener("click", skip);
-
-      // 已访问过 或 要求减少动效:直接跳过开机
-      var seen = false;
-      try { seen = sessionStorage.getItem(KEY) === "1"; } catch (e) {}
-      if (seen || reduce) {
-        boot.style.display = "none";
-        window.addEventListener("DOMContentLoaded", function () {
-          var bars = document.querySelectorAll(".dossier-bar i");
-          for (var i = 0; i < bars.length; i++) { bars[i].style.width = bars[i].getAttribute("data-v") + "%"; }
-        });
-        // DOM 已就绪时立刻填充
-        var bars0 = document.querySelectorAll(".dossier-bar i");
-        for (var j = 0; j < bars0.length; j++) { bars0[j].style.width = bars0[j].getAttribute("data-v") + "%"; }
-        return;
-      }
-
-      // 安全兜底:6s 后强制结束,避免 JS 异常导致黑屏卡死
-      var guard = window.setTimeout(skip, 6000);
-
-      var lines = [
-        "> initializing human-large-model runtime ...",
-        "> loading subject  : LUKE  [HLM-1]",
-        "> threat eval       : OMEGA",
-        "> decrypting dossier #LXM-0001 ..."
-      ];
-      var li = 0, ci = 0;
-      function typeLine() {
-        if (li >= lines.length) { runBar(); return; }
-        var line = lines[li];
-        if (ci <= line.length) {
-          log.textContent = lines.slice(0, li).join("\n") + (li ? "\n" : "") + line.slice(0, ci);
-          ci++;
-          window.setTimeout(typeLine, 14);
-        } else {
-          ci = 0; li++;
-          window.setTimeout(typeLine, 180);
-        }
-      }
-      function runBar() {
-        var p = 0;
-        var t = window.setInterval(function () {
-          p += Math.random() * 12 + 4;
-          if (p >= 100) {
-            p = 100;
-            window.clearInterval(t);
-            fill.style.width = "100%";
-            log.textContent += "\n> ACCESS GRANTED";
-            status.textContent = "● 解密完成";
-            status.style.color = "var(--green)";
-            window.clearTimeout(guard);
-            window.setTimeout(function () { skip(); }, 600);
-          }
-          fill.style.width = p + "%";
-          status.textContent = "解密中 " + Math.floor(p) + "%";
-        }, 90);
-      }
-      window.setTimeout(typeLine, 350);
-    })();
-  </script>
-
-  {/* ===== // 03 技术栈 ===== */}
-  <section class="shell-wide dossier-section" id="stack">
-    <div class="dossier-wrap">
-      <div class="dossier-section-head">
-        <div>
-          <span class="dossier-kicker">// 03 · Modules</span>
-          <h2>技术栈</h2>
-        </div>
-      </div>
-      <div class="dossier-scan-sysbar">
-        <span>SYS: SCHEMAX-HLM1</span>
-        <span>BUS: NEURAL-64 // SKILL PATH</span>
-        <span>MODE: MIL-DEPLOY</span>
-        <span class="r">REV: 2.6 &nbsp;·&nbsp; LVL: 9 &nbsp;·&nbsp; CLR: SIGNAL</span>
-      </div>
-      <div class="dossier-scan">
-        <ul class="dossier-scan-list">
-          {techStack.map((item, index) => (
-            <li class="dossier-scan-item">
-              <span class="scan-prefix">已激活</span>
-              <img src={item.src} alt="" width="22" height="22" loading="lazy" decoding="async" />
-              <span>{item.label}</span>
-              <span class="scan-code">MOD-{String(index + 1).padStart(2, "0")}</span>
-            </li>
           ))}
-        </ul>
-      </div>
-    </div>
-  </section>
+        </h1>
 
-  {/* ===== // 04 内容入口 ===== */}
-  <section class="shell-wide dossier-section" id="works">
-    <div class="dossier-wrap">
-      <div class="dossier-section-head">
-        <div>
-          <span class="dossier-kicker">// 04 · Entries</span>
-          <h2>内容入口</h2>
-        </div>
-        <p>三个长期方向,内容分布在主站和不同子项目里。</p>
-      </div>
-      <div class="dossier-assets">
-        {featuredWorks.map((item) => (
-          <DossierAssetCard {...item} />
-        ))}
-      </div>
-    </div>
-  </section>
+        <p class="home-tagline" data-reveal="hello-tagline">
+          // HELLO. I AM HUMAN-LARGE-MODEL LUKE — YOUR SILICON KIN.
+        </p>
 
-  {/* ===== // 05 前端教学路线 ===== */}
-  <section class="shell-wide dossier-section" id="frontend-guide">
-    <div class="dossier-wrap">
-      <div class="dossier-section-head">
-        <div>
-          <span class="dossier-kicker">// 05 · Training</span>
-          <h2>前端教学路线</h2>
+        <div class="home-hero-actions" data-reveal="hello-actions">
+          <a class="dossier-btn" href="#courses">▸ 解锁全部档案</a>
+          <a class="dossier-btn ghost" href="https://github.com/luker1228" target="_blank" rel="noreferrer">建立加密通讯</a>
         </div>
-        <p>写给后端、设计和零基础同学的前端速通,会独立成仓,主站保留路线索引。</p>
+
+        <a class="home-scroll-cue" href="#matrix" aria-label="向下滚动">
+          <span class="home-scroll-cue-text">SCROLL · 解密中</span>
+          <span class="home-scroll-cue-arrow"></span>
+        </a>
       </div>
-      <div class="dossier-columns">
-        <div class="dossier-panel">
-          <div class="dossier-panel-head"><h2>训练模块</h2><span class="tag">5 个 · 由浅入深</span></div>
-          <div class="dossier-protos">
-            {guideSteps.map((step, i) => (
-              <div class="dossier-proto">
-                <span class="pid">MOD-0{i + 1}</span>
-                <strong>{step}</strong>
-                <span class="st">已就绪</span>
+    </section>
+
+    {/* ===== // 02 · 主体识别 + 能力矩阵 ===== */}
+    <section class="shell-wide dossier-section home-section" id="matrix" data-reveal-section data-reveal-matrix>
+      <div class="dossier-wrap">
+        <div class="dossier-section-head">
+          <div>
+            <h2>主体识别 / 能力矩阵</h2>
+          </div>
+        </div>
+
+        <div class="dossier-hero home-dual">
+          {/* 主体识别 ID 卡 */}
+          <div class="dossier-panel dossier-id home-id">
+            <span class="dossier-corner tl"></span>
+            <span class="dossier-corner tr"></span>
+            <span class="dossier-corner bl"></span>
+            <span class="dossier-corner br"></span>
+            <div class="dossier-panel-head">
+              <h2>主体识别</h2>
+            </div>
+
+            <div class="grid">
+              <div>
+                <div class="dossier-photo">
+                  <img src={sideProfilePortrait.src} alt="HLM-1 主体档案" width="1024" height="1536" loading="lazy" decoding="async" />
+                  <span class="scanbar"></span>
+                  <span class="reg tl"></span>
+                  <span class="reg tr"></span>
+                  <span class="reg bl"></span>
+                  <span class="reg br"></span>
+                </div>
+                <div class="dossier-photo-label">主体成像 / SUBJECT IMAGE</div>
+              </div>
+
+              <div class="dossier-fields">
+                <div class="dossier-field"><span class="k">代号</span><span class="v">LUKE</span></div>
+                <div class="dossier-field"><span class="k">型号</span><span class="v">HLM-1</span></div>
+                <div class="dossier-field"><span class="k">评级</span><span class="v omega">◉ OMEGA</span></div>
+                <div class="dossier-field"><span class="k">状态</span><span class="v green">● ONLINE</span></div>
+                <div class="dossier-field"><span class="k">出厂</span><span class="v">地球</span></div>
+              </div>
+            </div>
+          </div>
+
+          {/* 能力矩阵 */}
+          <div class="dossier-panel dossier-matrix home-matrix">
+            <div class="blueprint" style={`background-image:url('${blueprintWebp}')`}></div>
+
+            <div class="dossier-panel-head">
+              <h2>SUBJECT · LUKE</h2>
+            </div>
+
+            {capabilityMatrix.map((item, i) => (
+              <div class="dossier-stat" style={`--i:${i}`}>
+                <div class="row">
+                  <span class="name">{item.name}</span>
+                  <span class="val" data-count={item.value}>0</span>
+                </div>
+                <div class="dossier-bar"><i data-v={item.value}></i></div>
               </div>
             ))}
           </div>
         </div>
-        <div class="dossier-panel">
-          <div class="dossier-panel-head"><h2>独立仓库</h2><span class="tag" style="color:var(--yellow)">● 进行中</span></div>
-          <p style="margin:0;color:var(--text-soft);line-height:1.7">前端教学会拆成独立仓库,主站只保留路线和入口,不在这里硬塞教学内容。</p>
-          <div class="footnote" style="margin-top:0.7rem">// 接入后此处变为可点击入口</div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  {/* ===== // 06 项目 Demo ===== */}
-  <section class="shell-wide dossier-section" id="product-demo">
-    <div class="dossier-wrap">
-      <div class="dossier-section-head">
-        <div>
-          <span class="dossier-kicker">// 06 · Prototypes</span>
-          <h2>项目 Demo</h2>
-        </div>
-        <p>能跑起来的小作品——展示截图、解决的问题、技术栈,以及在线体验入口。</p>
-      </div>
-      <div class="dossier-columns">
-        <div class="dossier-panel">
-          <div class="dossier-panel-head"><h2>原型机</h2><span class="tag" style="color:var(--yellow)">● 待部署</span></div>
-          <p style="margin:0 0 0.8rem;color:var(--text-soft);line-height:1.7">主站会展示 Demo 截图、解决的问题、技术栈,以及在线体验和 GitHub 入口。现在先把结构定住,等外部仓库接入。</p>
-          <div class="dossier-scan-list">
-            <span class="dossier-scan-item">产品思维</span>
-            <span class="dossier-scan-item">工程交付</span>
-            <span class="dossier-scan-item">可运行原型</span>
+    {/* ===== // 03 · 技术栈 ===== */}
+    <section class="shell-wide dossier-section home-section" id="stack">
+      <div class="dossier-wrap">
+        <div class="dossier-section-head">
+          <div>
+            <h2>技术栈</h2>
           </div>
         </div>
-        <div class="dossier-terminal">
-          <div class="tbar"><i></i><i></i><i></i><span class="ttitle">luke@schemax — bash</span></div>
-          <div class="tbody">
-            <p>$ demo --status</p>
-            <p class="dim">&gt; 等待外部仓库接入</p>
-            <p class="dim">&gt; 预留:产品截图展示区</p>
-            <p class="dim">&gt; 链接将指向真实可运行 Demo</p>
-            <p class="dim">&gt; status: <span style="color:var(--yellow)">PENDING</span></p>
-          </div>
+        <div class="dossier-scan">
+          <ul class="dossier-scan-list">
+            {techStack.map((item, index) => (
+              <li class="dossier-scan-item" style={`--i:${index}`}>
+                <img src={item.src} alt="" width="22" height="22" loading="lazy" decoding="async" />
+                <span>{item.label}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+    {/* ===== // 04 · 我的博客 ===== */}
+    <section class="shell-wide dossier-section home-section" id="records">
+      <div class="dossier-wrap">
+        <div class="dossier-section-head">
+          <div>
+            <h2>我的博客</h2>
+          </div>
+        </div>
+
+        <div class="dossier-panel dossier-records home-records">
+          <div class="dossier-panel-head">
+            <h2>RECORDS</h2>
+            <span class="tag">{posts.length} 篇 · 悬停可解密</span>
+          </div>
+
+          {fieldRecords.map((rec, i) => (
+            <a class="dossier-rec" href={rec.href} style={`--i:${i}`}>
+              <span class="id">{rec.id}</span>
+              <span class="lv open">已解密</span>
+              <span class="date">{rec.date}</span>
+              <span class="title">{rec.title}</span>
+              <span class="home-rec-tag">{rec.tag}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ===== // 05 · 课程 ===== */}
+    <section class="shell-wide dossier-section home-section" id="courses">
+      <div class="dossier-wrap">
+        <div class="dossier-section-head">
+          <div>
+            <h2>课程</h2>
+          </div>
+        </div>
+        <div class="dossier-assets home-assets">
+          {courses.map((item, i) => (
+            <div class="home-asset-wrap" style={`--i:${i}`}>
+              <DossierAssetCard {...item} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var sections = Array.from(document.querySelectorAll("[data-reveal-section]"));
+      var matrix = document.querySelector("[data-reveal-matrix]");
+
+      function startCountUp(stat) {
+        var valEl = stat.querySelector(".val");
+        var bar = stat.querySelector(".dossier-bar i");
+        var target = parseInt(valEl && valEl.getAttribute("data-count") || "0", 10);
+        if (bar) bar.style.width = target + "%";
+        if (!valEl) return;
+        if (reduce) { valEl.textContent = String(target); return; }
+        var start = null;
+        var duration = 1100;
+        function step(ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / duration, 1);
+          // easeOutCubic
+          var eased = 1 - Math.pow(1 - p, 3);
+          valEl.textContent = String(Math.round(target * eased));
+          if (p < 1) window.requestAnimationFrame(step);
+        }
+        window.requestAnimationFrame(step);
+      }
+
+      function revealSection(section) {
+        section.classList.add("is-visible");
+        if (section.hasAttribute("data-reveal-matrix")) {
+          var stats = Array.from(section.querySelectorAll(".dossier-stat"));
+          stats.forEach(function (stat, idx) {
+            var delay = reduce ? 0 : 120 + idx * 110;
+            window.setTimeout(function () { startCountUp(stat); }, delay);
+          });
+        }
+      }
+
+      if (reduce || !("IntersectionObserver" in window)) {
+        sections.forEach(revealSection);
+        return;
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            revealSection(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -15% 0px", threshold: 0.15 });
+
+      sections.forEach(function (s) { io.observe(s); });
+
+      // 首屏 Hello 段无阈值,直接在初始化时点亮(避免刚加载完用户没滚动也能看到入场)
+      var hero = document.getElementById("intro");
+      if (hero && !hero.classList.contains("is-visible")) {
+        window.requestAnimationFrame(function () { hero.classList.add("is-visible"); });
+      }
+    })();
+  </script>
+
+  <style is:global>
+    /* ============================================================
+       首页 · 作品集式分段入场
+       全部 scope 在 .home-page 下,不污染其他页面
+       ============================================================ */
+
+    .home-page .home-section { padding-bottom: 1rem; }
+
+    /* ---------- 首页容器收窄:比全站 88rem 更聚焦,适合个人介绍页 ---------- */
+    .home-page .shell-wide {
+      width: min(calc(100% - 1.5rem), 64rem);
+    }
+    .home-page .dossier-wrap {
+      width: 100%;
+      margin: 0;
+      padding-inline: 0;
+    }
+
+    /* ---------- 收紧 section 间距 + panel 内边距,减少纵向留白 ---------- */
+    .home-page .dossier-section { margin-top: 1.5rem; }
+    .home-page .dossier-section-head { margin-bottom: 1rem; }
+    .home-page .dossier-panel { padding: 1rem 1.25rem; }
+    .home-page .dossier-panel-head { padding-bottom: 0.55rem; margin-bottom: 0.75rem; }
+
+    /* ---------- 放大 panel 内部内容,让窄容器更饱满 ---------- */
+    /* 能力矩阵:条形更高、stat 字号放大 */
+    .home-page .home-matrix .dossier-stat { margin-bottom: 0.7rem; }
+    .home-page .home-matrix .dossier-stat:last-of-type { margin-bottom: 0.5rem; }
+    .home-page .home-matrix .dossier-stat .row {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .home-page .home-matrix .dossier-stat .row .name { font-size: 14px; }
+    .home-page .home-matrix .dossier-stat .row .val { font-size: 15px; }
+    .home-page .home-matrix .dossier-bar { height: 14px; }
+
+    /* 最新文章:行高放大、列宽放宽 */
+    .home-page .home-records .dossier-rec {
+      grid-template-columns: 92px 80px 116px 1fr auto;
+      gap: 0.9rem;
+      padding: 0.7rem 0.85rem;
+      font-size: 14px;
+    }
+    .home-page .home-records .dossier-rec .title { font-size: 14.5px; }
+
+    /* 技术栈:scan-item 改成「图标 + 名」两列(去掉伪状态前缀和伪模块编号) */
+    .home-page #stack .dossier-scan-item {
+      grid-template-columns: 1.6rem 1fr;
+      padding: 0.7rem 0.85rem;
+      font-size: 14px;
+    }
+    .home-page #stack .dossier-scan-item img { width: 22px; height: 22px; }
+
+    /* 课程卡(fm-card)由组件自身承担样式;此处仅留 grid 容器对齐,
+       保证不同长度文案下三张卡顶部/底部对齐。 */
+    .home-page .home-asset-wrap { display: flex; }
+    .home-page .home-asset-wrap .fm-card { width: 100%; height: 100%; }
+
+    /* ---------- 能力矩阵 stat 的 stagger 延迟 ---------- */
+    .home-page [data-reveal-matrix] .dossier-stat {
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+    /* 能力矩阵条形:入场前宽度归零,JS 在 count-up 时设置 inline width:value%,过渡生效 */
+    .home-page [data-reveal-matrix] .dossier-bar i {
+      width: 0%;
+      transition: width 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* ============================================================
+       01 · Hello 首屏
+       ============================================================ */
+    .home-page .home-hero {
+      min-height: calc(100dvh - 120px);
+      display: flex;
+      align-items: center;
+      padding: clamp(3rem, 9vw, 6rem) 0 4rem;
+    }
+    .home-page .home-hero-grid {
+      width: 100%;
+      display: grid;
+      gap: clamp(1rem, 2.4vw, 1.6rem);
+      grid-template-columns: 1fr;
+      position: relative;
+    }
+    .home-page .home-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+    .home-page .home-hero-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      border: 1px solid var(--dossier-border);
+      padding: 0.3rem 0.65rem;
+      text-transform: uppercase;
+    }
+
+    .home-page .home-hello {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-transform: none;
+      display: grid;
+      gap: 0.15em;
+    }
+    .home-page .home-hello-line {
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+      /* clip-path 起始:整行被右侧遮住 */
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+      transition-delay: calc(var(--i, 0) * 220ms + 100ms);
+    }
+    .home-page .home-hello-line .home-hello-text {
+      display: inline-block;
+      transform: translateY(10%);
+      transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+      transition-delay: calc(var(--i, 0) * 220ms + 100ms);
+    }
+    .home-page .home-hero.is-visible .home-hello-line {
+      clip-path: inset(0 0% 0 0);
+    }
+    .home-page .home-hero.is-visible .home-hello-line .home-hello-text {
+      transform: translateY(0);
+    }
+    /* 第二行强调色:硅基同类 */
+    .home-page .home-hello-line:last-child .home-hello-text {
+      background: linear-gradient(180deg, transparent 60%, var(--yellow) 60%);
+      padding: 0 0.05em;
+    }
+
+    .home-page .home-tagline {
+      margin: 0.5rem 0 0;
+      font-family: var(--font-mono);
+      font-size: clamp(11px, 1.4vw, 14px);
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      transition-delay: 650ms;
+    }
+    .home-page .home-hero.is-visible .home-tagline {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .home-page .home-hero-actions {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      transition-delay: 850ms;
+    }
+    .home-page .home-hero.is-visible .home-hero-actions {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .home-page .home-scroll-cue {
+      position: absolute;
+      right: 0;
+      bottom: -3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      transition-delay: 1100ms;
+    }
+    .home-page .home-hero.is-visible .home-scroll-cue { opacity: 1; }
+    .home-page .home-scroll-cue-arrow {
+      width: 26px;
+      height: 1px;
+      background: var(--dossier-border);
+      position: relative;
+    }
+    .home-page .home-scroll-cue-arrow::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      border-right: 1px solid var(--dossier-border);
+      border-bottom: 1px solid var(--dossier-border);
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    @media (max-width: 640px) {
+      .home-page .home-scroll-cue { position: static; margin-top: 1.5rem; }
+    }
+
+    /* ============================================================
+       02 · 主体识别 ID 卡 + 能力矩阵(双栏对称展开 + 条形生长 + count-up)
+       ============================================================ */
+    /* 双栏等高:ID 卡与能力矩阵 stretch 到同一高度。ID 卡内容少,
+       由内部 grid 撑满高度(照片放大 + 字段均匀分布),消除底部留白。 */
+    .home-page .home-dual {
+      align-items: stretch;
+    }
+    /* ID 卡从左侧滑入 */
+    .home-page .home-id {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    /* ID 卡内部撑满 panel 高度,与能力矩阵等高且不留白:
+       panel 自身变 flex column,grid flex:1 撑满除 head 外的剩余高度;
+       照片适度放大(仍方形)、字段区 space-between 均匀铺满整列。 */
+    .home-page .home-id.dossier-panel {
+      display: flex;
+      flex-direction: column;
+    }
+    .home-page .home-id .dossier-panel-head {
+      margin-bottom: 0;                 /* head 不再占额外下边距,空间留给 grid */
+    }
+    .home-page .home-id .grid {
+      flex: 1;                          /* 撑满 panel 除 head 外的剩余高度 */
+      gap: 1.1rem;
+      align-items: center;
+    }
+    .home-page .home-id .dossier-photo {
+      width: clamp(180px, 24vw, 250px); /* 方形,放大成为 ID 卡视觉主体 */
+    }
+    .home-page .home-id .dossier-photo-label {
+      font-size: 10px;
+      margin-top: 0.35rem;
+      letter-spacing: 0.12em;
+    }
+    .home-page .home-id .dossier-fields {
+      flex: 1;                          /* 字段区占满 grid cell 高度 */
+      justify-content: space-between;   /* 5 个字段均匀铺满整列 */
+      gap: 0.4rem;
+      font-size: 14px;
+    }
+    .home-page .home-id .dossier-field {
+      grid-template-columns: 4rem 1fr;
+      gap: 0.5rem;
+    }
+    .home-page .home-id .dossier-field .k { font-size: 11px; }
+    .home-page .home-id .dossier-field .v { font-size: 14px; }
+    /* 能力矩阵从右侧滑入 */
+    .home-page .home-matrix {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .home-page [data-reveal-matrix].is-visible .home-id,
+    .home-page [data-reveal-matrix].is-visible .home-matrix {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* 能力矩阵的条形 stat 错峰淡入 */
+    .home-page .home-matrix .dossier-stat {
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .home-page [data-reveal-matrix].is-visible .dossier-stat {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ============================================================
+       03 · 技术栈(静态加载,无入场动效)
+       ============================================================ */
+
+    /* ============================================================
+       04 · 我的博客(静态加载,无入场动效)
+       ============================================================ */
+    .home-page .home-records .dossier-rec {
+      position: relative;
+    }
+    .home-page .home-records .dossier-rec .home-rec-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-soft);
+      border: 1px solid var(--dossier-border-bright);
+      padding: 0.15rem 0.5rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       05 · 课程(静态加载,无入场动效)
+       ============================================================ */
+
+    /* ---------- reduced-motion:hello + 能力矩阵跳过动效,直接显示 ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .home-page .home-hello-line,
+      .home-page .home-hello-line .home-hello-text,
+      .home-page .home-tagline,
+      .home-page .home-hero-actions,
+      .home-page .home-scroll-cue,
+      .home-page .home-id,
+      .home-page .home-matrix,
+      .home-page .home-matrix .dossier-stat,
+      .home-page [data-reveal-matrix] .dossier-bar i {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+      }
+      .home-page .home-hello-line { clip-path: inset(0 0 0 0) !important; }
+    }
+  </style>
 </BaseLayout>

@@ -19,10 +19,10 @@ const {
     { href: "/", label: "首页" },
     { href: "/#stack", label: "技术栈" },
     { href: "/blogs/", label: "博客" },
-    { href: "/#works", label: "内容入口" }
+    { href: "/design-dna/", label: "设计 DNA" }
   ],
   manualHref = `${baseUrl}howto/`,
-  manualLabel = "战术手册",
+  manualLabel = "课程",
   showGithub = true,
   showBrandSubtitle = true
 } = Astro.props;
@@ -38,7 +38,7 @@ const isManual = variant === "manual";
 <header class:list={["site-header", { "manual-topbar-header": isManual }]}>
   <div class:list={["shell", "shell-wide", { "manual-global-bar": isManual }]}>
     <div class="header-primary">
-      <BrandIdentity href={resolveHref("/")} imageSrc={resolveHref("images/brand/logo-min.svg")} manual={isManual} showSubtitle={showBrandSubtitle} />
+      <BrandIdentity href={resolveHref("/")} imageSrc={resolveHref("images/brand/logo-min.png")} manual={isManual} showSubtitle={showBrandSubtitle} />
 
       <nav class:list={["nav", { "manual-site-nav": isManual }]} aria-label={isManual ? "手册入口" : "站内导航"}>
         {navItems.map((item) => (

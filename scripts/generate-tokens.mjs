@@ -14,6 +14,10 @@ const { colors, shadows } = design.tokens
 
 // ── CSS 变量名映射 ──────────────────────────────────────────────────
 // key: DESIGN.json token 名  value: 生成的 CSS 变量名数组
+// ── CSS 变量名映射 ──────────────────────────────────────────────────
+// key: DESIGN.json token 名  value: 生成的 CSS 变量名数组
+// 这是事实白名单:任何颜色必须先在这里登记,才会进 tokens.css,
+// 进而在 check-tokens.mjs 里被视为合法 var() 引用源。
 const COLOR_VARS = {
   'carbon-black':   ['--bg'],
   'deep-void':      ['--surface'],
@@ -27,6 +31,12 @@ const COLOR_VARS = {
   'phosphor-green': ['--green'],
   'neural-violet':  ['--purple'],
   'alert-red':      ['--red'],
+  // field-* 是浅色纸面(field-manual)下使用的「ink」变体:
+  // 饱和度更低、明度更暗,在暖纸面上读得清、不刺眼。
+  // 命名约定 --<color>-ink,对应已有的 --yellow-ink(在 global.css 浅色皮肤段定义)。
+  'field-green':  ['--green-ink'],
+  'field-red':    ['--red-ink'],
+  'field-violet': ['--purple-ink'],
 }
 
 // 从基础 token 派生的值（不在 DESIGN.json 里，但跟颜色强绑定）

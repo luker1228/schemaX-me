@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run tokens:check && astro build",
     "preview": "astro preview",
     "tokens": "node scripts/generate-tokens.mjs",
+    "tokens:check": "node scripts/check-tokens.mjs",
     "new:guide": "node scripts/new-guide.mjs"
   },
   "dependencies": {

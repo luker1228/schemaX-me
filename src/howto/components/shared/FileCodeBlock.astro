@@ -1,0 +1,31 @@
+---
+interface Props {
+  filename: string;
+  code: string;
+}
+
+import { fileCodeMarkPath } from "./code-icons.js";
+
+const { filename, code } = Astro.props;
+
+function escapeHtml(value: string) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function highlightJson(line: string) {
+  return escapeHtml(line)
+    .replace(/(&quot;[^&]*?&quot;)(?=\s*:)/g, '<span class="file-code-key">$1</span>')
+    .replace(/(&quot;https?:[^&]*?&quot;)/g, '<span class="file-code-url">$1</span>');
+}
+---
+
+<figure class="file-code-block">
+  <figcaption class="file-code-header">
+    <span class="file-code-file"><svg class="file-code-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d={fileCodeMarkPath}></path></svg>{filename}</span>
+    <button class="file-code-copy" type="button" data-copy-code aria-label={`复制 ${filename} 代码`}>
+      <span class="sr-only">复制</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+    </button>
+  </figcaption>
+  <pre data-language="json"><code data-language="json">{code.split("\n").map((line) => <span set:html={highlightJson(line || " ")}></span>)}</code></pre>
+</figure>

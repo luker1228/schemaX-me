@@ -1,9 +1,9 @@
 export const deployManual = {
   code: "FM-02",
   slug: "deploy",
-  title: "部署战术手册",
+  title: "部署课程",
   description: "把应用安全地推上线：环境变量、CI/CD、容器、域名与运维排错。",
-  heroTitle: ["从产物到上线", "部署战术手册"],
+  heroTitle: ["从产物到上线", "部署课程"],
   heroSummary:
     "给已经能写应用、但还没把部署链路真正打通的同学。先把 Docker、镜像、配置注入和运行环境讲清楚，再往 CI/CD 和线上排障推进。",
   heroTags: ["构建与产物", "镜像与运行时", "环境变量", "配置注入", "容器化上线", "部署排错"],

@@ -171,7 +171,7 @@ POST /api/projects
 export function PromptsPage({ currentPath, prev, next }) {
   const lesson = currentPath ? { currentPath, prev, next } : getFrontendLegacyLesson("prompts.html");
   return (
-    <PageFrame title="Prompt Library · 后端同学的前端战术手册">
+    <PageFrame title="Prompt Library · 后端同学的前端课程">
       <>
         <ManualLessonHeader currentPath={lesson.currentPath} />
         <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>

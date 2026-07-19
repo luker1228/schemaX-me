@@ -56,16 +56,16 @@ export function getFrontendLegacyLesson(path) {
 }
 
 export const frontendLessonPages = [
-  { slug: "lesson-html", currentPath: "lesson-html.html", title: "HTML 基础 · 前端战术手册", kind: "legacy", htmlKey: "lesson-html" },
-  { slug: "lesson-html-2", currentPath: "lesson-html-2.html", title: "HTML 进阶 · 前端战术手册", kind: "legacy", htmlKey: "lesson-html-2" },
-  { slug: "lesson-css", currentPath: "lesson-css.html", title: "CSS 基础 · 前端战术手册", kind: "legacy", htmlKey: "lesson-css" },
-  { slug: "lesson-css-2", currentPath: "lesson-css-2.html", title: "CSS 进阶 · 前端战术手册", kind: "legacy", htmlKey: "lesson-css-2" },
-  { slug: "lesson-js", currentPath: "lesson-js.html", title: "JavaScript · 前端战术手册", kind: "legacy", htmlKey: "lesson-js" },
-  { slug: "lesson-layout", currentPath: "lesson-layout.html", title: "布局基础 · 前端战术手册", kind: "legacy", htmlKey: "lesson-layout" },
-  { slug: "lesson-layout-2", currentPath: "lesson-layout-2.html", title: "布局进阶 · 前端战术手册", kind: "legacy", htmlKey: "lesson-layout-2" },
-  { slug: "lesson-react", currentPath: "lesson-react.html", title: "React · 前端战术手册", kind: "react" },
-  { slug: "components", currentPath: "components.html", title: "组件 · 前端战术手册", kind: "components" },
-  { slug: "prompts", currentPath: "prompts.html", title: "提示词 · 前端战术手册", kind: "prompts" },
+  { slug: "lesson-html", currentPath: "lesson-html.html", title: "HTML 基础 · 前端课程", kind: "legacy", htmlKey: "lesson-html" },
+  { slug: "lesson-html-2", currentPath: "lesson-html-2.html", title: "HTML 进阶 · 前端课程", kind: "legacy", htmlKey: "lesson-html-2" },
+  { slug: "lesson-css", currentPath: "lesson-css.html", title: "CSS 基础 · 前端课程", kind: "legacy", htmlKey: "lesson-css" },
+  { slug: "lesson-css-2", currentPath: "lesson-css-2.html", title: "CSS 进阶 · 前端课程", kind: "legacy", htmlKey: "lesson-css-2" },
+  { slug: "lesson-js", currentPath: "lesson-js.html", title: "JavaScript · 前端课程", kind: "legacy", htmlKey: "lesson-js" },
+  { slug: "lesson-layout", currentPath: "lesson-layout.html", title: "布局基础 · 前端课程", kind: "legacy", htmlKey: "lesson-layout" },
+  { slug: "lesson-layout-2", currentPath: "lesson-layout-2.html", title: "布局进阶 · 前端课程", kind: "legacy", htmlKey: "lesson-layout-2" },
+  { slug: "lesson-react", currentPath: "lesson-react.html", title: "React · 前端课程", kind: "react" },
+  { slug: "components", currentPath: "components.html", title: "组件 · 前端课程", kind: "components" },
+  { slug: "prompts", currentPath: "prompts.html", title: "提示词 · 前端课程", kind: "prompts" },
 ];
 
 export const frontendHomeLessons = [

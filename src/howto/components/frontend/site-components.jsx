@@ -177,19 +177,19 @@ export function ManualLessonHeader({ currentPath = "" }) {
     <header className="site-header manual-topbar-header">
       <div className="shell shell-wide manual-global-bar">
         <a className="brand manual-site-brand" href={withBasePath("/")}>
-          <span className="brand-avatar manual-brand-avatar">
+          <span className="brand-logo manual-brand-logo">
             <img src={withBasePath("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
           </span>
-          <span className="brand-copy manual-brand-copy">
-            <span className="brand-mark manual-brand-mark">schemaX</span>
-            <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+          <span className="brand-text manual-brand-text">
+            <span className="brand-name manual-brand-name">schemaX</span>
+            <span className="brand-tagline manual-brand-tagline">绝密计划 · CLASSIFIED</span>
           </span>
         </a>
         <div className="manual-global-actions manual-index-chapters">
           <SiteNav currentPath={currentPath} />
         </div>
         <div className="header-actions" aria-label="固定入口">
-          <a className="header-action header-action-manual" href={withBasePath("howto/")}>战术手册</a>
+          <a className="header-action header-action-manual" href={withBasePath("howto/")}>课程</a>
           <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
         </div>
       </div>

@@ -31,21 +31,21 @@ const lessons = deployLessons.map((lesson) => ({
 const homeHref = withBase("/");
 export function DeployIndexPage() {
   return (
-    <PageFrame title="部署战术手册">
+    <PageFrame title="部署课程">
       <div className="site-shell deploy-manual-page">
         <header className="site-header manual-topbar-header">
           <div className="shell shell-wide manual-global-bar">
             <a className="brand manual-site-brand" href={homeHref}>
-              <span className="brand-avatar manual-brand-avatar">
+              <span className="brand-logo manual-brand-logo">
                 <img src={withBase("images/brand/logo-min.svg")} alt="schemaX" width="56" height="56" />
               </span>
-              <span className="brand-copy manual-brand-copy">
-                <span className="brand-mark manual-brand-mark">schemaX</span>
-                <span className="brand-subtitle manual-brand-subtitle">绝密计划 · CLASSIFIED</span>
+              <span className="brand-text manual-brand-text">
+                <span className="brand-name manual-brand-name">schemaX</span>
+                <span className="brand-tagline manual-brand-tagline">绝密计划 · CLASSIFIED</span>
               </span>
             </a>
             <div className="header-actions" aria-label="固定入口">
-              <a className="header-action header-action-manual" href={withBase("howto/")}>战术手册</a>
+              <a className="header-action header-action-manual" href={withBase("howto/")}>课程</a>
               <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
             </div>
           </div>
@@ -124,8 +124,8 @@ export function DeployIndexPage() {
         <footer className="footer">
           <div className="container footer-grid">
             <div className="footer-col">
-              <a className="brand-mark" href={withHowtoManualPath("deploy")}>
-                <span>部署战术</span><span className="brand-pill">{deployManual.code}</span>
+              <a className="brand-name" href={withHowtoManualPath("deploy")}>
+                <span>部署战术</span><span className="brand-badge">{deployManual.code}</span>
               </a>
               <p className="card-copy">从构建产物、镜像到上线配置，先把部署链路里真正重要的边界建立起来。</p>
             </div>

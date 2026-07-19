@@ -81,9 +81,9 @@
   --radius-sm: 2px;
   --radius-md: 0px;
   --radius-lg: 0px;
-  --font-display: "Space Grotesk", "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-body: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Space Grotesk", "Avenir Next", "Segoe UI", "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-body: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, "Noto Sans SC", "Source Han Sans SC", monospace;
   --lesson-measure: 960px;
   --manual-topbar-shell: 88rem;
   --toc-rail-width: 200px;
@@ -158,7 +158,6 @@ textarea {
   z-index: 20;
   background: var(--surface);
   color: var(--fg);
-  border-bottom: 2px solid var(--border);
 }
 
 .site-header-inner,
@@ -199,7 +198,6 @@ textarea {
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.46), transparent 42%),
     var(--manual-header-surface);
-  border-bottom: 2px solid var(--manual-header-border);
   box-shadow: none;
 }
 
@@ -268,12 +266,12 @@ textarea {
   transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
 }
 
-.manual-topbar-header .manual-brand-mark,
+.manual-topbar-header .manual-brand-name,
 .manual-topbar-header .manual-site-nav a {
   color: var(--manual-header-ink);
 }
 
-.manual-topbar-header .manual-brand-subtitle {
+.manual-topbar-header .manual-brand-tagline {
   color: var(--manual-header-muted);
 }
 
@@ -438,7 +436,7 @@ textarea {
   }
 }
 
-.brand-pill,
+.brand-badge,
 .eyebrow,
 .micro-pill {
   display: inline-flex;
@@ -451,7 +449,7 @@ textarea {
   font-weight: 700;
 }
 
-.brand-pill {
+.brand-badge {
   flex: 0 0 auto;
   padding: 4px 7px;
   border-radius: 0;
@@ -1006,6 +1004,370 @@ textarea {
   font-weight: 400;
   line-height: 1.4;
 }
+
+/* 页内目录：嵌在 ArticlePreviewCard 里，由二级与三级标题派生的导航。
+   不再自带边框/背景——卡片外壳已经提供，避免出现双框与不协调的强调色边。 */
+.lesson-article-toc {
+  margin-top: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.lesson-article-toc-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lesson-article-toc-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.lesson-article-toc-list > li > a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: var(--fg);
+  font-size: clamp(1rem, 1.4vw, 1.05rem);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lesson-article-toc-list > li > a:hover {
+  color: var(--accent);
+}
+
+.lesson-article-toc-sub {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.35rem 0 0.25rem 1.75rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid color-mix(in oklab, var(--border) 28%, transparent);
+  list-style: none;
+}
+
+.lesson-article-toc-sub a {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.lesson-article-toc-sub a:hover {
+  color: var(--fg);
+}
+
+/* 导航目录：分组式侧栏导航，嵌在 ArticlePreviewCard 里。
+   与「页内目录」(lesson-article-toc) 的区别：
+   - 页内目录按本文 H2/H3 结构派生，带编号与缩进子项；
+   - 导航目录按 SECTIONS / COMPONENTS 分组，扁平条目，active 项用黄色整宽色块高亮。 */
+.lesson-article-nav {
+  margin-top: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.lesson-article-nav-title {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lesson-article-nav-group {
+  display: grid;
+  gap: 0.05rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lesson-article-nav-group + .lesson-article-nav-group {
+  margin-top: 1.25rem;
+}
+
+.lesson-article-nav-group-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* 分组标签前的黄色小方块标记。 */
+.lesson-article-nav-group-label::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.lesson-article-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  padding: 0.25rem 0.75rem;
+  color: var(--muted);
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
+  font-weight: 400;
+  line-height: 1.35;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+/* 钢琴键：水平的细长条，默认 2px 高，横向铺开；hover/active 时变粗（高度增加）。 */
+.lesson-article-nav-item::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 2px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--border) 32%, transparent);
+  transition: height 180ms ease, background 180ms ease, width 180ms ease;
+}
+
+.lesson-article-nav-item:hover {
+  color: var(--fg);
+}
+
+.lesson-article-nav-item:hover::before {
+  height: 5px;
+  background: var(--accent);
+}
+
+.lesson-article-nav-item.is-active {
+  background: var(--accent);
+  color: var(--fg);
+  border-color: var(--border);
+  box-shadow: 4px 4px 0 var(--border);
+}
+
+/* active 态：钢琴键最粗（深色），叠在黄色色块上形成对比。 */
+.lesson-article-nav-item.is-active::before {
+  width: 1.5rem;
+  height: 6px;
+  background: var(--fg);
+}
+
+/* ===== 文章页左右两栏目录（仅 /howto/guide/[article-content] 启用） =====
+   <main class="guide-article-layout"> 是一个三列网格：
+   [导航目录 rail] [正文 content] [页内目录 rail]。
+   正文被包进单一的 .guide-article-content 子节点，使两根 rail 所在的网格行高
+   等于整篇正文高度，position: sticky 才能沿全篇跟随滚动；窄屏折叠为单列并隐藏 rail。 */
+main.guide-lesson-page.guide-article-layout {
+  display: grid;
+  grid-template-columns: minmax(0, var(--guide-rail, 12rem)) minmax(0, 1fr) minmax(0, var(--guide-rail, 12rem));
+  align-items: start;
+  column-gap: clamp(3rem, 5vw, 5rem);
+  width: min(calc(100vw - 32px), 1360px);
+}
+
+main.guide-lesson-page.guide-article-layout > .guide-article-content {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+/* 正文里的 .lesson-shell 默认锁 960px，在收窄的中列会溢出；
+   文章页让它铺满中列，随屏宽自适应。 */
+main.guide-lesson-page.guide-article-layout .guide-article-content .lesson-shell {
+  width: 100%;
+}
+
+main.guide-lesson-page.guide-article-layout > .guide-article-rail {
+  position: sticky;
+  top: var(--header-offset);
+  align-self: start;
+  max-height: calc(100vh - var(--header-offset) - 1.5rem);
+  overflow-y: auto;
+  padding-top: 0.5rem;
+}
+
+main.guide-lesson-page.guide-article-layout > .guide-article-nav-rail {
+  grid-column: 1;
+  grid-row: 1;
+  /* 整体左移，贴近视口左边；窄屏归零避免溢出。 */
+  margin-left: clamp(-10rem, -10vw, 0rem);
+}
+
+main.guide-lesson-page.guide-article-layout > .guide-article-toc-rail {
+  grid-column: 3;
+  grid-row: 1;
+  /* 整体右移，与左栏对称，让正文视觉居中；窄屏归零避免溢出。 */
+  margin-right: clamp(-10rem, -10vw, 0rem);
+}
+
+/* rail 内的目录是独立侧栏，去掉在卡片内部使用时遗留的顶部外边距。 */
+.guide-article-rail .lesson-article-nav,
+.guide-article-rail .lesson-article-toc {
+  margin-top: 0;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* 导航目录（左栏）：跨课程索引，收紧分组间距。 */
+.guide-article-nav-rail .lesson-article-nav-title,
+.guide-article-toc-rail .lesson-article-toc-label {
+  display: block;
+  margin-bottom: 0.85rem;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.guide-article-nav-rail .lesson-article-nav-group + .lesson-article-nav-group {
+  margin-top: 1rem;
+}
+
+/* 页内目录（右栏）：紧凑、带 active 高亮的二级目录。 */
+.guide-article-toc-rail .lesson-article-toc-list {
+  gap: 0.15rem;
+  border-left: 1px solid color-mix(in oklab, var(--border) 22%, transparent);
+}
+
+.guide-article-toc-rail .lesson-article-toc-list > li > a {
+  display: block;
+  padding: 0.3rem 0 0.3rem 0.75rem;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.guide-article-toc-rail .lesson-article-toc-list > li > a:hover {
+  color: var(--fg);
+  border-left-color: color-mix(in oklab, var(--border) 40%, transparent);
+}
+
+.guide-article-toc-rail .lesson-article-toc-list > li > a.is-active {
+  width: fit-content;
+  color: var(--fg);
+  font-weight: 700;
+  border-left-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+}
+
+/* 点击页内目录锚点时，目标 section 不被吸顶 header 遮挡。 */
+.lesson-article-section {
+  scroll-margin-top: var(--header-offset);
+}
+
+/* 窄屏：折叠为单列并隐藏两侧 rail（跨页导航由顶部/底部 CourseNavigator 承担）。 */
+@media (max-width: 1023px) {
+  main.guide-lesson-page.guide-article-layout {
+    grid-template-columns: 1fr;
+    width: min(calc(100vw - 32px), var(--lesson-measure));
+  }
+
+  main.guide-lesson-page.guide-article-layout > .guide-article-content {
+    grid-column: 1;
+  }
+
+  main.guide-lesson-page.guide-article-layout > .guide-article-rail {
+    display: none;
+  }
+}
+
+.file-code-block {
+  width: 100%;
+  margin: 1rem 0 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px;
+  background: #f3ead9;
+}
+
+.file-code-header {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 38%, transparent);
+  color: var(--fg);
+}
+
+.file-code-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.5vw, 1rem);
+  line-height: 1;
+}
+
+.file-code-mark {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: 0 0 auto;
+  color: #706b62;
+}
+
+.file-code-copy {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.file-code-copy svg { width: 1.2rem; height: 1.2rem; }
+.file-code-copy:hover, .file-code-copy:focus-visible { background: color-mix(in oklab, var(--fg) 8%, transparent); outline: 1px solid var(--border); outline-offset: 2px; }
+.file-code-copy[data-copied] { border: 3px solid var(--ground-yellow); border-radius: 0.7rem; background: #f3ead9; color: var(--fg); }
+.file-code-copy[data-copied] svg { display: none; }
+.file-code-copy[data-copied]::after { content: "✓"; font-size: 1.1rem; font-weight: 700; line-height: 1; }
+
+.file-code-block pre {
+  margin: 0;
+  padding: clamp(0.75rem, 1.5vw, 1rem);
+  overflow: auto;
+  color: #1e2732;
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.5vw, 1rem);
+  line-height: 1.85;
+}
+
+.file-code-block code { display: grid; min-width: max-content; }
+.file-code-block code > span { display: block; }
+.file-code-key { color: #08722e; }
+.file-code-url { color: #0c3f87; }
 
 .lesson-article-inline-note {
   display: grid;

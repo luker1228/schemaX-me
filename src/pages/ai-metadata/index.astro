@@ -7,9 +7,9 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const patterns = [
   {
     slug: "corner-brackets",
-    eyebrow: "Visual Token Group",
+    eyebrow: "Visual Token Group · ID 卡专属",
     title: "Corner Brackets",
-    summary: "档案面板和人物照片共用的一组角标语言。左侧看真实渲染，右侧直接拿 HTML / CSS / tokens。",
+    summary: "⚠ 受限 motif——铁律:仅首页 §2 主体识别卡(.dossier-id)可用,其它任何位置禁止。本页作为 reference 保留演示,生产页一律不得现场渲染。",
     source: "src/styles/global.css:2210",
     tokens: [
       ["--corner-bracket-color", "var(--classified)"],
@@ -66,9 +66,9 @@ const patterns = [
   border: var(--corner-bracket-photo-stroke) solid var(--corner-bracket-color);
 }`,
     notes: [
+      "⚠ 铁律:dossier-corner 仅首页 §2 主体识别卡(.dossier-id)可用,其它任何生产位置禁止现场渲染。本 reference 页作为文档例外保留演示。",
       "Panel 和 photo 分开设 token，避免一个尺寸同时兼顾大面板和小照片。",
-      "真正的视觉重点不是 border 本身，而是 offset 带来的“夹在边框外”的机械感。",
-      "如果后面要继续扩展，可以按这个结构继续加别的 pattern 卡。"
+      "真正的视觉重点不是 border 本身，而是 offset 带来的“夹在边框外”的机械感。"
     ]
   }
 ];

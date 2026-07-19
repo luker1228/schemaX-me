@@ -95,7 +95,6 @@ select {
   padding: 0.9rem 0;
   background: rgba(23, 23, 23, 0.94);
   backdrop-filter: blur(8px);
-  border-bottom: 2px solid var(--border);
 }
 
 .site-header .shell-wide,
@@ -2218,7 +2217,7 @@ main {
 /* =============================================================
    DOSSIER 设计系统 · 最强人类大模型 LUKE 机密档案
    (A 终端启动 + C 赛博档案 融合)
-   全部 scope 在 .dossier / .dossier-boot 下,不污染既有样式
+   全部 scope 在 .dossier 下,不污染既有样式
    ============================================================= */
 :root {
   --classified: #d43f2a;
@@ -2235,172 +2234,6 @@ main {
   --corner-bracket-photo-size: 10px;
   --corner-bracket-photo-stroke: 1.5px;
   --corner-bracket-photo-offset: 4px;
-}
-
-/* ---------- 开机解密层 ---------- */
-.dossier-boot {
-  position: fixed;
-  inset: 0;
-  z-index: 9500;
-  display: grid;
-  grid-template-columns: minmax(280px, 0.8fr) minmax(320px, 1fr);
-  align-items: center;
-  gap: clamp(1.5rem, 5vw, 5rem);
-  padding: clamp(20px, 6vw, 90px);
-  background: var(--dossier-boot-bg);
-  color: var(--phosphor);
-  cursor: pointer;
-  transition: opacity 0.5s ease;
-}
-.dossier-boot.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-.dossier-boot-console {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  gap: 1.1rem;
-  align-content: center;
-}
-.dossier-boot-tag {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.3em;
-  opacity: 0.7;
-}
-.dossier-boot-log {
-  margin: 0;
-  min-height: 11em;
-  font-family: var(--font-mono);
-  font-size: clamp(13px, 1.4vw, 16px);
-  line-height: 1.9;
-  white-space: pre-wrap;
-  text-shadow: 0 0 8px rgba(244, 234, 214, 0.2);
-}
-.dossier-boot-bar {
-  width: min(420px, 80vw);
-  height: 10px;
-  border: 1px solid var(--phosphor-dim);
-  background: #101010;
-  position: relative;
-}
-.dossier-boot-bar span {
-  position: absolute;
-  inset: 0;
-  width: 0;
-  background: var(--yellow);
-  box-shadow: 0 0 12px rgba(255, 212, 59, 0.35);
-  transition: width 0.2s linear;
-}
-.dossier-boot-status {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  color: var(--yellow);
-}
-.dossier-boot-visual {
-  position: relative;
-  width: min(48vw, 620px);
-  justify-self: end;
-  aspect-ratio: 1 / 1;
-  border: 1px solid rgba(244, 234, 214, 0.45);
-  background: #0a0a0a;
-  overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(244, 234, 214, 0.1),
-    0 0 44px rgba(255, 212, 59, 0.12);
-}
-.dossier-boot-visual::before,
-.dossier-boot-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.dossier-boot-visual::before {
-  z-index: 2;
-  background:
-    linear-gradient(90deg, rgba(255, 73, 73, 0.65) 0 18px, transparent 18px calc(100% - 18px), rgba(255, 73, 73, 0.65) calc(100% - 18px)),
-    linear-gradient(0deg, rgba(255, 73, 73, 0.65) 0 18px, transparent 18px calc(100% - 18px), rgba(255, 73, 73, 0.65) calc(100% - 18px));
-  clip-path: polygon(0 0, 8% 0, 8% 2px, 2px 2px, 2px 8%, 0 8%, 0 0, 100% 0, 92% 0, 92% 2px, calc(100% - 2px) 2px, calc(100% - 2px) 8%, 100% 8%, 100% 0, 100% 100%, 92% 100%, 92% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 92%, 100% 92%, 100% 100%, 0 100%, 8% 100%, 8% calc(100% - 2px), 2px calc(100% - 2px), 2px 92%, 0 92%);
-  opacity: 0.9;
-}
-.dossier-boot-visual::after {
-  z-index: 3;
-  background: repeating-linear-gradient(0deg, rgba(244, 234, 214, 0.08) 0 1px, transparent 1px 5px);
-  mix-blend-mode: screen;
-  opacity: 0.55;
-}
-.dossier-boot-visual img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  filter: contrast(1.08) saturate(1.05);
-}
-.dossier-boot-scan {
-  position: absolute;
-  z-index: 4;
-  left: 0;
-  right: 0;
-  top: -24%;
-  height: 22%;
-  background: linear-gradient(180deg, transparent, rgba(255, 212, 59, 0.22), transparent);
-  box-shadow: 0 0 30px rgba(255, 212, 59, 0.25);
-  animation: dossier-boot-scan 2.4s linear infinite;
-}
-.dossier-boot-verified {
-  position: absolute;
-  z-index: 5;
-  right: 18px;
-  bottom: 18px;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--yellow);
-  background: rgba(10, 10, 10, 0.82);
-  color: var(--yellow);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-}
-@keyframes dossier-boot-scan {
-  from { transform: translateY(0); }
-  to { transform: translateY(560%); }
-}
-@media (max-width: 860px) {
-  .dossier-boot {
-    grid-template-columns: 1fr;
-    align-content: center;
-    gap: 1.35rem;
-  }
-
-  .dossier-boot-visual {
-    width: min(82vw, 420px);
-    justify-self: start;
-    order: -1;
-  }
-
-  .dossier-boot-log {
-    min-height: 8em;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dossier-boot-scan {
-    animation: none;
-    top: 39%;
-  }
-}
-.dossier-boot-skip {
-  position: absolute;
-  bottom: 26px;
-  right: 30px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: var(--text-soft);
-  border: 1px solid var(--border);
-  padding: 0.35rem 0.7rem;
 }
 
 /* ---------- 档案主体 ---------- */
@@ -3048,97 +2881,8 @@ img.dossier-stamp.s2 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.4rem;
 }
-.dossier-asset {
-  position: relative;
-  display: grid;
-  gap: 0.7rem;
-  align-content: start;
-  padding: 1.4rem;
-  background: var(--dossier-panel);
-  border: 1px solid var(--dossier-border);
-  text-decoration: none;
-  color: inherit;
-  transition: transform 140ms ease, box-shadow 140ms ease;
-}
-.dossier-asset:hover {
-  transform: translate(-6px, -6px);
-}
-.dossier-asset .ah {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-}
-.dossier-asset .aid {
-  color: var(--yellow);
-}
-.dossier-asset .cls {
-  color: var(--text-soft);
-}
-.dossier-asset h3 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-.dossier-asset p {
-  margin: 0;
-  color: var(--text-soft);
-  line-height: 1.65;
-  font-size: 0.95rem;
-}
-.dossier-asset .meta {
-  margin-top: auto;
-  padding-top: 0.6rem;
-  border-top: 1px dashed var(--dossier-border-bright);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-soft);
-  letter-spacing: 0.08em;
-}
-.dossier-asset.acc-yellow {
-  box-shadow: none;
-}
-.dossier-asset.acc-cyan {
-  box-shadow: none;
-}
-.dossier-asset.acc-green {
-  box-shadow: none;
-}
-.dossier-asset.acc-red {
-  box-shadow: none;
-}
-.dossier-asset.acc-purple {
-  box-shadow: none;
-}
-.dossier-asset.acc-yellow:hover {
-  box-shadow:
-    6px 6px 0 #f4ead6,
-    12px 12px 0 var(--yellow);
-}
-.dossier-asset.acc-cyan:hover {
-  box-shadow:
-    6px 6px 0 #f4ead6,
-    12px 12px 0 #f4ead6;
-}
-.dossier-asset.acc-green:hover {
-  box-shadow:
-    6px 6px 0 #dfe7d3,
-    12px 12px 0 var(--green);
-}
-.dossier-asset.acc-red:hover {
-  box-shadow:
-    6px 6px 0 #f4ead6,
-    12px 12px 0 var(--classified);
-}
-.dossier-asset.acc-purple:hover {
-  box-shadow:
-    6px 6px 0 #f4ead6,
-    12px 12px 0 var(--purple);
-}
+/* 课程入口卡(fm-card)的样式在 src/components/DossierAssetCard.astro 组件内自带,
+   此处只保留 grid 容器。 */
 @media (max-width: 900px) {
   .dossier-assets {
     grid-template-columns: 1fr;
@@ -3280,11 +3024,6 @@ body:has(.dossier) .site-header {
   border-bottom-color: #241d13;
 }
 
-body:has(.dossier) .dossier-boot {
-  --accent: #ffd43b;
-  --yellow: #ffd43b;
-}
-
 body:has(.dossier) .dossier {
   color: #241d13;
 }
@@ -3302,7 +3041,6 @@ body:has(.dossier) .dossier-atmosphere::after {
 
 body:has(.dossier) .dossier-topbar,
 body:has(.dossier) .dossier-panel,
-body:has(.dossier) .dossier-asset,
 body:has(.dossier) .dossier-proto,
 body:has(.dossier) .dossier-scan,
 body:has(.dossier) .dossier-terminal {
@@ -3315,7 +3053,6 @@ body:has(.dossier) .dossier-terminal {
 body:has(.dossier) .dossier-topbar .l,
 body:has(.dossier) .dossier-topbar .cur,
 body:has(.dossier) .dossier-proto .pid,
-body:has(.dossier) .dossier-scan-sysbar,
 body:has(.dossier) .dossier-terminal .tbody {
   color: #241d13;
 }
@@ -3443,8 +3180,7 @@ body:has(.dossier) .dossier-btn.ghost:hover {
 }
 
 body:has(.dossier) .dossier-bar,
-body:has(.dossier) .dossier-terminal .tbar,
-body:has(.dossier) .dossier-scan-sysbar {
+body:has(.dossier) .dossier-terminal .tbar {
   background: #f0e6d3;
   border-color: #6b5c42;
 }
@@ -3455,8 +3191,6 @@ body:has(.dossier) .dossier-proto:hover {
 }
 
 body:has(.dossier) .dossier-section-head p,
-body:has(.dossier) .dossier-asset p,
-body:has(.dossier) .dossier-asset .meta,
 body:has(.dossier) .dossier-terminal .ttitle {
   color: #6b5c42;
 }
@@ -3488,25 +3222,6 @@ body:has(.dossier) .site-footer .footer-inner {
   transform: translateX(-130%);
   animation: dossier-stack-scan 3.8s linear infinite;
   pointer-events: none;
-}
-.dossier-scan-sysbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  padding: 0.38rem 0.75rem;
-  border: 1px solid var(--dossier-border-bright);
-  border-bottom: none;
-  background: #101010;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--phosphor);
-  opacity: 0.72;
-}
-.dossier-scan-sysbar .r {
-  margin-left: auto;
 }
 .dossier-scan-list {
   display: grid;
@@ -3633,7 +3348,6 @@ body:has(.dossier) .dossier-panel-head h2,
 body:has(.dossier) .dossier-kicker,
 body:has(.dossier) .dossier-stat .row .val,
 body:has(.dossier) .dossier-field .v.omega,
-body:has(.dossier) .dossier-asset .aid,
 body:has(.dossier) .dossier-scan-item .scan-code {
   color: var(--yellow-ink);
 }

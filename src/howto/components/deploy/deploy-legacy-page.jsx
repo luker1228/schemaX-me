@@ -27,11 +27,11 @@ export function DeployLegacyPage({ title, html, prev = null, next = null }) {
       renderHeader={() => (
         <header className="site-header manual-topbar-header">
           <div className="shell shell-wide manual-global-bar">
-            <a className="brand-mark" href={withHowtoManualPath("deploy")}>
-              <span>部署战术</span><span className="brand-pill">FM-02</span>
+            <a className="brand-name" href={withHowtoManualPath("deploy")}>
+              <span>部署战术</span><span className="brand-badge">FM-02</span>
             </a>
             <div className="header-actions" aria-label="固定入口">
-              <a className="header-action header-action-manual" href={withBasePath("howto/")}>战术手册</a>
+              <a className="header-action header-action-manual" href={withBasePath("howto/")}>课程</a>
               <a className="header-action header-action-github" href="https://github.com/luker1228" target="_blank" rel="noreferrer"><span aria-hidden="true">◉</span>GitHub</a>
             </div>
           </div>

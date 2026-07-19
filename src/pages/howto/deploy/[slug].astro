@@ -26,11 +26,11 @@ if (!lesson) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{lesson.title} · 部署战术手册</title>
+    <title>{lesson.title} · 部署课程</title>
   </head>
   <body>
     {lesson.slug === "docker-artifact-image" ? (
-      <DeployLegacyPage client:load title={`${lesson.title} · 部署战术手册`} html={dockerArtifactImageHtml} prev={neighbors.prev} next={neighbors.next} />
+      <DeployLegacyPage client:load title={`${lesson.title} · 部署课程`} html={dockerArtifactImageHtml} prev={neighbors.prev} next={neighbors.next} />
     ) : (
       <div>Unsupported deploy lesson: {lesson.slug}</div>
     )}

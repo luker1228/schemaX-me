@@ -1,12 +1,16 @@
 ---
 import "../../../howto/styles.css";
+import howtoStylesSource from "../../../howto/styles.css?raw";
 import { getCollection } from "astro:content";
 import { CourseNavigator } from "../../../howto/components/shared/course-navigator.jsx";
 import LessonArticleSection from "../../../howto/components/shared/LessonArticleSection.astro";
 import ArticlePreviewCard from "../../../howto/components/shared/ArticlePreviewCard.astro";
 import PreviewCodeExample from "../../../howto/components/shared/PreviewCodeExample.astro";
+import HtmlCssTabs from "../../../howto/components/shared/HtmlCssTabs.astro";
+import FileCodeBlock from "../../../howto/components/shared/FileCodeBlock.astro";
 import ManualHeader from "../../../components/ManualHeader.astro";
 import { withBasePath, withHowtoManualPath } from "../../../howto/lib/paths.js";
+import { createArticleContentExamples } from "../../../howto/manuals/guide/article-content.examples.js";
 import { blogManual, guideLessons, toGuideLesson } from "../../../howto/manuals/guide/registry.js";
 
 export async function getStaticPaths() {
@@ -33,71 +37,59 @@ const isArticleLesson = lesson?.label?.startsWith("ARTICLE");
 const articleHeroMeta = lesson?.slug === "article-content"
   ? ["教程文章 · ARTICLE", "正文结构 · CONTENT", "H2 至 H4"]
   : ["教程文章 · ARTICLE", "文章 Hero · ENTRY", "建立阅读预期"];
-const previewCardCss = `.lesson-article-preview-card {
-  border: 1px solid color-mix(in oklab, var(--border) 58%, transparent);
-  border-radius: 4px;
-  background: var(--surface);
-  box-shadow: 4px 4px 0 var(--border);
-}`;
-const articleBodyCss = `.lesson-article-preview-card p {
-  margin: 0;
-  font-size: clamp(1rem, 1.4vw, 1.125rem);
-  line-height: 1.75;
-}
+const articleExamples = createArticleContentExamples(howtoStylesSource);
+const headingHtml = articleExamples.headings.html;
+const headingCss = articleExamples.headings.css;
+const tocHtml = articleExamples.toc.html;
+const tocCss = articleExamples.toc.css;
+const navTocHtml = articleExamples.navToc.html;
+const navTocCss = articleExamples.navToc.css;
+const previewCardHtml = articleExamples.previewCard.html;
+const previewCardCss = articleExamples.previewCard.css;
+const articleBodyHtml = articleExamples.articleBody.html;
+const articleBodyCss = articleExamples.articleBody.css;
+const blockquoteHtml = articleExamples.blockquote.html;
+const blockquoteCss = articleExamples.blockquote.css;
+const codeBlockExample = articleExamples.codeBlock.html;
+const codeBlockCss = articleExamples.codeBlock.css;
+const basicCodePreview = articleExamples.codeBlock.preview;
+const basicCodeHtml = articleExamples.basicPreviewCode.html;
+const basicCodeCss = articleExamples.basicPreviewCode.css;
+const fileCodeExample = articleExamples.fileCodeBlock.code;
+const fileCodeBlockHtml = articleExamples.fileCodeBlock.html;
+const fileCodeBlockCss = articleExamples.fileCodeBlock.css;
+const previewCodePairHtml = articleExamples.previewCodePair.html;
+const previewCodePairCss = articleExamples.previewCodePair.css;
 
-/* 相邻正文段落之间的间距。 */
-.lesson-article-preview-card p + p {
-  margin-top: 1rem;
-}`;
-const blockquoteCss = `.lesson-article-inline-note {
-  display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  gap: 0.75rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--surface);
-}
-
-.lesson-article-inline-note::before {
-  content: "“";
-  font-family: Georgia, serif;
-  font-size: 3.5rem;
-  font-weight: 900;
-  line-height: 0.62;
-}
-
-.lesson-article-inline-note p {
-  font-size: clamp(1rem, 1.4vw, 1.125rem);
-  line-height: 1.75;
-}`;
-const codeBlockExample = `<section class="lesson-example">
-  <h2>代码块</h2>
-  <p>用代码说明一个可复用的结构。</p>
-</section>`;
-const codeBlockCss = `.guide-code {
-  padding: 0.875rem 1rem;
-  background: #f0e7d6;
-  font-family: var(--font-mono);
-  line-height: 1.7;
-}`;
-const previewCodePairCss = `.lesson-preview-code-pair {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
-
-.lesson-preview-code-panel {
-  display: grid;
-  grid-template-rows: 1fr;
-}
-
-.lesson-preview-code-pair.is-code-collapsed .lesson-preview-code-panel {
-  grid-template-rows: 6.5rem;
-}`;
+// 本页真实的目录数据：仅 article-content 启用左右两栏目录。
+// 页内目录 = 本页正文 section；导航目录 = guideLessons 跨课程，按 label 前缀分组。
+const isArticleContentPage = lesson?.slug === "article-content";
+const articleTocEntries = isArticleContentPage
+  ? [
+      "文章标题级别",
+      "页内目录",
+      "导航目录",
+      "预览区",
+      "正文",
+      "引用块",
+      "代码块",
+      "预览块 + 代码块",
+    ].map((title, index) => ({ title, id: `article-section-${index + 1}` }))
+  : [];
+const guideNavGroups = (() => {
+  const groups = new Map();
+  for (const item of guideLessons) {
+    const prefix = item.label?.split("·")[0]?.trim() ?? "OTHER";
+    if (!groups.has(prefix)) groups.set(prefix, []);
+    groups.get(prefix).push({
+      slug: item.slug,
+      title: item.title,
+      href: withHowtoManualPath("guide", item.slug),
+      isCurrent: item.slug === lesson?.slug,
+    });
+  }
+  return [...groups.entries()].map(([label, items]) => ({ label, items }));
+})();
 
 if (!lesson) {
   throw new Error(`Unknown guide lesson: ${Astro.params.slug}`);
@@ -141,6 +133,8 @@ function prettyCss(css) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc/400.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc/700.css" />
     <title>{lesson.title} · {blogManual.title}</title>
     <meta name="description" content={lesson.summary} />
   </head>
@@ -154,11 +148,11 @@ function prettyCss(css) {
           { href: withHowtoManualPath("guide"), label: "指导手册" }
         ]}
         manualHref={withBasePath("howto/")}
-        manualLabel="战术手册"
-        showBrandSubtitle={false}
+        manualLabel="课程"
       />
 
-      <main class:list={["container", "guide-lesson-page", { "guide-component-doc": lesson.slug === "hero", "guide-article-lesson": isArticleLesson }]}>
+      <main class:list={["container", "guide-lesson-page", { "guide-component-doc": lesson.slug === "hero", "guide-article-lesson": isArticleLesson, "guide-article-layout": isArticleContentPage }]}>
+        <div class="guide-article-content">
         <CourseNavigator previous={guidePrevious} index={guideIndex} next={guideNext} placement="top" label="组件课程导航" />
         {isArticleLesson ? (
           <header class="lesson-article-hero html-reading-hero guide-article-lesson-hero">
@@ -248,7 +242,7 @@ function prettyCss(css) {
         )}
 
         {lesson.slug === "article-content" && (
-          <LessonArticleSection title="文章标题级别" className="guide-preview-section">
+          <LessonArticleSection id="article-section-1" title="文章标题级别" className="guide-preview-section">
             <p class="guide-article-body-label">预览</p>
             <ArticlePreviewCard>
               <section>
@@ -265,35 +259,79 @@ function prettyCss(css) {
             <figure class="guide-code-figure">
               <pre class="guide-code" tabindex="0" data-language={codeLanguage} data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label={`复制 ${codeLanguageLabel} 代码`}><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language={codeLanguage}>{lessonHtml.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", codeLanguage)}></span>)}</code></pre>
             </figure>
-            <p class="guide-article-body-label">正文 CSS 样式</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(lesson.css).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-            </figure>
+            <p class="guide-article-body-label">HTML + CSS</p>
+            <HtmlCssTabs id="article-headings" html={headingHtml} css={headingCss} />
           </LessonArticleSection>
         )}
 
         {lesson.slug === "article-content" && (
-          <LessonArticleSection title="预览区的样式">
+          <LessonArticleSection id="article-section-2" title="页内目录">
+            <p class="guide-article-body-label">预览</p>
+            <ArticlePreviewCard>
+              <nav class="lesson-article-toc" aria-label="文章目录">
+                <span class="lesson-article-toc-label">目录</span>
+                <ol class="lesson-article-toc-list">
+                  <li>
+                    <a href="#why">为什么需要多阶段构建</a>
+                    <ol class="lesson-article-toc-sub">
+                      <li><a href="#problem">单阶段构建的局限</a></li>
+                      <li><a href="#idea">分阶段的思路</a></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <a href="#how">如何分离构建与运行</a>
+                  </li>
+                  <li>
+                    <a href="#check">发布前检查</a>
+                  </li>
+                </ol>
+              </nav>
+            </ArticlePreviewCard>
+            <p class="guide-article-body-label">HTML + CSS</p>
+            <HtmlCssTabs id="article-toc" html={tocHtml} css={tocCss} />
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection id="article-section-3" title="导航目录">
+            <p class="guide-article-body-label">预览</p>
+            <ArticlePreviewCard>
+              <nav class="lesson-article-nav" aria-label="导航目录">
+                <span class="lesson-article-nav-title">导航目录</span>
+                <ul class="lesson-article-nav-group">
+                  <li class="lesson-article-nav-group-label">SECTIONS</li>
+                  <li><a class="lesson-article-nav-item is-active" href="#hero">课程 Hero 标题区</a></li>
+                  <li><a class="lesson-article-nav-item" href="#heading">课程章节引导区</a></li>
+                  <li><a class="lesson-article-nav-item" href="#actions">行动与状态区</a></li>
+                </ul>
+                <ul class="lesson-article-nav-group">
+                  <li class="lesson-article-nav-group-label">COMPONENTS</li>
+                  <li><a class="lesson-article-nav-item" href="#card">课程目录入口</a></li>
+                  <li><a class="lesson-article-nav-item" href="#faq">检查与答疑区</a></li>
+                </ul>
+              </nav>
+            </ArticlePreviewCard>
+            <p class="guide-article-body-label">HTML + CSS</p>
+            <HtmlCssTabs id="article-nav-toc" html={navTocHtml} css={navTocCss} />
+          </LessonArticleSection>
+        )}
+
+        {lesson.slug === "article-content" && (
+          <LessonArticleSection id="article-section-4" title="预览区">
             <ArticlePreviewCard>
               <p>这是一块预览区。</p>
             </ArticlePreviewCard>
-            <p class="guide-article-body-label">CSS 样式</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(previewCardCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-            </figure>
+            <HtmlCssTabs id="preview-card" html={previewCardHtml} css={previewCardCss} />
           </LessonArticleSection>
         )}
 
         {lesson.slug === "article-content" && (
-          <LessonArticleSection title="正文的样式">
+          <LessonArticleSection id="article-section-5" title="正文">
             <ArticlePreviewCard>
               <p>这是一段正文，用来说明当前章节要解决的问题与读者将获得的结果。</p>
               <p>第二段继续补充关键判断、示例背景或下一步动作，让读者可以顺着内容完成学习。</p>
             </ArticlePreviewCard>
-            <p class="guide-article-body-label">CSS 样式</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(articleBodyCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-            </figure>
+            <HtmlCssTabs id="article-body" html={articleBodyHtml} css={articleBodyCss} />
             <blockquote class="lesson-article-inline-note">
               <p><code>p + p</code> 表示选择紧跟在另一个 <code>p</code> 后面的段落，因此为第二段及后续段落加入间距。</p>
             </blockquote>
@@ -301,7 +339,7 @@ function prettyCss(css) {
         )}
 
         {lesson.slug === "article-content" && (
-          <LessonArticleSection title="引用块">
+          <LessonArticleSection id="article-section-6" title="引用块">
             <p class="guide-article-body-label">正文批注条</p>
             <blockquote class="lesson-article-inline-note">
               <p><code>p + p</code> 表示选择紧跟在另一个 <code>p</code> 后面的段落，因此为第二段及后续段落加入间距。</p>
@@ -310,50 +348,33 @@ function prettyCss(css) {
             <aside class="lesson-article-highlight-note">
               <p><code>p + p</code> 为连续段落建立稳定的阅读间距。</p>
             </aside>
-            <p class="guide-article-body-label">CSS 样式</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(blockquoteCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-            </figure>
+            <HtmlCssTabs id="article-quote" html={blockquoteHtml} css={blockquoteCss} />
           </LessonArticleSection>
         )}
 
         {lesson.slug === "article-content" && (
-          <LessonArticleSection title="代码块">
-            <p class="guide-article-body-label">预览</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="html" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 HTML 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="html">{codeBlockExample.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "html")}></span>)}</code></pre>
-            </figure>
-            <p class="guide-article-body-label">CSS 样式</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(codeBlockCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-            </figure>
+          <LessonArticleSection id="article-section-7" title="代码块">
+            <p class="guide-article-body-label">基础代码块预览</p>
+            <ArticlePreviewCard>
+              <pre class="guide-code" tabindex="0" data-language="javascript"><code>{basicCodePreview}</code></pre>
+            </ArticlePreviewCard>
+            <p class="guide-article-body-label">基础代码块：HTML + CSS</p>
+            <HtmlCssTabs id="basic-preview-code" html={basicCodeHtml} css={basicCodeCss} />
+            <p class="guide-article-body-label">HTML + CSS 组合预览</p>
+            <ArticlePreviewCard>
+              <HtmlCssTabs id="code-block-preview" html={codeBlockExample} css={codeBlockCss} />
+            </ArticlePreviewCard>
+            <HtmlCssTabs id="code-block" html={codeBlockExample} css={codeBlockCss} />
+            <p class="guide-article-body-label">带文件名的代码块的预览</p>
+            <ArticlePreviewCard>
+              <FileCodeBlock filename="components.json" code={fileCodeExample} />
+            </ArticlePreviewCard>
+            <HtmlCssTabs id="file-code-block" html={fileCodeBlockHtml} css={fileCodeBlockCss} />
           </LessonArticleSection>
         )}
 
         {lesson.slug === "article-content" && (
-          <LessonArticleSection title="HTML + CSS 组合展示">
-            <div class="guide-code-tabs" data-code-tabs>
-              <div class="guide-code-tablist" role="tablist" aria-label="代码语言切换">
-                <button type="button" role="tab" aria-selected="true" aria-controls="code-panel-html" id="code-tab-html" data-code-tab="html">HTML</button>
-                <button type="button" role="tab" aria-selected="false" aria-controls="code-panel-css" id="code-tab-css" data-code-tab="css">CSS</button>
-              </div>
-              <div role="tabpanel" id="code-panel-html" aria-labelledby="code-tab-html" data-code-panel="html">
-                <figure class="guide-code-figure">
-                  <pre class="guide-code" tabindex="0" data-language="html" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 HTML 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="html">{codeBlockExample.split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "html")}></span>)}</code></pre>
-                </figure>
-              </div>
-              <div role="tabpanel" id="code-panel-css" aria-labelledby="code-tab-css" data-code-panel="css" hidden>
-                <figure class="guide-code-figure">
-                  <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(codeBlockCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-                </figure>
-              </div>
-              <button class="guide-code-combined-copy" type="button" data-copy-html-css>复制 HTML + CSS</button>
-            </div>
-          </LessonArticleSection>
-        )}
-
-        {lesson.slug === "article-content" && (
-          <LessonArticleSection title="预览块 + 代码块">
+          <LessonArticleSection id="article-section-8" title="预览块 + 代码块">
             <PreviewCodeExample>
               <ArticlePreviewCard slot="preview">
                 <p>这是一块预览区。</p>
@@ -364,10 +385,7 @@ function prettyCss(css) {
                 </figure>
               </Fragment>
             </PreviewCodeExample>
-            <p class="guide-article-body-label">CSS 样式</p>
-            <figure class="guide-code-figure">
-              <pre class="guide-code" tabindex="0" data-language="css" data-theme="github-light-default"><button class="guide-code-copy" type="button" data-copy-code aria-label="复制 CSS 代码"><span class="sr-only">复制</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg></button><code data-line-numbers data-language="css">{prettyCss(previewCodePairCss).split("\n").map((line) => <span data-line set:html={highlightLine(line || " ", "css")}></span>)}</code></pre>
-            </figure>
+            <HtmlCssTabs id="preview-code-pair" html={previewCodePairHtml} css={previewCodePairCss} />
           </LessonArticleSection>
         )}
 
@@ -396,6 +414,40 @@ function prettyCss(css) {
         )}
 
         <CourseNavigator previous={guidePrevious} index={guideIndex} next={guideNext} placement="bottom" label="组件课程导航" />
+        </div>
+
+        {isArticleContentPage && (
+          <aside class="guide-article-rail guide-article-nav-rail" aria-label="导航目录">
+            <nav class="lesson-article-nav">
+              <span class="lesson-article-nav-title">导航目录</span>
+              {guideNavGroups.map((group) => (
+                <ul class="lesson-article-nav-group">
+                  <li class="lesson-article-nav-group-label">{group.label}</li>
+                  {group.items.map((item) => (
+                    <li>
+                      <a class:list={["lesson-article-nav-item", { "is-active": item.isCurrent }]} href={item.href} aria-current={item.isCurrent ? "page" : undefined}>{item.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </nav>
+          </aside>
+        )}
+
+        {isArticleContentPage && (
+          <aside class="guide-article-rail guide-article-toc-rail" aria-label="页内目录">
+            <nav class="lesson-article-toc" data-article-toc>
+              <span class="lesson-article-toc-label">页内目录</span>
+              <ol class="lesson-article-toc-list">
+                {articleTocEntries.map((entry, index) => (
+                  <li>
+                    <a href={`#${entry.id}`} data-toc-target={entry.id} class:list={[{ "is-active": index === 0 }]}>{entry.title}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </aside>
+        )}
 
       </main>
     </div>
@@ -405,14 +457,15 @@ function prettyCss(css) {
 <script>
   document.querySelectorAll("[data-copy-code]").forEach((button) => {
     button.addEventListener("click", async () => {
-      const code = button.parentElement?.querySelector("code");
+      const code = button.closest(".file-code-block")?.querySelector("code") ?? button.parentElement?.querySelector("code");
       if (!code) return;
       await navigator.clipboard.writeText(code.innerText);
       button.setAttribute("data-copied", "true");
       button.setAttribute("aria-label", "已复制");
       window.setTimeout(() => {
         button.removeAttribute("data-copied");
-        button.setAttribute("aria-label", code.dataset.language === "css" ? "复制 CSS 代码" : "复制 HTML 代码");
+        const label = code.dataset.language === "css" ? "CSS" : code.dataset.language === "json" ? "JSON" : code.dataset.language === "html-css" ? "HTML + CSS" : "HTML";
+        button.setAttribute("aria-label", `复制 ${label} 代码`);
       }, 1400);
     });
   });
@@ -448,10 +501,50 @@ function prettyCss(css) {
       const html = tabs?.querySelector('[data-code-panel="html"] code')?.innerText ?? "";
       const css = tabs?.querySelector('[data-code-panel="css"] code')?.innerText ?? "";
       await navigator.clipboard.writeText(`<!-- HTML -->\n${html}\n\n/* CSS */\n${css}`);
+      button.setAttribute("data-copied", "true");
       button.textContent = "已复制 HTML + CSS";
-      window.setTimeout(() => { button.textContent = "复制 HTML + CSS"; }, 1400);
+      window.setTimeout(() => {
+        button.removeAttribute("data-copied");
+        button.textContent = "复制 HTML + CSS";
+      }, 1400);
     });
   });
+
+  // 页内目录滚动高亮：观察正文 section，把当前可见章节在右栏 TOC 上标为 is-active。
+  const articleToc = document.querySelector("[data-article-toc]");
+  if (articleToc && "IntersectionObserver" in window) {
+    const links = Array.from(articleToc.querySelectorAll("a[data-toc-target]"));
+    const sections = links
+      .map((link) => document.getElementById(link.dataset.tocTarget))
+      .filter(Boolean);
+    if (sections.length) {
+      const ratios = new Map();
+      const setActive = () => {
+        let activeId = sections[0].id;
+        let max = 0;
+        for (const section of sections) {
+          const ratio = ratios.get(section.id) ?? 0;
+          if (ratio > max) {
+            max = ratio;
+            activeId = section.id;
+          }
+        }
+        links.forEach((link) => {
+          link.classList.toggle("is-active", link.dataset.tocTarget === activeId);
+        });
+      };
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            ratios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+          }
+          setActive();
+        },
+        { rootMargin: "-96px 0px -55% 0px", threshold: [0, 0.1, 0.25, 0.5, 1] }
+      );
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
 </script>
 
 <style>
@@ -524,8 +617,7 @@ function prettyCss(css) {
   .code-token-string { color: #0a3069; }
   .guide-code-copy { position: absolute; top: 0.75rem; right: 0.5rem; z-index: 1; display: inline-flex; width: 1.75rem; height: 1.75rem; align-items: center; justify-content: center; border: 0; border-radius: 0.25rem; background: #f0e7d6; color: #1f2328; cursor: pointer; opacity: 0.75; }
   .guide-code-copy svg { width: 1rem; height: 1rem; }
-  .guide-code-copy:hover, .guide-code-copy:focus-visible { background: #f3f4f6; opacity: 1; outline: 2px solid #0969da; outline-offset: 2px; }
-  .guide-code-copy[data-copied] { color: #1a7f37; opacity: 1; }
+  .guide-code-copy:hover, .guide-code-copy:focus-visible, .guide-code-copy:active, .guide-code-copy[data-copied] { background: var(--ground-yellow); color: var(--fg); opacity: 1; outline: 0; }
   .guide-code-tabs { overflow: hidden; border: 0; }
   .guide-code-tablist { display: flex; background: transparent; }
   .guide-code-tablist button { min-width: 6rem; padding: 0.7rem 1rem; border: 0; background: transparent; color: var(--muted); font: 400 0.9rem/1 var(--font-body); cursor: pointer; }

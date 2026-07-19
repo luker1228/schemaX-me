@@ -207,7 +207,7 @@ const components = [
 export function ComponentsPage({ currentPath, prev, next }) {
   const lesson = currentPath ? { currentPath, prev, next } : getFrontendLegacyLesson("components.html");
   return (
-    <PageFrame title="组件认知页 · 后端同学的前端战术手册">
+    <PageFrame title="组件认知页 · 后端同学的前端课程">
       <ConfigProvider theme={{ token: { colorPrimary: "#ef7627", borderRadius: 8, fontFamily: "inherit" } }}>
         <ManualLessonHeader currentPath={lesson.currentPath} />
         <ManualCourseLayout currentPath={lesson.currentPath} prev={lesson.prev} next={lesson.next}>

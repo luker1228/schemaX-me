@@ -1,0 +1,1647 @@
+{
+  "_comment": "check-tokens.mjs 的历史遗留白名单。按 (file, normalized-value) 粒度容忍。逐步清理:每修掉一种颜色在某文件的使用,就删对应条目,目标是清空。",
+  "generatedAt": "2026-07-19T07:18:47.817Z",
+  "count": 328,
+  "violations": [
+    {
+      "file": "src/components/ui/button-group.tsx",
+      "value": "#00000012",
+      "kind": "hex"
+    },
+    {
+      "file": "src/components/ui/button-group.tsx",
+      "value": "#0000001f",
+      "kind": "hex"
+    },
+    {
+      "file": "src/components/ui/button-group.tsx",
+      "value": "#ffffff1f",
+      "kind": "hex"
+    },
+    {
+      "file": "src/components/ui/button-group.tsx",
+      "value": "#ffffff33",
+      "kind": "hex"
+    },
+    {
+      "file": "src/components/ui/button-group.tsx",
+      "value": "#ffffff2b",
+      "kind": "hex"
+    },
+    {
+      "file": "src/components/ui/button-group.tsx",
+      "value": "#ffffff45",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#efe7d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#000000",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#00a8f8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#6b6355",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#ffdc58",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#00c870",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/deploy/deploy-index-page.jsx",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/components-page.jsx",
+      "value": "#666666",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/components-page.jsx",
+      "value": "#eeeeee",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/components-page.jsx",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/components-page.jsx",
+      "value": "#ef7627",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/components-page.jsx",
+      "value": "#999999",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/components-page.jsx",
+      "value": "#fafafa",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#efe7d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#000000",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#00a8f8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#6b6355",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#ffdc58",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#d030a8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#00c870",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#a088d0",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/index-page.jsx",
+      "value": "#1e1e1b",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#ef7627",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#1a1a1a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#fbfaf6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#666666",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#fffdf8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#f7f4ec",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#fff7eb",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/layout-recipe-components.jsx",
+      "value": "#fef3e6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css-2.html",
+      "value": "#ef7627",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css-2.html",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css-2.html",
+      "value": "#555555",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#f5f4ee",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#1a1a1a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#6b6b6b",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#4b5563",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#0f766e",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#b45309",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#b91c1c",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#d6d6d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-css.html",
+      "value": "#9ca3af",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-js.html",
+      "value": "#f5f4ee",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-js.html",
+      "value": "#1a1a1a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-js.html",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-js.html",
+      "value": "#6b6b6b",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "#f5f4ee",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "#1a1a1a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "#ffffff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "#fff7e8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "#ffe29a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "#f7efdf",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/legacy-content/lesson-layout-2.html",
+      "value": "rgba(247, 239, 223, 0.78)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/components/frontend/lesson-react-page.jsx",
+      "value": "#ffdc58",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/lesson-react-page.jsx",
+      "value": "#241d13",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/lesson-react-page.jsx",
+      "value": "#282828",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/lesson-react-page.jsx",
+      "value": "#666666",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/frontend/lesson-react-page.jsx",
+      "value": "#777777",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/shared/HtmlCssTabs.astro",
+      "value": "#f0e7d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/components/shared/HtmlCssTabs.astro",
+      "value": "#1f2328",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fffdf7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fff2ce",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#241d13",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#6b5c42",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(255, 255, 255, 0.46)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fff7e7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(0, 200, 112, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#f3ead9",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#706b62",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#1e2732",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#08722e",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#0c3f87",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#f0e7d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgb(240 231 214 / 1%)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#000000",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(40, 30, 15, 0.45)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fff7e8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.035)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#a85f00",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.24)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#ffdc58",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#ffd12e",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fffaf0",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#efe7d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#ffe7a3",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#e63946",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fff9ef",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.045)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.2)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#f0e6d3",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#eee5d5",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#302d28",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#ef7627",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(255,255,255,0.56)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(255,255,255,0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.08)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(36, 29, 19, 0.1)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#1677ff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#fff2f0",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#ffccc7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#cf1322",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(0, 0, 0, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#e8f3ff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#91caff",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#0958d9",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(0, 0, 0, 0.12)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#0c0f0d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#e7f3ea",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(34, 255, 136, 0.04)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(34, 255, 136, 0.035)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(0, 0, 0, 0.55)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#1f2a24",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#0f1311",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#22ff88",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#eadfbd",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(255, 255, 255, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#d8c89d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#46502a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(34, 255, 136, 0.03)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#cfc7b5",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "rgba(15, 19, 17, 0.9)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#2c3d33",
+      "kind": "hex"
+    },
+    {
+      "file": "src/howto/styles.css",
+      "value": "#08120c",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(212, 63, 42, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "#0d0d0d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "#141414",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(20, 20, 20, 0.86)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(0, 0, 0, 0.24)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.76)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.14)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(255, 255, 255, 0.03)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.56)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(10, 10, 10, 0.78)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.12)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(255, 212, 59, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(19, 19, 19, 0.95)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.74)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(255, 255, 255, 0.025)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(212, 63, 42, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.1)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "rgba(244, 234, 214, 0.78)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "#0a0a0a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/ai-metadata/index.astro",
+      "value": "#e8dcc3",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "rgba(36, 29, 19, 0.22)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "#241d13",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "#082515",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "#062433",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "#2a0707",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "rgba(255, 212, 59, 0.22)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "rgba(0, 212, 255, 0.55)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "rgba(36, 29, 19, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/design-dna.astro",
+      "value": "#0a5c33",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "#0c0f0d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(152, 255, 201, 0.34)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(34, 255, 136, 0.32)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(74, 255, 176, 0.28)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(20, 54, 36, 0.72)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(7, 14, 11, 0.9)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(5, 10, 8, 0.94)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(255, 255, 255, 0.04)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(0, 0, 0, 0.42)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(34, 255, 136, 0.12)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(34, 255, 136, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(255, 255, 255, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(255, 255, 255, 0.03)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(230, 255, 244, 0.74)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(74, 255, 176, 0.22)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(6, 13, 10, 0.7)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "#7dffbf",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(34, 255, 136, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(34, 255, 136, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(122, 255, 193, 0.34)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(144, 255, 204, 0)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(144, 255, 204, 0.42)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(194, 255, 223, 0.92)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(40, 255, 144, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(81, 255, 166, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "#98ffc9",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(152, 255, 201, 0.42)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(2, 7, 4, 0.72)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "#effff5",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(236, 255, 246, 0.58)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(152, 255, 201, 0.9)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "#22ff88",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(74, 255, 176, 0.15)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/deploy/index.astro",
+      "value": "rgba(9, 18, 13, 0.68)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "rgba(34, 255, 136, 0.04)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "rgba(0, 0, 0, 0.6)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#0c0f0d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#22ff88",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#2c3d33",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#6f8a7a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#d43f2a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#e7f3ea",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "rgba(34, 255, 136, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "#08120c",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/_DecodeOverlay.astro",
+      "value": "rgba(34, 255, 136, 0.5)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "#0c0f0d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(152, 255, 201, 0.34)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(34, 255, 136, 0.32)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(74, 255, 176, 0.28)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(20, 54, 36, 0.72)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(7, 14, 11, 0.9)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(5, 10, 8, 0.94)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(255, 255, 255, 0.04)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(0, 0, 0, 0.42)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(34, 255, 136, 0.12)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(34, 255, 136, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(255, 255, 255, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(255, 255, 255, 0.03)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(230, 255, 244, 0.74)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(74, 255, 176, 0.22)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(6, 13, 10, 0.7)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "#7dffbf",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(34, 255, 136, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(34, 255, 136, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(122, 255, 193, 0.34)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(144, 255, 204, 0)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(144, 255, 204, 0.42)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(194, 255, 223, 0.92)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(40, 255, 144, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(81, 255, 166, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "#98ffc9",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(152, 255, 201, 0.42)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(2, 7, 4, 0.72)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "#effff5",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(236, 255, 246, 0.58)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(152, 255, 201, 0.9)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "#22ff88",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(74, 255, 176, 0.15)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/frontend/index.astro",
+      "value": "rgba(9, 18, 13, 0.68)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#fff7e8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#fffdf7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#fff2ce",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#241d13",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#6b5c42",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#756b5c",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#fff7e7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#0b0805",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#f0e7d6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#1f2328",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#57606a",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#116329",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#0550ae",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#cf222e",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/guide/[slug].astro",
+      "value": "#0a3069",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "#fff7e8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "#fffdf7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "#fff2ce",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "#241d13",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "#6b5c42",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "#a85f00",
+      "kind": "hex"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(36, 29, 19, 0.24)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(255, 212, 59, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(36, 29, 19, 0.055)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(255, 253, 247, 0.94)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(255, 255, 255, 0.38)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(0, 0, 0, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(36, 29, 19, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(255, 255, 255, 0.45)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/pages/howto/index.astro",
+      "value": "rgba(36, 29, 19, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.18)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(0, 212, 255, 0.1)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(23, 23, 23, 0.94)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#241d13",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#f4ead6",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#0d0d0d",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#fff8ec",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.08)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(0, 212, 255, 0.05)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 255, 255, 0.02)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#f2e9d8",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(17, 17, 17, 0.88)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(242, 233, 216, 0.9)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(242, 233, 216, 0.16)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#f5eedf",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#1e1b0c",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#1a1322",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#0d1b12",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#1d1110",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#241508",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(182, 120, 255, 0.08)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 122, 0, 0.08)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#0c0c0c",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#151515",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#d6f7df",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(244, 234, 214, 0.025)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(0, 0, 0, 0.55)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(0, 0, 0, 0.32)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(0,0,0,.5)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#101010",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 64, 64, 0.4)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.55)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.35)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 253, 247, 0.94)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(36, 29, 19, 0.035)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(112, 82, 36, 0.06)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#fffdf7",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(36, 29, 19, 0.22)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(36, 29, 19, 0.25)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.2)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(36, 29, 19, 0.28)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.72)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#f5c84b",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(245, 200, 75, 0.62)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#6b5c42",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#f0e6d3",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "#fff2ce",
+      "kind": "hex"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(36, 29, 19, 0.2)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.045)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 212, 59, 0.12)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(244, 234, 214, 0.12)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(0, 210, 106, 0.5)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/global.css",
+      "value": "rgba(255, 77, 77, 0.35)",
+      "kind": "rgb"
+    },
+    {
+      "file": "src/styles/header-actions.css",
+      "value": "#241d13",
+      "kind": "hex"
+    }
+  ]
+}
